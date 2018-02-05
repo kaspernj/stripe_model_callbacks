@@ -20,8 +20,14 @@ describe StripeModelCallbacks::Customer::Subscription::CreatedService do
 
       expect(response.code).to eq "200"
       expect(created_invoice_item.customer).to eq customer
+      expect(created_invoice_item.description).to eq "My First Invoice Item (created for API docs)"
+      expect(created_invoice_item.discountable).to eq true
       expect(created_invoice_item.invoice).to eq nil
       expect(created_invoice_item.amount.format).to eq "$10.00"
+      expect(created_invoice_item.livemode).to eq false
+      expect(created_invoice_item.period_start).to eq Time.new(2018, 02, 04, 19, 31, 56)
+      expect(created_invoice_item.period_end).to eq Time.new(2018, 02, 04, 19, 31, 56)
+      expect(created_invoice_item.plan).to eq nil
     end
   end
 end

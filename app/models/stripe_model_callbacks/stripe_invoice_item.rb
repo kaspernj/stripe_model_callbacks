@@ -13,6 +13,12 @@ class StripeModelCallbacks::StripeInvoiceItem < StripeModelCallbacks::Applicatio
     optional: true,
     primary_key: "identifier"
 
+  belongs_to :plan,
+    class_name: "StripeModelCallbacks::StripePlan",
+    foreign_key: "plan_identifier",
+    optional: true,
+    primary_key: "identifier"
+
   monetize :amount_cents
 
   def assign_from_stripe(object)

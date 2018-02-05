@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180205112513) do
+ActiveRecord::Schema.define(version: 20180205130433) do
 
   create_table "stripe_charges", force: :cascade do |t|
     t.string "identifier", null: false
@@ -18,7 +18,8 @@ ActiveRecord::Schema.define(version: 20180205112513) do
     t.string "amount_currency", null: false
     t.integer "amount_refunded_cents"
     t.string "amount_refunded_currency"
-    t.string "application_cents"
+    t.integer "application_cents"
+    t.string "application_currency"
     t.boolean "captured", null: false
     t.string "currency", null: false
     t.string "customer_identifier"
@@ -27,21 +28,21 @@ ActiveRecord::Schema.define(version: 20180205112513) do
     t.string "failure_code"
     t.string "failure_message"
     t.text "fraud_details"
-    t.string "invoice"
+    t.string "invoice_identifier"
     t.boolean "livemode", null: false
     t.text "metadata"
     t.string "on_behalf_of"
-    t.string "order"
+    t.string "order_identifier"
     t.text "outcome"
-    t.boolean "paid"
+    t.boolean "paid", null: false
     t.string "receipt_email"
     t.string "receipt_number"
     t.boolean "refunded", null: false
     t.string "review"
     t.text "shipping"
-    t.text "source"
+    t.string "source_identifier"
     t.string "source_transfer"
-    t.string "statement_desciptor"
+    t.string "statement_descriptor"
     t.string "status"
     t.string "transfer"
     t.string "transfer_group"
@@ -49,6 +50,9 @@ ActiveRecord::Schema.define(version: 20180205112513) do
     t.datetime "updated_at", null: false
     t.index ["customer_identifier"], name: "index_stripe_charges_on_customer_identifier"
     t.index ["identifier"], name: "index_stripe_charges_on_identifier"
+    t.index ["invoice_identifier"], name: "index_stripe_charges_on_invoice_identifier"
+    t.index ["order_identifier"], name: "index_stripe_charges_on_order_identifier"
+    t.index ["source_identifier"], name: "index_stripe_charges_on_source_identifier"
   end
 
   create_table "stripe_customers", force: :cascade do |t|
