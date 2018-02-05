@@ -11,18 +11,22 @@ class StripeModelCallbacks::StripeSubscription < StripeModelCallbacks::Applicati
   belongs_to :discount,
     class_name: "StripeModelCallbacks::StripeDiscount",
     foreign_key: "discount_identifier",
+    inverse_of: :subscriptions,
     optional: true,
     primary_key: "identifier"
 
   belongs_to :plan,
     class_name: "StripeModelCallbacks::StripePlan",
     foreign_key: "plan_identifier",
+    inverse_of: :subscriptions,
     optional: true,
     primary_key: "identifier"
 
   has_many :invoices,
     class_name: "StripeModelCallbacks::StripeInvoice",
+    dependent: :restrict_with_error,
     foreign_key: "subscription_identifier",
+    inverse_of: :subscription,
     primary_key: "identifier"
 
   def assign_from_stripe(object)

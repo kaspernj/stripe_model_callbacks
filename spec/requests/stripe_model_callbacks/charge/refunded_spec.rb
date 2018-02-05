@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "charge refunded" do
-  let!(:charge) { create :stripe_charge, identifier: "ch_00000000000000" }
+  let!(:charge) { create :stripe_charge, identifier: "ch_1BrtHZAT5SYrvIfdqkyvLyvX" }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
@@ -15,12 +15,29 @@ describe "charge refunded" do
     it "marks the charge as refunded" do
       expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
         .to change(PublicActivity::Activity.where(key: "stripe_model_callbacks_stripe_charge.refunded"), :count).by(1)
+        .and change(StripeModelCallbacks::StripeCharge, :count).by(1)
+        .and change(StripeModelCallbacks::StripeRefund, :count).by(1)
 
-      charge.reload
+      created_charge = StripeModelCallbacks::StripeCharge.last
+      created_refund = StripeModelCallbacks::StripeRefund.last
 
       expect(response.code).to eq "200"
-      expect(charge.refunded?).to eq true
-      expect(charge.amount_refunded).to eq Money.new(100, "USD")
+
+      expect(created_charge.amount.format).to eq "$1.00"
+      expect(created_charge.amount_refunded.format).to eq "$1.00"
+      expect(created_charge.description).to eq "My First Test Charge (created for API docs)"
+      expect(created_charge.refunded?).to eq true
+
+      expect(created_refund.identifier).to eq "re_CGQ7INZZQPOC8U"
+      expect(created_refund.amount.format).to eq "$1.00"
+      expect(created_refund.balance_transaction).to eq "txn_CGQ7Sq2yeAIYK4"
+      expect(created_refund.charge).to eq charge
+      expect(created_refund.created_at).to eq Time.zone.parse("2018-02-04 19:36:09")
+      expect(created_refund.currency).to eq "usd"
+      expect(created_refund.metadata).to eq "{}"
+      expect(created_refund.reason).to eq nil
+      expect(created_refund.receipt_number).to eq "1527-1121"
+      expect(created_refund.status).to eq "succeeded"
     end
   end
 end

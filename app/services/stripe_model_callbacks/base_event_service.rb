@@ -1,5 +1,5 @@
 class StripeModelCallbacks::BaseEventService < ServicePattern::Service
-  attr_reader :event
+  attr_reader :event, :object
 
   def self.reported_execute!(*args, &blk)
     with_exception_notifications do
@@ -24,11 +24,9 @@ class StripeModelCallbacks::BaseEventService < ServicePattern::Service
     # ExceptionNotifier.notify_exception(e)
   end
 
-  def initialize(event:)
+  def initialize(event: nil, object: nil)
     @event = event
-  end
-
-  def object
-    event.data.object
+    @object = object
+    @object ||= event.data.object
   end
 end

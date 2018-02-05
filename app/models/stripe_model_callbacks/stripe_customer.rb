@@ -8,8 +8,23 @@ class StripeModelCallbacks::StripeCustomer < StripeModelCallbacks::ApplicationRe
     optional: true,
     primary_key: "identifier"
 
+  has_many :charges,
+    class_name: "StripeModelCallbacks::StripeCharge",
+    dependent: :restrict_with_error,
+    foreign_key: "customer_identifier",
+    inverse_of: :customer,
+    primary_key: "identifier"
+
   has_many :invoice_items,
     class_name: "StripeModelCallbacks::StripeInvoiceItem",
+    dependent: :restrict_with_error,
+    foreign_key: "customer_identifier",
+    inverse_of: :customer,
+    primary_key: "identifier"
+
+  has_many :orders,
+    class_name: "StripeModelCallbacks::StripeOrder",
+    dependent: :restrict_with_error,
     foreign_key: "customer_identifier",
     inverse_of: :customer,
     primary_key: "identifier"

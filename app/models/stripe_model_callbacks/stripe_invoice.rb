@@ -4,11 +4,13 @@ class StripeModelCallbacks::StripeInvoice < StripeModelCallbacks::ApplicationRec
   belongs_to :subscription,
     class_name: "StripeModelCallbacks::StripeSubscription",
     foreign_key: "subscription_identifier",
+    inverse_of: :invoices,
     optional: true,
     primary_key: "identifier"
 
   has_many :invoice_items,
     class_name: "StripeModelCallbacks::StripeInvoiceItem",
+    dependent: :destroy,
     foreign_key: "invoice_identifier",
     primary_key: "identifier"
 

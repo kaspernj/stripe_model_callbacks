@@ -4,7 +4,22 @@ class StripeModelCallbacks::StripeCharge < StripeModelCallbacks::ApplicationReco
   belongs_to :customer,
     class_name: "StripeModelCallbacks::StripeCustomer",
     foreign_key: "customer_identifier",
+    inverse_of: :charges,
     optional: true,
+    primary_key: "identifier"
+
+  has_many :orders,
+    class_name: "StripeModelCallbacks::StripeOrder",
+    dependent: :restrict_with_error,
+    foreign_key: "charge_identifier",
+    inverse_of: :charge,
+    primary_key: "identifier"
+
+  has_many :refunds,
+    class_name: "StripeModelCallbacks::StripeRefund",
+    dependent: :restrict_with_error,
+    foreign_key: "charge_identifier",
+    inverse_of: :charge,
     primary_key: "identifier"
 
   monetize :amount_cents

@@ -4,6 +4,7 @@ class StripeModelCallbacks::StripeOrder < StripeModelCallbacks::ApplicationRecor
   belongs_to :charge,
     class_name: "StripeModelCallbacks::StripeCharge",
     foreign_key: "charge_identifier",
+    inverse_of: :orders,
     optional: true,
     primary_key: "identifier"
 

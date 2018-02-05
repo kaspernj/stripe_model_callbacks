@@ -1,6 +1,13 @@
 class StripeModelCallbacks::StripePlan < StripeModelCallbacks::ApplicationRecord
   self.table_name = "stripe_plans"
 
+  has_many :subscriptions,
+    class_name: "StripeModelCallbacks::StripeSubscription",
+    dependent: :restrict_with_error,
+    foreign_key: "plan_identifier",
+    inverse_of: :plan,
+    primary_key: "identifier"
+
   monetize :amount_cents
 
   def assign_from_stripe(object)

@@ -4,6 +4,7 @@ class StripeModelCallbacks::StripeRefund < StripeModelCallbacks::ApplicationReco
   belongs_to :charge,
     class_name: "StripeModelCallbacks::StripeCharge",
     foreign_key: "charge_identifier",
+    inverse_of: :refunds,
     optional: true,
     primary_key: "identifier"
 
@@ -12,14 +13,15 @@ class StripeModelCallbacks::StripeRefund < StripeModelCallbacks::ApplicationReco
   def assign_from_stripe(object)
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
-      balance_transaction: object.balance_transaction,
       charge_identifier: object.charge,
-      currency: object.currency,
       livemode: object.try(:livemode) == true,
-      metadata: JSON.generate(object.metadata),
-      reason: object.reason,
-      receipt_number: object.receipt_number,
-      status: object.status
+      metadata: JSON.generate(object.metadata)
+    )
+
+    StripeModelCallbacks::AttributesAssignerService.execute!(
+      model: self,
+      stripe_model: object,
+      attributes: %w[balance_transaction currency reason receipt_number status]
     )
 
     self.failure_reason = object.failure_reason if object.respond_to?(:failure_reason)
