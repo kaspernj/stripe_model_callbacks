@@ -10,7 +10,14 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
       StripeModelCallbacks::NotifierService.reported_execute!(event: event)
     end
 
-    # Update subscription when we got data about credit card.
+    events.subscribe "customer.created" do |event|
+      StripeModelCallbacks::Customer::CreatedService.reported_execute!(event: event)
+    end
+
+    events.subscribe "customer.deleted" do |event|
+      StripeModelCallbacks::Customer::DeletedService.reported_execute!(event: event)
+    end
+
     events.subscribe "customer.updated" do |event|
       StripeModelCallbacks::Customer::UpdatedService.reported_execute!(event: event)
     end

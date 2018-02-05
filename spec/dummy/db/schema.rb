@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180205130433) do
+ActiveRecord::Schema.define(version: 20180205131846) do
 
   create_table "stripe_charges", force: :cascade do |t|
     t.string "identifier", null: false
@@ -44,7 +44,6 @@ ActiveRecord::Schema.define(version: 20180205130433) do
     t.string "source_transfer"
     t.string "statement_descriptor"
     t.string "status"
-    t.string "transfer"
     t.string "transfer_group"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -59,7 +58,9 @@ ActiveRecord::Schema.define(version: 20180205130433) do
     t.string "identifier", null: false
     t.integer "account_balance", null: false
     t.string "business_vat_id"
-    t.string "currency", null: false
+    t.datetime "created"
+    t.datetime "deleted_at"
+    t.string "currency"
     t.string "default_source"
     t.boolean "delinquent", null: false
     t.string "description"

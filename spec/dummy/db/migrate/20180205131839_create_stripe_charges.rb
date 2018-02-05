@@ -32,7 +32,6 @@ class CreateStripeCharges < ActiveRecord::Migration[5.0]
       t.string :source_transfer
       t.string :statement_descriptor
       t.string :status
-      t.string :transfer
       t.string :transfer_group
       t.timestamps
     end
