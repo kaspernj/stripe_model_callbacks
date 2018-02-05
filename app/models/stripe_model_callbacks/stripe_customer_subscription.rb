@@ -1,0 +1,2 @@
+class StripeModelCallbacks::StripeCustomerSubscription < StripeModelCallbacks::ApplicationRecord
+end

@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
 # Declare your gem's dependencies in stripe_model_callbacks.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and

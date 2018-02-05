@@ -1,5 +1,3 @@
-module StripeModelCallbacks
-  class ApplicationRecord < ActiveRecord::Base
-    self.abstract_class = true
-  end
+class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
+  self.abstract_class = true
 end

@@ -1,4 +1,2 @@
-module StripeModelCallbacks
-  class ApplicationJob < ActiveJob::Base
-  end
+class StripeModelCallbacks::ApplicationJob < ActiveJob::Base
 end

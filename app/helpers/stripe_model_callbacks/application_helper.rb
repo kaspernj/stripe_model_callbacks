@@ -1,4 +1,2 @@
-module StripeModelCallbacks
-  module ApplicationHelper
-  end
+module StripeModelCallbacks::ApplicationHelper
 end

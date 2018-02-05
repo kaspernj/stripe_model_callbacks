@@ -1,4 +1,4 @@
-module ApplicationCable
-  class Channel < ActionCable::Channel::Base
-  end
+module ApplicationCable; end
+
+class ApplicationCable::Channel < ActionCable::Channel::Base
 end
