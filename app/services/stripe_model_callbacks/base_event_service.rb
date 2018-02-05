@@ -18,7 +18,7 @@ class StripeModelCallbacks::BaseEventService < ServicePattern::Service
     if cleaned.any?
       Rails.logger.error cleaned
     else
-      Rails.logger.error e.backtrace
+      Rails.logger.error e.backtrace.join("\n")
     end
 
     ExceptionNotifier.notify_exception(e) if Rails.env.production?

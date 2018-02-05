@@ -24,6 +24,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     subscription_events
     invoice_events
     order_events
+    recipient_events
     sku_events
     plan_events
     product_events
@@ -71,10 +72,10 @@ private
     end
   end
 
-  def sku_events
-    %w[created deleted updated].each do |sku_event|
-      events.subscribe "sku.#{sku_event}" do |event|
-        StripeModelCallbacks::Sku::UpdatedService.reported_execute!(event: event)
+  def recipient_events
+    %w[created deleted updated].each do |plan_event|
+      events.subscribe "recipient.#{plan_event}" do |event|
+        StripeModelCallbacks::Recipient::UpdatedService.reported_execute!(event: event)
       end
     end
   end
@@ -83,6 +84,14 @@ private
     %w[created deleted updated].each do |plan_event|
       events.subscribe "plan.#{plan_event}" do |event|
         StripeModelCallbacks::Plan::UpdatedService.reported_execute!(event: event)
+      end
+    end
+  end
+
+  def sku_events
+    %w[created deleted updated].each do |sku_event|
+      events.subscribe "sku.#{sku_event}" do |event|
+        StripeModelCallbacks::Sku::UpdatedService.reported_execute!(event: event)
       end
     end
   end

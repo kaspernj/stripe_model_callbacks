@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180205195227) do
+ActiveRecord::Schema.define(version: 20180205214861) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -269,6 +269,24 @@ ActiveRecord::Schema.define(version: 20180205195227) do
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_stripe_products_on_deleted_at"
     t.index ["identifier"], name: "index_stripe_products_on_identifier"
+  end
+
+  create_table "stripe_recipients", force: :cascade do |t|
+    t.string "identifier", null: false
+    t.string "active_account"
+    t.string "description"
+    t.datetime "deleted_at"
+    t.string "name"
+    t.string "email"
+    t.boolean "livemode", default: false, null: false
+    t.string "stripe_type"
+    t.text "metadata"
+    t.string "migrated_to"
+    t.boolean "verified", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_stripe_recipients_on_deleted_at"
+    t.index ["identifier"], name: "index_stripe_recipients_on_identifier"
   end
 
   create_table "stripe_refunds", force: :cascade do |t|
