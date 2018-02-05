@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe StripeModelCallbacks::Charge::RefundedService do
+describe "charge refunded" do
   let!(:charge) { create :stripe_charge, identifier: "ch_00000000000000" }
 
   def bypass_event_signature(payload)

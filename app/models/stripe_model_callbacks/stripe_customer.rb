@@ -4,12 +4,14 @@ class StripeModelCallbacks::StripeCustomer < StripeModelCallbacks::ApplicationRe
   belongs_to :subscription,
     class_name: "StripeModelCallbacks::StripeSubscription",
     foreign_key: "subscription_identifier",
+    inverse_of: :customer,
     optional: true,
     primary_key: "identifier"
 
   has_many :invoice_items,
     class_name: "StripeModelCallbacks::StripeInvoiceItem",
     foreign_key: "customer_identifier",
+    inverse_of: :customer,
     primary_key: "identifier"
 
   def assign_from_stripe(object)

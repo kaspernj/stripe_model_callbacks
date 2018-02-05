@@ -4,6 +4,7 @@ class StripeModelCallbacks::StripeSubscription < StripeModelCallbacks::Applicati
   belongs_to :customer,
     class_name: "StripeModelCallbacks::StripeCustomer",
     foreign_key: "customer_identifier",
+    inverse_of: :subscription,
     optional: true,
     primary_key: "identifier"
 

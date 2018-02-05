@@ -11,7 +11,7 @@ class StripeModelCallbacks::BaseEventService < ServicePattern::Service
 
   def self.with_exception_notifications
     yield
-  rescue => e
+  rescue => e # rubocop:disable Style/RescueStandardError
     puts "ERROR: #{e.message}"
 
     cleaned = Rails.backtrace_cleaner.clean(e.backtrace)
