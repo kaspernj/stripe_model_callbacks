@@ -1,2 +1,0 @@
-module StripeModelCallbacks::ApplicationHelper
-end
