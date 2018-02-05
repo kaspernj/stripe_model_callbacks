@@ -13,35 +13,34 @@ class StripeModelCallbacks::StripeCharge < StripeModelCallbacks::ApplicationReco
 
   def assign_from_stripe(object)
     assign_attributes(
-      amount: Money.new(object.amount, object.currency),
-      amount_refunded: object.amount_refunded ? Money.new(object.amount_refunded, object.currency) : nil,
-      application: object.application ? Money.new(object.application, object.currency) : nil,
-      captured: object.captured,
       created_at: Time.zone.at(object.created),
-      currency: object.currency,
       customer_identifier: object.customer,
-      description: object.description,
-      dispute: object.dispute,
       livemode: object.livemode,
-      failure_code: object.failure_code,
-      failure_message: object.failure_message,
-      fraud_details: object.fraud_details,
       invoice_identifier: object.invoice,
       metadata: JSON.generate(object.metadata),
-      on_behalf_of: object.on_behalf_of,
       order_identifier: object.order,
-      outcome: object.outcome,
-      paid: object.paid,
-      receipt_email: object.receipt_email,
-      receipt_number: object.receipt_number,
-      refunded: object.refunded,
-      review: object.review,
-      shipping: object.shipping,
-      source_identifier: object.source,
-      source_transfer: object.source_transfer,
-      statement_descriptor: object.statement_descriptor,
-      status: object.status,
-      transfer_group: object.transfer_group
+      source_identifier: object.source
+    )
+
+    assign_amounts_from_stripe(object)
+
+    StripeModelCallbacks::AttributesAssignerService.execute!(
+      model: self,
+      stripe_model: object,
+      attributes: %w[
+        captured currency description dispute outcome refunded fraud_details failure_message failure_code on_behalf_of paid
+        receipt_email receipt_number review shipping source_transfer statement_descriptor status transfer_group
+      ]
+    )
+  end
+
+private
+
+  def assign_amounts_from_stripe(object)
+    assign_attributes(
+      amount: Money.new(object.amount, object.currency),
+      amount_refunded: object.amount_refunded ? Money.new(object.amount_refunded, object.currency) : nil,
+      application: object.application ? Money.new(object.application, object.currency) : nil
     )
   end
 end

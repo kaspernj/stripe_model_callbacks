@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180205165218) do
+ActiveRecord::Schema.define(version: 20180205184427) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -39,27 +39,27 @@ ActiveRecord::Schema.define(version: 20180205165218) do
     t.string "amount_refunded_currency"
     t.integer "application_cents"
     t.string "application_currency"
-    t.boolean "captured", null: false
     t.string "currency", null: false
-    t.string "customer_identifier"
-    t.string "description"
+    t.boolean "captured", null: false
+    t.boolean "paid", null: false
     t.string "dispute"
     t.string "failure_code"
     t.string "failure_message"
     t.text "fraud_details"
-    t.string "invoice_identifier"
-    t.boolean "livemode", null: false
-    t.text "metadata"
-    t.string "on_behalf_of"
-    t.string "order_identifier"
     t.text "outcome"
-    t.boolean "paid", null: false
-    t.string "receipt_email"
-    t.string "receipt_number"
     t.boolean "refunded", null: false
     t.string "review"
-    t.text "shipping"
+    t.string "description"
+    t.string "customer_identifier"
+    t.string "order_identifier"
     t.string "source_identifier"
+    t.string "invoice_identifier"
+    t.string "on_behalf_of"
+    t.string "receipt_email"
+    t.string "receipt_number"
+    t.text "shipping"
+    t.boolean "livemode", null: false
+    t.text "metadata"
     t.string "source_transfer"
     t.string "statement_descriptor"
     t.string "status"
@@ -136,33 +136,13 @@ ActiveRecord::Schema.define(version: 20180205165218) do
     t.string "amount_due_currency", null: false
     t.integer "application_fee_cents"
     t.string "application_fee_currency"
-    t.boolean "attempted", null: false
     t.string "billing", null: false
-    t.string "charge_identifier"
-    t.boolean "closed", null: false
-    t.string "currency", null: false
-    t.string "customer_identifier", null: false
-    t.datetime "date", null: false
-    t.string "description"
     t.integer "discount_cents"
     t.string "discount_currency"
-    t.datetime "due_date"
     t.integer "ending_balance_cents"
     t.integer "ending_balance_currency"
-    t.boolean "forgiven", null: false
-    t.boolean "livemode", null: false
-    t.text "metadata"
-    t.datetime "next_payment_attempt"
-    t.string "number"
-    t.boolean "paid", null: false
-    t.datetime "period_start"
-    t.datetime "period_end"
-    t.string "receipt_number"
-    t.integer "starting_balance_cents"
-    t.string "starting_balance_currency"
-    t.string "statement_descriptor"
-    t.string "subscription_identifier"
-    t.datetime "subscription_proration_date"
+    t.string "charge_identifier"
+    t.string "currency", null: false
     t.integer "subtotal_cents"
     t.string "subtotal_currency"
     t.integer "tax_cents"
@@ -170,6 +150,26 @@ ActiveRecord::Schema.define(version: 20180205165218) do
     t.decimal "tax_percent"
     t.integer "total_cents"
     t.string "total_currency"
+    t.string "customer_identifier", null: false
+    t.string "description"
+    t.boolean "forgiven", null: false
+    t.string "receipt_number"
+    t.string "subscription_identifier"
+    t.boolean "attempted", null: false
+    t.datetime "next_payment_attempt"
+    t.boolean "closed", null: false
+    t.datetime "date", null: false
+    t.datetime "due_date"
+    t.boolean "livemode", null: false
+    t.text "metadata"
+    t.string "number"
+    t.boolean "paid", null: false
+    t.datetime "period_start"
+    t.datetime "period_end"
+    t.integer "starting_balance_cents"
+    t.string "starting_balance_currency"
+    t.string "statement_descriptor"
+    t.datetime "subscription_proration_date"
     t.datetime "webhooks_delivered_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

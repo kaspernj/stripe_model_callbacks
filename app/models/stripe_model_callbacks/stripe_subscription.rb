@@ -27,17 +27,25 @@ class StripeModelCallbacks::StripeSubscription < StripeModelCallbacks::Applicati
 
   def assign_from_stripe(object)
     assign_attributes(
-      billing: object.billing,
       created_at: Time.zone.at(object.created),
       canceled_at: object.canceled_at ? Time.zone.at(object.canceled_at) : nil,
-      cancel_at_period_end: object.cancel_at_period_end,
-      current_period_start: Time.zone.at(object.current_period_start),
-      current_period_end: Time.zone.at(object.current_period_end),
       customer_identifier: object.customer,
       ended_at: object.ended_at ? Time.zone.at(object.ended_at) : nil,
       identifier: object.id,
       livemode: object.livemode,
-      plan_identifier: object.plan.id,
+      plan_identifier: object.plan.id
+    )
+
+    assign_periods(object)
+    StripeModelCallbacks::AttributesAssignerService.execute!(model: self, stripe_model: object, attributes: %w[billing cancel_at_period_end])
+  end
+
+private
+
+  def assign_periods(object)
+    assign_attributes(
+      current_period_start: Time.zone.at(object.current_period_start),
+      current_period_end: Time.zone.at(object.current_period_end),
       start: Time.zone.at(object.start),
       trial_start: object.trial_start ? Time.zone.at(object.trial_start) : nil,
       trial_end: object.trial_end ? Time.zone.at(object.trial_end) : nil

@@ -23,7 +23,7 @@ describe "refund updated" do
       expect(refund.charge).to eq charge
       expect(refund.amount.format).to eq "$1.00"
       expect(refund.balance_transaction).to eq nil
-      expect(refund.created_at).to eq Time.new(2018, 2, 5, 16, 37, 7)
+      expect(refund.created_at).to eq Time.zone.parse("2018-02-05 16:37:07")
       expect(refund.currency).to eq "usd"
       expect(refund.metadata).to eq "{}"
       expect(refund.reason).to eq nil

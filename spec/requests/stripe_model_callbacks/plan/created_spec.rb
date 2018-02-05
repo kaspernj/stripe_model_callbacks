@@ -20,7 +20,7 @@ describe "plan updated" do
 
       expect(plan.identifier).to eq "gold_00000000000000"
       expect(plan.amount.format).to eq "$20.00"
-      expect(plan.created_at).to eq Time.new(2018, 2, 5, 15, 52, 25)
+      expect(plan.created_at).to eq Time.zone.parse("2018-02-05 15:52:25")
       expect(plan.metadata).to eq "{}"
       expect(plan.interval).to eq "month"
       expect(plan.interval_count).to eq 1

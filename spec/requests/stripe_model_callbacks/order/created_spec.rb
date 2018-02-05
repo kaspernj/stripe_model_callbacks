@@ -26,7 +26,7 @@ describe "order creation" do
       expect(created_order.application).to eq nil
       expect(created_order.application_fee).to eq nil
       expect(created_order.charge).to eq nil
-      expect(created_order.created_at).to eq Time.new(2018, 2, 5, 13, 32, 13)
+      expect(created_order.created_at).to eq Time.zone.parse("2018-02-05 13:32:13")
       expect(created_order.customer).to eq nil
       expect(created_order.email).to eq nil
       expect(created_order.livemode).to eq false
@@ -43,7 +43,7 @@ describe "order creation" do
       expect(created_order.shipping_tracking_number).to eq nil
       expect(created_order.shipping_methods).to eq nil
       expect(created_order.status).to eq "created"
-      expect(created_order.updated_at).to eq Time.new(2018, 2, 5, 13, 32, 13)
+      expect(created_order.updated_at).to eq Time.zone.parse("2018-02-05 13:32:13")
 
       expect(created_order_item.amount.format).to eq "$15.00"
       expect(created_order_item.currency).to eq "usd"
