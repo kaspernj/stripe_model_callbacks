@@ -52,8 +52,6 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
       #    "name": null,
       #    "tokenization_method": null
       # }
-      # Customer.stripe_source_updated(event.data.object)
-
       StripeModelCallbacks::Customer::SourceUpdatedService.reported_execute!(event: event)
     end
 
@@ -69,8 +67,28 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
       StripeModelCallbacks::InvoiceItem::CreatedService.reported_execute!(event: event)
     end
 
+    events.subscribe "charge.captured" do |event|
+      StripeModelCallbacks::Charge::UpdatedService.reported_execute!(event: event)
+    end
+
+    events.subscribe "charge.failed" do |event|
+      StripeModelCallbacks::Charge::UpdatedService.reported_execute!(event: event)
+    end
+
+    events.subscribe "charge.pending" do |event|
+      StripeModelCallbacks::Charge::UpdatedService.reported_execute!(event: event)
+    end
+
     events.subscribe "charge.refunded" do |event|
-      StripeModelCallbacks::Charge::RefundedService.reported_execute!(event: event)
+      StripeModelCallbacks::Charge::UpdatedService.reported_execute!(event: event)
+    end
+
+    events.subscribe "charge.updated" do |event|
+      StripeModelCallbacks::Charge::UpdatedService.reported_execute!(event: event)
+    end
+
+    events.subscribe "charge.succeeded" do |event|
+      StripeModelCallbacks::Charge::UpdatedService.reported_execute!(event: event)
     end
 
     events.subscribe "customer.subscription.created" do |event|
@@ -85,6 +103,14 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     # When a subscriptions is finally canceled.
     events.subscribe "customer.subscription.deleted" do |event|
       StripeModelCallbacks::Customer::Subscription::DeletedService.reported_execute!(event: event)
+    end
+
+    events.subscribe "order.created" do |event|
+      StripeModelCallbacks::Order::UpdatedService.reported_execute!(event: event)
+    end
+
+    events.subscribe "order.updated" do |event|
+      StripeModelCallbacks::Order::UpdatedService.reported_execute!(event: event)
     end
   end
 end

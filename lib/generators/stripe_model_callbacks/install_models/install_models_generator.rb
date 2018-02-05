@@ -23,6 +23,8 @@ module StripeModelCallbacks::Generators
       migration_template "create_stripe_discounts.rb", "db/migrate/create_stripe_discounts.rb"
       migration_template "create_stripe_invoices.rb", "db/migrate/create_stripe_invoices.rb"
       migration_template "create_stripe_invoice_items.rb", "db/migrate/create_stripe_invoice_items.rb"
+      migration_template "create_stripe_orders.rb", "db/migrate/create_stripe_orders.rb"
+      migration_template "create_stripe_order_items.rb", "db/migrate/create_stripe_order_items.rb"
       migration_template "create_stripe_plans.rb", "db/migrate/create_stripe_plans.rb"
       migration_template "create_stripe_sources.rb", "db/migrate/create_stripe_sources.rb"
       migration_template "create_stripe_subscriptions.rb", "db/migrate/create_stripe_subscriptions.rb"

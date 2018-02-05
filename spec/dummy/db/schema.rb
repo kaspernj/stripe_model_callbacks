@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180205131846) do
+ActiveRecord::Schema.define(version: 20180205140210) do
 
   create_table "stripe_charges", force: :cascade do |t|
     t.string "identifier", null: false
@@ -156,6 +156,56 @@ ActiveRecord::Schema.define(version: 20180205131846) do
     t.index ["customer_identifier"], name: "index_stripe_invoices_on_customer_identifier"
     t.index ["identifier"], name: "index_stripe_invoices_on_identifier"
     t.index ["subscription_identifier"], name: "index_stripe_invoices_on_subscription_identifier"
+  end
+
+  create_table "stripe_order_items", force: :cascade do |t|
+    t.string "parent_identifier", null: false
+    t.string "order_identifier", null: false
+    t.integer "amount_cents", null: false
+    t.string "amount_currency", null: false
+    t.string "currency", null: false
+    t.string "description"
+    t.integer "quantity"
+    t.string "order_item_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_identifier"], name: "index_stripe_order_items_on_order_identifier"
+    t.index ["parent_identifier"], name: "index_stripe_order_items_on_parent_identifier"
+  end
+
+  create_table "stripe_orders", force: :cascade do |t|
+    t.string "identifier", null: false
+    t.integer "amount_cents", null: false
+    t.string "amount_currency", null: false
+    t.integer "amount_returned_cents"
+    t.string "amount_returned_currency"
+    t.integer "application_cents"
+    t.string "application_currency"
+    t.integer "application_fee"
+    t.string "charge_identifier"
+    t.string "currency", null: false
+    t.string "customer_identifier"
+    t.string "email"
+    t.boolean "livemode", null: false
+    t.text "metadata"
+    t.string "selected_shipping_method"
+    t.string "shipping_address_city"
+    t.string "shipping_address_country"
+    t.string "shipping_address_line1"
+    t.string "shipping_address_line2"
+    t.string "shipping_address_postal_code"
+    t.string "shipping_address_state"
+    t.string "shipping_carrier"
+    t.string "shipping_name"
+    t.string "shipping_phone"
+    t.string "shipping_tracking_number"
+    t.string "shipping_methods"
+    t.string "status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["charge_identifier"], name: "index_stripe_orders_on_charge_identifier"
+    t.index ["customer_identifier"], name: "index_stripe_orders_on_customer_identifier"
+    t.index ["identifier"], name: "index_stripe_orders_on_identifier"
   end
 
   create_table "stripe_plans", force: :cascade do |t|
