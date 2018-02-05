@@ -4,8 +4,7 @@ class CreateStripeCustomers < ActiveRecord::Migration[5.0]
       t.string :identifier, index: true, null: false
       t.integer :account_balance, null: false
       t.string :business_vat_id
-      t.datetime :created
-      t.datetime :deleted_at
+      t.datetime :deleted_at, index: true
       t.string :currency
       t.string :default_source
       t.boolean :delinquent, null: false

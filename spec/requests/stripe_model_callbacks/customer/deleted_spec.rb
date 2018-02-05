@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe StripeModelCallbacks::Customer::DeletedService do
+describe "customer deleted" do
   let!(:stripe_customer) { create :stripe_customer, identifier: "cus_00000000000000" }
 
   def bypass_event_signature(payload)

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe StripeModelCallbacks::Customer::Subscription::UpdatedService do
+describe "subscription updating" do
   let!(:stripe_customer) { create :stripe_customer, identifier: "cus_00000000000000" }
   let!(:stripe_plan) { create :stripe_plan, identifier: "silver-express-898_00000000000000" }
   let!(:stripe_subscription) { create :stripe_subscription, identifier: "sub_00000000000000" }

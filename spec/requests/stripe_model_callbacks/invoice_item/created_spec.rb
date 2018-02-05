@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe StripeModelCallbacks::Customer::Subscription::CreatedService do
+describe "subscription creation" do
   let!(:customer) { create :stripe_customer, identifier: "cus_00000000000000" }
 
   def bypass_event_signature(payload)

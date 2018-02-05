@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180205140210) do
+ActiveRecord::Schema.define(version: 20180205165218) do
+
+  create_table "activities", force: :cascade do |t|
+    t.string "trackable_type"
+    t.integer "trackable_id"
+    t.string "owner_type"
+    t.integer "owner_id"
+    t.string "key"
+    t.text "parameters"
+    t.string "recipient_type"
+    t.integer "recipient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
+    t.index ["owner_type", "owner_id"], name: "index_activities_on_owner_type_and_owner_id"
+    t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
+    t.index ["recipient_type", "recipient_id"], name: "index_activities_on_recipient_type_and_recipient_id"
+    t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
+    t.index ["trackable_type", "trackable_id"], name: "index_activities_on_trackable_type_and_trackable_id"
+  end
 
   create_table "stripe_charges", force: :cascade do |t|
     t.string "identifier", null: false
@@ -58,7 +77,6 @@ ActiveRecord::Schema.define(version: 20180205140210) do
     t.string "identifier", null: false
     t.integer "account_balance", null: false
     t.string "business_vat_id"
-    t.datetime "created"
     t.datetime "deleted_at"
     t.string "currency"
     t.string "default_source"
@@ -71,6 +89,7 @@ ActiveRecord::Schema.define(version: 20180205140210) do
     t.text "shipping"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_stripe_customers_on_deleted_at"
     t.index ["identifier"], name: "index_stripe_customers_on_identifier"
   end
 
@@ -88,6 +107,7 @@ ActiveRecord::Schema.define(version: 20180205140210) do
     t.string "customer_identifier"
     t.string "currency", null: false
     t.date "datetime"
+    t.datetime "deleted_at"
     t.string "description"
     t.boolean "discountable", null: false
     t.string "invoice_identifier"
@@ -103,6 +123,7 @@ ActiveRecord::Schema.define(version: 20180205140210) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_identifier"], name: "index_stripe_invoice_items_on_customer_identifier"
+    t.index ["deleted_at"], name: "index_stripe_invoice_items_on_deleted_at"
     t.index ["identifier"], name: "index_stripe_invoice_items_on_identifier"
     t.index ["invoice_identifier"], name: "index_stripe_invoice_items_on_invoice_identifier"
     t.index ["plan_identifier"], name: "index_stripe_invoice_items_on_plan_identifier"
@@ -219,9 +240,31 @@ ActiveRecord::Schema.define(version: 20180205140210) do
     t.text "metadata"
     t.string "name", null: false
     t.string "statement_descriptor"
+    t.integer "trial_period_days"
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_stripe_plans_on_deleted_at"
     t.index ["identifier"], name: "index_stripe_plans_on_identifier"
+  end
+
+  create_table "stripe_refunds", force: :cascade do |t|
+    t.string "identifier", null: false
+    t.integer "amount_cents"
+    t.string "amount_currency"
+    t.string "balance_transaction"
+    t.string "charge_identifier", null: false
+    t.string "currency", null: false
+    t.string "failure_balance_transaction"
+    t.string "failure_reason"
+    t.boolean "livemode", null: false
+    t.text "metadata"
+    t.string "reason"
+    t.string "receipt_number"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identifier"], name: "index_stripe_refunds_on_identifier"
   end
 
   create_table "stripe_sources", force: :cascade do |t|
@@ -258,9 +301,11 @@ ActiveRecord::Schema.define(version: 20180205140210) do
     t.integer "tex_percent"
     t.datetime "trial_start"
     t.datetime "trial_end"
+    t.datetime "deleted_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_identifier"], name: "index_stripe_subscriptions_on_customer_identifier"
+    t.index ["deleted_at"], name: "index_stripe_subscriptions_on_deleted_at"
     t.index ["discount"], name: "index_stripe_subscriptions_on_discount"
     t.index ["identifier"], name: "index_stripe_subscriptions_on_identifier"
     t.index ["plan_identifier"], name: "index_stripe_subscriptions_on_plan_identifier"

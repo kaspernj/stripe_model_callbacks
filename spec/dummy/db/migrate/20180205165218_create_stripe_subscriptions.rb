@@ -20,6 +20,7 @@ class CreateStripeSubscriptions < ActiveRecord::Migration[5.0]
       t.integer :tex_percent
       t.datetime :trial_start
       t.datetime :trial_end
+      t.datetime :deleted_at, index: true
       t.timestamps
     end
   end

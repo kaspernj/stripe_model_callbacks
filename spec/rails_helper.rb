@@ -9,6 +9,7 @@ require "rspec/rails"
 
 require "factory_bot_rails"
 require "pry-rails"
+require "public_activity/testing"
 
 FactoryBot.definition_file_paths << File.join(File.dirname(__FILE__), "factories")
 FactoryBot.find_definitions

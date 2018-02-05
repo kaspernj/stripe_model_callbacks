@@ -1,17 +1,13 @@
 class StripeModelCallbacks::Customer::UpdatedService < StripeModelCallbacks::BaseEventService
   def execute!
-    stripe_customer.assign_from_stripe(object)
+    customer = StripeModelCallbacks::StripeCustomer.find_or_initialize_by(identifier: object.id)
+    customer.assign_from_stripe(object)
+    customer.deleted_at ||= Time.zone.now if event.type == "customer.deleted"
 
-    if stripe_customer.save
+    if customer.save
       ServicePattern::Response.new(success: true)
     else
-      ServicePattern::Response.new(errors: stripe_customer.errors.full_messages)
+      ServicePattern::Response.new(errors: customer.errors.full_messages)
     end
-  end
-
-private
-
-  def stripe_customer
-    @_stripe_customer ||= StripeModelCallbacks::StripeCustomer.find_by!(identifier: object.id)
   end
 end

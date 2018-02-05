@@ -7,6 +7,7 @@ class CreateStripeInvoiceItems < ActiveRecord::Migration[5.0]
       t.string :customer_identifier, index: true
       t.string :currency, null: false
       t.date :datetime
+      t.datetime :deleted_at, index: true
       t.string :description
       t.boolean :discountable, null: false
       t.string :invoice_identifier, index: true

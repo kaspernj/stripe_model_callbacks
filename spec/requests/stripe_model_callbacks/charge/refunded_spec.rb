@@ -13,7 +13,8 @@ describe "charge refunded" do
 
   describe "#execute!" do
     it "marks the charge as refunded" do
-      post "/stripe-events", params: payload
+      expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
+        .to change(PublicActivity::Activity.where(key: "stripe_model_callbacks_stripe_charge.refunded"), :count).by(1)
 
       charge.reload
 

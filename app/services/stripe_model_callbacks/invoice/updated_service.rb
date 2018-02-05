@@ -1,6 +1,6 @@
-class StripeModelCallbacks::Invoice::PaymentSucceededService < StripeModelCallbacks::BaseEventService
+class StripeModelCallbacks::Invoice::UpdatedService < StripeModelCallbacks::BaseEventService
   def execute!
-    invoice = StripeModelCallbacks::StripeInvoice.new
+    invoice = StripeModelCallbacks::StripeInvoice.find_or_initialize_by(identifier: object.id)
     invoice.assign_from_stripe(object)
 
     if invoice.save
@@ -10,6 +10,11 @@ class StripeModelCallbacks::Invoice::PaymentSucceededService < StripeModelCallba
         invoice_line.invoice_identifier = object.id
         invoice_line.save!
       end
+
+      invoice.create_activity :payment_failed if event.type == "invoice.payment_failed"
+      invoice.create_activity :payment_succeeded if event.type == "invoice.payment_succeeded"
+      invoice.create_activity :sent if event.type == "invoice.sent"
+      invoice.create_activity :upcoming if event.type == "invoice.upcoming"
 
       ServicePattern::Response.new(success: true)
     else

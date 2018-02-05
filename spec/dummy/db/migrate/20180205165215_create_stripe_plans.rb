@@ -11,6 +11,8 @@ class CreateStripePlans < ActiveRecord::Migration[5.0]
       t.text :metadata
       t.string :name, null: false
       t.string :statement_descriptor
+      t.integer :trial_period_days
+      t.datetime :deleted_at, index: true
       t.timestamps
     end
   end

@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "auto_autoloader", ">= 0.0.5"
   s.add_runtime_dependency "exception_notifier", ">= 1.0.0"
   s.add_runtime_dependency "money-rails", ">= 1.10.0"
+  s.add_runtime_dependency "public_activity", ">= 1.5.0"
   s.add_runtime_dependency "service_pattern", ">= 0.0.3"
   s.add_runtime_dependency "stripe", ">= 3.9.1"
   s.add_runtime_dependency "stripe_event", ">= 2.1.1"
