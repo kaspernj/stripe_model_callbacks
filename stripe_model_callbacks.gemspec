@@ -23,14 +23,4 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "service_pattern", ">= 0.0.3"
   s.add_runtime_dependency "stripe", ">= 3.9.1"
   s.add_runtime_dependency "stripe_event", ">= 2.1.1"
-
-  s.add_development_dependency "best_practice_project", "0.0.10"
-  s.add_development_dependency "capybara", "2.13.0"
-  s.add_development_dependency "capybara-webkit", "1.14.0"
-  s.add_development_dependency "factory_bot_rails", "4.8.2"
-  s.add_development_dependency "pry-rails", "0.3.6"
-  s.add_development_dependency "rails_best_practices", "1.19.0"
-  s.add_development_dependency "rspec-rails", "3.7.2"
-  s.add_development_dependency "rubocop", "0.52.1"
-  s.add_development_dependency "sqlite3", "1.3.13"
 end
