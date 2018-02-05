@@ -4,18 +4,21 @@ class StripeModelCallbacks::StripeInvoiceItem < StripeModelCallbacks::Applicatio
   belongs_to :customer,
     class_name: "StripeModelCallbacks::StripeCustomer",
     foreign_key: "customer_identifier",
+    inverse_of: :invoice_items,
     optional: true,
     primary_key: "identifier"
 
   belongs_to :invoice,
     class_name: "StripeModelCallbacks::StripeInvoice",
     foreign_key: "invoice_identifier",
+    inverse_of: :invoice_items,
     optional: true,
     primary_key: "identifier"
 
   belongs_to :plan,
     class_name: "StripeModelCallbacks::StripePlan",
     foreign_key: "plan_identifier",
+    inverse_of: :invoice_items,
     optional: true,
     primary_key: "identifier"
 

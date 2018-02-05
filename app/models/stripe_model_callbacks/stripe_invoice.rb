@@ -12,6 +12,7 @@ class StripeModelCallbacks::StripeInvoice < StripeModelCallbacks::ApplicationRec
     class_name: "StripeModelCallbacks::StripeInvoiceItem",
     dependent: :destroy,
     foreign_key: "invoice_identifier",
+    inverse_of: :invoice,
     primary_key: "identifier"
 
   monetize :amount_due_cents

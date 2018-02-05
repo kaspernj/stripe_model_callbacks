@@ -11,7 +11,15 @@ class StripeModelCallbacks::StripeOrder < StripeModelCallbacks::ApplicationRecor
   belongs_to :customer,
     class_name: "StripeModelCallbacks::StripeCustomer",
     foreign_key: "customer_identifier",
+    inverse_of: :orders,
     optional: true,
+    primary_key: "identifier"
+
+  has_many :order_items,
+    class_name: "StripeModelCallbacks::StripeOrderItem",
+    dependent: :destroy,
+    foreign_key: "order_identifier",
+    inverse_of: :order,
     primary_key: "identifier"
 
   monetize :amount_cents

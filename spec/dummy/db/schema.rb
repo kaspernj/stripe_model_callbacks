@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180205184427) do
+ActiveRecord::Schema.define(version: 20180205195227) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -248,6 +248,29 @@ ActiveRecord::Schema.define(version: 20180205184427) do
     t.index ["identifier"], name: "index_stripe_plans_on_identifier"
   end
 
+  create_table "stripe_products", force: :cascade do |t|
+    t.string "identifier", null: false
+    t.boolean "active", default: false, null: false
+    t.datetime "deleted_at"
+    t.text "stripe_attributes"
+    t.string "caption"
+    t.string "description"
+    t.boolean "livemode", default: false, null: false
+    t.text "metadata"
+    t.string "name"
+    t.decimal "package_dimensions_height"
+    t.decimal "package_dimensions_length"
+    t.decimal "package_dimensions_weight"
+    t.decimal "package_dimensions_width"
+    t.boolean "shippable", default: false, null: false
+    t.string "statement_descriptor"
+    t.text "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_stripe_products_on_deleted_at"
+    t.index ["identifier"], name: "index_stripe_products_on_identifier"
+  end
+
   create_table "stripe_refunds", force: :cascade do |t|
     t.string "identifier", null: false
     t.integer "amount_cents"
@@ -265,6 +288,27 @@ ActiveRecord::Schema.define(version: 20180205184427) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["identifier"], name: "index_stripe_refunds_on_identifier"
+  end
+
+  create_table "stripe_skus", force: :cascade do |t|
+    t.string "identifier", null: false
+    t.boolean "active", default: false, null: false
+    t.datetime "deleted_at"
+    t.text "stripe_attributes"
+    t.string "currency", null: false
+    t.integer "inventory_quantity"
+    t.string "inventory_type"
+    t.string "inventory_value"
+    t.boolean "livemode"
+    t.text "metadata"
+    t.integer "price_cents"
+    t.string "price_currency"
+    t.string "product_identifier"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_stripe_skus_on_deleted_at"
+    t.index ["identifier"], name: "index_stripe_skus_on_identifier"
+    t.index ["product_identifier"], name: "index_stripe_skus_on_product_identifier"
   end
 
   create_table "stripe_sources", force: :cascade do |t|

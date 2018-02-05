@@ -4,6 +4,7 @@ class StripeModelCallbacks::StripeOrderItem < StripeModelCallbacks::ApplicationR
   belongs_to :order,
     class_name: "StripeModelCallbacks::StripeOrder",
     foreign_key: "order_identifier",
+    inverse_of: :order_items,
     optional: true,
     primary_key: "identifier"
 
