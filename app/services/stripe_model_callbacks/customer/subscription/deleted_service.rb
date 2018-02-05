@@ -12,6 +12,6 @@ class StripeModelCallbacks::Customer::Subscription::DeletedService < StripeModel
 private
 
   def subscription
-    @_subscription ||= ::Subscription.find_by!(stripe_subscription_identifier: object.id)
+    @_subscription ||= StripeModelCallbacks::StripeSubscription.find_by!(identifier: object.id)
   end
 end

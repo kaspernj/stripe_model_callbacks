@@ -18,7 +18,7 @@
       "delinquent": false,
       "description": null,
       "discount": null,
-      "email": null,
+      "email": "test@example.com",
       "invoice_prefix": "c41d443e39",
       "livemode": false,
       "metadata": {

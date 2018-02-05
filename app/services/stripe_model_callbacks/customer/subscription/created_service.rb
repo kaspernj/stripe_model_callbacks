@@ -1,6 +1,6 @@
 class StripeModelCallbacks::Customer::Subscription::CreatedService < StripeModelCallbacks::BaseEventService
   def execute!
-    subscription = ::Subscription.new(state: "active")
+    subscription = StripeModelCallbacks::StripeSubscription.new
     subscription.assign_from_stripe(object)
 
     if subscription.save

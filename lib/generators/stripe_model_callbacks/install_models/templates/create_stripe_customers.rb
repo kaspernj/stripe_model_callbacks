@@ -1,7 +1,7 @@
-class CreateStripeAccounts < ActiveRecord::Migration[5.0]
+class CreateStripeCustomers < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_model_callbacks_stripe_customers do |t|
-      t.string :identifier, null: false
+    create_table :stripe_customers do |t|
+      t.string :identifier, index: true, null: false
       t.integer :account_balance, null: false
       t.string :business_vat_id
       t.string :currency, null: false

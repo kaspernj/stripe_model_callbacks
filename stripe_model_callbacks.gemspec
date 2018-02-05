@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", ">= 5.0.0"
   s.add_runtime_dependency "auto_autoloader", ">= 0.0.5"
+  s.add_runtime_dependency "exception_notifier", ">= 1.0.0"
+  s.add_runtime_dependency "money-rails", ">= 1.10.0"
   s.add_runtime_dependency "service_pattern", ">= 0.0.3"
   s.add_runtime_dependency "stripe", ">= 3.9.1"
   s.add_runtime_dependency "stripe_event", ">= 2.1.1"
@@ -26,6 +28,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "capybara", "2.13.0"
   s.add_development_dependency "capybara-webkit", "1.14.0"
   s.add_development_dependency "factory_bot_rails", "4.8.2"
+  s.add_development_dependency "pry-rails", "0.3.6"
   s.add_development_dependency "rails_best_practices", "1.19.0"
   s.add_development_dependency "rspec-rails", "3.7.2"
   s.add_development_dependency "rubocop", "0.52.1"

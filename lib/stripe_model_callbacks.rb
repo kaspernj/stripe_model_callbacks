@@ -1,5 +1,9 @@
 require "auto_autoloader"
+require "exception_notifier"
+require "money-rails"
 require "service_pattern"
+require "stripe"
+require "stripe_event"
 require "stripe_model_callbacks/engine"
 
 module StripeModelCallbacks
