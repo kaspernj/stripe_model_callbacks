@@ -19,6 +19,7 @@ module StripeModelCallbacks::Generators
 
     def copy_migrations
       migration_template "create_stripe_charges.rb", "db/migrate/create_stripe_charges.rb"
+      migration_template "create_stripe_coupons.rb", "db/migrate/create_stripe_coupons.rb"
       migration_template "create_stripe_customers.rb", "db/migrate/create_stripe_customers.rb"
       migration_template "create_stripe_discounts.rb", "db/migrate/create_stripe_discounts.rb"
       migration_template "create_stripe_invoices.rb", "db/migrate/create_stripe_invoices.rb"

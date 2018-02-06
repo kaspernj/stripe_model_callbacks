@@ -20,9 +20,10 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
 
     # events.subscribe "source.transaction.created"
 
+    charge_events
+    coupon_events
     customer_events
     invoice_item_events
-    charge_events
     invoice_events
     order_events
     recipient_events
@@ -40,6 +41,14 @@ private
     %w[captured failed pending refunded updated succeeded].each do |charge_event|
       events.subscribe "charge.#{charge_event}" do |event|
         StripeModelCallbacks::Charge::UpdatedService.reported_execute!(event: event)
+      end
+    end
+  end
+
+  def coupon_events
+    %w[created deleted updated].each do |coupon_event|
+      events.subscribe "coupon.#{coupon_event}" do |event|
+        StripeModelCallbacks::Coupon::UpdatedService.reported_execute!(event: event)
       end
     end
   end
@@ -77,8 +86,8 @@ private
   end
 
   def recipient_events
-    %w[created deleted updated].each do |plan_event|
-      events.subscribe "recipient.#{plan_event}" do |event|
+    %w[created deleted updated].each do |recipient_event|
+      events.subscribe "recipient.#{recipient_event}" do |event|
         StripeModelCallbacks::Recipient::UpdatedService.reported_execute!(event: event)
       end
     end
@@ -125,8 +134,8 @@ private
   end
 
   def transfer_events
-    %w[created reversed updated].each do |subscription_event|
-      events.subscribe "transfer.#{subscription_event}" do |event|
+    %w[created reversed updated].each do |transfer_event|
+      events.subscribe "transfer.#{transfer_event}" do |event|
         StripeModelCallbacks::Transfer::UpdatedService.reported_execute!(event: event)
       end
     end
