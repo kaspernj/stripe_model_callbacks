@@ -27,6 +27,13 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
     inverse_of: :subscription,
     primary_key: "identifier"
 
+  has_many :discounts,
+    class_name: "StripeDiscount",
+    dependent: :restrict_with_error,
+    foreign_key: "subscription_identifier",
+    inverse_of: :subscription,
+    primary_key: "identifier"
+
   def assign_from_stripe(object)
     assign_attributes(
       created: Time.zone.at(object.created),

@@ -18,6 +18,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
 
     charge_events
     coupon_events
+    customer_discount_events
     customer_events
     customer_source_events
     invoice_item_events
@@ -47,6 +48,14 @@ private
     %w[created deleted updated].each do |coupon_event|
       events.subscribe "coupon.#{coupon_event}" do |event|
         StripeModelCallbacks::Coupon::UpdatedService.reported_execute!(event: event)
+      end
+    end
+  end
+
+  def customer_discount_events
+    %w[created deleted updated].each do |customer_event|
+      events.subscribe "customer.discount.#{customer_event}" do |event|
+        StripeModelCallbacks::Customer::DiscountUpdatedService.reported_execute!(event: event)
       end
     end
   end
