@@ -7,7 +7,7 @@ class CreateStripePlans < ActiveRecord::Migration[5.0]
       t.string :currency, null: false
       t.string :interval, null: false
       t.integer :interval_count, null: false
-      t.boolean :livemode, null: false
+      t.boolean :livemode, default: true, null: false
       t.text :metadata
       t.string :name, null: false
       t.string :statement_descriptor

@@ -15,4 +15,8 @@ class StripeOrderItem < StripeModelCallbacks::ApplicationRecord
       order_item_type: object.type
     )
   end
+
+  def to_stripe
+    @_to_stripe ||= Stripe::OrderItem.retrieve(id)
+  end
 end

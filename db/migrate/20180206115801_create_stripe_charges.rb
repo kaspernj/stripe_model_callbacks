@@ -5,7 +5,7 @@ class CreateStripeCharges < ActiveRecord::Migration[5.0]
       amount_columns(t)
       dispute_failure_and_fraud_columns(t)
       recipient_columns(t)
-      t.boolean :livemode, null: false
+      t.boolean :livemode, default: true, null: false
       t.text :metadata
       t.string :source_transfer
       t.string :statement_descriptor

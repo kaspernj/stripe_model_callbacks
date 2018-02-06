@@ -20,4 +20,8 @@ class StripePlan < StripeModelCallbacks::ApplicationRecord
       trial_period_days: object.trial_period_days
     )
   end
+
+  def to_stripe
+    @_to_stripe ||= Stripe::Plan.retrieve(id)
+  end
 end

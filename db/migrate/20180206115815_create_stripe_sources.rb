@@ -7,7 +7,7 @@ class CreateStripeSources < ActiveRecord::Migration[5.0]
       t.string :client_secret, null: false
       t.string :currency
       t.string :flow, null: false
-      t.boolean :livemode, null: false
+      t.boolean :livemode, default: true, null: false
       t.string :metadata
       create_owner_columns(t)
       create_receiver_columns(t)

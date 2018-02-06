@@ -9,17 +9,16 @@ class StripeCustomer < StripeModelCallbacks::ApplicationRecord
   has_many :stripe_subscriptions, dependent: :restrict_with_error
 
   def assign_from_stripe(object)
-    assign_attributes(
-      account_balance: object.account_balance,
-      created: Time.zone.at(object.created),
-      delinquent: object.delinquent,
-      description: object.description,
-      discount: object.discount,
-      email: object.email,
-      livemode: object.livemode,
-      metadata: JSON.generate(object.metadata)
+    StripeModelCallbacks::AttributesAssignerService.execute!(
+      model: self, stripe_model: object,
+      attributes: %w[
+        account_balance currency created delinquent description discount email id
+        livemode metadata
+      ]
     )
+  end
 
-    self.currency = object.currency if object.respond_to?(:currency)
+  def to_stripe
+    @_to_stripe ||= Stripe::Customer.retrieve(id)
   end
 end

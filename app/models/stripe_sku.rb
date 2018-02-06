@@ -23,4 +23,8 @@ class StripeSku < StripeModelCallbacks::ApplicationRecord
       attributes: %w[currency]
     )
   end
+
+  def to_stripe
+    @_to_stripe ||= Stripe::Sku.retrieve(id)
+  end
 end

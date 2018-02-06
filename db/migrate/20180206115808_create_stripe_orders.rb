@@ -7,7 +7,7 @@ class CreateStripeOrders < ActiveRecord::Migration[5.0]
       t.string :currency, null: false
       t.string :stripe_customer_id, index: true
       t.string :email
-      t.boolean :livemode, null: false
+      t.boolean :livemode, default: true, null: false
       t.text :metadata
       shipping_columns(t)
       t.string :status, null: false

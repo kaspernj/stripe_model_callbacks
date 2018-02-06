@@ -11,4 +11,8 @@ class StripeRecipient < StripeModelCallbacks::ApplicationRecord
       attributes: %w[active_account description email name migrated_to verified]
     )
   end
+
+  def to_stripe
+    @_to_stripe ||= Stripe::Recipient.retrieve(id)
+  end
 end

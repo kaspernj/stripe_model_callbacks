@@ -20,4 +20,8 @@ class StripeTransfer < StripeModelCallbacks::ApplicationRecord
       ]
     )
   end
+
+  def to_stripe
+    @_to_stripe ||= Stripe::Transfer.retrieve(id)
+  end
 end

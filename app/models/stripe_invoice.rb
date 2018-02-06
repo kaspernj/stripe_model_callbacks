@@ -24,4 +24,8 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
       paid: object.paid
     )
   end
+
+  def to_stripe
+    @_to_stripe ||= Stripe::Invoice.retrieve(id)
+  end
 end

@@ -21,4 +21,8 @@ class StripeProduct < StripeModelCallbacks::ApplicationRecord
       attributes: %w[caption description name statement_descriptor]
     )
   end
+
+  def to_stripe
+    @_to_stripe ||= Stripe::Product.retrieve(id)
+  end
 end

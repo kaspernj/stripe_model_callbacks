@@ -9,5 +9,20 @@ FactoryBot.define do
     livemode false
     stripe_plan
     start 1.month.ago.beginning_of_month
+
+    trait :active do
+      status "active"
+    end
+
+    trait :with_stripe_mock do
+      after :create do |stripe_subscription|
+        mock_subscription = Stripe::Subscription.create(
+          customer: stripe_subscription.stripe_customer.id,
+          plan: stripe_subscription.stripe_plan.id
+        )
+        stripe_subscription.assign_from_stripe(mock_subscription)
+        stripe_subscription.save!
+      end
+    end
   end
 end

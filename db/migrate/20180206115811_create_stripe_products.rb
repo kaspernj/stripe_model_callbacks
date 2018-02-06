@@ -7,7 +7,7 @@ class CreateStripeProducts < ActiveRecord::Migration[5.0]
       t.text :stripe_attributes
       t.string :caption
       t.string :description
-      t.boolean :livemode, default: false, null: false
+      t.boolean :livemode, default: true, null: false
       t.text :metadata
       t.string :name
       t.decimal :package_dimensions_height

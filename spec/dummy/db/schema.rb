@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.string "receipt_email"
     t.string "receipt_number"
     t.text "shipping"
-    t.boolean "livemode", null: false
+    t.boolean "livemode", default: true, null: false
     t.text "metadata"
     t.string "source_transfer"
     t.string "statement_descriptor"
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.string "currency"
     t.string "duration"
     t.integer "duration_in_months"
-    t.boolean "livemode", default: false, null: false
+    t.boolean "livemode", default: true, null: false
     t.integer "max_redemptions"
     t.text "metadata"
     t.integer "percent_off"
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.string "description"
     t.text "discount"
     t.string "email"
-    t.boolean "livemode", null: false
+    t.boolean "livemode", default: true, null: false
     t.text "metadata"
     t.text "shipping"
     t.datetime "created"
@@ -203,7 +203,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.string "description"
     t.boolean "discountable", null: false
     t.string "stripe_invoice_id"
-    t.boolean "livemode", null: false
+    t.boolean "livemode", default: true, null: false
     t.text "metadata"
     t.datetime "period_start"
     t.datetime "period_end"
@@ -251,7 +251,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.boolean "closed", null: false
     t.datetime "date", null: false
     t.datetime "due_date"
-    t.boolean "livemode", null: false
+    t.boolean "livemode", default: true, null: false
     t.text "metadata"
     t.string "number"
     t.boolean "paid", null: false
@@ -297,7 +297,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.string "currency", null: false
     t.string "stripe_customer_id"
     t.string "email"
-    t.boolean "livemode", null: false
+    t.boolean "livemode", default: true, null: false
     t.text "metadata"
     t.string "selected_shipping_method"
     t.string "shipping_address_city"
@@ -352,7 +352,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.string "currency", null: false
     t.string "interval", null: false
     t.integer "interval_count", null: false
-    t.boolean "livemode", null: false
+    t.boolean "livemode", default: true, null: false
     t.text "metadata"
     t.string "name", null: false
     t.string "statement_descriptor"
@@ -371,7 +371,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.text "stripe_attributes"
     t.string "caption"
     t.string "description"
-    t.boolean "livemode", default: false, null: false
+    t.boolean "livemode", default: true, null: false
     t.text "metadata"
     t.string "name"
     t.decimal "package_dimensions_height"
@@ -395,7 +395,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.datetime "deleted_at"
     t.string "name"
     t.string "email"
-    t.boolean "livemode", default: false, null: false
+    t.boolean "livemode", default: true, null: false
     t.string "stripe_type"
     t.text "metadata"
     t.string "migrated_to"
@@ -414,7 +414,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.string "currency", null: false
     t.string "failure_balance_transaction"
     t.string "failure_reason"
-    t.boolean "livemode", null: false
+    t.boolean "livemode", default: true, null: false
     t.text "metadata"
     t.string "reason"
     t.string "receipt_number"
@@ -453,7 +453,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.string "client_secret", null: false
     t.string "currency"
     t.string "flow", null: false
-    t.boolean "livemode", null: false
+    t.boolean "livemode", default: true, null: false
     t.string "metadata"
     t.string "owner_address_city"
     t.string "owner_address_country"
@@ -512,12 +512,12 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.integer "days_until_due"
     t.string "discount"
     t.datetime "ended_at"
-    t.boolean "livemode", null: false
+    t.boolean "livemode", default: true, null: false
     t.text "metadata"
     t.string "stripe_plan_id", null: false
     t.integer "quantity"
     t.datetime "start", null: false
-    t.integer "tex_percent"
+    t.integer "tax_percent"
     t.string "status"
     t.datetime "trial_start"
     t.datetime "trial_end"
@@ -527,6 +527,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_stripe_subscriptions_on_deleted_at"
     t.index ["discount"], name: "index_stripe_subscriptions_on_discount"
+    t.index ["status"], name: "index_stripe_subscriptions_on_status"
     t.index ["stripe_customer_id"], name: "index_stripe_subscriptions_on_stripe_customer_id"
     t.index ["stripe_plan_id"], name: "index_stripe_subscriptions_on_stripe_plan_id"
   end
@@ -543,7 +544,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.string "description"
     t.string "destination"
     t.string "destination_payment"
-    t.boolean "livemode", default: false, null: false
+    t.boolean "livemode", default: true, null: false
     t.text "metadata"
     t.boolean "reversed", default: false, null: false
     t.string "source_transaction"

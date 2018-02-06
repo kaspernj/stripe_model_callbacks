@@ -7,7 +7,7 @@ class CreateStripeRecipients < ActiveRecord::Migration[5.0]
       t.datetime :deleted_at, index: true
       t.string :name
       t.string :email
-      t.boolean :livemode, default: false, null: false
+      t.boolean :livemode, default: true, null: false
       t.string :stripe_type
       t.text :metadata
       t.string :migrated_to

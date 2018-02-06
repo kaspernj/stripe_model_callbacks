@@ -17,20 +17,21 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
 
   def assign_from_stripe(object)
     assign_attributes(
-      created: Time.zone.at(object.created),
       canceled_at: object.canceled_at ? Time.zone.at(object.canceled_at) : nil,
       stripe_customer_id: object.customer,
       ended_at: object.ended_at ? Time.zone.at(object.ended_at) : nil,
-      id: object.id,
-      livemode: object.livemode,
       stripe_plan_id: object.plan.id
     )
 
     assign_periods(object)
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
-      attributes: %w[billing cancel_at_period_end status]
+      attributes: %w[billing cancel_at_period_end created id livemode status]
     )
+  end
+
+  def to_stripe
+    @_to_stripe ||= Stripe::Subscription.retrieve(id)
   end
 
 private

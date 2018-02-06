@@ -9,7 +9,7 @@ class CreateStripeInvoices < ActiveRecord::Migration[5.0]
       t.boolean :closed, null: false
       t.datetime :date, null: false
       t.datetime :due_date
-      t.boolean :livemode, null: false
+      t.boolean :livemode, default: true, null: false
       t.text :metadata
       t.string :number
       t.boolean :paid, null: false

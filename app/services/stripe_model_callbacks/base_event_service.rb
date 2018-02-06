@@ -1,4 +1,4 @@
-class StripeModelCallbacks::BaseEventService < ServicePattern::Service
+class StripeModelCallbacks::BaseEventService < StripeModelCallbacks::BaseService
   attr_reader :event, :object
 
   def initialize(event: nil, object: nil)

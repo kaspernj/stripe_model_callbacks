@@ -9,7 +9,7 @@ class CreateStripeRefunds < ActiveRecord::Migration[5.0]
       t.string :currency, null: false
       t.string :failure_balance_transaction
       t.string :failure_reason
-      t.boolean :livemode, null: false
+      t.boolean :livemode, default: true, null: false
       t.text :metadata
       t.string :reason
       t.string :receipt_number

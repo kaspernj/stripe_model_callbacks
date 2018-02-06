@@ -9,8 +9,16 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
 
   def execute!
     attributes.each do |attribute|
+      next unless stripe_model.respond_to?(attribute)
       setter_method = "#{attribute}="
-      value = stripe_model.__send__(attribute) if stripe_model.respond_to?(attribute)
+      value = stripe_model.__send__(attribute)
+
+      if attribute == "metadata"
+        value = JSON.generate(value)
+      elsif attribute == "created" && value
+        value = Time.zone.at(value)
+      end
+
       model.__send__(setter_method, value)
     end
   end

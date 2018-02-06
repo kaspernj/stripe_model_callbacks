@@ -25,4 +25,8 @@ class StripeInvoiceItem < StripeModelCallbacks::ApplicationRecord
       subscription_item: object.try(:subscription_item)
     )
   end
+
+  def to_stripe
+    @_to_stripe ||= Stripe::InvoiceItem.retrieve(id)
+  end
 end

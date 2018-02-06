@@ -9,7 +9,7 @@ class CreateStripeCoupons < ActiveRecord::Migration[5.0]
       t.string :currency
       t.string :duration
       t.integer :duration_in_months
-      t.boolean :livemode, default: false, null: false
+      t.boolean :livemode, default: true, null: false
       t.integer :max_redemptions
       t.text :metadata
       t.integer :percent_off

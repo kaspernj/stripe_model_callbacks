@@ -24,6 +24,10 @@ class StripeDispute < StripeModelCallbacks::ApplicationRecord
     )
   end
 
+  def to_stripe
+    @_to_stripe ||= Stripe::Dispute.retrieve(id)
+  end
+
 private
 
   def assign_evidence_attributes(object)

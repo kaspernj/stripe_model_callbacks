@@ -27,6 +27,10 @@ class StripeSource < StripeModelCallbacks::ApplicationRecord
     )
   end
 
+  def to_stripe
+    @_to_stripe ||= Stripe::Source.retrieve(id)
+  end
+
 private
 
   def assign_owner(object)

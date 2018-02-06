@@ -11,7 +11,7 @@ class CreateStripeInvoiceItems < ActiveRecord::Migration[5.0]
       t.string :description
       t.boolean :discountable, null: false
       t.string :stripe_invoice_id, index: true
-      t.boolean :livemode, null: false
+      t.boolean :livemode, default: true, null: false
       t.text :metadata
       t.datetime :period_start
       t.datetime :period_end

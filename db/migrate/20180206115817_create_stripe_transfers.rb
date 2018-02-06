@@ -12,7 +12,7 @@ class CreateStripeTransfers < ActiveRecord::Migration[5.0]
       t.string :description
       t.string :destination
       t.string :destination_payment
-      t.boolean :livemode, default: false, null: false
+      t.boolean :livemode, default: true, null: false
       t.text :metadata
       t.boolean :reversed, default: false, null: false
       t.string :source_transaction

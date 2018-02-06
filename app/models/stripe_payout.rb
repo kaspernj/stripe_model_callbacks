@@ -21,4 +21,8 @@ class StripePayout < StripeModelCallbacks::ApplicationRecord
       ]
     )
   end
+
+  def to_stripe
+    @_to_stripe ||= Stripe::Payout.retrieve(id)
+  end
 end

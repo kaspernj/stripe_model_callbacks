@@ -32,6 +32,10 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
     )
   end
 
+  def to_stripe
+    @_to_stripe ||= Stripe::Charge.retrieve(id)
+  end
+
 private
 
   def assign_amounts_from_stripe(object)

@@ -21,4 +21,8 @@ class StripeCoupon < StripeModelCallbacks::ApplicationRecord
       ]
     )
   end
+
+  def to_stripe
+    @_to_stripe ||= Stripe::Coupon.retrieve(id)
+  end
 end

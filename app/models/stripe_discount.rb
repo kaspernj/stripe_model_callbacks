@@ -21,6 +21,10 @@ class StripeDiscount < StripeModelCallbacks::ApplicationRecord
     assign_other_coupon_attributes(object)
   end
 
+  def to_stripe
+    @_to_stripe ||= Stripe::Discount.retrieve(id)
+  end
+
 private
 
   def assign_coupon_attributes(object)

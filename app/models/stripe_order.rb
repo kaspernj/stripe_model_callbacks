@@ -28,6 +28,10 @@ class StripeOrder < StripeModelCallbacks::ApplicationRecord
     assign_shipping_from_stripe(object)
   end
 
+  def to_stripe
+    @_to_stripe ||= Stripe::Order.retrieve(id)
+  end
+
 private
 
   def assign_amounts_from_stripe(object)

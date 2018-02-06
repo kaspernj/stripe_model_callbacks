@@ -11,7 +11,7 @@ class CreateStripeCustomers < ActiveRecord::Migration[5.0]
       t.string :description
       t.text :discount
       t.string :email
-      t.boolean :livemode, null: false
+      t.boolean :livemode, default: true, null: false
       t.text :metadata
       t.text :shipping
       t.datetime :created

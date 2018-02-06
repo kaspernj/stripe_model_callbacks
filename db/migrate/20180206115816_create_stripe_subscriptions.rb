@@ -12,7 +12,7 @@ class CreateStripeSubscriptions < ActiveRecord::Migration[5.0]
       t.integer :days_until_due
       t.string :discount, index: true
       t.datetime :ended_at
-      t.boolean :livemode, null: false
+      t.boolean :livemode, default: true, null: false
       t.text :metadata
       t.string :stripe_plan_id, index: true, null: false
       t.integer :quantity
