@@ -1,11 +1,12 @@
 class StripeInvoice < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
-  belongs_to :stripe_subscription, inverse_of: :stripe_invoices, optional: true
+  belongs_to :stripe_customer, optional: true
+  belongs_to :stripe_subscription, optional: true
   has_many :stripe_invoice_items, dependent: :destroy
 
-  monetize :amount_due_cents
-  monetize :application_fee_cents
+  monetize :amount_due_cents, allow_nil: true
+  monetize :application_fee_cents, allow_nil: true
 
   def assign_from_stripe(object)
     assign_attributes(

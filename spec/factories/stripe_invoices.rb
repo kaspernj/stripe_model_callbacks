@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :stripe_invoice do
+    sequence(:id) { |n| "stripe-invoice-#{n}" }
     amount_due_cents 0
     amount_due_currency "USD"
     attempted false

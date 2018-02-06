@@ -5,6 +5,7 @@ class StripeCustomer < StripeModelCallbacks::ApplicationRecord
 
   has_many :stripe_charges, dependent: :restrict_with_error
   has_many :stripe_discounts, dependent: :restrict_with_error
+  has_many :stripe_invoices, dependent: :restrict_with_error
   has_many :stripe_invoice_items, dependent: :restrict_with_error
   has_many :stripe_orders, dependent: :restrict_with_error
 

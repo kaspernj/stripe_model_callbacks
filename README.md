@@ -22,6 +22,11 @@ $ bundle
 
 You also need to install and setup the gems `public_activity`, `stripe` and `stripe_event`. Do this:
 
+Install the migration for Public Activity, which will provide logging:
+```bash
+rails g public_activity:migration
+```
+
 Do something like this in `config/routes.rb`:
 ```ruby
 Rails.application.routes.draw do
@@ -65,6 +70,16 @@ StripeTransfer.where("stripe_transfers.created > ?", Time.zone.now.beginning_of_
 
 You can inspect the tables and see which tables and columns that are available. Most of it alligns with
 the attributes mentioned in Stripe's own API.
+
+## Testing
+
+If you need some FactoryBot factories, then you can do like this in `spec/rails_helper.rb`:
+```ruby
+require "stripe_model_callbacks/factory_bot_definitions"
+```
+
+You can take a look at the factories here:
+https://github.com/kaspernj/stripe_model_callbacks/tree/master/spec/factories
 
 ## Contributing
 Contribution directions go here.
