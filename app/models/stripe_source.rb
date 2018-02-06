@@ -15,6 +15,7 @@ class StripeSource < StripeModelCallbacks::ApplicationRecord
     )
 
     assign_owner(object)
+    assign_owner_verified(object)
     assign_receiver(object)
     assign_ach_credit_transfer(object)
 
@@ -36,7 +37,12 @@ private
       owner_address_state: object.owner.address&.state,
       owner_email: object.owner.email,
       owner_name: object.owner.name,
-      owner_phone: object.owner.phone,
+      owner_phone: object.owner.phone
+    )
+  end
+
+  def assign_owner_verified(object)
+    assign_attributes(
       owner_verified_address_city: object.owner.verified_address&.city,
       owner_verified_address_country: object.owner.verified_address&.country,
       owner_verified_address_line1: object.owner.verified_address&.line1,
@@ -66,7 +72,7 @@ private
       ach_credit_transfer_routing_number: object.ach_credit_transfer.routing_number,
       ach_credit_transfer_fingerprint: object.ach_credit_transfer.fingerprint,
       ach_credit_transfer_bank_name: object.ach_credit_transfer.bank_name,
-      ach_credit_transfer_swift_code: object.ach_credit_transfer.swift_code,
+      ach_credit_transfer_swift_code: object.ach_credit_transfer.swift_code
     )
   end
 end

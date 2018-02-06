@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180206090715) do
+ActiveRecord::Schema.define(version: 20180206094733) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -72,6 +72,28 @@ ActiveRecord::Schema.define(version: 20180206090715) do
     t.index ["invoice_identifier"], name: "index_stripe_charges_on_invoice_identifier"
     t.index ["order_identifier"], name: "index_stripe_charges_on_order_identifier"
     t.index ["source_identifier"], name: "index_stripe_charges_on_source_identifier"
+  end
+
+  create_table "stripe_coupons", force: :cascade do |t|
+    t.string "identifier", null: false
+    t.integer "amount_off_cents"
+    t.string "amount_off_currency"
+    t.datetime "created"
+    t.datetime "deleted_at"
+    t.string "currency"
+    t.string "duration"
+    t.integer "duration_in_months"
+    t.boolean "livemode", default: false, null: false
+    t.integer "max_redemptions"
+    t.text "metadata"
+    t.integer "percent_off"
+    t.datetime "redeem_by"
+    t.integer "times_redeemed"
+    t.boolean "stripe_valid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_stripe_coupons_on_deleted_at"
+    t.index ["identifier"], name: "index_stripe_coupons_on_identifier"
   end
 
   create_table "stripe_customers", force: :cascade do |t|
