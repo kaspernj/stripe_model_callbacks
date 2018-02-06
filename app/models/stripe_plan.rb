@@ -1,17 +1,17 @@
 class StripePlan < StripeModelCallbacks::ApplicationRecord
-  has_many :invoice_items,
+  self.primary_key = "id"
+
+  has_many :stripe_invoice_items,
     class_name: "StripeInvoiceItem",
     dependent: :restrict_with_error,
-    foreign_key: "plan_identifier",
-    inverse_of: :plan,
-    primary_key: "identifier"
+    foreign_key: "plan_id",
+    inverse_of: :plan
 
-  has_many :subscriptions,
+  has_many :stripe_subscriptions,
     class_name: "StripeSubscription",
     dependent: :restrict_with_error,
-    foreign_key: "plan_identifier",
-    inverse_of: :plan,
-    primary_key: "identifier"
+    foreign_key: "plan_id",
+    inverse_of: :plan
 
   monetize :amount_cents
 

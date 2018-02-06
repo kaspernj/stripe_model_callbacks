@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "recipient created" do
-  let!(:recipient) { create :stripe_recipient, identifier: "rp_00000000000000" }
+  let!(:recipient) { create :stripe_recipient, id: "rp_00000000000000" }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
@@ -20,7 +20,7 @@ describe "recipient created" do
 
       expect(response.code).to eq "200"
 
-      expect(recipient.identifier).to eq "rp_00000000000000"
+      expect(recipient.id).to eq "rp_00000000000000"
       expect(recipient.description).to eq "Recipient for John Doe"
       expect(recipient.email).to eq "test@example.com"
       expect(recipient.name).to eq "John Doe"

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "source canceled" do
-  let!(:source) { create :stripe_source, identifier: "src_00000000000000" }
+  let!(:source) { create :stripe_source, id: "src_00000000000000" }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
@@ -22,7 +22,7 @@ describe "source canceled" do
       expect(response.code).to eq "200"
 
       expect(source.currency).to eq "usd"
-      expect(source.identifier).to eq "src_00000000000000"
+      expect(source.id).to eq "src_00000000000000"
       expect(source.flow).to eq "receiver"
       expect(source.created).to eq Time.zone.parse("2018-02-06 07:41:46")
       expect(source.livemode).to eq false

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "payout canceled" do
-  let!(:payout) { create :stripe_payout, identifier: "po_00000000000000" }
+  let!(:payout) { create :stripe_payout, id: "po_00000000000000" }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
@@ -21,7 +21,7 @@ describe "payout canceled" do
 
       expect(response.code).to eq "200"
 
-      expect(payout.identifier).to eq "po_00000000000000"
+      expect(payout.id).to eq "po_00000000000000"
       expect(payout.amount.format).to eq "$11.00"
       expect(payout.arrival_date).to eq Time.zone.parse("2018-02-06 11:56:30")
       expect(payout.automatic).to eq true

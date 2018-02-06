@@ -1,10 +1,11 @@
 class StripeOrderItem < StripeModelCallbacks::ApplicationRecord
-  belongs_to :order,
+  self.primary_key = "id"
+
+  belongs_to :stripe_order,
     class_name: "StripeOrder",
-    foreign_key: "order_identifier",
+    foreign_key: "order_id",
     inverse_of: :order_items,
-    optional: true,
-    primary_key: "identifier"
+    optional: true
 
   monetize :amount_cents
 
@@ -13,7 +14,7 @@ class StripeOrderItem < StripeModelCallbacks::ApplicationRecord
       amount: Money.new(object.amount, object.currency),
       currency: object.currency,
       description: object.description,
-      parent_identifier: object.parent,
+      parent_id: object.parent,
       quantity: object.quantity,
       order_item_type: object.type
     )

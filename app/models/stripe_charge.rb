@@ -1,24 +1,9 @@
 class StripeCharge < StripeModelCallbacks::ApplicationRecord
-  belongs_to :customer,
-    class_name: "StripeCustomer",
-    foreign_key: "customer_identifier",
-    inverse_of: :charges,
-    optional: true,
-    primary_key: "identifier"
+  self.primary_key = "id"
 
-  has_many :orders,
-    class_name: "StripeOrder",
-    dependent: :restrict_with_error,
-    foreign_key: "charge_identifier",
-    inverse_of: :charge,
-    primary_key: "identifier"
-
-  has_many :refunds,
-    class_name: "StripeRefund",
-    dependent: :restrict_with_error,
-    foreign_key: "charge_identifier",
-    inverse_of: :charge,
-    primary_key: "identifier"
+  belongs_to :stripe_customer, inverse_of: :stripe_charges, optional: true
+  has_many :stripe_orders, dependent: :restrict_with_error, inverse_of: :stripe_charge
+  has_many :stripe_refunds, dependent: :restrict_with_error, inverse_of: :stripe_charge
 
   monetize :amount_cents
   monetize :amount_refunded_cents, allow_nil: true
@@ -27,12 +12,12 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
   def assign_from_stripe(object)
     assign_attributes(
       created: Time.zone.at(object.created),
-      customer_identifier: object.customer,
+      customer_id: object.customer,
       livemode: object.livemode,
-      invoice_identifier: object.invoice,
+      invoice_id: object.invoice,
       metadata: JSON.generate(object.metadata),
-      order_identifier: object.order,
-      source_identifier: object.source
+      order_id: object.order,
+      source_id: object.source
     )
 
     assign_amounts_from_stripe(object)

@@ -1,17 +1,18 @@
 class StripeRefund < StripeModelCallbacks::ApplicationRecord
-  belongs_to :charge,
+  self.primary_key = "id"
+
+  belongs_to :stripe_charge,
     class_name: "StripeCharge",
-    foreign_key: "charge_identifier",
+    foreign_key: "charge_id",
     inverse_of: :refunds,
-    optional: true,
-    primary_key: "identifier"
+    optional: true
 
   monetize :amount_cents, allow_nil: true
 
   def assign_from_stripe(object)
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
-      charge_identifier: object.charge,
+      charge_id: object.charge,
       created: Time.zone.at(object.created),
       livemode: object.try(:livemode) == true,
       metadata: JSON.generate(object.metadata)

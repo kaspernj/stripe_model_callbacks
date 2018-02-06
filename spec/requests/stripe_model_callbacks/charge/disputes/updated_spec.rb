@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "disputes updated" do
-  let!(:dispute) { create :stripe_dispute, identifier: "dp_00000000000000" }
+  let!(:dispute) { create :stripe_dispute, id: "dp_00000000000000" }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
@@ -20,11 +20,11 @@ describe "disputes updated" do
 
       expect(response.code).to eq "200"
 
-      expect(dispute.identifier).to eq "dp_00000000000000"
+      expect(dispute.id).to eq "dp_00000000000000"
       expect(dispute.created).to eq Time.zone.parse("2018-02-06 13:12:56")
       expect(dispute.amount.format).to eq "$10.00"
-      expect(dispute.balance_transaction_identifier).to eq "txn_00000000000000"
-      expect(dispute.charge_identifier).to eq "ch_00000000000000"
+      expect(dispute.balance_transaction_id).to eq "txn_00000000000000"
+      expect(dispute.charge_id).to eq "ch_00000000000000"
       expect(dispute.currency).to eq "usd"
       expect(dispute.evidence_details_due_by).to eq Time.zone.parse("2018-02-25 23:59:59")
       expect(dispute.is_charge_refundable).to eq false

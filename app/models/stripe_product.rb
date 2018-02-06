@@ -1,4 +1,6 @@
 class StripeProduct < StripeModelCallbacks::ApplicationRecord
+  self.primary_key = "id"
+
   def assign_from_stripe(object)
     assign_attributes(
       active: object.active == true,

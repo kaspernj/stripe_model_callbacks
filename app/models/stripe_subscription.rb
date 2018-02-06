@@ -1,48 +1,45 @@
 class StripeSubscription < StripeModelCallbacks::ApplicationRecord
-  belongs_to :customer,
+  self.primary_key = "id"
+
+  belongs_to :stripe_customer,
     class_name: "StripeCustomer",
-    foreign_key: "customer_identifier",
+    foreign_key: "customer_id",
     inverse_of: :subscription,
-    optional: true,
-    primary_key: "identifier"
+    optional: true
 
-  belongs_to :discount,
+  belongs_to :stripe_discount,
     class_name: "StripeDiscount",
-    foreign_key: "discount_identifier",
+    foreign_key: "discount_id",
     inverse_of: :subscriptions,
-    optional: true,
-    primary_key: "identifier"
+    optional: true
 
-  belongs_to :plan,
+  belongs_to :stripe_plan,
     class_name: "StripePlan",
-    foreign_key: "plan_identifier",
+    foreign_key: "plan_id",
     inverse_of: :subscriptions,
-    optional: true,
-    primary_key: "identifier"
+    optional: true
 
-  has_many :invoices,
+  has_many :stripe_invoices,
     class_name: "StripeInvoice",
     dependent: :restrict_with_error,
-    foreign_key: "subscription_identifier",
-    inverse_of: :subscription,
-    primary_key: "identifier"
+    foreign_key: "subscription_id",
+    inverse_of: :subscription
 
-  has_many :discounts,
+  has_many :stripe_discounts,
     class_name: "StripeDiscount",
     dependent: :restrict_with_error,
-    foreign_key: "subscription_identifier",
-    inverse_of: :subscription,
-    primary_key: "identifier"
+    foreign_key: "subscription_id",
+    inverse_of: :subscription
 
   def assign_from_stripe(object)
     assign_attributes(
       created: Time.zone.at(object.created),
       canceled_at: object.canceled_at ? Time.zone.at(object.canceled_at) : nil,
-      customer_identifier: object.customer,
+      customer_id: object.customer,
       ended_at: object.ended_at ? Time.zone.at(object.ended_at) : nil,
-      identifier: object.id,
+      id: object.id,
       livemode: object.livemode,
-      plan_identifier: object.plan.id
+      plan_id: object.plan.id
     )
 
     assign_periods(object)

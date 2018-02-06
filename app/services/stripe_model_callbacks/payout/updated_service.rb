@@ -24,6 +24,6 @@ private
   end
 
   def payout
-    @_payout ||= StripePayout.find_or_initialize_by(identifier: object.id)
+    @_payout ||= StripePayout.find_or_initialize_by(id: object.id)
   end
 end

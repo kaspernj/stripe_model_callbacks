@@ -1,6 +1,6 @@
 class StripeModelCallbacks::Plan::UpdatedService < StripeModelCallbacks::BaseEventService
   def execute!
-    plan = StripePlan.find_or_initialize_by(identifier: object.id)
+    plan = StripePlan.find_or_initialize_by(id: object.id)
     plan.assign_from_stripe(object)
     plan.deleted_at ||= Time.zone.now if event.type == "plan.deleted"
 

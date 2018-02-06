@@ -1,17 +1,17 @@
 class StripeInvoice < StripeModelCallbacks::ApplicationRecord
-  belongs_to :subscription,
-    class_name: "StripeSubscription",
-    foreign_key: "subscription_identifier",
-    inverse_of: :invoices,
-    optional: true,
-    primary_key: "identifier"
+  self.primary_key = "id"
 
-  has_many :invoice_items,
+  belongs_to :stripe_subscription,
+    class_name: "StripeSubscription",
+    foreign_key: "subscription_id",
+    inverse_of: :invoices,
+    optional: true
+
+  has_many :stripe_invoice_items,
     class_name: "StripeInvoiceItem",
     dependent: :destroy,
-    foreign_key: "invoice_identifier",
-    inverse_of: :invoice,
-    primary_key: "identifier"
+    foreign_key: "invoice_id",
+    inverse_of: :invoice
 
   monetize :amount_due_cents
   monetize :application_fee_cents
@@ -24,10 +24,10 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
       billing: object.billing,
       closed: object.closed,
       currency: object.currency,
-      customer_identifier: object.customer,
+      customer_id: object.customer,
       date: Time.zone.at(object.date),
       forgiven: object.forgiven,
-      identifier: object.id,
+      id: object.id,
       livemode: object.livemode,
       paid: object.paid
     )

@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe "refund updated" do
-  let!(:charge) { create :stripe_charge, identifier: "ch_00000000000000" }
-  let!(:refund) { create :stripe_refund, identifier: "re_00000000000000", charge: charge }
+  let!(:charge) { create :stripe_charge, id: "ch_00000000000000" }
+  let!(:refund) { create :stripe_refund, id: "re_00000000000000", stripe_charge: charge }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))

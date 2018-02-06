@@ -1,38 +1,35 @@
 class StripeCustomer < StripeModelCallbacks::ApplicationRecord
-  belongs_to :subscription,
-    class_name: "StripeSubscription",
-    foreign_key: "subscription_identifier",
-    inverse_of: :customer,
-    optional: true,
-    primary_key: "identifier"
+  self.primary_key = "id"
 
-  has_many :charges,
+  belongs_to :stripe_subscription,
+    class_name: "StripeSubscription",
+    foreign_key: "subscription_id",
+    inverse_of: :customer,
+    optional: true
+
+  has_many :stripe_charges,
     class_name: "StripeCharge",
     dependent: :restrict_with_error,
-    foreign_key: "customer_identifier",
-    inverse_of: :customer,
-    primary_key: "identifier"
+    foreign_key: "customer_id",
+    inverse_of: :customer
 
-  has_many :discounts,
+  has_many :stripe_discounts,
     class_name: "StripeDiscount",
     dependent: :restrict_with_error,
-    foreign_key: "customer_identifier",
-    inverse_of: :customer,
-    primary_key: "identifier"
+    foreign_key: "customer_id",
+    inverse_of: :customer
 
-  has_many :invoice_items,
+  has_many :stripe_invoice_items,
     class_name: "StripeInvoiceItem",
     dependent: :restrict_with_error,
-    foreign_key: "customer_identifier",
-    inverse_of: :customer,
-    primary_key: "identifier"
+    foreign_key: "customer_id",
+    inverse_of: :customer
 
-  has_many :orders,
+  has_many :stripe_orders,
     class_name: "StripeOrder",
     dependent: :restrict_with_error,
-    foreign_key: "customer_identifier",
-    inverse_of: :customer,
-    primary_key: "identifier"
+    foreign_key: "customer_id",
+    inverse_of: :customer
 
   def assign_from_stripe(object)
     assign_attributes(

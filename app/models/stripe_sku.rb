@@ -1,4 +1,6 @@
 class StripeSku < StripeModelCallbacks::ApplicationRecord
+  self.primary_key = "id"
+
   monetize :price_cents
 
   def assign_from_stripe(object)
@@ -13,7 +15,7 @@ class StripeSku < StripeModelCallbacks::ApplicationRecord
       livemode: object.livemode,
       metadata: JSON.generate(object.metadata),
       price: Money.new(object.price, object.currency),
-      product_identifier: object.product
+      product_id: object.product
     )
 
     StripeModelCallbacks::AttributesAssignerService.execute!(

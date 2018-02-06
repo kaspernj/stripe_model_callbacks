@@ -1,9 +1,9 @@
 require "rails_helper"
 
 describe "subscription deletion" do
-  let!(:customer) { create :stripe_customer, identifier: "cus_00000000000000" }
-  let!(:plan) { create :stripe_plan, identifier: "silver-express-898_00000000000000" }
-  let!(:subscription) { create :stripe_subscription, customer: customer, plan: plan, identifier: "sub_00000000000000" }
+  let!(:customer) { create :stripe_customer, id: "cus_00000000000000" }
+  let!(:plan) { create :stripe_plan, id: "silver-express-898_00000000000000" }
+  let!(:subscription) { create :stripe_subscription, customer: customer, plan: plan, id: "sub_00000000000000" }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))

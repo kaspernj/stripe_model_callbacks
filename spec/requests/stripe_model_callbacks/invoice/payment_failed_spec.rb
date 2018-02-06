@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "invoice payment failed" do
-  let!(:stripe_customer) { create :stripe_customer, identifier: "cus_CGNFgjPGtHlvXI" }
+  let!(:stripe_customer) { create :stripe_customer, id: "cus_CGNFgjPGtHlvXI" }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))

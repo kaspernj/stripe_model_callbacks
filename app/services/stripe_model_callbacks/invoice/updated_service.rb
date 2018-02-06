@@ -23,14 +23,14 @@ private
 
   def create_invoice_items
     object.lines.each do |stripe_invoice_item|
-      invoice_item = StripeInvoiceItem.find_or_initialize_by(identifier: stripe_invoice_item.id)
+      invoice_item = StripeInvoiceItem.find_or_initialize_by(id: stripe_invoice_item.id)
       invoice_item.assign_from_stripe(stripe_invoice_item)
-      invoice_item.invoice_identifier = object.id
+      invoice_item.invoice_id = object.id
       invoice_item.save!
     end
   end
 
   def invoice
-    @_invoice ||= StripeInvoice.find_or_initialize_by(identifier: object.id)
+    @_invoice ||= StripeInvoice.find_or_initialize_by(id: object.id)
   end
 end

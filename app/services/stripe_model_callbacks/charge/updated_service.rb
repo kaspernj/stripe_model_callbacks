@@ -14,7 +14,7 @@ class StripeModelCallbacks::Charge::UpdatedService < StripeModelCallbacks::BaseE
 private
 
   def charge
-    @_charge ||= StripeCharge.find_or_initialize_by(identifier: object.id)
+    @_charge ||= StripeCharge.find_or_initialize_by(id: object.id)
   end
 
   def create_activity

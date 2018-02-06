@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe "customer discount deleted" do
-  let!(:coupon) { create :stripe_coupon, identifier: "25OFF_00000000000000" }
-  let!(:customer) { create :stripe_customer, identifier: "cus_00000000000000" }
+  let!(:coupon) { create :stripe_coupon, id: "25OFF_00000000000000" }
+  let!(:customer) { create :stripe_customer, id: "cus_00000000000000" }
   let!(:discount) { create :stripe_discount, coupon: coupon, customer: customer }
 
   def bypass_event_signature(payload)
@@ -23,9 +23,9 @@ describe "customer discount deleted" do
 
       expect(response.code).to eq "200"
 
-      expect(discount.coupon_identifier).to eq "25OFF_00000000000000"
+      expect(discount.coupon_id).to eq "25OFF_00000000000000"
       expect(discount.coupon).to eq coupon
-      expect(discount.customer_identifier).to eq "cus_00000000000000"
+      expect(discount.customer_id).to eq "cus_00000000000000"
       expect(discount.customer).to eq customer
       expect(discount.coupon_amount_off).to eq nil
       expect(discount.coupon_created).to eq Time.zone.parse("2018-02-06 12:29:43")
@@ -41,7 +41,7 @@ describe "customer discount deleted" do
       expect(discount.coupon_valid).to eq true
       expect(discount.start).to eq Time.zone.parse("2018-02-06 12:29:43")
       expect(discount.end).to eq Time.zone.parse("2018-05-06 12:29:43")
-      expect(discount.subscription_identifier).to eq nil
+      expect(discount.subscription_id).to eq nil
       expect(discount.subscription).to eq nil
       expect(discount.deleted_at).to be > 1.minute.ago
     end

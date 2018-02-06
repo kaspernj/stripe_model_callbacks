@@ -1,31 +1,29 @@
 class StripeDiscount < StripeModelCallbacks::ApplicationRecord
-  belongs_to :coupon,
+  self.primary_key = "id"
+
+  belongs_to :stripe_coupon,
     class_name: "StripeCoupon",
-    foreign_key: "coupon_identifier",
+    foreign_key: "coupon_id",
     inverse_of: :discounts,
-    optional: true,
-    primary_key: "identifier"
+    optional: true
 
-  belongs_to :customer,
+  belongs_to :stripe_customer,
     class_name: "StripeCustomer",
-    foreign_key: "customer_identifier",
+    foreign_key: "customer_id",
     inverse_of: :discounts,
-    optional: true,
-    primary_key: "identifier"
+    optional: true
 
-  belongs_to :subscription,
+  belongs_to :stripe_subscription,
     class_name: "StripeSubscription",
-    foreign_key: "subscription_identifier",
+    foreign_key: "subscription_id",
     inverse_of: :discounts,
-    optional: true,
-    primary_key: "identifier"
+    optional: true
 
-  has_many :subscriptions,
+  has_many :stripe_subscriptions,
     class_name: "StripeSubscription",
     dependent: :restrict_with_error,
-    foreign_key: "discount_identifier",
-    inverse_of: :discount,
-    primary_key: "identifier"
+    foreign_key: "discount_id",
+    inverse_of: :discount
 
   monetize :coupon_amount_off_cents, allow_nil: true
 
@@ -34,8 +32,8 @@ class StripeDiscount < StripeModelCallbacks::ApplicationRecord
       created: object.respond_to?(:created) ? Time.zone.at(object.created) : nil,
       start: Time.zone.at(object.start),
       end: Time.zone.at(object.end),
-      customer_identifier: object.customer,
-      subscription_identifier: object.subscription&.id
+      customer_id: object.customer,
+      subscription_id: object.subscription&.id
     )
 
     assign_coupon_attributes(object)
