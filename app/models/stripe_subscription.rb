@@ -39,7 +39,10 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
     )
 
     assign_periods(object)
-    StripeModelCallbacks::AttributesAssignerService.execute!(model: self, stripe_model: object, attributes: %w[billing cancel_at_period_end])
+    StripeModelCallbacks::AttributesAssignerService.execute!(
+      model: self, stripe_model: object,
+      attributes: %w[billing cancel_at_period_end status]
+    )
   end
 
 private

@@ -135,7 +135,7 @@ private
   end
 
   def subscription_events
-    %w[created deleted updated].each do |subscription_event|
+    %w[created deleted trial_will_end updated].each do |subscription_event|
       events.subscribe "customer.subscription.#{subscription_event}" do |event|
         StripeModelCallbacks::Customer::Subscription::UpdatedService.reported_execute!(event: event)
       end
