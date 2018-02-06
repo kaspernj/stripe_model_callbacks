@@ -17,8 +17,8 @@ class CreateStripeSubscriptions < ActiveRecord::Migration[5.0]
       t.string :stripe_plan_id, index: true, null: false
       t.integer :quantity
       t.datetime :start, null: false
-      t.integer :tex_percent
-      t.string :status
+      t.integer :tax_percent
+      t.string :status, index: true
       t.datetime :trial_start
       t.datetime :trial_end
       t.datetime :deleted_at, index: true

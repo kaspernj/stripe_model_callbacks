@@ -1,13 +1,12 @@
 class StripeCustomer < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
-  belongs_to :stripe_subscription, inverse_of: :stripe_customer, optional: true
-
   has_many :stripe_charges, dependent: :restrict_with_error
   has_many :stripe_discounts, dependent: :restrict_with_error
   has_many :stripe_invoices, dependent: :restrict_with_error
   has_many :stripe_invoice_items, dependent: :restrict_with_error
   has_many :stripe_orders, dependent: :restrict_with_error
+  has_many :stripe_subscriptions, dependent: :restrict_with_error
 
   def assign_from_stripe(object)
     assign_attributes(

@@ -1,7 +1,7 @@
 class StripeOrderItem < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
-  belongs_to :stripe_order, inverse_of: :stripe_order_items, optional: true
+  belongs_to :stripe_order, optional: true
 
   monetize :amount_cents
 

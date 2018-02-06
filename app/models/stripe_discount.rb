@@ -1,9 +1,9 @@
 class StripeDiscount < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
-  belongs_to :stripe_coupon, inverse_of: :stripe_discounts, optional: true
-  belongs_to :stripe_customer, inverse_of: :stripe_discounts, optional: true
-  belongs_to :stripe_subscription, inverse_of: :stripe_discounts, optional: true
+  belongs_to :stripe_coupon, optional: true
+  belongs_to :stripe_customer, optional: true
+  belongs_to :stripe_subscription, optional: true
   has_many :stripe_subscriptions, dependent: :restrict_with_error
 
   monetize :coupon_amount_off_cents, allow_nil: true

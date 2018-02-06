@@ -1,11 +1,19 @@
 class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
-  belongs_to :stripe_customer, inverse_of: :stripe_subscription, optional: true
-  belongs_to :stripe_discount, inverse_of: :stripe_subscriptions, optional: true
-  belongs_to :stripe_plan, inverse_of: :stripe_subscriptions, optional: true
+  belongs_to :stripe_customer, optional: true
+  belongs_to :stripe_discount, optional: true
+  belongs_to :stripe_plan, optional: true
   has_many :stripe_invoices, dependent: :restrict_with_error
   has_many :stripe_discounts, dependent: :restrict_with_error
+
+  STATES = %w[trialing active past_due canceled unpaid].freeze
+
+  scope :with_state, lambda { |states|
+    response = StripeModelCallbacks::Subscription::StateCheckerService.execute!(allowed: STATES, state: states)
+    raise response.errors.join(".") unless response.success?
+    where(status: states)
+  }
 
   def assign_from_stripe(object)
     assign_attributes(
