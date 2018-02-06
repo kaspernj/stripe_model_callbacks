@@ -5,6 +5,10 @@ class StripeRefund < StripeModelCallbacks::ApplicationRecord
 
   monetize :amount_cents, allow_nil: true
 
+  def self.stripe_class
+    Stripe::Refund
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
@@ -22,9 +26,5 @@ class StripeRefund < StripeModelCallbacks::ApplicationRecord
 
     self.failure_reason = object.failure_reason if object.respond_to?(:failure_reason)
     self.failure_balance_transaction = object.failure_balance_transaction if object.respond_to?(:failure_balance_transaction)
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Refund.retrieve(id)
   end
 end

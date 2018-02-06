@@ -6,6 +6,10 @@ class StripeSource < StripeModelCallbacks::ApplicationRecord
   monetize :receiver_amount_received_cents, allow_nil: true
   monetize :receiver_amount_returned_cents, allow_nil: true
 
+  def self.stripe_class
+    Stripe::Source
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       amount: object.amount ? Money.new(object.amount, object.currency) : nil,
@@ -24,10 +28,6 @@ class StripeSource < StripeModelCallbacks::ApplicationRecord
         status usage
       ]
     )
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Source.retrieve(id)
   end
 
 private

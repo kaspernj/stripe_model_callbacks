@@ -3,6 +3,10 @@ class StripeSku < StripeModelCallbacks::ApplicationRecord
 
   monetize :price_cents
 
+  def self.stripe_class
+    Stripe::Sku
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       active: object.active == true,
@@ -22,9 +26,5 @@ class StripeSku < StripeModelCallbacks::ApplicationRecord
       model: self, stripe_model: object,
       attributes: %w[currency]
     )
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Sku.retrieve(id)
   end
 end

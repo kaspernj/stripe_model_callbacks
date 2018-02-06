@@ -9,6 +9,10 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
   monetize :amount_refunded_cents, allow_nil: true
   monetize :application_cents, allow_nil: true
 
+  def self.stripe_class
+    Stripe::Charge
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       created: Time.zone.at(object.created),
@@ -30,10 +34,6 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
         receipt_email receipt_number review shipping source_transfer statement_descriptor status transfer_group
       ]
     )
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Charge.retrieve(id)
   end
 
 private

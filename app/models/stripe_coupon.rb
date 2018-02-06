@@ -5,6 +5,10 @@ class StripeCoupon < StripeModelCallbacks::ApplicationRecord
 
   monetize :amount_off_cents, allow_nil: true
 
+  def self.stripe_class
+    Stripe::Coupon
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       amount_off: object.amount_off ? Money.new(object.amount_off, object.currency) : nil,
@@ -20,9 +24,5 @@ class StripeCoupon < StripeModelCallbacks::ApplicationRecord
         times_redeemed
       ]
     )
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Coupon.retrieve(id)
   end
 end

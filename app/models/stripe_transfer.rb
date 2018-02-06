@@ -4,6 +4,10 @@ class StripeTransfer < StripeModelCallbacks::ApplicationRecord
   monetize :amount_cents
   monetize :amount_reversed_cents
 
+  def self.stripe_class
+    Stripe::Transfer
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
@@ -19,9 +23,5 @@ class StripeTransfer < StripeModelCallbacks::ApplicationRecord
         source_transaction source_type transfer_group status
       ]
     )
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Transfer.retrieve(id)
   end
 end

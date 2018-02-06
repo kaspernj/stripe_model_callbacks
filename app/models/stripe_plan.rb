@@ -6,6 +6,10 @@ class StripePlan < StripeModelCallbacks::ApplicationRecord
 
   monetize :amount_cents
 
+  def self.stripe_class
+    Stripe::Plan
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
@@ -19,9 +23,5 @@ class StripePlan < StripeModelCallbacks::ApplicationRecord
       statement_descriptor: object.statement_descriptor,
       trial_period_days: object.trial_period_days
     )
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Plan.retrieve(id)
   end
 end

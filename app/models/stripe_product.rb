@@ -1,6 +1,10 @@
 class StripeProduct < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
+  def self.stripe_class
+    Stripe::Subscription
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       active: object.active == true,
@@ -20,9 +24,5 @@ class StripeProduct < StripeModelCallbacks::ApplicationRecord
       model: self, stripe_model: object,
       attributes: %w[caption description name statement_descriptor]
     )
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Product.retrieve(id)
   end
 end

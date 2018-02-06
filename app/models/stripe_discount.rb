@@ -8,6 +8,10 @@ class StripeDiscount < StripeModelCallbacks::ApplicationRecord
 
   monetize :coupon_amount_off_cents, allow_nil: true
 
+  def self.stripe_class
+    Stripe::Discount
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       created: object.respond_to?(:created) ? Time.zone.at(object.created) : nil,
@@ -19,10 +23,6 @@ class StripeDiscount < StripeModelCallbacks::ApplicationRecord
 
     assign_coupon_attributes(object)
     assign_other_coupon_attributes(object)
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Discount.retrieve(id)
   end
 
 private

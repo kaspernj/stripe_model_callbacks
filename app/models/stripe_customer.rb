@@ -8,6 +8,10 @@ class StripeCustomer < StripeModelCallbacks::ApplicationRecord
   has_many :stripe_orders, dependent: :restrict_with_error
   has_many :stripe_subscriptions, dependent: :restrict_with_error
 
+  def self.stripe_class
+    Stripe::Customer
+  end
+
   def assign_from_stripe(object)
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
@@ -16,9 +20,5 @@ class StripeCustomer < StripeModelCallbacks::ApplicationRecord
         livemode metadata
       ]
     )
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Customer.retrieve(id)
   end
 end

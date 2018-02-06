@@ -19,6 +19,6 @@ class StripeModelCallbacks::BaseService < ServicePattern::Service
       Rails.logger.error e.backtrace.join("\n")
     end
 
-    ExceptionNotifier.notify_exception(e) if Rails.env.production?
+    ExceptionNotifier.notify_exception(e) if Object.const_defined?("ExceptionNotifier")
   end
 end

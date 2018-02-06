@@ -3,6 +3,10 @@ class StripePayout < StripeModelCallbacks::ApplicationRecord
 
   monetize :amount_cents, allow_nil: true
 
+  def self.stripe_class
+    Stripe::Subscription
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
@@ -20,9 +24,5 @@ class StripePayout < StripeModelCallbacks::ApplicationRecord
         failure_code failure_message livemode source_type statement_descriptor status
       ]
     )
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Payout.retrieve(id)
   end
 end

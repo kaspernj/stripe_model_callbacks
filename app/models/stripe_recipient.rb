@@ -1,6 +1,10 @@
 class StripeRecipient < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
+  def self.stripe_class
+    Stripe::Recipient
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       stripe_type: object.type
@@ -10,9 +14,5 @@ class StripeRecipient < StripeModelCallbacks::ApplicationRecord
       model: self, stripe_model: object,
       attributes: %w[active_account description email name migrated_to verified]
     )
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Recipient.retrieve(id)
   end
 end

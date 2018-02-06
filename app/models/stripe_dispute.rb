@@ -3,6 +3,10 @@ class StripeDispute < StripeModelCallbacks::ApplicationRecord
 
   monetize :amount_cents
 
+  def self.stripe_class
+    Stripe::Dispute
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
@@ -22,10 +26,6 @@ class StripeDispute < StripeModelCallbacks::ApplicationRecord
       model: self, stripe_model: object,
       attributes: %w[currency livemode reason status is_charge_refundable]
     )
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Dispute.retrieve(id)
   end
 
 private

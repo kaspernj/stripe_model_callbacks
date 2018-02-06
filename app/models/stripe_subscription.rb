@@ -15,11 +15,8 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
     where(status: states)
   }
 
-  def self.create_from_stripe!(object)
-    stripe_subscription = new
-    stripe_subscription.assign_from_stripe(object)
-    stripe_subscription.save!
-    stripe_subscription
+  def self.stripe_class
+    Stripe::Subscription
   end
 
   def assign_from_stripe(object)
@@ -35,10 +32,6 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
       model: self, stripe_model: object,
       attributes: %w[billing cancel_at_period_end created id livemode status]
     )
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Subscription.retrieve(id)
   end
 
 private

@@ -5,6 +5,10 @@ class StripeOrderItem < StripeModelCallbacks::ApplicationRecord
 
   monetize :amount_cents
 
+  def self.stripe_class
+    Stripe::OrderItem
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
@@ -14,9 +18,5 @@ class StripeOrderItem < StripeModelCallbacks::ApplicationRecord
       quantity: object.quantity,
       order_item_type: object.type
     )
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::OrderItem.retrieve(id)
   end
 end

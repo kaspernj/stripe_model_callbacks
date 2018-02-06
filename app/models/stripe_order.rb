@@ -9,6 +9,10 @@ class StripeOrder < StripeModelCallbacks::ApplicationRecord
   monetize :amount_returned_cents, allow_nil: true
   monetize :application_cents, allow_nil: true
 
+  def self.stripe_class
+    Stripe::Order
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       stripe_charge_id: object.charge,
@@ -26,10 +30,6 @@ class StripeOrder < StripeModelCallbacks::ApplicationRecord
     assign_amounts_from_stripe(object)
     assign_shipping_address_from_stripe(object)
     assign_shipping_from_stripe(object)
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Order.retrieve(id)
   end
 
 private

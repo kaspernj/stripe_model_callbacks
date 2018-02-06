@@ -1,5 +1,4 @@
 require "auto_autoloader"
-require "exception_notifier"
 require "money-rails"
 require "public_activity"
 require "service_pattern"

@@ -8,6 +8,10 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
   monetize :amount_due_cents, allow_nil: true
   monetize :application_fee_cents, allow_nil: true
 
+  def self.stripe_class
+    Stripe::Invoice
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       amount_due: Money.new(object.amount_due, object.currency),
@@ -23,9 +27,5 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
       livemode: object.livemode,
       paid: object.paid
     )
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::Invoice.retrieve(id)
   end
 end

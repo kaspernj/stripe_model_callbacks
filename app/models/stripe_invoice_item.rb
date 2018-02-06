@@ -7,6 +7,10 @@ class StripeInvoiceItem < StripeModelCallbacks::ApplicationRecord
 
   monetize :amount_cents
 
+  def self.stripe_class
+    Stripe::InvoiceItem
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
@@ -24,9 +28,5 @@ class StripeInvoiceItem < StripeModelCallbacks::ApplicationRecord
       stripe_subscription_id: object.subscription,
       subscription_item: object.try(:subscription_item)
     )
-  end
-
-  def to_stripe
-    @_to_stripe ||= Stripe::InvoiceItem.retrieve(id)
   end
 end
