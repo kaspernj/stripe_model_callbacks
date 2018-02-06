@@ -15,6 +15,13 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
     where(status: states)
   }
 
+  def self.create_from_stripe!(object)
+    stripe_subscription = new
+    stripe_subscription.assign_from_stripe(object)
+    stripe_subscription.save!
+    stripe_subscription
+  end
+
   def assign_from_stripe(object)
     assign_attributes(
       canceled_at: object.canceled_at ? Time.zone.at(object.canceled_at) : nil,

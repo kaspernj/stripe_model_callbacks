@@ -3,20 +3,20 @@ class CreateStripeSubscriptions < ActiveRecord::Migration[5.0]
     create_table :stripe_subscriptions, id: false do |t|
       t.string :id, primary: true, null: false
       t.integer :application_fee_percent
-      t.string :billing, null: false
-      t.boolean :cancel_at_period_end, null: false
+      t.string :billing
+      t.boolean :cancel_at_period_end
       t.datetime :canceled_at
-      t.datetime :current_period_start, null: false
-      t.datetime :current_period_end, null: false
-      t.string :stripe_customer_id, index: true, null: false
+      t.datetime :current_period_start
+      t.datetime :current_period_end
+      t.string :stripe_customer_id, index: true
       t.integer :days_until_due
       t.string :discount, index: true
       t.datetime :ended_at
-      t.boolean :livemode, default: true, null: false
+      t.boolean :livemode, default: true
       t.text :metadata
-      t.string :stripe_plan_id, index: true, null: false
+      t.string :stripe_plan_id, index: true
       t.integer :quantity
-      t.datetime :start, null: false
+      t.datetime :start
       t.integer :tax_percent
       t.string :status, index: true
       t.datetime :trial_start

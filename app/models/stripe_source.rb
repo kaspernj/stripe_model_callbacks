@@ -9,10 +9,6 @@ class StripeSource < StripeModelCallbacks::ApplicationRecord
   def assign_from_stripe(object)
     assign_attributes(
       amount: object.amount ? Money.new(object.amount, object.currency) : nil,
-      created: Time.zone.at(object.created),
-      flow: object.flow,
-      livemode: object.livemode,
-      metadata: JSON.generate(object.metadata),
       stripe_type: object.type
     )
 
@@ -23,7 +19,10 @@ class StripeSource < StripeModelCallbacks::ApplicationRecord
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
-      attributes: %w[client_secret currency flow livemode statement_descriptor status usage]
+      attributes: %w[
+        client_secret created currency flow livemode metadata statement_descriptor
+        status usage
+      ]
     )
   end
 

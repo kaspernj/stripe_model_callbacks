@@ -12,12 +12,10 @@ class StripeModelCallbacks::Subscription::StateCheckerService < StripeModelCallb
         response = Subscription::StateCheckerService.execute!(allowed: allowed, state: state_i)
         return response unless response.success?
       end
-    else
-      if allowed.include?(state)
-        ServicePattern::Response.new(success: true)
-      else
-        ServicePattern::Response.new(errors: ["Not allowed: #{state}"])
-      end
+    elsif !allowed.include?(state)
+      return ServicePattern::Response.new(errors: ["Not allowed: #{state}"])
     end
+
+    ServicePattern::Response.new(success: true)
   end
 end

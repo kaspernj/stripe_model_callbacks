@@ -503,20 +503,20 @@ ActiveRecord::Schema.define(version: 20180206151132) do
   create_table "stripe_subscriptions", id: false, force: :cascade do |t|
     t.string "id", null: false
     t.integer "application_fee_percent"
-    t.string "billing", null: false
-    t.boolean "cancel_at_period_end", null: false
+    t.string "billing"
+    t.boolean "cancel_at_period_end"
     t.datetime "canceled_at"
-    t.datetime "current_period_start", null: false
-    t.datetime "current_period_end", null: false
-    t.string "stripe_customer_id", null: false
+    t.datetime "current_period_start"
+    t.datetime "current_period_end"
+    t.string "stripe_customer_id"
     t.integer "days_until_due"
     t.string "discount"
     t.datetime "ended_at"
-    t.boolean "livemode", default: true, null: false
+    t.boolean "livemode", default: true
     t.text "metadata"
-    t.string "stripe_plan_id", null: false
+    t.string "stripe_plan_id"
     t.integer "quantity"
-    t.datetime "start", null: false
+    t.datetime "start"
     t.integer "tax_percent"
     t.string "status"
     t.datetime "trial_start"
