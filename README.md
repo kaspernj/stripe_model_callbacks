@@ -46,7 +46,7 @@ end
 
 Add the migrations for the Stripe models to your project like this:
 ```bash
-rails generate stripe_model_callbacks:install_models
+rake stripe_model_callbacks:install:migrations
 ```
 
 You should set up your Stripe account to post events to your website using a URL that looks something like this:
