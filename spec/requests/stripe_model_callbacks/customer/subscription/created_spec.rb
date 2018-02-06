@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe "subscription creation" do
-  let!(:stripe_customer) { create :stripe_customer, identifier: "cus_00000000000000" }
-  let!(:stripe_plan) { create :stripe_plan, identifier: "silver-express-898_00000000000000" }
+  let!(:stripe_customer) { create :stripe_customer, id: "cus_00000000000000" }
+  let!(:stripe_plan) { create :stripe_plan, id: "silver-express-898_00000000000000" }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
@@ -20,8 +20,8 @@ describe "subscription creation" do
       created_subscription = StripeSubscription.last
 
       expect(response.code).to eq "200"
-      expect(created_subscription.customer).to eq stripe_customer
-      expect(created_subscription.plan).to eq stripe_plan
+      expect(created_subscription.stripe_customer).to eq stripe_customer
+      expect(created_subscription.stripe_plan).to eq stripe_plan
     end
   end
 end

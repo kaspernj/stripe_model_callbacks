@@ -1,7 +1,7 @@
 class CreateStripeInvoices < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_invoices do |t|
-      t.string :identifier, index: true, null: false
+    create_table :stripe_invoices, id: false do |t|
+      t.string :id, primary: true, null: false
       amount_columns(t)
       customer_columns(t)
       t.boolean :attempted, null: false
@@ -36,7 +36,7 @@ private
     t.string :discount_currency
     t.integer :ending_balance_cents
     t.integer :ending_balance_currency
-    t.string :charge_identifier, index: true
+    t.string :stripe_charge_id, index: true
     t.string :currency, null: false
     t.integer :subtotal_cents
     t.string :subtotal_currency
@@ -48,10 +48,10 @@ private
   end
 
   def customer_columns(t)
-    t.string :customer_identifier, index: true, null: false
+    t.string :stripe_customer_id, index: true, null: false
     t.string :description
     t.boolean :forgiven, null: false
     t.string :receipt_number
-    t.string :subscription_identifier, index: true
+    t.string :stripe_subscription_id, index: true
   end
 end

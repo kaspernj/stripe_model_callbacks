@@ -1,7 +1,7 @@
 class CreateStripePlans < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_plans do |t|
-      t.string :identifier, index: true, null: false
+    create_table :stripe_plans, id: false do |t|
+      t.string :id, primary: true, null: false
       t.integer :amount_cents, null: false
       t.string :amount_currency, null: false
       t.string :currency, null: false

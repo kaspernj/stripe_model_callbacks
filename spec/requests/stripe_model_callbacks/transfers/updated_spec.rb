@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "transfer updated" do
-  let!(:transfer) { create :stripe_transfer, identifier: "tr_00000000000000" }
+  let!(:transfer) { create :stripe_transfer, id: "tr_00000000000000" }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
@@ -20,7 +20,7 @@ describe "transfer updated" do
 
       expect(response.code).to eq "200"
 
-      expect(transfer.identifier).to eq "tr_00000000000000"
+      expect(transfer.id).to eq "tr_00000000000000"
       expect(transfer.amount.format).to eq "$11.00"
       expect(transfer.amount_reversed.format).to eq "$0.00"
       expect(transfer.balance_transaction).to eq "txn_00000000000000"

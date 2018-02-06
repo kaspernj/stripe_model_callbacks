@@ -18,7 +18,7 @@ describe "customer source updated" do
 
       expect(response.code).to eq "200"
 
-      expect(created_source.identifier).to eq "src_00000000000000"
+      expect(created_source.id).to eq "src_00000000000000"
       expect(created_source.currency).to eq "usd"
       expect(created_source.created).to eq Time.zone.parse("2018-02-06 12:18:52")
       expect(created_source.owner_email).to eq "jenny.rosen@example.com"

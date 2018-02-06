@@ -1,7 +1,7 @@
 class CreateStripeSkus < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_skus do |t|
-      t.string :identifier, index: true, null: false
+    create_table :stripe_skus, id: false do |t|
+      t.string :id, primary: true, null: false
       t.boolean :active, default: false, null: false
       t.datetime :deleted_at, index: true
       t.text :stripe_attributes
@@ -13,7 +13,7 @@ class CreateStripeSkus < ActiveRecord::Migration[5.0]
       t.text :metadata
       t.integer :price_cents
       t.string :price_currency
-      t.string :product_identifier, index: true
+      t.string :stripe_product_id, index: true
       t.datetime :created
       t.datetime :updated
       t.timestamps

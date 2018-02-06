@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :stripe_source do
-    sequence(:identifier) { |n| "stripe-source-#{n}" }
+    sequence(:id) { |n| "stripe-source-#{n}" }
     client_secret "CLIENT-FAKE-SECRET"
     flow "receiver"
     livemode false

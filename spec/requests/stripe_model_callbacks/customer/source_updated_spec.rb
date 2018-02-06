@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "customer source updated" do
-  let!(:stripe_source) { create :stripe_source, identifier: "src_00000000000000" }
+  let!(:stripe_source) { create :stripe_source, id: "src_00000000000000" }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
@@ -20,7 +20,7 @@ describe "customer source updated" do
 
       expect(response.code).to eq "200"
 
-      expect(stripe_source.identifier).to eq "src_00000000000000"
+      expect(stripe_source.id).to eq "src_00000000000000"
       expect(stripe_source.currency).to eq "usd"
       expect(stripe_source.created).to eq Time.zone.parse("2018-02-04 19:29:53")
       expect(stripe_source.owner_email).to eq "jenny.rosen@example.com"

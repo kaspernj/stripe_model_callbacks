@@ -1,11 +1,13 @@
 class StripeDispute < StripeModelCallbacks::ApplicationRecord
+  self.primary_key = "id"
+
   monetize :amount_cents
 
   def assign_from_stripe(object)
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
-      balance_transaction_identifier: object.balance_transaction,
-      charge_identifier: object.charge,
+      balance_transaction_id: object.balance_transaction,
+      stripe_charge_id: object.charge,
       created: Time.zone.at(object.created),
       metadata: JSON.generate(object.metadata)
     )

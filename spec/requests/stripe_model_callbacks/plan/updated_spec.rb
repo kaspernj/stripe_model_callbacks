@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "plan updated" do
-  let!(:plan) { create :stripe_plan, identifier: "gold_00000000000000" }
+  let!(:plan) { create :stripe_plan, id: "gold_00000000000000" }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
@@ -20,7 +20,7 @@ describe "plan updated" do
 
       expect(response.code).to eq "200"
 
-      expect(plan.identifier).to eq "gold_00000000000000"
+      expect(plan.id).to eq "gold_00000000000000"
       expect(plan.amount.format).to eq "$20.00"
       expect(plan.created).to eq Time.zone.parse("2018-02-05 15:48:16")
       expect(plan.metadata).to eq "{}"

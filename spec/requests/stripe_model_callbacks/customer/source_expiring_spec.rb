@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe "customer source expiring" do
-  let!(:stripe_customer) { create :stripe_customer, identifier: "cus_00000000000000" }
-  let!(:stripe_source) { create :stripe_source, identifier: "src_00000000000000" }
+  let!(:stripe_customer) { create :stripe_customer, id: "cus_00000000000000" }
+  let!(:stripe_source) { create :stripe_source, id: "src_00000000000000" }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
@@ -22,7 +22,7 @@ describe "customer source expiring" do
 
       expect(response.code).to eq "200"
 
-      expect(stripe_source.identifier).to eq "src_00000000000000"
+      expect(stripe_source.id).to eq "src_00000000000000"
       expect(stripe_source.currency).to eq "usd"
       expect(stripe_source.created).to eq Time.zone.parse("2018-02-06 12:25:06")
       expect(stripe_source.owner_email).to eq "jenny.rosen@example.com"

@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe "order updated" do
-  let!(:order) { create :stripe_order, identifier: "or_00000000000000" }
-  let!(:order_item) { create :stripe_order_item, order: order, parent_identifier: "sk_1BrqWPAT5SYrvIfdCfVmF7Kx" }
+  let!(:order) { create :stripe_order, id: "or_00000000000000" }
+  let!(:order_item) { create :stripe_order_item, stripe_order: order, parent_id: "sk_1BrqWPAT5SYrvIfdCfVmF7Kx" }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
@@ -23,14 +23,14 @@ describe "order updated" do
 
       expect(response.code).to eq "200"
 
-      expect(order.identifier).to eq "or_00000000000000"
+      expect(order.id).to eq "or_00000000000000"
       expect(order.amount.format).to eq "$15.00"
       expect(order.amount_returned).to eq nil
       expect(order.application).to eq nil
       expect(order.application_fee).to eq nil
-      expect(order.charge).to eq nil
+      expect(order.stripe_charge).to eq nil
       expect(order.created).to eq Time.zone.parse("2018-02-05 14:12:19")
-      expect(order.customer).to eq nil
+      expect(order.stripe_customer).to eq nil
       expect(order.email).to eq nil
       expect(order.livemode).to eq false
       expect(order.metadata).to eq "{}"
@@ -50,9 +50,9 @@ describe "order updated" do
 
       expect(order_item.amount.format).to eq "$15.00"
       expect(order_item.currency).to eq "usd"
-      expect(order_item.order).to eq order
+      expect(order_item.stripe_order).to eq order
       expect(order_item.description).to eq "T-shirt"
-      expect(order_item.parent_identifier).to eq "sk_1BrqWPAT5SYrvIfdCfVmF7Kx"
+      expect(order_item.parent_id).to eq "sk_1BrqWPAT5SYrvIfdCfVmF7Kx"
       expect(order_item.quantity).to eq nil
       expect(order_item.order_item_type).to eq "sku"
     end

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :stripe_plan do
-    sequence(:identifier) { |n| "stripe-plan-#{n}" }
+    sequence(:id) { |n| "stripe-plan-#{n}" }
     amount_cents 10_000
     amount_currency "USD"
     currency "usd"

@@ -1,7 +1,7 @@
 class CreateStripeProducts < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_products do |t|
-      t.string :identifier, index: true, null: false
+    create_table :stripe_products, id: false do |t|
+      t.string :id, primary: true, null: false
       t.boolean :active, default: false, null: false
       t.datetime :deleted_at, index: true
       t.text :stripe_attributes

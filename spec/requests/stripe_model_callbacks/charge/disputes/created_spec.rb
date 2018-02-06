@@ -18,11 +18,11 @@ describe "disputes creation" do
 
       expect(response.code).to eq "200"
 
-      expect(created_dispute.identifier).to eq "dp_00000000000000"
+      expect(created_dispute.id).to eq "dp_00000000000000"
       expect(created_dispute.created).to eq Time.zone.parse("2018-02-06 13:11:19")
       expect(created_dispute.amount.format).to eq "$10.00"
-      expect(created_dispute.balance_transaction_identifier).to eq "txn_00000000000000"
-      expect(created_dispute.charge_identifier).to eq "ch_00000000000000"
+      expect(created_dispute.balance_transaction_id).to eq "txn_00000000000000"
+      expect(created_dispute.stripe_charge_id).to eq "ch_00000000000000"
       expect(created_dispute.currency).to eq "usd"
       expect(created_dispute.evidence_details_due_by).to eq Time.zone.parse("2018-02-25 23:59:59")
       expect(created_dispute.is_charge_refundable).to eq false

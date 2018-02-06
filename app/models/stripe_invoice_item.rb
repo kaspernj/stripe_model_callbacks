@@ -1,24 +1,9 @@
 class StripeInvoiceItem < StripeModelCallbacks::ApplicationRecord
-  belongs_to :customer,
-    class_name: "StripeCustomer",
-    foreign_key: "customer_identifier",
-    inverse_of: :invoice_items,
-    optional: true,
-    primary_key: "identifier"
+  self.primary_key = "id"
 
-  belongs_to :invoice,
-    class_name: "StripeInvoice",
-    foreign_key: "invoice_identifier",
-    inverse_of: :invoice_items,
-    optional: true,
-    primary_key: "identifier"
-
-  belongs_to :plan,
-    class_name: "StripePlan",
-    foreign_key: "plan_identifier",
-    inverse_of: :invoice_items,
-    optional: true,
-    primary_key: "identifier"
+  belongs_to :stripe_customer, inverse_of: :stripe_invoice_items, optional: true
+  belongs_to :stripe_invoice, inverse_of: :stripe_invoice_items, optional: true
+  belongs_to :stripe_plan, inverse_of: :stripe_invoice_items, optional: true
 
   monetize :amount_cents
 
@@ -26,17 +11,17 @@ class StripeInvoiceItem < StripeModelCallbacks::ApplicationRecord
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
       currency: object.currency,
-      customer_identifier: object.try(:customer),
+      stripe_customer_id: object.try(:customer),
       description: object.description,
       discountable: object.discountable,
       livemode: object.livemode,
       metadata: JSON.generate(object.metadata),
       period_start: Time.zone.at(object.period.start),
       period_end: Time.zone.at(object.period.end),
-      plan_identifier: object.plan&.id,
+      stripe_plan_id: object.plan&.id,
       proration: object.proration,
       quantity: object.quantity,
-      subscription_identifier: object.subscription,
+      stripe_subscription_id: object.subscription,
       subscription_item: object.try(:subscription_item)
     )
   end

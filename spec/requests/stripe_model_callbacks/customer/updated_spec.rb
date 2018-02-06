@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "customer updating" do
-  let!(:stripe_customer) { create :stripe_customer, identifier: "cus_00000000000000" }
+  let!(:stripe_customer) { create :stripe_customer, id: "cus_00000000000000" }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))

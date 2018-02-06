@@ -1,6 +1,6 @@
 class StripeModelCallbacks::Customer::Subscription::UpdatedService < StripeModelCallbacks::BaseEventService
   def execute!
-    subscription ||= StripeSubscription.find_or_initialize_by(identifier: object.id)
+    subscription ||= StripeSubscription.find_or_initialize_by(id: object.id)
     subscription.assign_from_stripe(object)
     subscription.deleted_at ||= Time.zone.now if event.type == "customer.subscription.deleted"
 

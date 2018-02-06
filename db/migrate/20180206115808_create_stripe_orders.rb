@@ -1,11 +1,11 @@
 class CreateStripeOrders < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_orders do |t|
-      t.string :identifier, index: true, null: false
+    create_table :stripe_orders, id: false do |t|
+      t.string :id, primary: true, null: false
       amount_columns(t)
-      t.string :charge_identifier, index: true
+      t.string :stripe_charge_id, index: true
       t.string :currency, null: false
-      t.string :customer_identifier, index: true
+      t.string :stripe_customer_id, index: true
       t.string :email
       t.boolean :livemode, null: false
       t.text :metadata

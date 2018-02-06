@@ -10,7 +10,6 @@ FactoryBot.define do
     forgiven false
     livemode false
     paid false
-
-    association :customer, factory: :stripe_customer
+    stripe_customer
   end
 end

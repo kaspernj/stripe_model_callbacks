@@ -18,14 +18,14 @@ describe "sku created" do
 
       expect(response.code).to eq "200"
 
-      expect(created_sku.identifier).to eq "sku_00000000000000"
+      expect(created_sku.id).to eq "sku_00000000000000"
       expect(created_sku.inventory_quantity).to eq 50
       expect(created_sku.inventory_type).to eq "finite"
       expect(created_sku.inventory_value).to eq nil
       expect(created_sku.livemode).to eq false
       expect(created_sku.metadata).to eq "{}"
       expect(created_sku.price.format).to eq "$15.00"
-      expect(created_sku.product_identifier).to eq "prod_00000000000000"
+      expect(created_sku.stripe_product_id).to eq "prod_00000000000000"
     end
   end
 end

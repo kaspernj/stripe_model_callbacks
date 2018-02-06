@@ -13,7 +13,7 @@ class StripeModelCallbacks::Charge::DisputeUpdatedService < StripeModelCallbacks
 private
 
   def dispute
-    @_dispute ||= StripeDispute.find_or_initialize_by(identifier: object.id)
+    @_dispute ||= StripeDispute.find_or_initialize_by(id: object.id)
   end
 
   def create_activity
