@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180206094733) do
+ActiveRecord::Schema.define(version: 20180206115817) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -254,6 +254,32 @@ ActiveRecord::Schema.define(version: 20180206094733) do
     t.index ["charge_identifier"], name: "index_stripe_orders_on_charge_identifier"
     t.index ["customer_identifier"], name: "index_stripe_orders_on_customer_identifier"
     t.index ["identifier"], name: "index_stripe_orders_on_identifier"
+  end
+
+  create_table "stripe_payouts", force: :cascade do |t|
+    t.string "identifier", null: false
+    t.integer "amount_cents"
+    t.string "amount_currency"
+    t.datetime "arrival_date"
+    t.boolean "automatic"
+    t.string "balance_transaction"
+    t.datetime "created"
+    t.string "currency"
+    t.string "description"
+    t.string "destination"
+    t.string "failure_balance_transaction"
+    t.string "failure_code"
+    t.string "failure_message"
+    t.boolean "livemode"
+    t.text "metadata"
+    t.string "stripe_method"
+    t.string "source_type"
+    t.string "statement_descriptor"
+    t.string "status"
+    t.string "stripe_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identifier"], name: "index_stripe_payouts_on_identifier"
   end
 
   create_table "stripe_plans", force: :cascade do |t|

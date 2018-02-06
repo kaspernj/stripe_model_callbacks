@@ -27,6 +27,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     invoice_events
     order_events
     recipient_events
+    payout_events
     plan_events
     product_events
     sku_events
@@ -81,6 +82,14 @@ private
     %w[created updated].each do |order_event|
       events.subscribe "order.#{order_event}" do |event|
         StripeModelCallbacks::Order::UpdatedService.reported_execute!(event: event)
+      end
+    end
+  end
+
+  def payout_events
+    %w[canceled created failed paid updated].each do |payout_event|
+      events.subscribe "payout.#{payout_event}" do |event|
+        StripeModelCallbacks::Payout::UpdatedService.reported_execute!(event: event)
       end
     end
   end
