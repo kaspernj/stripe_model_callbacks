@@ -13,6 +13,13 @@ class StripeCustomer < StripeModelCallbacks::ApplicationRecord
     inverse_of: :customer,
     primary_key: "identifier"
 
+  has_many :discounts,
+    class_name: "StripeDiscount",
+    dependent: :restrict_with_error,
+    foreign_key: "customer_identifier",
+    inverse_of: :customer,
+    primary_key: "identifier"
+
   has_many :invoice_items,
     class_name: "StripeInvoiceItem",
     dependent: :restrict_with_error,

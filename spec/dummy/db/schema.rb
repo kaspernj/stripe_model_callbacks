@@ -118,11 +118,31 @@ ActiveRecord::Schema.define(version: 20180206115817) do
   end
 
   create_table "stripe_discounts", force: :cascade do |t|
-    t.string "identifier", null: false
+    t.string "coupon_identifier"
+    t.string "customer_identifier"
+    t.string "subscription_identifier"
+    t.integer "coupon_amount_off_cents"
+    t.string "coupon_amount_off_currency"
+    t.string "coupon_currency"
+    t.datetime "coupon_created"
+    t.string "coupon_duration"
+    t.integer "coupon_duration_in_months"
+    t.boolean "coupon_livemode"
+    t.integer "coupon_max_redemptions"
+    t.text "coupon_metadata"
+    t.integer "coupon_percent_off"
+    t.integer "coupon_redeem_by"
+    t.integer "coupon_times_redeemed"
+    t.boolean "coupon_valid"
     t.datetime "created"
+    t.datetime "deleted_at"
+    t.datetime "start"
+    t.datetime "end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["identifier"], name: "index_stripe_discounts_on_identifier"
+    t.index ["coupon_identifier"], name: "index_stripe_discounts_on_coupon_identifier"
+    t.index ["customer_identifier"], name: "index_stripe_discounts_on_customer_identifier"
+    t.index ["subscription_identifier"], name: "index_stripe_discounts_on_subscription_identifier"
   end
 
   create_table "stripe_invoice_items", force: :cascade do |t|
