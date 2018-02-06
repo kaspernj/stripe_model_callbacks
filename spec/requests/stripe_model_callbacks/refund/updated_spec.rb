@@ -20,7 +20,7 @@ describe "refund updated" do
       refund.reload
 
       expect(response.code).to eq "200"
-      expect(refund.charge).to eq charge
+      expect(refund.stripe_charge).to eq charge
       expect(refund.amount.format).to eq "$1.00"
       expect(refund.balance_transaction).to eq nil
       expect(refund.created).to eq Time.zone.parse("2018-02-05 16:37:07")

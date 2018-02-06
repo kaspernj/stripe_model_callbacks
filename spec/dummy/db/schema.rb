@@ -50,10 +50,10 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.boolean "refunded", null: false
     t.string "review"
     t.string "description"
-    t.string "customer_id"
-    t.string "order_id"
-    t.string "source_id"
-    t.string "invoice_id"
+    t.string "stripe_customer_id"
+    t.string "stripe_order_id"
+    t.string "stripe_source_id"
+    t.string "stripe_invoice_id"
     t.string "on_behalf_of"
     t.string "receipt_email"
     t.string "receipt_number"
@@ -67,10 +67,10 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.datetime "created"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["customer_id"], name: "index_stripe_charges_on_customer_id"
-    t.index ["invoice_id"], name: "index_stripe_charges_on_invoice_id"
-    t.index ["order_id"], name: "index_stripe_charges_on_order_id"
-    t.index ["source_id"], name: "index_stripe_charges_on_source_id"
+    t.index ["stripe_customer_id"], name: "index_stripe_charges_on_stripe_customer_id"
+    t.index ["stripe_invoice_id"], name: "index_stripe_charges_on_stripe_invoice_id"
+    t.index ["stripe_order_id"], name: "index_stripe_charges_on_stripe_order_id"
+    t.index ["stripe_source_id"], name: "index_stripe_charges_on_stripe_source_id"
   end
 
   create_table "stripe_coupons", id: false, force: :cascade do |t|
@@ -115,9 +115,9 @@ ActiveRecord::Schema.define(version: 20180206151132) do
   end
 
   create_table "stripe_discounts", force: :cascade do |t|
-    t.string "coupon_id"
-    t.string "customer_id"
-    t.string "subscription_id"
+    t.string "stripe_coupon_id"
+    t.string "stripe_customer_id"
+    t.string "stripe_subscription_id"
     t.integer "coupon_amount_off_cents"
     t.string "coupon_amount_off_currency"
     t.string "coupon_currency"
@@ -137,9 +137,9 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.datetime "end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["coupon_id"], name: "index_stripe_discounts_on_coupon_id"
-    t.index ["customer_id"], name: "index_stripe_discounts_on_customer_id"
-    t.index ["subscription_id"], name: "index_stripe_discounts_on_subscription_id"
+    t.index ["stripe_coupon_id"], name: "index_stripe_discounts_on_stripe_coupon_id"
+    t.index ["stripe_customer_id"], name: "index_stripe_discounts_on_stripe_customer_id"
+    t.index ["stripe_subscription_id"], name: "index_stripe_discounts_on_stripe_subscription_id"
   end
 
   create_table "stripe_disputes", id: false, force: :cascade do |t|
@@ -148,7 +148,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.integer "amount_cents"
     t.string "amount_currency"
     t.string "balance_transaction_id"
-    t.string "charge_id"
+    t.string "stripe_charge_id"
     t.string "currency"
     t.text "evidence_access_activity_log"
     t.text "evidence_billing_address"
@@ -189,36 +189,36 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["balance_transaction_id"], name: "index_stripe_disputes_on_balance_transaction_id"
-    t.index ["charge_id"], name: "index_stripe_disputes_on_charge_id"
+    t.index ["stripe_charge_id"], name: "index_stripe_disputes_on_stripe_charge_id"
   end
 
   create_table "stripe_invoice_items", id: false, force: :cascade do |t|
     t.string "id", null: false
     t.integer "amount_cents"
     t.string "amount_currency"
-    t.string "customer_id"
+    t.string "stripe_customer_id"
     t.string "currency", null: false
     t.date "datetime"
     t.datetime "deleted_at"
     t.string "description"
     t.boolean "discountable", null: false
-    t.string "invoice_id"
+    t.string "stripe_invoice_id"
     t.boolean "livemode", null: false
     t.text "metadata"
     t.datetime "period_start"
     t.datetime "period_end"
-    t.string "plan_id"
+    t.string "stripe_plan_id"
     t.boolean "proration", null: false
     t.integer "quantity"
-    t.string "subscription_id"
+    t.string "stripe_subscription_id"
     t.string "subscription_item"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["customer_id"], name: "index_stripe_invoice_items_on_customer_id"
     t.index ["deleted_at"], name: "index_stripe_invoice_items_on_deleted_at"
-    t.index ["invoice_id"], name: "index_stripe_invoice_items_on_invoice_id"
-    t.index ["plan_id"], name: "index_stripe_invoice_items_on_plan_id"
-    t.index ["subscription_id"], name: "index_stripe_invoice_items_on_subscription_id"
+    t.index ["stripe_customer_id"], name: "index_stripe_invoice_items_on_stripe_customer_id"
+    t.index ["stripe_invoice_id"], name: "index_stripe_invoice_items_on_stripe_invoice_id"
+    t.index ["stripe_plan_id"], name: "index_stripe_invoice_items_on_stripe_plan_id"
+    t.index ["stripe_subscription_id"], name: "index_stripe_invoice_items_on_stripe_subscription_id"
   end
 
   create_table "stripe_invoices", id: false, force: :cascade do |t|
@@ -232,7 +232,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.string "discount_currency"
     t.integer "ending_balance_cents"
     t.integer "ending_balance_currency"
-    t.string "charge_id"
+    t.string "stripe_charge_id"
     t.string "currency", null: false
     t.integer "subtotal_cents"
     t.string "subtotal_currency"
@@ -241,11 +241,11 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.decimal "tax_percent"
     t.integer "total_cents"
     t.string "total_currency"
-    t.string "customer_id", null: false
+    t.string "stripe_customer_id", null: false
     t.string "description"
     t.boolean "forgiven", null: false
     t.string "receipt_number"
-    t.string "subscription_id"
+    t.string "stripe_subscription_id"
     t.boolean "attempted", null: false
     t.datetime "next_payment_attempt"
     t.boolean "closed", null: false
@@ -264,14 +264,14 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.datetime "webhooks_delivered_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["charge_id"], name: "index_stripe_invoices_on_charge_id"
-    t.index ["customer_id"], name: "index_stripe_invoices_on_customer_id"
-    t.index ["subscription_id"], name: "index_stripe_invoices_on_subscription_id"
+    t.index ["stripe_charge_id"], name: "index_stripe_invoices_on_stripe_charge_id"
+    t.index ["stripe_customer_id"], name: "index_stripe_invoices_on_stripe_customer_id"
+    t.index ["stripe_subscription_id"], name: "index_stripe_invoices_on_stripe_subscription_id"
   end
 
   create_table "stripe_order_items", force: :cascade do |t|
     t.string "parent_id", null: false
-    t.string "order_id", null: false
+    t.string "stripe_order_id", null: false
     t.integer "amount_cents", null: false
     t.string "amount_currency", null: false
     t.string "currency", null: false
@@ -280,8 +280,8 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.string "order_item_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["order_id"], name: "index_stripe_order_items_on_order_id"
     t.index ["parent_id"], name: "index_stripe_order_items_on_parent_id"
+    t.index ["stripe_order_id"], name: "index_stripe_order_items_on_stripe_order_id"
   end
 
   create_table "stripe_orders", id: false, force: :cascade do |t|
@@ -293,9 +293,9 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.integer "application_cents"
     t.string "application_currency"
     t.integer "application_fee"
-    t.string "charge_id"
+    t.string "stripe_charge_id"
     t.string "currency", null: false
-    t.string "customer_id"
+    t.string "stripe_customer_id"
     t.string "email"
     t.boolean "livemode", null: false
     t.text "metadata"
@@ -316,8 +316,8 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.datetime "updated"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["charge_id"], name: "index_stripe_orders_on_charge_id"
-    t.index ["customer_id"], name: "index_stripe_orders_on_customer_id"
+    t.index ["stripe_charge_id"], name: "index_stripe_orders_on_stripe_charge_id"
+    t.index ["stripe_customer_id"], name: "index_stripe_orders_on_stripe_customer_id"
   end
 
   create_table "stripe_payouts", id: false, force: :cascade do |t|
@@ -410,7 +410,7 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.integer "amount_cents"
     t.string "amount_currency"
     t.string "balance_transaction"
-    t.string "charge_id", null: false
+    t.string "stripe_charge_id", null: false
     t.string "currency", null: false
     t.string "failure_balance_transaction"
     t.string "failure_reason"
@@ -437,13 +437,13 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.text "metadata"
     t.integer "price_cents"
     t.string "price_currency"
-    t.string "product_id"
+    t.string "stripe_product_id"
     t.datetime "created"
     t.datetime "updated"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_stripe_skus_on_deleted_at"
-    t.index ["product_id"], name: "index_stripe_skus_on_product_id"
+    t.index ["stripe_product_id"], name: "index_stripe_skus_on_stripe_product_id"
   end
 
   create_table "stripe_sources", id: false, force: :cascade do |t|
@@ -508,13 +508,13 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.datetime "canceled_at"
     t.datetime "current_period_start", null: false
     t.datetime "current_period_end", null: false
-    t.string "customer_id", null: false
+    t.string "stripe_customer_id", null: false
     t.integer "days_until_due"
     t.string "discount"
     t.datetime "ended_at"
     t.boolean "livemode", null: false
     t.text "metadata"
-    t.string "plan_id", null: false
+    t.string "stripe_plan_id", null: false
     t.integer "quantity"
     t.datetime "start", null: false
     t.integer "tex_percent"
@@ -525,10 +525,10 @@ ActiveRecord::Schema.define(version: 20180206151132) do
     t.datetime "created"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["customer_id"], name: "index_stripe_subscriptions_on_customer_id"
     t.index ["deleted_at"], name: "index_stripe_subscriptions_on_deleted_at"
     t.index ["discount"], name: "index_stripe_subscriptions_on_discount"
-    t.index ["plan_id"], name: "index_stripe_subscriptions_on_plan_id"
+    t.index ["stripe_customer_id"], name: "index_stripe_subscriptions_on_stripe_customer_id"
+    t.index ["stripe_plan_id"], name: "index_stripe_subscriptions_on_stripe_plan_id"
   end
 
   create_table "stripe_transfers", id: false, force: :cascade do |t|

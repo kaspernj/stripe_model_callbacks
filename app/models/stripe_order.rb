@@ -1,23 +1,9 @@
 class StripeOrder < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
-  belongs_to :stripe_charge,
-    class_name: "StripeCharge",
-    foreign_key: "charge_id",
-    inverse_of: :orders,
-    optional: true
-
-  belongs_to :stripe_customer,
-    class_name: "StripeCustomer",
-    foreign_key: "customer_id",
-    inverse_of: :orders,
-    optional: true
-
-  has_many :stripe_order_items,
-    class_name: "StripeOrderItem",
-    dependent: :destroy,
-    foreign_key: "order_id",
-    inverse_of: :order
+  belongs_to :stripe_charge, inverse_of: :stripe_orders, optional: true
+  belongs_to :stripe_customer, inverse_of: :stripe_orders, optional: true
+  has_many :stripe_order_items, dependent: :destroy, inverse_of: :stripe_order
 
   monetize :amount_cents
   monetize :amount_returned_cents, allow_nil: true
@@ -25,10 +11,10 @@ class StripeOrder < StripeModelCallbacks::ApplicationRecord
 
   def assign_from_stripe(object)
     assign_attributes(
-      charge_id: object.charge,
+      stripe_charge_id: object.charge,
       created: Time.zone.at(object.created),
       currency: object.currency,
-      customer_id: object.customer,
+      stripe_customer_id: object.customer,
       email: object.email,
       livemode: object.livemode,
       metadata: JSON.generate(object.metadata),

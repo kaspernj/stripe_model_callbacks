@@ -31,7 +31,7 @@ describe "charge refunded" do
       expect(created_refund.id).to eq "re_CGQ7INZZQPOC8U"
       expect(created_refund.amount.format).to eq "$1.00"
       expect(created_refund.balance_transaction).to eq "txn_CGQ7Sq2yeAIYK4"
-      expect(created_refund.charge).to eq charge
+      expect(created_refund.stripe_charge).to eq charge
       expect(created_refund.created).to eq Time.zone.parse("2018-02-04 19:36:09")
       expect(created_refund.currency).to eq "usd"
       expect(created_refund.metadata).to eq "{}"

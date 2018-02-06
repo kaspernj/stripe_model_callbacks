@@ -20,8 +20,8 @@ describe "subscription updating" do
       stripe_subscription.reload
 
       expect(response.code).to eq "200"
-      expect(stripe_subscription.customer).to eq stripe_customer
-      expect(stripe_subscription.plan).to eq stripe_plan
+      expect(stripe_subscription.stripe_customer).to eq stripe_customer
+      expect(stripe_subscription.stripe_plan).to eq stripe_plan
       expect(stripe_subscription.current_period_end).to eq Time.zone.at(1_520_191_372)
     end
   end

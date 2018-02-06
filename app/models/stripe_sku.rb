@@ -15,7 +15,7 @@ class StripeSku < StripeModelCallbacks::ApplicationRecord
       livemode: object.livemode,
       metadata: JSON.generate(object.metadata),
       price: Money.new(object.price, object.currency),
-      product_id: object.product
+      stripe_product_id: object.product
     )
 
     StripeModelCallbacks::AttributesAssignerService.execute!(

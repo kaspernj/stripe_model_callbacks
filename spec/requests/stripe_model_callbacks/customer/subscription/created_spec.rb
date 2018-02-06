@@ -20,8 +20,8 @@ describe "subscription creation" do
       created_subscription = StripeSubscription.last
 
       expect(response.code).to eq "200"
-      expect(created_subscription.customer).to eq stripe_customer
-      expect(created_subscription.plan).to eq stripe_plan
+      expect(created_subscription.stripe_customer).to eq stripe_customer
+      expect(created_subscription.stripe_plan).to eq stripe_plan
     end
   end
 end

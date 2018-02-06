@@ -7,7 +7,7 @@ class StripeDispute < StripeModelCallbacks::ApplicationRecord
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
       balance_transaction_id: object.balance_transaction,
-      charge_id: object.charge,
+      stripe_charge_id: object.charge,
       created: Time.zone.at(object.created),
       metadata: JSON.generate(object.metadata)
     )

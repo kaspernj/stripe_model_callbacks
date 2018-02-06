@@ -7,7 +7,7 @@ FactoryBot.define do
     current_period_end Time.zone.now.end_of_month
     stripe_customer
     livemode false
-    association :plan, factory: :stripe_plan
+    stripe_plan
     start 1.month.ago.beginning_of_month
   end
 end

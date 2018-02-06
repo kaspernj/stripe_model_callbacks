@@ -12,12 +12,12 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
   def assign_from_stripe(object)
     assign_attributes(
       created: Time.zone.at(object.created),
-      customer_id: object.customer,
+      stripe_customer_id: object.customer,
       livemode: object.livemode,
-      invoice_id: object.invoice,
+      stripe_invoice_id: object.invoice,
       metadata: JSON.generate(object.metadata),
-      order_id: object.order,
-      source_id: object.source
+      stripe_order_id: object.order,
+      stripe_source_id: object.source
     )
 
     assign_amounts_from_stripe(object)

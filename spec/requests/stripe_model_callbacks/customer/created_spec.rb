@@ -23,7 +23,7 @@ describe "customer creation" do
       expect(created_customer.delinquent).to eq false
       expect(created_customer.metadata).to eq "{}"
       expect(created_customer.email).to eq "user@example.com"
-      expect(created_customer.subscription).to eq nil
+      expect(created_customer.stripe_subscription).to eq nil
       expect(created_customer.discount).to eq nil
       expect(created_customer.account_balance).to eq 0
     end

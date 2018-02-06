@@ -3,7 +3,7 @@ require "rails_helper"
 describe "subscription deletion" do
   let!(:customer) { create :stripe_customer, id: "cus_00000000000000" }
   let!(:plan) { create :stripe_plan, id: "silver-express-898_00000000000000" }
-  let!(:subscription) { create :stripe_subscription, customer: customer, plan: plan, id: "sub_00000000000000" }
+  let!(:subscription) { create :stripe_subscription, stripe_customer: customer, stripe_plan: plan, id: "sub_00000000000000" }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
@@ -20,8 +20,8 @@ describe "subscription deletion" do
       subscription.reload
 
       expect(response.code).to eq "200"
-      expect(subscription.customer).to eq customer
-      expect(subscription.plan).to eq plan
+      expect(subscription.stripe_customer).to eq customer
+      expect(subscription.stripe_plan).to eq plan
       expect(subscription.ended_at).to eq Time.zone.at(1_517_769_949)
     end
   end

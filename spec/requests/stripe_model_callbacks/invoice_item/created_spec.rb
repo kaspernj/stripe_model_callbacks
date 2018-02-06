@@ -27,7 +27,7 @@ describe "subscription creation" do
       expect(created_invoice_item.livemode).to eq false
       expect(created_invoice_item.period_start).to eq Time.zone.parse("2018-02-04 19:31:56")
       expect(created_invoice_item.period_end).to eq Time.zone.parse("2018-02-04 19:31:56")
-      expect(created_invoice_item.plan).to eq nil
+      expect(created_invoice_item.stripe_plan).to eq nil
     end
   end
 end

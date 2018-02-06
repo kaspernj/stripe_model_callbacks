@@ -1,12 +1,9 @@
 class StripeCoupon < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
-  monetize :amount_off_cents, allow_nil: true
+  has_many :stripe_discounts, dependent: :restrict_with_error, inverse_of: :stripe_coupon
 
-  has_many :stripe_discounts,
-    class_name: "StripeDiscount",
-    dependent: :restrict_with_error,
-    inverse_of: :stripe_coupon
+  monetize :amount_off_cents, allow_nil: true
 
   def assign_from_stripe(object)
     assign_attributes(

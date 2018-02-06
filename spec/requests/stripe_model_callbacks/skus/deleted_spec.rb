@@ -27,7 +27,7 @@ describe "sku deleted" do
       expect(sku.livemode).to eq false
       expect(sku.metadata).to eq "{}"
       expect(sku.price.format).to eq "$15.00"
-      expect(sku.product_id).to eq "prod_00000000000000"
+      expect(sku.stripe_product_id).to eq "prod_00000000000000"
       expect(sku.deleted_at).to be > 1.minute.ago
     end
   end

@@ -27,7 +27,7 @@ describe "order creation" do
       expect(created_order.application_fee).to eq nil
       expect(created_order.stripe_charge).to eq nil
       expect(created_order.created).to eq Time.zone.parse("2018-02-05 13:32:13")
-      expect(created_order.customer).to eq nil
+      expect(created_order.stripe_customer).to eq nil
       expect(created_order.email).to eq nil
       expect(created_order.livemode).to eq false
       expect(created_order.metadata).to eq "{}"
@@ -47,7 +47,7 @@ describe "order creation" do
 
       expect(created_order_item.amount.format).to eq "$15.00"
       expect(created_order_item.currency).to eq "usd"
-      expect(created_order_item.order).to eq created_order
+      expect(created_order_item.stripe_order).to eq created_order
       expect(created_order_item.description).to eq "T-shirt"
       expect(created_order_item.parent_id).to eq "sk_1BrqWPAT5SYrvIfdCfVmF7Kx"
       expect(created_order_item.quantity).to eq nil

@@ -3,7 +3,7 @@ require "rails_helper"
 describe "customer discount deleted" do
   let!(:coupon) { create :stripe_coupon, id: "25OFF_00000000000000" }
   let!(:customer) { create :stripe_customer, id: "cus_00000000000000" }
-  let!(:discount) { create :stripe_discount, coupon: coupon, customer: customer }
+  let!(:discount) { create :stripe_discount, stripe_coupon: coupon, stripe_customer: customer }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
@@ -23,10 +23,10 @@ describe "customer discount deleted" do
 
       expect(response.code).to eq "200"
 
-      expect(discount.coupon_id).to eq "25OFF_00000000000000"
-      expect(discount.coupon).to eq coupon
-      expect(discount.customer_id).to eq "cus_00000000000000"
-      expect(discount.customer).to eq customer
+      expect(discount.stripe_coupon_id).to eq "25OFF_00000000000000"
+      expect(discount.stripe_coupon).to eq coupon
+      expect(discount.stripe_customer_id).to eq "cus_00000000000000"
+      expect(discount.stripe_customer).to eq customer
       expect(discount.coupon_amount_off).to eq nil
       expect(discount.coupon_created).to eq Time.zone.parse("2018-02-06 12:29:43")
       expect(discount.coupon_currency).to eq nil
@@ -41,8 +41,8 @@ describe "customer discount deleted" do
       expect(discount.coupon_valid).to eq true
       expect(discount.start).to eq Time.zone.parse("2018-02-06 12:29:43")
       expect(discount.end).to eq Time.zone.parse("2018-05-06 12:29:43")
-      expect(discount.subscription_id).to eq nil
-      expect(discount.subscription).to eq nil
+      expect(discount.stripe_subscription_id).to eq nil
+      expect(discount.stripe_subscription).to eq nil
       expect(discount.deleted_at).to be > 1.minute.ago
     end
   end

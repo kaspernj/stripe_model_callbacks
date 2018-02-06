@@ -19,9 +19,9 @@ private
 
   def discount
     @_discount ||= StripeDiscount.find_or_initialize_by(
-      coupon_id: object.coupon.id,
-      customer_id: object.customer,
-      subscription_id: object.subscription&.id
+      stripe_coupon_id: object.coupon.id,
+      stripe_customer_id: object.customer,
+      stripe_subscription_id: object.subscription&.id
     )
   end
 end
