@@ -4,8 +4,8 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_customer, inverse_of: :stripe_subscription, optional: true
   belongs_to :stripe_discount, inverse_of: :stripe_subscriptions, optional: true
   belongs_to :stripe_plan, inverse_of: :stripe_subscriptions, optional: true
-  has_many :stripe_invoices, dependent: :restrict_with_error, inverse_of: :stripe_subscription
-  has_many :stripe_discounts, dependent: :restrict_with_error, inverse_of: :stripe_subscription
+  has_many :stripe_invoices, dependent: :restrict_with_error
+  has_many :stripe_discounts, dependent: :restrict_with_error
 
   def assign_from_stripe(object)
     assign_attributes(

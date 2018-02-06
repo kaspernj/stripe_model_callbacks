@@ -3,7 +3,7 @@ class StripeOrder < StripeModelCallbacks::ApplicationRecord
 
   belongs_to :stripe_charge, inverse_of: :stripe_orders, optional: true
   belongs_to :stripe_customer, inverse_of: :stripe_orders, optional: true
-  has_many :stripe_order_items, dependent: :destroy, inverse_of: :stripe_order
+  has_many :stripe_order_items, dependent: :destroy
 
   monetize :amount_cents
   monetize :amount_returned_cents, allow_nil: true

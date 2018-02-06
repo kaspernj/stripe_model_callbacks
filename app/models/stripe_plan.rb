@@ -1,8 +1,8 @@
 class StripePlan < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
-  has_many :stripe_invoice_items, dependent: :restrict_with_error, inverse_of: :stripe_plan
-  has_many :stripe_subscriptions, dependent: :restrict_with_error, inverse_of: :stripe_plan
+  has_many :stripe_invoice_items, dependent: :restrict_with_error
+  has_many :stripe_subscriptions, dependent: :restrict_with_error
 
   monetize :amount_cents
 

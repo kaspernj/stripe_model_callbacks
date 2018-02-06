@@ -1,7 +1,7 @@
 class StripeCoupon < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
-  has_many :stripe_discounts, dependent: :restrict_with_error, inverse_of: :stripe_coupon
+  has_many :stripe_discounts, dependent: :restrict_with_error
 
   monetize :amount_off_cents, allow_nil: true
 

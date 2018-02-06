@@ -4,7 +4,7 @@ class StripeDiscount < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_coupon, inverse_of: :stripe_discounts, optional: true
   belongs_to :stripe_customer, inverse_of: :stripe_discounts, optional: true
   belongs_to :stripe_subscription, inverse_of: :stripe_discounts, optional: true
-  has_many :stripe_subscriptions, dependent: :restrict_with_error, inverse_of: :stripe_discount
+  has_many :stripe_subscriptions, dependent: :restrict_with_error
 
   monetize :coupon_amount_off_cents, allow_nil: true
 

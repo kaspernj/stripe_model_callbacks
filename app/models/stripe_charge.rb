@@ -1,9 +1,9 @@
 class StripeCharge < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
-  belongs_to :stripe_customer, inverse_of: :stripe_charges, optional: true
-  has_many :stripe_orders, dependent: :restrict_with_error, inverse_of: :stripe_charge
-  has_many :stripe_refunds, dependent: :restrict_with_error, inverse_of: :stripe_charge
+  belongs_to :stripe_customer, optional: true
+  has_many :stripe_orders, dependent: :restrict_with_error
+  has_many :stripe_refunds, dependent: :restrict_with_error
 
   monetize :amount_cents
   monetize :amount_refunded_cents, allow_nil: true
