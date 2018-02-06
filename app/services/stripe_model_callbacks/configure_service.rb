@@ -10,10 +10,6 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
       StripeModelCallbacks::NotifierService.reported_execute!(event: event)
     end
 
-    events.subscribe "customer.source.updated" do |event|
-      StripeModelCallbacks::Customer::SourceUpdatedService.reported_execute!(event: event)
-    end
-
     events.subscribe "charge.refund.updated" do |event|
       StripeModelCallbacks::Refund::UpdatedService.reported_execute!(event: event)
     end
@@ -23,6 +19,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     charge_events
     coupon_events
     customer_events
+    customer_source_events
     invoice_item_events
     invoice_events
     order_events
@@ -58,6 +55,14 @@ private
     %w[created deleted updated].each do |customer_event|
       events.subscribe "customer.#{customer_event}" do |event|
         StripeModelCallbacks::Customer::UpdatedService.reported_execute!(event: event)
+      end
+    end
+  end
+
+  def customer_source_events
+    %w[created deleted expiring updated].each do |customer_event|
+      events.subscribe "customer.source.#{customer_event}" do |event|
+        StripeModelCallbacks::Customer::SourceUpdatedService.reported_execute!(event: event)
       end
     end
   end

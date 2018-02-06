@@ -1,6 +1,7 @@
 require "rails_helper"
 
-describe "customer source updated" do
+describe "customer source deleted" do
+  let!(:stripe_customer) { create :stripe_customer, identifier: "cus_00000000000000" }
   let!(:stripe_source) { create :stripe_source, identifier: "src_00000000000000" }
 
   def bypass_event_signature(payload)
@@ -8,13 +9,14 @@ describe "customer source updated" do
     expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
   end
 
-  let(:payload) { File.read("spec/fixtures/stripe_events/customer/customer.source.updated.json") }
+  let(:payload) { File.read("spec/fixtures/stripe_events/customer/customer.source.deleted.json") }
   before { bypass_event_signature(payload) }
 
   describe "#execute!" do
-    it "updates the subscription" do
-      expect { post "/stripe-events", params: payload }
+    it "adds an activity and updates the source" do
+      expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
         .to change(StripeSource, :count).by(0)
+        .and change(PublicActivity::Activity.where(key: "stripe_source.deleted"), :count).by(1)
 
       stripe_source.reload
 
@@ -22,7 +24,7 @@ describe "customer source updated" do
 
       expect(stripe_source.identifier).to eq "src_00000000000000"
       expect(stripe_source.currency).to eq "usd"
-      expect(stripe_source.created).to eq Time.zone.parse("2018-02-04 19:29:53")
+      expect(stripe_source.created).to eq Time.zone.parse("2018-02-06 12:27:27")
       expect(stripe_source.owner_email).to eq "jenny.rosen@example.com"
     end
   end
