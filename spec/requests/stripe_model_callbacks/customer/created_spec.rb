@@ -6,15 +6,15 @@ describe "customer creation" do
     expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
   end
 
-  let(:payload) { File.read("spec/fixtures/stripe_events/customer_created.json") }
+  let(:payload) { File.read("spec/fixtures/stripe_events/customer/customer.created.json") }
   before { bypass_event_signature(payload) }
 
   describe "#execute!" do
     it "updates the subscription" do
       expect { post "/stripe-events", params: payload }
-        .to change(StripeModelCallbacks::StripeCustomer, :count).by(1)
+        .to change(StripeCustomer, :count).by(1)
 
-      created_customer = StripeModelCallbacks::StripeCustomer.last
+      created_customer = StripeCustomer.last
 
       expect(response.code).to eq "200"
       expect(created_customer.identifier).to eq "cus_2wm5EgmRGEiyPO"

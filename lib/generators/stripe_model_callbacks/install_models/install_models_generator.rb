@@ -32,6 +32,7 @@ module StripeModelCallbacks::Generators
       migration_template "create_stripe_skus.rb", "db/migrate/create_stripe_skus.rb"
       migration_template "create_stripe_sources.rb", "db/migrate/create_stripe_sources.rb"
       migration_template "create_stripe_subscriptions.rb", "db/migrate/create_stripe_subscriptions.rb"
+      migration_template "create_stripe_transfers.rb", "db/migrate/create_stripe_transfers.rb"
     end
   end
 end

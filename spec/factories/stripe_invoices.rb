@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :stripe_invoice, class: StripeModelCallbacks::StripeInvoice do
+  factory :stripe_invoice do
     amount_due_cents 0
     amount_due_currency "USD"
     attempted false

@@ -1,6 +1,6 @@
 class StripeModelCallbacks::Customer::SourceUpdatedService < StripeModelCallbacks::BaseEventService
   def execute!
-    source = StripeModelCallbacks::StripeSource.find_or_initialize_by(identifier: object.id)
+    source = StripeSource.find_or_initialize_by(identifier: object.id)
     source.assign_from_stripe(object)
 
     if source.save

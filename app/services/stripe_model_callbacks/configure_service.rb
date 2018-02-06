@@ -18,16 +18,20 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
       StripeModelCallbacks::Refund::UpdatedService.reported_execute!(event: event)
     end
 
+    # events.subscribe "source.transaction.created"
+
     customer_events
     invoice_item_events
     charge_events
-    subscription_events
     invoice_events
     order_events
     recipient_events
-    sku_events
     plan_events
     product_events
+    sku_events
+    source_events
+    subscription_events
+    transfer_events
   end
 
 private
@@ -104,10 +108,26 @@ private
     end
   end
 
+  def source_events
+    %w[canceled chargeable failed mandate_notification].each do |source_event|
+      events.subscribe "source.#{source_event}" do |event|
+        StripeModelCallbacks::Source::UpdatedService.reported_execute!(event: event)
+      end
+    end
+  end
+
   def subscription_events
-    %w[created updated deleted].each do |subscription_event|
+    %w[created deleted updated].each do |subscription_event|
       events.subscribe "customer.subscription.#{subscription_event}" do |event|
         StripeModelCallbacks::Customer::Subscription::UpdatedService.reported_execute!(event: event)
+      end
+    end
+  end
+
+  def transfer_events
+    %w[created reversed updated].each do |subscription_event|
+      events.subscribe "transfer.#{subscription_event}" do |event|
+        StripeModelCallbacks::Transfer::UpdatedService.reported_execute!(event: event)
       end
     end
   end

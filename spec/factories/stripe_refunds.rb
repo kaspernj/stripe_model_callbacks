@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :stripe_refund, class: StripeModelCallbacks::StripeRefund do
+  factory :stripe_refund do
     sequence(:identifier) { |n| "stripe-refund-#{n}" }
     association :charge, factory: :stripe_charge
     currency "usd"

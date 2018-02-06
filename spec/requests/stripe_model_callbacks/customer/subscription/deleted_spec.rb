@@ -10,7 +10,7 @@ describe "subscription deletion" do
     expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
   end
 
-  let(:payload) { File.read("spec/fixtures/stripe_events/customer_subscription_deleted.json") }
+  let(:payload) { File.read("spec/fixtures/stripe_events/customer/customer.subscription.deleted.json") }
   before { bypass_event_signature(payload) }
 
   describe "#execute!" do

@@ -8,14 +8,14 @@ describe "product deleted" do
     expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
   end
 
-  let(:payload) { File.read("spec/fixtures/stripe_events/product_deleted.json") }
+  let(:payload) { File.read("spec/fixtures/stripe_events/product/product.deleted.json") }
   before { bypass_event_signature(payload) }
 
   describe "#execute!" do
     it "creates the subscription" do
       expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
-        .to change(StripeModelCallbacks::StripeProduct, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_model_callbacks_stripe_product.deleted"), :count).by(1)
+        .to change(StripeProduct, :count).by(0)
+        .and change(PublicActivity::Activity.where(key: "stripe_product.deleted"), :count).by(1)
 
       product.reload
 
@@ -23,8 +23,8 @@ describe "product deleted" do
 
       expect(product.identifier).to eq "prod_00000000000000"
       expect(product.active?).to eq false
-      expect(product.created_at).to eq Time.zone.parse("2018-02-04 16:49:05")
-      expect(product.updated_at).to eq Time.zone.parse("2018-02-04 16:49:05")
+      expect(product.created).to eq Time.zone.parse("2018-02-04 16:49:05")
+      expect(product.updated).to eq Time.zone.parse("2018-02-04 16:49:05")
       expect(product.name).to eq "Extra Large"
       expect(product.deleted_at).to be > 1.minute.ago
     end

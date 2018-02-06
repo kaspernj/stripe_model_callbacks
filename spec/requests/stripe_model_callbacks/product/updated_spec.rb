@@ -8,13 +8,13 @@ describe "product updated" do
     expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
   end
 
-  let(:payload) { File.read("spec/fixtures/stripe_events/product_updated.json") }
+  let(:payload) { File.read("spec/fixtures/stripe_events/product/product.updated.json") }
   before { bypass_event_signature(payload) }
 
   describe "#execute!" do
     it "creates the subscription" do
       expect { post "/stripe-events", params: payload }
-        .to change(StripeModelCallbacks::StripeProduct, :count).by(0)
+        .to change(StripeProduct, :count).by(0)
 
       product.reload
 
@@ -22,8 +22,8 @@ describe "product updated" do
 
       expect(product.identifier).to eq "prod_00000000000000"
       expect(product.active?).to eq false
-      expect(product.created_at).to eq Time.zone.parse("2018-02-04 16:49:05")
-      expect(product.updated_at).to eq Time.zone.parse("2018-02-04 16:49:05")
+      expect(product.created).to eq Time.zone.parse("2018-02-04 16:49:05")
+      expect(product.updated).to eq Time.zone.parse("2018-02-04 16:49:05")
       expect(product.name).to eq "Extra Large"
     end
   end

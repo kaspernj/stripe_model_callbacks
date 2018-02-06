@@ -8,13 +8,13 @@ describe "recipient created" do
     expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
   end
 
-  let(:payload) { File.read("spec/fixtures/stripe_events/recipient_deleted.json") }
+  let(:payload) { File.read("spec/fixtures/stripe_events/recipient/recipient.deleted.json") }
   before { bypass_event_signature(payload) }
 
   describe "#execute!" do
     it "deletes the recipient" do
       expect { post "/stripe-events", params: payload }
-        .to change(StripeModelCallbacks::StripeRecipient, :count).by(0)
+        .to change(StripeRecipient, :count).by(0)
 
       recipient.reload
 

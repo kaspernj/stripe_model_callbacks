@@ -23,7 +23,7 @@ private
 
   def create_invoice_items
     object.lines.each do |stripe_invoice_item|
-      invoice_item = StripeModelCallbacks::StripeInvoiceItem.find_or_initialize_by(identifier: stripe_invoice_item.id)
+      invoice_item = StripeInvoiceItem.find_or_initialize_by(identifier: stripe_invoice_item.id)
       invoice_item.assign_from_stripe(stripe_invoice_item)
       invoice_item.invoice_identifier = object.id
       invoice_item.save!
@@ -31,6 +31,6 @@ private
   end
 
   def invoice
-    @_invoice ||= StripeModelCallbacks::StripeInvoice.find_or_initialize_by(identifier: object.id)
+    @_invoice ||= StripeInvoice.find_or_initialize_by(identifier: object.id)
   end
 end

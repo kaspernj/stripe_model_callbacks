@@ -9,14 +9,14 @@ describe "order updated" do
     expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
   end
 
-  let(:payload) { File.read("spec/fixtures/stripe_events/order_updated.json") }
+  let(:payload) { File.read("spec/fixtures/stripe_events/order/order.updated.json") }
   before { bypass_event_signature(payload) }
 
   describe "#execute!" do
     it "marks the charge as refunded" do
       expect { post "/stripe-events", params: payload }
-        .to change(StripeModelCallbacks::StripeOrder, :count).by(0)
-        .and change(StripeModelCallbacks::StripeOrderItem, :count).by(0)
+        .to change(StripeOrder, :count).by(0)
+        .and change(StripeOrderItem, :count).by(0)
 
       order.reload
       order_item.reload
@@ -29,7 +29,7 @@ describe "order updated" do
       expect(order.application).to eq nil
       expect(order.application_fee).to eq nil
       expect(order.charge).to eq nil
-      expect(order.created_at).to eq Time.zone.parse("2018-02-05 14:12:19")
+      expect(order.created).to eq Time.zone.parse("2018-02-05 14:12:19")
       expect(order.customer).to eq nil
       expect(order.email).to eq nil
       expect(order.livemode).to eq false
@@ -46,7 +46,7 @@ describe "order updated" do
       expect(order.shipping_tracking_number).to eq nil
       expect(order.shipping_methods).to eq nil
       expect(order.status).to eq "created"
-      expect(order.updated_at).to eq Time.zone.parse("2018-02-05 14:12:19")
+      expect(order.updated).to eq Time.zone.parse("2018-02-05 14:12:19")
 
       expect(order_item.amount.format).to eq "$15.00"
       expect(order_item.currency).to eq "usd"

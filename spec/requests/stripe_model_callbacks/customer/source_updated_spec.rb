@@ -8,15 +8,15 @@ describe "customer source updated" do
     expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
   end
 
-  let(:payload) { File.read("spec/fixtures/stripe_events/customer_source_updated.json") }
+  let(:payload) { File.read("spec/fixtures/stripe_events/customer/customer.source.updated.json") }
   before { bypass_event_signature(payload) }
 
   describe "#execute!" do
     it "updates the subscription" do
       expect { post "/stripe-events", params: payload }
-        .to change(StripeModelCallbacks::StripeSource, :count).by(1)
+        .to change(StripeSource, :count).by(1)
 
-      created_source = StripeModelCallbacks::StripeSource.last
+      created_source = StripeSource.last
 
       expect(response.code).to eq "200"
       expect(created_source.currency).to eq "usd"

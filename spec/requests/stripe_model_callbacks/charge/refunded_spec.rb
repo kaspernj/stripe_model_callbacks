@@ -8,18 +8,18 @@ describe "charge refunded" do
     expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
   end
 
-  let(:payload) { File.read("spec/fixtures/stripe_events/charge_refunded.json") }
+  let(:payload) { File.read("spec/fixtures/stripe_events/charge/charge.refunded.json") }
   before { bypass_event_signature(payload) }
 
   describe "#execute!" do
     it "marks the charge as refunded" do
       expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
-        .to change(PublicActivity::Activity.where(key: "stripe_model_callbacks_stripe_charge.refunded"), :count).by(1)
-        .and change(StripeModelCallbacks::StripeCharge, :count).by(1)
-        .and change(StripeModelCallbacks::StripeRefund, :count).by(1)
+        .to change(PublicActivity::Activity.where(key: "stripe_charge.refunded"), :count).by(1)
+        .and change(StripeCharge, :count).by(1)
+        .and change(StripeRefund, :count).by(1)
 
-      created_charge = StripeModelCallbacks::StripeCharge.last
-      created_refund = StripeModelCallbacks::StripeRefund.last
+      created_charge = StripeCharge.last
+      created_refund = StripeRefund.last
 
       expect(response.code).to eq "200"
 
@@ -32,7 +32,7 @@ describe "charge refunded" do
       expect(created_refund.amount.format).to eq "$1.00"
       expect(created_refund.balance_transaction).to eq "txn_CGQ7Sq2yeAIYK4"
       expect(created_refund.charge).to eq charge
-      expect(created_refund.created_at).to eq Time.zone.parse("2018-02-04 19:36:09")
+      expect(created_refund.created).to eq Time.zone.parse("2018-02-04 19:36:09")
       expect(created_refund.currency).to eq "usd"
       expect(created_refund.metadata).to eq "{}"
       expect(created_refund.reason).to eq nil

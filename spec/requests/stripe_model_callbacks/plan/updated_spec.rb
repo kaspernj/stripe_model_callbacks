@@ -8,13 +8,13 @@ describe "plan updated" do
     expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
   end
 
-  let(:payload) { File.read("spec/fixtures/stripe_events/plan_updated.json") }
+  let(:payload) { File.read("spec/fixtures/stripe_events/plan/plan.updated.json") }
   before { bypass_event_signature(payload) }
 
   describe "#execute!" do
     it "marks the charge as refunded" do
       expect { post "/stripe-events", params: payload }
-        .to change(StripeModelCallbacks::StripePlan, :count).by(0)
+        .to change(StripePlan, :count).by(0)
 
       plan.reload
 
@@ -22,7 +22,7 @@ describe "plan updated" do
 
       expect(plan.identifier).to eq "gold_00000000000000"
       expect(plan.amount.format).to eq "$20.00"
-      expect(plan.created_at).to eq Time.zone.parse("2018-02-05 15:48:16")
+      expect(plan.created).to eq Time.zone.parse("2018-02-05 15:48:16")
       expect(plan.metadata).to eq "{}"
       expect(plan.interval).to eq "month"
       expect(plan.interval_count).to eq 1

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180205214861) do
+ActiveRecord::Schema.define(version: 20180206090715) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20180205214861) do
     t.string "statement_descriptor"
     t.string "status"
     t.string "transfer_group"
+    t.datetime "created"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_identifier"], name: "index_stripe_charges_on_customer_identifier"
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(version: 20180205214861) do
     t.boolean "livemode", null: false
     t.text "metadata"
     t.text "shipping"
+    t.datetime "created"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_stripe_customers_on_deleted_at"
@@ -95,6 +97,7 @@ ActiveRecord::Schema.define(version: 20180205214861) do
 
   create_table "stripe_discounts", force: :cascade do |t|
     t.string "identifier", null: false
+    t.datetime "created"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["identifier"], name: "index_stripe_discounts_on_identifier"
@@ -222,6 +225,8 @@ ActiveRecord::Schema.define(version: 20180205214861) do
     t.string "shipping_tracking_number"
     t.string "shipping_methods"
     t.string "status", null: false
+    t.datetime "created"
+    t.datetime "updated"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["charge_identifier"], name: "index_stripe_orders_on_charge_identifier"
@@ -242,6 +247,7 @@ ActiveRecord::Schema.define(version: 20180205214861) do
     t.string "statement_descriptor"
     t.integer "trial_period_days"
     t.datetime "deleted_at"
+    t.datetime "created"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_stripe_plans_on_deleted_at"
@@ -265,6 +271,8 @@ ActiveRecord::Schema.define(version: 20180205214861) do
     t.boolean "shippable", default: false, null: false
     t.string "statement_descriptor"
     t.text "url"
+    t.datetime "created"
+    t.datetime "updated"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_stripe_products_on_deleted_at"
@@ -303,6 +311,7 @@ ActiveRecord::Schema.define(version: 20180205214861) do
     t.string "reason"
     t.string "receipt_number"
     t.string "status"
+    t.datetime "created"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["identifier"], name: "index_stripe_refunds_on_identifier"
@@ -322,6 +331,8 @@ ActiveRecord::Schema.define(version: 20180205214861) do
     t.integer "price_cents"
     t.string "price_currency"
     t.string "product_identifier"
+    t.datetime "created"
+    t.datetime "updated"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_stripe_skus_on_deleted_at"
@@ -338,6 +349,47 @@ ActiveRecord::Schema.define(version: 20180205214861) do
     t.string "flow", null: false
     t.boolean "livemode", null: false
     t.string "metadata"
+    t.string "owner_address_city"
+    t.string "owner_address_country"
+    t.string "owner_address_line1"
+    t.string "owner_address_line2"
+    t.string "owner_address_postal_code"
+    t.string "owner_address_state"
+    t.string "owner_email"
+    t.string "owner_name"
+    t.string "owner_phone"
+    t.string "owner_verified_address_city"
+    t.string "owner_verified_address_country"
+    t.string "owner_verified_address_line1"
+    t.string "owner_verified_address_line2"
+    t.string "owner_verified_address_postal_code"
+    t.string "owner_verified_address_state"
+    t.string "owner_verified_email"
+    t.string "owner_verified_name"
+    t.string "owner_verified_phone"
+    t.string "receiver_address"
+    t.integer "receiver_amount_charged_cents"
+    t.string "receiver_amount_charged_currency"
+    t.integer "receiver_amount_received_cents"
+    t.string "receiver_amount_received_currency"
+    t.integer "receiver_amount_returned_cents"
+    t.string "receiver_amount_returned_currency"
+    t.string "receiver_refund_attributes_method"
+    t.string "receiver_refund_attributes_status"
+    t.string "redirect_failure_reason"
+    t.string "redirect_return_url"
+    t.string "redirect_status"
+    t.text "redirect_url"
+    t.string "statement_descriptor"
+    t.string "status"
+    t.string "stripe_type"
+    t.string "usage"
+    t.string "ach_credit_transfer_account_number"
+    t.string "ach_credit_transfer_routing_number"
+    t.string "ach_credit_transfer_fingerprint"
+    t.string "ach_credit_transfer_bank_name"
+    t.string "ach_credit_transfer_swift_code"
+    t.datetime "created"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["identifier"], name: "index_stripe_sources_on_identifier"
@@ -364,6 +416,7 @@ ActiveRecord::Schema.define(version: 20180205214861) do
     t.datetime "trial_start"
     t.datetime "trial_end"
     t.datetime "deleted_at"
+    t.datetime "created"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["customer_identifier"], name: "index_stripe_subscriptions_on_customer_identifier"
@@ -371,6 +424,30 @@ ActiveRecord::Schema.define(version: 20180205214861) do
     t.index ["discount"], name: "index_stripe_subscriptions_on_discount"
     t.index ["identifier"], name: "index_stripe_subscriptions_on_identifier"
     t.index ["plan_identifier"], name: "index_stripe_subscriptions_on_plan_identifier"
+  end
+
+  create_table "stripe_transfers", force: :cascade do |t|
+    t.string "identifier", null: false
+    t.integer "amount_cents", null: false
+    t.string "amount_currency", null: false
+    t.integer "amount_reversed_cents", null: false
+    t.string "amount_reversed_currency", null: false
+    t.string "balance_transaction"
+    t.datetime "created"
+    t.string "currency", null: false
+    t.string "description"
+    t.string "destination"
+    t.string "destination_payment"
+    t.boolean "livemode", default: false, null: false
+    t.text "metadata"
+    t.boolean "reversed", default: false, null: false
+    t.string "source_transaction"
+    t.string "source_type"
+    t.string "transfer_group"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["identifier"], name: "index_stripe_transfers_on_identifier"
   end
 
 end

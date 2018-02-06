@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :stripe_subscription, class: StripeModelCallbacks::StripeSubscription do
+  factory :stripe_subscription do
     sequence(:identifier) { |n| "stripe-subscription-#{n}" }
     billing "charge_automatically"
     cancel_at_period_end false
