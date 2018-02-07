@@ -17,4 +17,20 @@ class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
       attributes: %w[id created metadata quantity]
     )
   end
+
+  def update_quantity_on_stripe!(new_quantity)
+    sub_object = stripe_subscription.to_stripe
+
+    new_items = [{
+      id: id,
+      plan: stripe_plan_id,
+      quantity: new_quantity
+    }]
+
+    sub_object.items = new_items
+    sub_object.save
+
+    stripe_subscription.reload_from_stripe!
+    nil
+  end
 end
