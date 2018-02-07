@@ -1,6 +1,8 @@
 class StripeProduct < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
+  has_many :stripe_plans
+
   def self.stripe_class
     Stripe::Subscription
   end

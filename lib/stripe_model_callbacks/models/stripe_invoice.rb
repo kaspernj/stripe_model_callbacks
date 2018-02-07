@@ -3,7 +3,7 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
 
   belongs_to :stripe_customer, optional: true
   belongs_to :stripe_subscription, optional: true
-  has_many :stripe_invoice_items, dependent: :destroy
+  has_many :stripe_invoice_items
 
   monetize :amount_due_cents, allow_nil: true
   monetize :application_fee_cents, allow_nil: true

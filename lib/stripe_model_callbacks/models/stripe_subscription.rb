@@ -4,9 +4,9 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_customer, optional: true
   belongs_to :stripe_discount, optional: true
   belongs_to :stripe_plan, optional: true
-  has_many :stripe_invoices, dependent: :restrict_with_error
-  has_many :stripe_discounts, dependent: :restrict_with_error
-  has_many :stripe_subscription_items, autosave: true, dependent: :restrict_with_error
+  has_many :stripe_invoices
+  has_many :stripe_discounts
+  has_many :stripe_subscription_items, autosave: true
 
   STATES = %w[trialing active past_due canceled unpaid].freeze
 
