@@ -62,7 +62,9 @@ log and more automatically using the ActiveRecord models.
 
 ## Usage
 
-To see a list of transfers for example, you do something like this as you would with any given model:
+### Queries with ActiveRecord
+
+To see a list of transfers, you can do something like this, as you would with any given model:
 
 ```ruby
 StripeTransfer.where("stripe_transfers.created > ?", Time.zone.now.beginning_of_month)
@@ -70,6 +72,43 @@ StripeTransfer.where("stripe_transfers.created > ?", Time.zone.now.beginning_of_
 
 You can inspect the tables and see which tables and columns that are available. Most of it alligns with
 the attributes mentioned in Stripe's own API.
+
+### Updating on Stripe
+
+You can update the data on Stripe like this:
+
+```ruby
+stripe_subscription = StripeSubscription.find(id)
+stripe_subscription.update_on_stripe!(tax_percent: 10)
+```
+
+Create a record from a Stripe object
+
+```ruby
+object = Stripe::Subscription.retrieve(id)
+stripe_subscription = StripeSubscription.create_from_stripe!(object)
+```
+
+Sync data from Stripe:
+```ruby
+stripe_subscription = StripeSubscription.find(id)
+stripe_subscription.reload_from_stripe!
+```
+
+Delete on Stripe:
+```ruby
+stripe_subscription = StripeSubscription.find(id)
+stripe_subscription.destroy_on_stripe!
+```
+
+Convert model to a Stripe object:
+```ruby
+stripe_subscription = StripeSubscription.find(id)
+stripe_subscription.to_stripe.delete(at_period_end: true)
+
+# We should probably reload so the model reflect that change instantly (else it should receive it through a sync event in a short while)
+stripe_subscription.reload_from_stripe!
+```
 
 ## Testing
 

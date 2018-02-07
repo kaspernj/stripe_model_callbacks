@@ -30,7 +30,7 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
     assign_periods(object)
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
-      attributes: %w[billing cancel_at_period_end created id livemode status]
+      attributes: %w[billing cancel_at_period_end created id livemode status tax_percent]
     )
   end
 

@@ -4,6 +4,8 @@ class StripePlan < StripeModelCallbacks::ApplicationRecord
   has_many :stripe_invoice_items, dependent: :restrict_with_error
   has_many :stripe_subscriptions, dependent: :restrict_with_error
 
+  scope :not_deleted, -> { where(deleted_at: nil) }
+
   monetize :amount_cents
 
   def self.stripe_class
@@ -11,17 +13,11 @@ class StripePlan < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
-    assign_attributes(
-      amount: Money.new(object.amount, object.currency),
-      created: Time.zone.at(object.created),
-      currency: object.currency,
-      interval: object.interval,
-      interval_count: object.interval_count,
-      livemode: object.livemode,
-      metadata: JSON.generate(object.metadata),
-      name: object.name,
-      statement_descriptor: object.statement_descriptor,
-      trial_period_days: object.trial_period_days
+    assign_attributes(amount: Money.new(object.amount, object.currency))
+
+    StripeModelCallbacks::AttributesAssignerService.execute!(
+      model: self, stripe_model: object,
+      attributes: %w[created currency id interval interval_count livemode metadata name statement_descriptor trial_period_days]
     )
   end
 end

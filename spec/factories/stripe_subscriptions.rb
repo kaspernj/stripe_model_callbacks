@@ -16,6 +16,9 @@ FactoryBot.define do
     end
 
     trait :with_stripe_mock do
+      association :stripe_customer, factory: [:stripe_customer, :with_stripe_mock]
+      association :stripe_plan, factory: [:stripe_plan, :with_stripe_mock]
+
       after :create do |stripe_subscription|
         mock_subscription = Stripe::Subscription.create(
           customer: stripe_subscription.stripe_customer.id,

@@ -63,4 +63,13 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.before(:each, stripe_mock: true) do
+    require "stripe_mock"
+    StripeMock.start
+  end
+
+  config.after(:each, stripe_mock: true) do
+    StripeMock.stop
+  end
 end
