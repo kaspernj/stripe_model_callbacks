@@ -7,5 +7,4 @@ require "stripe_event"
 require "stripe_model_callbacks/engine"
 
 module StripeModelCallbacks
-  AutoAutoloader.autoload_sub_classes(self, __FILE__)
 end

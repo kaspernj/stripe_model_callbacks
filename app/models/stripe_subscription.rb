@@ -24,7 +24,7 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
       canceled_at: object.canceled_at ? Time.zone.at(object.canceled_at) : nil,
       stripe_customer_id: object.customer,
       ended_at: object.ended_at ? Time.zone.at(object.ended_at) : nil,
-      stripe_plan_id: object.plan.id
+      stripe_plan_id: object.plan&.id
     )
 
     assign_periods(object)

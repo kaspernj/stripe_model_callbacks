@@ -6,6 +6,7 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
 
   def self.create_from_stripe!(object)
     model = new
+    model.stripe_object = object
     model.assign_from_stripe(object)
     model.save!
     model
@@ -16,8 +17,12 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
     create_from_stripe!(object)
   end
 
+  def stripe_object=(object)
+    @_stripe_object = object
+  end
+
   def to_stripe
-    @_to_stripe ||= self.class.stripe_class.retrieve(id)
+    @_stripe_object ||= self.class.stripe_class.retrieve(id)
   end
 
   def reload_from_stripe!
