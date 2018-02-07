@@ -34,7 +34,6 @@ describe StripeModelCallbacks::ApplicationRecord, :stripe_mock do
       stripe_plan = StripePlan.create_from_stripe!(mock_plan)
 
       expect(stripe_plan.id).to eq "test-plan"
-      expect(stripe_plan.name).to eq "Test plan"
       expect(stripe_plan.amount.format).to eq "$10.00"
     end
   end

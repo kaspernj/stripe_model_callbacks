@@ -17,10 +17,8 @@ class StripePlan < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
-    assign_attributes(
-      amount: Money.new(object.amount, object.currency),
-      stripe_product_id: object.product
-    )
+    assign_attributes(amount: Money.new(object.amount, object.currency))
+    self.stripe_product_id = object.product if object.respond_to?(:product)
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
