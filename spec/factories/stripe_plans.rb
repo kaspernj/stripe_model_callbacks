@@ -7,7 +7,7 @@ FactoryBot.define do
     interval "months"
     interval_count 1
     livemode false
-    sequence(:name) { |n| "Plan #{n}" }
+    stripe_product
 
     trait :with_stripe_mock do
       after :create do |stripe_plan|

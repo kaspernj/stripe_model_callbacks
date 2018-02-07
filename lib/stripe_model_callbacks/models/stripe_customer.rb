@@ -1,12 +1,12 @@
 class StripeCustomer < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
-  has_many :stripe_charges, dependent: :restrict_with_error
-  has_many :stripe_discounts, dependent: :restrict_with_error
-  has_many :stripe_invoices, dependent: :restrict_with_error
-  has_many :stripe_invoice_items, dependent: :restrict_with_error
-  has_many :stripe_orders, dependent: :restrict_with_error
-  has_many :stripe_subscriptions, dependent: :restrict_with_error
+  has_many :stripe_charges
+  has_many :stripe_discounts
+  has_many :stripe_invoices
+  has_many :stripe_invoice_items
+  has_many :stripe_orders
+  has_many :stripe_subscriptions
 
   def self.stripe_class
     Stripe::Customer
