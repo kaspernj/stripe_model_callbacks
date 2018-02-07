@@ -8,8 +8,6 @@ class StripePlan < StripeModelCallbacks::ApplicationRecord
 
   scope :not_deleted, -> { where(deleted_at: nil) }
 
-  delegate :name, to: :stripe_product
-
   monetize :amount_cents
 
   def self.stripe_class
@@ -26,5 +24,9 @@ class StripePlan < StripeModelCallbacks::ApplicationRecord
         created currency id interval interval_count livemode metadata statement_descriptor trial_period_days
       ]
     )
+  end
+
+  def name
+    stripe_product&.name
   end
 end
