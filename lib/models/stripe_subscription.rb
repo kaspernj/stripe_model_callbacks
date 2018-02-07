@@ -6,6 +6,7 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_plan, optional: true
   has_many :stripe_invoices, dependent: :restrict_with_error
   has_many :stripe_discounts, dependent: :restrict_with_error
+  has_many :stripe_subscription_items, autosave: true, dependent: :restrict_with_error
 
   STATES = %w[trialing active past_due canceled unpaid].freeze
 
@@ -32,6 +33,16 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
       model: self, stripe_model: object,
       attributes: %w[billing cancel_at_period_end created id livemode status tax_percent]
     )
+
+    object.items.each do |item|
+      if new_record?
+        sub_item = stripe_subscription_items.build
+      else
+        sub_item = stripe_subscription_items.find_or_initialize_by(id: item.id)
+      end
+
+      sub_item.assign_from_stripe(item)
+    end
   end
 
 private
