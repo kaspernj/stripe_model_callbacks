@@ -15,7 +15,8 @@ describe "subscription deletion" do
 
   describe "#execute!" do
     it "ends the subscription" do
-      post "/stripe-events", params: payload
+      expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
+        .to change(PublicActivity::Activity.where(key: "stripe_subscription.deleted"), :count).by(1)
 
       subscription.reload
 
