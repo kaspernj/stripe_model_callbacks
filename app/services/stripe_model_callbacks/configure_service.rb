@@ -14,6 +14,10 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
       StripeModelCallbacks::Refund::UpdatedService.reported_execute!(event: event)
     end
 
+    events.subscribe "customer.bank_account.deleted" do |event|
+      StripeModelCallbacks::Customer::BankAccount::DeletedService.reported_execute!(event: event)
+    end
+
     # events.subscribe "source.transaction.created"
 
     account_external_account_events
