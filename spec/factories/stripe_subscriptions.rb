@@ -15,17 +15,25 @@ FactoryBot.define do
       status "active"
     end
 
+    trait :cancel_at_period_end do
+      cancel_at_period_end true
+    end
+
     trait :with_stripe_mock do
       association :stripe_customer, factory: [:stripe_customer, :with_stripe_mock]
       association :stripe_plan, factory: [:stripe_plan, :with_stripe_mock]
 
       after :create do |stripe_subscription|
+        cancel_at_period_end = stripe_subscription.cancel_at_period_end?
+
         mock_subscription = Stripe::Subscription.create(
           customer: stripe_subscription.stripe_customer.id,
           plan: stripe_subscription.stripe_plan.id
         )
         stripe_subscription.assign_from_stripe(mock_subscription)
         stripe_subscription.save!
+
+        stripe_subscription.cancel!(at_period_end: true) if cancel_at_period_end
       end
     end
   end

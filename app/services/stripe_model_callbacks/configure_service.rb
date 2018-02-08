@@ -29,6 +29,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     payout_events
     plan_events
     product_events
+    review_events
     sku_events
     source_events
     subscription_events
@@ -86,7 +87,10 @@ private
   end
 
   def invoice_events
-    %w[created updated payment_failed payment_succeeded sent upcoming updated].each do |invoice_event|
+    # Upcoming event doesnt send an invoice ID. Dunno what to do about it... Disabling for now
+    # upcoming
+
+    %w[created payment_failed payment_succeeded sent updated].each do |invoice_event|
       events.subscribe "invoice.#{invoice_event}" do |event|
         StripeModelCallbacks::Invoice::UpdatedService.reported_execute!(event: event)
       end
@@ -145,6 +149,14 @@ private
     %w[created deleted updated].each do |product_event|
       events.subscribe "product.#{product_event}" do |event|
         StripeModelCallbacks::Product::UpdatedService.reported_execute!(event: event)
+      end
+    end
+  end
+
+  def review_events
+    %w[opened closed].each do |review_event|
+      events.subscribe "review.#{review_event}" do |event|
+        StripeModelCallbacks::Review::UpdatedService.reported_execute!(event: event)
       end
     end
   end

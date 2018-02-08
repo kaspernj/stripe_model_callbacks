@@ -4,6 +4,7 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_customer, optional: true
   has_many :stripe_orders
   has_many :stripe_refunds
+  has_many :stripe_reviews
 
   monetize :amount_cents
   monetize :amount_refunded_cents, allow_nil: true

@@ -54,11 +54,6 @@ Add the migrations for the Stripe models to your project like this:
 rake stripe_model_callbacks:install:migrations
 ```
 
-Load the models in an initializer in `config/initializers/stripe_model_callbacks` (to solve some auto-loading-reloading issues):
-```ruby
-require "stripe_model_callbacks/models"
-```
-
 You should set up your Stripe account to post events to your website using a URL that looks something like this:
 `https://www.yourdomain.com/stripe-events`.
 

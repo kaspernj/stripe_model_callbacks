@@ -20,5 +20,6 @@ class StripeModelCallbacks::BaseService < ServicePattern::Service
     end
 
     ExceptionNotifier.notify_exception(e) if Object.const_defined?("ExceptionNotifier")
+    raise e
   end
 end

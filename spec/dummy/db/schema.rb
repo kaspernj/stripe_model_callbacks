@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180207185604) do
+ActiveRecord::Schema.define(version: 20180208121235) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -264,6 +264,9 @@ ActiveRecord::Schema.define(version: 20180207185604) do
     t.datetime "webhooks_delivered_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "attempt_count"
+    t.integer "ending_balance"
+    t.integer "starting_balance"
     t.index ["stripe_charge_id"], name: "index_stripe_invoices_on_stripe_charge_id"
     t.index ["stripe_customer_id"], name: "index_stripe_invoices_on_stripe_customer_id"
     t.index ["stripe_subscription_id"], name: "index_stripe_invoices_on_stripe_subscription_id"
@@ -426,6 +429,19 @@ ActiveRecord::Schema.define(version: 20180207185604) do
     t.index ["stripe_charge_id"], name: "index_stripe_refunds_on_stripe_charge_id"
   end
 
+  create_table "stripe_reviews", id: false, force: :cascade do |t|
+    t.string "id", null: false
+    t.string "stripe_charge_id"
+    t.datetime "created"
+    t.boolean "livemode", default: false, null: false
+    t.boolean "open", default: true, null: false
+    t.string "reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reason"], name: "index_stripe_reviews_on_reason"
+    t.index ["stripe_charge_id"], name: "index_stripe_reviews_on_stripe_charge_id"
+  end
+
   create_table "stripe_skus", id: false, force: :cascade do |t|
     t.string "id", null: false
     t.boolean "active", default: false, null: false
@@ -509,7 +525,7 @@ ActiveRecord::Schema.define(version: 20180207185604) do
     t.string "stripe_plan_id"
     t.boolean "deleted", default: false, null: false
     t.text "metadata"
-    t.decimal "quantity"
+    t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["stripe_plan_id"], name: "index_stripe_subscription_items_on_stripe_plan_id"

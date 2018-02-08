@@ -37,12 +37,37 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
     object.items.each do |item|
       if new_record?
         sub_item = stripe_subscription_items.build
-      else
+      elsif item.respond_to?(:id)
         sub_item = stripe_subscription_items.find_or_initialize_by(id: item.id)
       end
 
-      sub_item.assign_from_stripe(item)
+      sub_item&.assign_from_stripe(item)
     end
+  end
+
+  def reactivate!
+    raise "Cannot reactivate unless cancel at period end has been set" unless cancel_at_period_end?
+
+    # https://stripe.com/docs/subscriptions/canceling-pausing
+    items = []
+    stripe_subscription_items.each do |item|
+      items << {
+        plan: item.stripe_plan_id,
+        quantity: item.quantity
+      }
+    end
+
+    to_stripe.items = items
+    to_stripe.save
+
+    reload_from_stripe!
+    self
+  end
+
+  def cancel!(args = {})
+    to_stripe.delete(args)
+    reload_from_stripe!
+    self
   end
 
 private
