@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180208122654) do
+ActiveRecord::Schema.define(version: 20180208160046) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -384,6 +384,7 @@ ActiveRecord::Schema.define(version: 20180208122654) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "stripe_product_id"
+    t.string "nickname"
     t.index ["deleted_at"], name: "index_stripe_plans_on_deleted_at"
     t.index ["stripe_product_id"], name: "index_stripe_plans_on_stripe_product_id"
   end

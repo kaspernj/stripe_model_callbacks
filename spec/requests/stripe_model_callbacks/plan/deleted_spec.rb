@@ -31,6 +31,7 @@ describe "plan deleted" do
       expect(plan.currency).to eq "dkk"
       expect(plan.livemode).to eq false
       expect(plan.name).to eq "Test product"
+      expect(plan.nickname).to eq nil
       expect(plan.statement_descriptor).to eq nil
       expect(plan.trial_period_days).to eq nil
       expect(plan.deleted_at).to be > 1.minute.ago

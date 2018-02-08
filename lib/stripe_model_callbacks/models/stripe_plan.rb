@@ -21,12 +21,13 @@ class StripePlan < StripeModelCallbacks::ApplicationRecord
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
       attributes: %w[
-        created currency id interval interval_count livemode metadata statement_descriptor trial_period_days
+        created currency id interval interval_count livemode metadata nickname statement_descriptor
+        trial_period_days
       ]
     )
   end
 
   def name
-    stripe_product&.name
+    nickname.presence || stripe_product&.name
   end
 end
