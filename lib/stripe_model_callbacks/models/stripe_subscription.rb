@@ -38,7 +38,8 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
       if new_record?
         sub_item = stripe_subscription_items.build
       elsif item.respond_to?(:id)
-        sub_item = stripe_subscription_items.find_or_initialize_by(id: item.id)
+        # Has to be found this way to actually update the values
+        sub_item = stripe_subscription_items.find { |sub_item| sub_item.id == item.id }
       end
 
       sub_item&.assign_from_stripe(item)
@@ -52,6 +53,7 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
     items = []
     stripe_subscription_items.each do |item|
       items << {
+        id: item.id,
         plan: item.stripe_plan_id,
         quantity: item.quantity
       }
