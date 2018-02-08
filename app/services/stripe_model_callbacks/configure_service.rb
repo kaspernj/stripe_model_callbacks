@@ -16,6 +16,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
 
     # events.subscribe "source.transaction.created"
 
+    account_external_account_events
     charge_events
     charge_dispute_events
     coupon_events
@@ -37,6 +38,14 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
   end
 
 private
+
+  def account_external_account_events
+    %w[created deleted updated].each do |external_account_event|
+      events.subscribe "account.external_account.#{external_account_event}" do |event|
+        StripeModelCallbacks::Account::ExternalAccount::UpdatedService.reported_execute!(event: event)
+      end
+    end
+  end
 
   def charge_events
     %w[captured failed pending refunded updated succeeded].each do |charge_event|

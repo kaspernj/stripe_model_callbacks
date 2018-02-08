@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180208121235) do
+ActiveRecord::Schema.define(version: 20180208122654) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -29,6 +29,26 @@ ActiveRecord::Schema.define(version: 20180208121235) do
     t.index ["recipient_type", "recipient_id"], name: "index_activities_on_recipient_type_and_recipient_id"
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
     t.index ["trackable_type", "trackable_id"], name: "index_activities_on_trackable_type_and_trackable_id"
+  end
+
+  create_table "stripe_bank_accounts", id: false, force: :cascade do |t|
+    t.string "id", null: false
+    t.string "stripe_account_id"
+    t.string "account_holder_name"
+    t.string "account_holder_type"
+    t.string "bank_name"
+    t.string "country"
+    t.string "currency"
+    t.boolean "default_for_currency"
+    t.string "fingerprint"
+    t.string "last4"
+    t.text "metadata"
+    t.string "routing_number"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["status"], name: "index_stripe_bank_accounts_on_status"
+    t.index ["stripe_account_id"], name: "index_stripe_bank_accounts_on_stripe_account_id"
   end
 
   create_table "stripe_charges", id: false, force: :cascade do |t|
