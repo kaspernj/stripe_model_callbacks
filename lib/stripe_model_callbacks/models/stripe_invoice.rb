@@ -3,7 +3,8 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
 
   belongs_to :stripe_customer, optional: true
   belongs_to :stripe_subscription, optional: true
-  has_many :stripe_invoice_items
+
+  has_many :stripe_invoice_items, autosave: true
 
   monetize :amount_due_cents, allow_nil: true
   monetize :application_fee_cents, allow_nil: true
@@ -60,7 +61,12 @@ private
         invoice_item = stripe_invoice_items.build
       else
         # Has to be found this way to actually update the values
-        invoice_item = stripe_invoice_items.find { |invoice_item_i| invoice_item_i.id == item.id }
+        invoice_item = stripe_invoice_items.find do |invoice_item_i|
+          invoice_item_i.id == item.id &&
+            invoice_item_i.stripe_subscription_item_id == item.subscription_item &&
+            invoice_item_i.stripe_plan_id == item.plan&.id
+        end
+
         invoice_item ||= stripe_invoice_items.build
       end
 
