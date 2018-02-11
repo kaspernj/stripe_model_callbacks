@@ -57,19 +57,14 @@ private
 
   def assign_invoice_items(object)
     object.lines.each do |item|
-      if new_record?
-        invoice_item = stripe_invoice_items.build
-      else
-        # Has to be found this way to actually update the values
-        invoice_item = stripe_invoice_items.find do |invoice_item_i|
-          invoice_item_i.id == item.id &&
-            invoice_item_i.stripe_subscription_item_id == item.subscription_item &&
-            invoice_item_i.stripe_plan_id == item.plan&.id
-        end
-
-        invoice_item ||= stripe_invoice_items.build
+      # Has to be found this way to actually update the values
+      invoice_item = stripe_invoice_items.find do |invoice_item_i|
+        invoice_item_i.id == item.id &&
+          invoice_item_i.stripe_subscription_item_id == item.subscription_item &&
+          invoice_item_i.stripe_plan_id == item.plan&.id
       end
 
+      invoice_item ||= stripe_invoice_items.build
       invoice_item.stripe_invoice_id = object.id
       invoice_item&.assign_from_stripe(item)
     end
