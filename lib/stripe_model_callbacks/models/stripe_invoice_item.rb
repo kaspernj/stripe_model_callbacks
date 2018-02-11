@@ -14,19 +14,19 @@ class StripeInvoiceItem < StripeModelCallbacks::ApplicationRecord
   def assign_from_stripe(object)
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
-      currency: object.currency,
       stripe_customer_id: object.try(:customer),
-      description: object.description,
-      discountable: object.discountable,
-      livemode: object.livemode,
       metadata: JSON.generate(object.metadata),
       period_start: Time.zone.at(object.period.start),
       period_end: Time.zone.at(object.period.end),
       stripe_plan_id: object.plan&.id,
-      proration: object.proration,
-      quantity: object.quantity,
       stripe_subscription_id: object.subscription,
-      subscription_item: object.try(:subscription_item)
+    )
+
+    StripeModelCallbacks::AttributesAssignerService.execute!(
+      model: self, stripe_model: object,
+      attributes: %w[
+        currency description discountable id livemode proration quantity subscription_item
+      ]
     )
   end
 end

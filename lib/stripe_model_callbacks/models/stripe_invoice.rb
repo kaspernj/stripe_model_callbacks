@@ -37,6 +37,8 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
         starting_balance statement_descriptor tax_percent
       ]
     )
+
+    assign_invoice_items(object)
   end
 
 private
@@ -50,5 +52,20 @@ private
       tax: object.tax ? Money.new(object.tax, object.currency) : nil,
       total: object.total ? Money.new(object.total, object.currency) : nil
     )
+  end
+
+  def assign_invoice_items(object)
+    object.lines.each do |item|
+      if new_record?
+        invoice_item = stripe_invoice_items.build
+      else
+        # Has to be found this way to actually update the values
+        invoice_item = stripe_invoice_items.find { |invoice_item| invoice_item.id == item.id }
+        invoice_item ||= stripe_invoice_items.build
+      end
+
+      invoice_item.stripe_invoice_id = object.id
+      invoice_item&.assign_from_stripe(item)
+    end
   end
 end
