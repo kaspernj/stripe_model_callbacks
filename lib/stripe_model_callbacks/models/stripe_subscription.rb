@@ -28,22 +28,13 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
       stripe_plan_id: object.plan&.id
     )
 
+    assign_items(object)
     assign_periods(object)
+
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
       attributes: %w[billing cancel_at_period_end created id livemode status tax_percent]
     )
-
-    object.items.each do |item|
-      if new_record?
-        sub_item = stripe_subscription_items.build
-      elsif item.respond_to?(:id)
-        # Has to be found this way to actually update the values
-        sub_item = stripe_subscription_items.find { |sub_item| sub_item.id == item.id }
-      end
-
-      sub_item&.assign_from_stripe(item)
-    end
   end
 
   def reactivate!
@@ -73,6 +64,19 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   end
 
 private
+
+  def assign_items(object)
+    object.items.each do |item|
+      if new_record?
+        sub_item = stripe_subscription_items.build
+      elsif item.respond_to?(:id)
+        # Has to be found this way to actually update the values
+        sub_item = stripe_subscription_items.find { |sub_item_i| sub_item_i.id == item.id }
+      end
+
+      sub_item&.assign_from_stripe(item)
+    end
+  end
 
   def assign_periods(object)
     assign_attributes(
