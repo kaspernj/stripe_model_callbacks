@@ -6,20 +6,11 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
   end
 
   def execute!
-    events.all do |event|
-      StripeModelCallbacks::NotifierService.reported_execute!(event: event)
-    end
-
-    events.subscribe "charge.refund.updated" do |event|
-      StripeModelCallbacks::Refund::UpdatedService.reported_execute!(event: event)
-    end
-
-    events.subscribe "customer.bank_account.deleted" do |event|
-      StripeModelCallbacks::Customer::BankAccount::DeletedService.reported_execute!(event: event)
-    end
-
     # events.subscribe "source.transaction.created"
 
+    all_events
+    charge_refund_events
+    customer_bank_account_events
     account_external_account_events
     charge_events
     charge_dispute_events
@@ -51,11 +42,23 @@ private
     end
   end
 
+  def all_events
+    events.all do |event|
+      StripeModelCallbacks::NotifierService.reported_execute!(event: event)
+    end
+  end
+
   def charge_events
     %w[captured failed pending refunded updated succeeded].each do |charge_event|
       events.subscribe "charge.#{charge_event}" do |event|
         StripeModelCallbacks::Charge::UpdatedService.reported_execute!(event: event)
       end
+    end
+  end
+
+  def charge_refund_events
+    events.subscribe "charge.refund.updated" do |event|
+      StripeModelCallbacks::Refund::UpdatedService.reported_execute!(event: event)
     end
   end
 
@@ -72,6 +75,12 @@ private
       events.subscribe "coupon.#{coupon_event}" do |event|
         StripeModelCallbacks::Coupon::UpdatedService.reported_execute!(event: event)
       end
+    end
+  end
+
+  def customer_bank_account_events
+    events.subscribe "customer.bank_account.deleted" do |event|
+      StripeModelCallbacks::Customer::BankAccount::DeletedService.reported_execute!(event: event)
     end
   end
 

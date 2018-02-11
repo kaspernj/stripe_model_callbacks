@@ -19,7 +19,7 @@ class StripeInvoiceItem < StripeModelCallbacks::ApplicationRecord
       period_start: Time.zone.at(object.period.start),
       period_end: Time.zone.at(object.period.end),
       stripe_plan_id: object.plan&.id,
-      stripe_subscription_id: object.subscription,
+      stripe_subscription_id: object.subscription
     )
 
     StripeModelCallbacks::AttributesAssignerService.execute!(

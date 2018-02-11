@@ -60,7 +60,7 @@ private
         invoice_item = stripe_invoice_items.build
       else
         # Has to be found this way to actually update the values
-        invoice_item = stripe_invoice_items.find { |invoice_item| invoice_item.id == item.id }
+        invoice_item = stripe_invoice_items.find { |invoice_item_i| invoice_item_i.id == item.id }
         invoice_item ||= stripe_invoice_items.build
       end
 
