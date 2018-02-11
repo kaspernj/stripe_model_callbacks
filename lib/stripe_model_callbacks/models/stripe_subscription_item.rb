@@ -4,6 +4,8 @@ class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_plan, optional: true
   belongs_to :stripe_subscription, optional: true
 
+  has_many :stripe_invoice_items
+
   def self.stripe_class
     Stripe::SubscriptionItem
   end

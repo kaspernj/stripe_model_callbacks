@@ -3,6 +3,7 @@ class StripeInvoiceItem < StripeModelCallbacks::ApplicationRecord
 
   belongs_to :stripe_customer, optional: true
   belongs_to :stripe_invoice, optional: true
+  belongs_to :stripe_subscription_item, optional: true
   belongs_to :stripe_plan, optional: true
 
   monetize :amount_cents
@@ -19,13 +20,14 @@ class StripeInvoiceItem < StripeModelCallbacks::ApplicationRecord
       period_start: Time.zone.at(object.period.start),
       period_end: Time.zone.at(object.period.end),
       stripe_plan_id: object.plan&.id,
-      stripe_subscription_id: object.subscription
+      stripe_subscription_id: object.subscription,
+      stripe_subscription_item_id: object.subscription_item
     )
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
       attributes: %w[
-        currency description discountable id livemode proration quantity subscription_item
+        currency description discountable id livemode proration quantity
       ]
     )
   end

@@ -27,7 +27,7 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
 
   def reload_from_stripe!
     assign_from_stripe(to_stripe)
-    save!
+    save! if changed?
   end
 
   def reload!(*args, &blk)
