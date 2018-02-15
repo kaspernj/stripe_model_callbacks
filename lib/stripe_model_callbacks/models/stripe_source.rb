@@ -11,10 +11,8 @@ class StripeSource < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
-    assign_attributes(
-      amount: object.amount ? Money.new(object.amount, object.currency) : nil,
-      stripe_type: object.type
-    )
+    self.stripe_type = object.type
+    self.amount = Money.new(object.amount, object.currency) if object.respond_to?(:amount)
 
     assign_owner(object)
     assign_owner_verified(object)
