@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180217094828) do
+ActiveRecord::Schema.define(version: 20180216224335) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -157,8 +157,6 @@ ActiveRecord::Schema.define(version: 20180217094828) do
     t.datetime "end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "identifier"
-    t.index ["identifier"], name: "index_stripe_discounts_on_identifier", unique: true
     t.index ["stripe_coupon_id"], name: "index_stripe_discounts_on_stripe_coupon_id"
     t.index ["stripe_customer_id"], name: "index_stripe_discounts_on_stripe_customer_id"
     t.index ["stripe_subscription_id"], name: "index_stripe_discounts_on_stripe_subscription_id"
