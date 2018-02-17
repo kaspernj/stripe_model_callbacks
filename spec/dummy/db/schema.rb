@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(version: 20180217094828) do
     t.index ["deleted_at"], name: "index_stripe_customers_on_deleted_at"
   end
 
-  create_table "stripe_discounts", id: :string, force: :cascade do |t|
+  create_table "stripe_discounts", force: :cascade do |t|
     t.string "stripe_coupon_id"
     t.string "stripe_customer_id"
     t.string "stripe_subscription_id"
@@ -157,7 +157,8 @@ ActiveRecord::Schema.define(version: 20180217094828) do
     t.datetime "end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["id"], name: "sqlite_autoindex_stripe_discounts_1", unique: true
+    t.string "identifier"
+    t.index ["identifier"], name: "index_stripe_discounts_on_identifier", unique: true
     t.index ["stripe_coupon_id"], name: "index_stripe_discounts_on_stripe_coupon_id"
     t.index ["stripe_customer_id"], name: "index_stripe_discounts_on_stripe_customer_id"
     t.index ["stripe_subscription_id"], name: "index_stripe_discounts_on_stripe_subscription_id"

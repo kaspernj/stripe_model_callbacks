@@ -21,7 +21,7 @@ describe "customer discount creation" do
 
       expect(response.code).to eq "200"
 
-      expect(created_discount.id).to eq "25OFF_00000000000000"
+      expect(created_discount.identifier).to eq "25OFF_00000000000000"
       expect(created_discount.stripe_coupon_id).to eq "25OFF_00000000000000"
       expect(created_discount.stripe_coupon).to eq coupon
       expect(created_discount.stripe_customer_id).to eq "cus_00000000000000"

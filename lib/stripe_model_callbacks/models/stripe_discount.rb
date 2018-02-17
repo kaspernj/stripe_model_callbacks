@@ -15,7 +15,7 @@ class StripeDiscount < StripeModelCallbacks::ApplicationRecord
   def assign_from_stripe(object)
     assign_attributes(
       created: object.respond_to?(:created) ? Time.zone.at(object.created) : nil,
-      id: StripeDiscount.calculated_id_from_stripe_object(object),
+      identifier: StripeDiscount.calculated_identifier_from_stripe_object(object),
       start: Time.zone.at(object.start),
       end: Time.zone.at(object.end),
       stripe_customer_id: object.customer,
@@ -50,14 +50,14 @@ private
     )
   end
 
-  def self.calculated_id_frommodel(model)
+  def self.calculated_identifier_frommodel(model)
     [
       model.stripe_customer_id,
       model.stripe_subscription_id
     ].join("_")
   end
 
-  def self.calculated_id_from_stripe_object(object)
+  def self.calculated_identifier_from_stripe_object(object)
     [
       object.customer,
       object.subscription
