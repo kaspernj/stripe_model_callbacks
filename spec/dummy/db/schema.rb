@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180216224335) do
+ActiveRecord::Schema.define(version: 20180217200350) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -249,8 +249,6 @@ ActiveRecord::Schema.define(version: 20180216224335) do
     t.integer "application_fee_cents"
     t.string "application_fee_currency"
     t.string "billing", null: false
-    t.integer "discount_cents"
-    t.string "discount_currency"
     t.integer "ending_balance_cents"
     t.integer "ending_balance_currency"
     t.string "stripe_charge_id"
@@ -288,8 +286,10 @@ ActiveRecord::Schema.define(version: 20180216224335) do
     t.integer "attempt_count"
     t.integer "ending_balance"
     t.integer "starting_balance"
+    t.string "stripe_discount_id"
     t.index ["stripe_charge_id"], name: "index_stripe_invoices_on_stripe_charge_id"
     t.index ["stripe_customer_id"], name: "index_stripe_invoices_on_stripe_customer_id"
+    t.index ["stripe_discount_id"], name: "index_stripe_invoices_on_stripe_discount_id"
     t.index ["stripe_subscription_id"], name: "index_stripe_invoices_on_stripe_subscription_id"
   end
 

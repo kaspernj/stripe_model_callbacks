@@ -1,6 +1,7 @@
 require "rails_helper"
 
 describe "invoice created" do
+  let!(:stripe_coupon) { create :stripe_coupon, id: "some-coupon" }
   let!(:stripe_customer) { create :stripe_customer, id: "cus_CGNFgjPGtHlvXI" }
 
   describe "#execute!" do
@@ -25,7 +26,7 @@ describe "invoice created" do
       expect(created_invoice.stripe_customer_id).to eq "cus_00000000000000"
       expect(created_invoice.date).to eq Time.zone.parse("2018-02-04 17:02:25")
       expect(created_invoice.description).to eq nil
-      expect(created_invoice.discount).to eq nil
+      expect(created_invoice.stripe_discount).to eq nil
       expect(created_invoice.due_date).to eq nil
       expect(created_invoice.forgiven?).to eq false
       expect(created_invoice.next_payment_attempt).to eq nil
@@ -41,6 +42,50 @@ describe "invoice created" do
       expect(created_invoice.tax).to eq nil
       expect(created_invoice.tax_percent).to eq nil
       expect(created_invoice.total.format).to eq "35.00 kr."
+    end
+
+    it "sets the discount reference if given" do
+      stripe_event = proc {
+        mock_stripe_event(
+          "invoice.created",
+          data: {
+            object: {
+              discount: {
+                "object": "discount",
+                "customer": "cus_CLI9d5IHGcdWBY",
+                "end": nil,
+                "start": 1_518_896_595,
+                "subscription": "sub_CLIA1HwHyqUO2L",
+                "coupon": {
+                  "id": stripe_coupon.id,
+                  "object": "coupon",
+                  "amount_off": nil,
+                  "created": 1_518_896_553,
+                  "currency": "",
+                  "duration": "forever",
+                  "duration_in_months": "",
+                  "livemode": "true",
+                  "max_redemptions": "",
+                  "percent_off": "100",
+                  "redeem_by": nil,
+                  "times_redeemed": "1",
+                  "valid": "true"
+                }
+              }
+            }
+          }
+        )
+      }
+
+      expect { stripe_event.call }
+        .to change(StripeInvoice, :count).by(1)
+        .and change(StripeDiscount, :count).by(1)
+
+      created_invoice = StripeInvoice.last
+      created_discount = StripeDiscount.last
+
+      expect(created_invoice.stripe_discount).to eq created_discount
+      expect(created_discount.stripe_coupon).to eq stripe_coupon
     end
   end
 end

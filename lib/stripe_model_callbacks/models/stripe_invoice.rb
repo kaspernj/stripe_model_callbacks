@@ -2,13 +2,13 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
   belongs_to :stripe_customer, optional: true
+  belongs_to :stripe_discount, optional: true
   belongs_to :stripe_subscription, optional: true
 
   has_many :stripe_invoice_items, autosave: true
 
   monetize :amount_due_cents, allow_nil: true
   monetize :application_fee_cents, allow_nil: true
-  monetize :discount_cents, allow_nil: true
   monetize :subtotal_cents, allow_nil: true
   monetize :tax_cents, allow_nil: true
   monetize :total_cents, allow_nil: true
@@ -48,7 +48,7 @@ private
     assign_attributes(
       amount_due: Money.new(object.amount_due, object.currency),
       application_fee: object.application_fee ? Money.new(object.application_fee, object.currency) : nil,
-      discount: object.discount ? Money.new(object.discount, object.currency) : nil,
+      stripe_discount_id: stripe_discount_id_from_object(object),
       subtotal: Money.new(object.subtotal, object.currency),
       tax: object.tax ? Money.new(object.tax, object.currency) : nil,
       total: object.total ? Money.new(object.total, object.currency) : nil
@@ -68,5 +68,12 @@ private
       invoice_item.stripe_invoice_id = object.id
       invoice_item&.assign_from_stripe(item)
     end
+  end
+
+  def stripe_discount_id_from_object(object)
+    return nil unless object.discount
+    response = StripeModelCallbacks::Customer::DiscountUpdatedService.execute!(object: object.discount)
+    raise response.errors.join(". ") if response.errors.any?
+    response.result.id
   end
 end

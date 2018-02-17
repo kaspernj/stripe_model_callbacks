@@ -1,11 +1,11 @@
 class StripeModelCallbacks::Customer::DiscountUpdatedService < StripeModelCallbacks::BaseEventService
   def execute!
     discount.assign_from_stripe(object)
-    discount.deleted_at ||= Time.zone.now if event.type == "customer.discount.deleted"
+    discount.deleted_at ||= Time.zone.now if event&.type == "customer.discount.deleted"
 
     if discount.save
       create_activity
-      ServicePattern::Response.new(success: true)
+      ServicePattern::Response.new(result: discount)
     else
       ServicePattern::Response.new(errors: discount.errors.full_messages)
     end
@@ -14,11 +14,11 @@ class StripeModelCallbacks::Customer::DiscountUpdatedService < StripeModelCallba
 private
 
   def create_activity
-    discount.create_activity :deleted if event.type == "customer.discount.deleted"
+    discount.create_activity :deleted if event&.type == "customer.discount.deleted"
   end
 
   def coupon_id_look_up_by
-    event.data.try(:previous_attributes).try(:coupon).try(:id) ||
+    event.try(:data).try(:previous_attributes).try(:coupon).try(:id) ||
       object.coupon.id
   end
 
