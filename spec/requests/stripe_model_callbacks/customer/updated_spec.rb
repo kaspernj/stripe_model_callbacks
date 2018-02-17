@@ -4,7 +4,7 @@ describe "customer updating" do
   let!(:stripe_customer) { create :stripe_customer, id: "cus_00000000000000" }
 
   describe "#execute!" do
-    it "updates the subscription" do
+    it "updates the given customer" do
       mock_stripe_event("customer.updated")
 
       stripe_customer.reload

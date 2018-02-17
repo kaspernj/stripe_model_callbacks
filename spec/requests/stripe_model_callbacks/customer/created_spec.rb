@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe "customer creation" do
   describe "#execute!" do
-    it "updates the subscription" do
+    it "creates a customer" do
       expect { mock_stripe_event("customer.created") }
         .to change(StripeCustomer, :count).by(1)
 

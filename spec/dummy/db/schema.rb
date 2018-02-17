@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180217200350) do
+ActiveRecord::Schema.define(version: 20180217204628) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -49,6 +49,34 @@ ActiveRecord::Schema.define(version: 20180217200350) do
     t.datetime "updated_at", null: false
     t.index ["status"], name: "index_stripe_bank_accounts_on_status"
     t.index ["stripe_account_id"], name: "index_stripe_bank_accounts_on_stripe_account_id"
+  end
+
+  create_table "stripe_cards", id: false, force: :cascade do |t|
+    t.string "id", null: false
+    t.string "address_city"
+    t.string "address_country"
+    t.string "address_line1"
+    t.string "address_line1_check"
+    t.string "address_line2"
+    t.string "address_state"
+    t.string "address_zip"
+    t.string "address_zip_check"
+    t.string "brand"
+    t.string "country"
+    t.string "stripe_customer_id"
+    t.string "cvc_check"
+    t.string "dynamic_last4"
+    t.integer "exp_month"
+    t.integer "exp_year"
+    t.string "fingerprint"
+    t.string "funding"
+    t.string "last4"
+    t.text "metadata"
+    t.string "name"
+    t.string "tokenization_method"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stripe_customer_id"], name: "index_stripe_cards_on_stripe_customer_id"
   end
 
   create_table "stripe_charges", id: false, force: :cascade do |t|

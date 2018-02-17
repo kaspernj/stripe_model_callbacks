@@ -4,7 +4,7 @@ describe "invoice payment succeeded" do
   let!(:stripe_customer) { create :stripe_customer, id: "cus_CGNFgjPGtHlvXI" }
 
   describe "#execute!" do
-    it "updates the subscription" do
+    it "updates the invoice and adds a payment succeeded log" do
       expect { PublicActivity.with_tracking { mock_stripe_event("invoice.payment_succeeded") } }
         .to change(StripeInvoice, :count).by(1)
         .and change(StripeInvoiceItem, :count).by(1)

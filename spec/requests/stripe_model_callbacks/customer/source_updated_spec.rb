@@ -4,7 +4,7 @@ describe "customer source updated" do
   let!(:stripe_source) { create :stripe_source, id: "src_00000000000000" }
 
   describe "#execute!" do
-    it "updates the subscription" do
+    it "updates the given source" do
       expect { mock_stripe_event("customer.source.updated") }
         .to change(StripeSource, :count).by(0)
 

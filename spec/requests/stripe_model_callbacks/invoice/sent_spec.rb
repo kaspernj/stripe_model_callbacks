@@ -5,7 +5,7 @@ describe "invoice sent" do
   let!(:stripe_invoice) { create :stripe_invoice, id: "in_00000000000000" }
 
   describe "#execute!" do
-    it "updates the subscription" do
+    it "updates the invoice and adds a sent log" do
       expect { PublicActivity.with_tracking { mock_stripe_event("invoice.sent") } }
         .to change(StripeInvoice, :count).by(0)
         .and change(StripeInvoiceItem, :count).by(1)

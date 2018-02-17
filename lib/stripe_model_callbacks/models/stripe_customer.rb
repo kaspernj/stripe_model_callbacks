@@ -1,6 +1,7 @@
 class StripeCustomer < StripeModelCallbacks::ApplicationRecord
   self.primary_key = "id"
 
+  has_many :stripe_cards
   has_many :stripe_charges
   has_many :stripe_discounts
   has_many :stripe_invoices
