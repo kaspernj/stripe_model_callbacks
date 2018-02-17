@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180211092437) do
+ActiveRecord::Schema.define(version: 20180217094828) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -134,7 +134,7 @@ ActiveRecord::Schema.define(version: 20180211092437) do
     t.index ["deleted_at"], name: "index_stripe_customers_on_deleted_at"
   end
 
-  create_table "stripe_discounts", force: :cascade do |t|
+  create_table "stripe_discounts", id: :string, force: :cascade do |t|
     t.string "stripe_coupon_id"
     t.string "stripe_customer_id"
     t.string "stripe_subscription_id"
@@ -157,6 +157,7 @@ ActiveRecord::Schema.define(version: 20180211092437) do
     t.datetime "end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["id"], name: "sqlite_autoindex_stripe_discounts_1", unique: true
     t.index ["stripe_coupon_id"], name: "index_stripe_discounts_on_stripe_coupon_id"
     t.index ["stripe_customer_id"], name: "index_stripe_discounts_on_stripe_customer_id"
     t.index ["stripe_subscription_id"], name: "index_stripe_discounts_on_stripe_subscription_id"
@@ -564,7 +565,7 @@ ActiveRecord::Schema.define(version: 20180211092437) do
     t.datetime "current_period_end"
     t.string "stripe_customer_id"
     t.integer "days_until_due"
-    t.string "discount"
+    t.string "stripe_discount_id"
     t.datetime "ended_at"
     t.boolean "livemode", default: true
     t.text "metadata"
@@ -580,9 +581,9 @@ ActiveRecord::Schema.define(version: 20180211092437) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["deleted_at"], name: "index_stripe_subscriptions_on_deleted_at"
-    t.index ["discount"], name: "index_stripe_subscriptions_on_discount"
     t.index ["status"], name: "index_stripe_subscriptions_on_status"
     t.index ["stripe_customer_id"], name: "index_stripe_subscriptions_on_stripe_customer_id"
+    t.index ["stripe_discount_id"], name: "index_stripe_subscriptions_on_stripe_discount_id"
     t.index ["stripe_plan_id"], name: "index_stripe_subscriptions_on_stripe_plan_id"
   end
 
