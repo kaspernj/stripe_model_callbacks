@@ -1,0 +1,80 @@
+{
+  "id": "evt_bgfsbgservsreg",
+  "object": "event",
+  "api_version": "2018-02-06",
+  "created": "1518896523",
+  "livemode": "true",
+  "pending_webhooks": "1",
+  "type": "customer.source.created",
+  "controller": "stripe_event/webhook",
+  "action": "event",
+  "request": {
+    "id": "req_asfdgasfgasfdaf",
+    "idempotency_key": ""
+  },
+  "webhook": {
+    "id": "evt_bgfsbgservsreg",
+    "object": "event",
+    "api_version": "2018-02-06",
+    "created": "1518896523",
+    "livemode": "true",
+    "pending_webhooks": "1",
+    "type": "customer.source.created",
+    "request": {
+      "id": "req_asfdgasfgasfdaf",
+      "idempotency_key": ""
+    },
+    "data": {
+      "object": {
+        "id": "card_000000000",
+        "object": "card",
+        "address_city": "",
+        "address_country": "",
+        "address_line1": "",
+        "address_line1_check": "",
+        "address_line2": "",
+        "address_state": "",
+        "address_zip": "",
+        "address_zip_check": "",
+        "brand": "Visa",
+        "country": "DK",
+        "customer": "cus_000000000",
+        "cvc_check": "pass",
+        "dynamic_last4": "",
+        "exp_month": "9",
+        "exp_year": "2029",
+        "fingerprint": "asdvawefgawvafg",
+        "funding": "debit",
+        "last4": "0062",
+        "name": "",
+        "tokenization_method": ""
+      }
+    }
+  },
+  "data": {
+    "object": {
+      "id": "card_000000000",
+      "object": "card",
+      "address_city": "",
+      "address_country": "",
+      "address_line1": "",
+      "address_line1_check": "",
+      "address_line2": "",
+      "address_state": "",
+      "address_zip": "",
+      "address_zip_check": "",
+      "brand": "Visa",
+      "country": "DK",
+      "customer": "cus_000000000",
+      "cvc_check": "pass",
+      "dynamic_last4": "",
+      "exp_month": "9",
+      "exp_year": "2029",
+      "fingerprint": "asdvawefgawvafg",
+      "funding": "debit",
+      "last4": "0062",
+      "name": "",
+      "tokenization_method": ""
+    }
+  }
+}

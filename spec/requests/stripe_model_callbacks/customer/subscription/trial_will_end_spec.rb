@@ -6,7 +6,7 @@ describe "subscription trial will end" do
   let!(:subscription) { create :stripe_subscription, stripe_customer: customer, stripe_plan: plan, id: "sub_00000000000000" }
 
   describe "#execute!" do
-    it "adds and activity and updates the subscription" do
+    it "adds an activity and updates the subscription" do
       expect { PublicActivity.with_tracking { mock_stripe_event("customer.subscription.trial_will_end") } }
         .to change(StripeSubscription, :count).by(0)
         .and change(PublicActivity::Activity.where(key: "stripe_subscription.trial_will_end"), :count).by(1)

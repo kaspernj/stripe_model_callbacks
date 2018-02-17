@@ -4,7 +4,7 @@ describe "recipient created" do
   let!(:recipient) { create :stripe_recipient, id: "rp_00000000000000" }
 
   describe "#execute!" do
-    it "updates the subscription" do
+    it "updates the given recipient" do
       expect { mock_stripe_event("recipient.updated") }
         .to change(StripeRecipient, :count).by(0)
 
