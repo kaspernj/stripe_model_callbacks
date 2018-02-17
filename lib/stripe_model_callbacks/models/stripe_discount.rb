@@ -17,6 +17,7 @@ class StripeDiscount < StripeModelCallbacks::ApplicationRecord
       created: object.respond_to?(:created) ? Time.zone.at(object.created) : nil,
       start: Time.zone.at(object.start),
       end: Time.zone.at(object.end),
+      stripe_coupon_id: object.coupon.id,
       stripe_customer_id: object.customer,
       stripe_subscription_id: object.subscription&.id
     )

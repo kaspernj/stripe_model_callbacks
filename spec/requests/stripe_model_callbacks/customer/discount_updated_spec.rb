@@ -1,9 +1,10 @@
 require "rails_helper"
 
 describe "customer discount updated" do
+  let!(:old_coupon) { create :stripe_coupon, id: "OLD_COUPON_ID" }
   let!(:coupon) { create :stripe_coupon, id: "25OFF_00000000000000" }
   let!(:customer) { create :stripe_customer, id: "cus_00000000000000" }
-  let!(:discount) { create :stripe_discount, stripe_coupon: coupon, stripe_customer: customer }
+  let!(:discount) { create :stripe_discount, stripe_coupon: old_coupon, stripe_customer: customer }
 
   def bypass_event_signature(payload)
     event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
