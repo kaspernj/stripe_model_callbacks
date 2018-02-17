@@ -3,17 +3,9 @@ require "rails_helper"
 describe "disputes funds reinstated" do
   let!(:dispute) { create :stripe_dispute, id: "dp_00000000000000" }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/charge/charge.dispute.funds_reinstated.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "adds an activity and updates the disppute" do
-      expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
+      expect { PublicActivity.with_tracking { mock_stripe_event("charge.dispute.funds_reinstated") } }
         .to change(StripeDispute, :count).by(0)
         .and change(PublicActivity::Activity.where(key: "stripe_dispute.funds_reinstated"), :count).by(1)
 

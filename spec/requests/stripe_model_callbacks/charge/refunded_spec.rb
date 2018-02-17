@@ -3,17 +3,9 @@ require "rails_helper"
 describe "charge refunded" do
   let!(:charge) { create :stripe_charge, id: "ch_1BrtHZAT5SYrvIfdqkyvLyvX" }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/charge/charge.refunded.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "marks the charge as refunded" do
-      expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
+      expect { PublicActivity.with_tracking { mock_stripe_event("charge.refunded") } }
         .to change(PublicActivity::Activity.where(key: "stripe_charge.refunded"), :count).by(1)
         .and change(StripeCharge, :count).by(1)
         .and change(StripeRefund, :count).by(1)

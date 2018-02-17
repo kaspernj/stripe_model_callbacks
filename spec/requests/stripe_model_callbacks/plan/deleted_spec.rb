@@ -4,17 +4,9 @@ describe "plan deleted" do
   let!(:plan) { create :stripe_plan, id: "peak_00000000000000", stripe_product: product }
   let!(:product) { create :stripe_product, id: "prod_00000000000000", name: "Test product" }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/plan/plan.deleted.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "marks the charge as refunded" do
-      expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
+      expect { PublicActivity.with_tracking { mock_stripe_event("plan.deleted") } }
         .to change(StripePlan, :count).by(0)
         .and change(PublicActivity::Activity.where(key: "stripe_plan.deleted"), :count).by(1)
 

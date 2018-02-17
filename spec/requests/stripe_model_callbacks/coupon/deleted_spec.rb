@@ -3,17 +3,9 @@ require "rails_helper"
 describe "coupon deleted" do
   let!(:coupon) { create :stripe_coupon, id: "25OFF_00000000000000" }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/coupon/coupon.deleted.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "marks the coupon as deleted" do
-      expect { post "/stripe-events", params: payload }
+      expect { mock_stripe_event("coupon.deleted") }
         .to change(StripeCoupon, :count).by(0)
 
       coupon.reload

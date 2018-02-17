@@ -3,17 +3,9 @@ require "rails_helper"
 describe "account external account updated" do
   let!(:bank_account) { create :stripe_bank_account, id: "ba_00000000000000" }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/account/account.external_account.updated.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "updates the bank account" do
-      expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
+      expect { PublicActivity.with_tracking { mock_stripe_event("account.external_account.updated") } }
         .to change(StripeBankAccount, :count).by(0)
         .and change(PublicActivity::Activity.where(key: "stripe_bank_account.update"), :count).by(1)
 

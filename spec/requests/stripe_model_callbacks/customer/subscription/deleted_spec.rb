@@ -5,17 +5,9 @@ describe "subscription deletion" do
   let!(:plan) { create :stripe_plan, id: "silver-express-898_00000000000000" }
   let!(:subscription) { create :stripe_subscription, stripe_customer: customer, stripe_plan: plan, id: "sub_00000000000000" }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/customer/customer.subscription.deleted.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "ends the subscription" do
-      expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
+      expect { PublicActivity.with_tracking { mock_stripe_event("customer.subscription.deleted") } }
         .to change(PublicActivity::Activity.where(key: "stripe_subscription.deleted"), :count).by(1)
 
       subscription.reload

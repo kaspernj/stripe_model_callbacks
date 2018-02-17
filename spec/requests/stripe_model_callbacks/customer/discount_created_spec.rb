@@ -4,17 +4,9 @@ describe "customer discount creation" do
   let!(:coupon) { create :stripe_coupon, id: "25OFF_00000000000000" }
   let!(:customer) { create :stripe_customer, id: "cus_00000000000000" }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/customer/customer.discount.created.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "adds a new discount" do
-      expect { post "/stripe-events", params: payload }
+      expect { mock_stripe_event("customer.discount.created") }
         .to change(StripeDiscount, :count).by(1)
 
       created_discount = StripeDiscount.last

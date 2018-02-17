@@ -4,17 +4,9 @@ describe "customer source deleted" do
   let!(:stripe_customer) { create :stripe_customer, id: "cus_00000000000000" }
   let!(:stripe_source) { create :stripe_source, id: "src_00000000000000" }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/customer/customer.source.deleted.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "adds an activity and updates the source" do
-      expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
+      expect { PublicActivity.with_tracking { mock_stripe_event("customer.source.deleted") } }
         .to change(StripeSource, :count).by(0)
         .and change(PublicActivity::Activity.where(key: "stripe_source.deleted"), :count).by(1)
 
