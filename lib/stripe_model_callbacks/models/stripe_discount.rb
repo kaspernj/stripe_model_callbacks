@@ -19,7 +19,7 @@ class StripeDiscount < StripeModelCallbacks::ApplicationRecord
       end: object.end ? Time.zone.at(object.end) : nil,
       stripe_coupon_id: object.coupon.id,
       stripe_customer_id: object.customer,
-      stripe_subscription_id: object.subscription&.id
+      stripe_subscription_id: object.subscription
     )
 
     assign_coupon_attributes(object)
