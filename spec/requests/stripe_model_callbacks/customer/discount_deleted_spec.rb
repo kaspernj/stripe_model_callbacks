@@ -5,17 +5,9 @@ describe "customer discount deleted" do
   let!(:customer) { create :stripe_customer, id: "cus_00000000000000" }
   let!(:discount) { create :stripe_discount, stripe_coupon: coupon, stripe_customer: customer }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/customer/customer.discount.deleted.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "adds an activity and updates the existing discount" do
-      expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
+      expect { PublicActivity.with_tracking { mock_stripe_event("customer.discount.deleted") } }
         .to change(StripeDiscount, :count).by(0)
         .and change(PublicActivity::Activity.where(key: "stripe_discount.deleted"), :count).by(1)
 

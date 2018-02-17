@@ -1,17 +1,9 @@
 require "rails_helper"
 
 describe "coupon created" do
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/coupon/coupon.created.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "creates the coupon" do
-      expect { post "/stripe-events", params: payload }
+      expect { mock_stripe_event("coupon.created") }
         .to change(StripeCoupon, :count).by(1)
 
       created_coupon = StripeCoupon.last

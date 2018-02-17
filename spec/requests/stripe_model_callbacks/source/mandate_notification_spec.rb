@@ -3,17 +3,9 @@ require "rails_helper"
 describe "source mandate notification" do
   let!(:source) { create :stripe_source, id: "src_00000000000000" }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/source/source.mandate_notification.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "creates an activity and updates the source" do
-      expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
+      expect { PublicActivity.with_tracking { mock_stripe_event("source.mandate_notification") } }
         .to change(StripeSource, :count).by(0)
         .and change(PublicActivity::Activity.where(key: "stripe_source.mandate_notification"), :count).by(1)
 

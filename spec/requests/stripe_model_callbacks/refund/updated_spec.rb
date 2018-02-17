@@ -4,17 +4,9 @@ describe "refund updated" do
   let!(:charge) { create :stripe_charge, id: "ch_00000000000000" }
   let!(:refund) { create :stripe_refund, id: "re_00000000000000", stripe_charge: charge }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/charge/charge.refund.updated.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "creates the subscription" do
-      expect { post "/stripe-events", params: payload }
+      expect { mock_stripe_event("charge.refund.updated") }
         .to change(StripeRefund, :count).by(0)
 
       refund.reload

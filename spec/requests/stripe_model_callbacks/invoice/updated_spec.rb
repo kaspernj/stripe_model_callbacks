@@ -13,17 +13,9 @@ describe "invoice updated" do
   let!(:stripe_plan) { create :stripe_plan, id: "peak_flow_build" }
   let!(:stripe_subscription_item) { create :stripe_subscription_item, id: "si_CHS7VAL80FwJv7" }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/invoice/invoice.updated.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "updates the subscription" do
-      expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
+      expect { PublicActivity.with_tracking { mock_stripe_event("invoice.updated") } }
         .to change(StripeInvoice, :count).by(0)
         .and change(StripeInvoiceItem, :count).by(0)
         .and change(PublicActivity::Activity.where(key: "stripe_invoice.update"), :count).by(1)

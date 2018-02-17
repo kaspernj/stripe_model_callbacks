@@ -3,17 +3,9 @@ require "rails_helper"
 describe "transfer reversed" do
   let!(:transfer) { create :stripe_transfer, id: "tr_00000000000000" }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/transfer/transfer.reversed.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "logs an activity and updates the transfer" do
-      expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
+      expect { PublicActivity.with_tracking { mock_stripe_event("transfer.reversed") } }
         .to change(StripeTransfer, :count).by(0)
         .and change(PublicActivity::Activity.where(key: "stripe_transfer.reversed"), :count).by(1)
 

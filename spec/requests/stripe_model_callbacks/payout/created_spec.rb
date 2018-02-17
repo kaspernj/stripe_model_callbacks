@@ -1,17 +1,9 @@
 require "rails_helper"
 
 describe "payout created" do
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/payout/payout.created.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "creates the subscription" do
-      expect { post "/stripe-events", params: payload }
+      expect { mock_stripe_event("payout.created") }
         .to change(StripePayout, :count).by(1)
 
       created_payout = StripePayout.last

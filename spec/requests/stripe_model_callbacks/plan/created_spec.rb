@@ -3,17 +3,9 @@ require "rails_helper"
 describe "plan updated" do
   let!(:stripe_product) { create :stripe_product, id: "prod_00000000000000", name: "Test product" }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/plan/plan.created.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "marks the charge as refunded" do
-      expect { post "/stripe-events", params: payload }
+      expect { mock_stripe_event("plan.created") }
         .to change(StripePlan, :count).by(1)
 
       plan = StripePlan.last

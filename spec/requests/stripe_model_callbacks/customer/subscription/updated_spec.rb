@@ -8,17 +8,9 @@ describe "subscription updating" do
     create :stripe_subscription_item, stripe_plan: stripe_plan, stripe_subscription: stripe_subscription, id: "si_CGPuxYgJ7bx2UW"
   end
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/customer/customer.subscription.updated.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "updates the subscription" do
-      expect { post "/stripe-events", params: payload }
+      expect { mock_stripe_event("customer.subscription.updated") }
         .to change(StripeSubscription, :count).by(0)
         .and change(StripeSubscriptionItem, :count).by(0)
 

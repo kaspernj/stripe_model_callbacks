@@ -1,17 +1,9 @@
 require "rails_helper"
 
 describe "disputes creation" do
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/charge/charge.dispute.created.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "creates a disppute" do
-      expect { post "/stripe-events", params: payload }
+      expect { mock_stripe_event("charge.dispute.created") }
         .to change(StripeDispute, :count).by(1)
 
       created_dispute = StripeDispute.last

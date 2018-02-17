@@ -4,17 +4,9 @@ describe "order updated" do
   let!(:order) { create :stripe_order, id: "or_00000000000000" }
   let!(:order_item) { create :stripe_order_item, stripe_order: order, parent_id: "sk_1BrqWPAT5SYrvIfdCfVmF7Kx" }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/order/order.updated.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "marks the charge as refunded" do
-      expect { post "/stripe-events", params: payload }
+      expect { mock_stripe_event("order.updated") }
         .to change(StripeOrder, :count).by(0)
         .and change(StripeOrderItem, :count).by(0)
 

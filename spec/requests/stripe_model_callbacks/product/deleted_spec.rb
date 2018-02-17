@@ -3,17 +3,9 @@ require "rails_helper"
 describe "product deleted" do
   let!(:product) { create :stripe_product, id: "prod_00000000000000" }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/product/product.deleted.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "creates the subscription" do
-      expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
+      expect { PublicActivity.with_tracking { mock_stripe_event("product.deleted") } }
         .to change(StripeProduct, :count).by(0)
         .and change(PublicActivity::Activity.where(key: "stripe_product.deleted"), :count).by(1)
 

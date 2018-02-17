@@ -5,17 +5,9 @@ describe "subscription trial will end" do
   let!(:plan) { create :stripe_plan, id: "silver-express-898_00000000000000" }
   let!(:subscription) { create :stripe_subscription, stripe_customer: customer, stripe_plan: plan, id: "sub_00000000000000" }
 
-  def bypass_event_signature(payload)
-    event = Stripe::Event.construct_from(JSON.parse(payload, symbolize_names: true))
-    expect(Stripe::Webhook).to receive(:construct_event).and_return(event)
-  end
-
-  let(:payload) { File.read("spec/fixtures/stripe_events/customer/customer.subscription.trial_will_end.json") }
-  before { bypass_event_signature(payload) }
-
   describe "#execute!" do
     it "adds and activity and updates the subscription" do
-      expect { PublicActivity.with_tracking { post "/stripe-events", params: payload } }
+      expect { PublicActivity.with_tracking { mock_stripe_event("customer.subscription.trial_will_end") } }
         .to change(StripeSubscription, :count).by(0)
         .and change(PublicActivity::Activity.where(key: "stripe_subscription.trial_will_end"), :count).by(1)
 
