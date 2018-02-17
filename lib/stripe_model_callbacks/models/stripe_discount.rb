@@ -4,6 +4,8 @@ class StripeDiscount < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_coupon, optional: true
   belongs_to :stripe_customer, optional: true
   belongs_to :stripe_subscription, optional: true
+
+  has_many :stripe_invoices
   has_many :stripe_subscriptions
 
   monetize :coupon_amount_off_cents, allow_nil: true
@@ -42,7 +44,7 @@ private
   def assign_other_coupon_attributes(object)
     assign_attributes(
       coupon_max_redemptions: object.coupon.max_redemptions,
-      coupon_metadata: JSON.generate(object.coupon.metadata),
+      coupon_metadata: JSON.generate(object.coupon.try(:metadata)),
       coupon_percent_off: object.coupon.percent_off,
       coupon_redeem_by: object.coupon.redeem_by ? Time.zone.at(object.coupon.redeem_by) : nil,
       coupon_times_redeemed: object.coupon.times_redeemed,

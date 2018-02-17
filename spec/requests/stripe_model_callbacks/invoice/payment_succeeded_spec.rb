@@ -25,7 +25,7 @@ describe "invoice payment succeeded" do
       expect(created_invoice.stripe_customer_id).to eq "cus_CGNFgjPGtHlvXI"
       expect(created_invoice.date).to eq Time.zone.parse("2018-02-04 18:29:07")
       expect(created_invoice.description).to eq nil
-      expect(created_invoice.discount).to eq nil
+      expect(created_invoice.stripe_discount).to eq nil
       expect(created_invoice.due_date).to eq nil
       expect(created_invoice.forgiven?).to eq false
       expect(created_invoice.next_payment_attempt).to eq nil

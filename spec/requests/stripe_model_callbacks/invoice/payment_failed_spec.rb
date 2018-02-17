@@ -27,7 +27,7 @@ describe "invoice payment failed" do
       expect(stripe_invoice.stripe_customer).to eq stripe_customer
       expect(stripe_invoice.date).to eq Time.zone.parse("2018-02-05 16:16:02")
       expect(stripe_invoice.description).to eq nil
-      expect(stripe_invoice.discount).to eq nil
+      expect(stripe_invoice.stripe_discount).to eq nil
       expect(stripe_invoice.due_date).to eq nil
       expect(stripe_invoice.forgiven?).to eq false
       expect(stripe_invoice.next_payment_attempt).to eq nil

@@ -36,7 +36,7 @@ describe "invoice updated" do
       expect(stripe_invoice.stripe_customer_id).to eq "cus_00000000000000"
       expect(stripe_invoice.date).to eq Time.zone.parse("2018-02-04 17:02:25")
       expect(stripe_invoice.description).to eq nil
-      expect(stripe_invoice.discount).to eq nil
+      expect(stripe_invoice.stripe_discount).to eq nil
       expect(stripe_invoice.due_date).to eq nil
       expect(stripe_invoice.forgiven?).to eq false
       expect(stripe_invoice.next_payment_attempt).to eq nil
