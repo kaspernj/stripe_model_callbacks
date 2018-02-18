@@ -4,11 +4,11 @@ class StripeCard < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_customer, optional: true
 
   def self.stripe_class
-    StripeClass
+    Stripe::Card
   end
 
   def assign_from_stripe(object)
-    self.stripe_customer_id = object.customer
+    self.stripe_customer_id = object.customer if object.respond_to?(:customer)
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
@@ -19,5 +19,9 @@ class StripeCard < StripeModelCallbacks::ApplicationRecord
         funding last4 name tokenization_method
       ]
     )
+  end
+
+  def to_stripe
+    @_stripe_object ||= Stripe::Customer.retrieve(stripe_customer_id).sources.retrieve(id)
   end
 end

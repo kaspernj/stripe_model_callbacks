@@ -2,6 +2,7 @@ class StripeModelCallbacks::Customer::SourceUpdatedService < StripeModelCallback
   def execute!
     source = stripe_class.find_or_initialize_by(id: object.id)
     source.assign_from_stripe(object)
+    source.deleted_at = Time.zone.now if event.type == "customer.source.deleted"
 
     if source.save
       source.create_activity :deleted if event.type == "customer.source.deleted"
