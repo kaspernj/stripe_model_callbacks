@@ -51,6 +51,7 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
 
   def destroy_on_stripe
     to_stripe.delete
+    update!(deleted_at: Time.zone.now) if respond_to?(:deleted_at)
     reload_from_stripe!
     true
   end

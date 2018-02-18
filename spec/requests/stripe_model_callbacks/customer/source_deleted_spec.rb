@@ -18,6 +18,7 @@ describe "customer source deleted" do
       expect(stripe_source.currency).to eq "usd"
       expect(stripe_source.created).to eq Time.zone.parse("2018-02-06 12:27:27")
       expect(stripe_source.owner_email).to eq "jenny.rosen@example.com"
+      expect(stripe_source.deleted_at).to be > 1.minute.ago
     end
   end
 end

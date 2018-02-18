@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180217204628) do
+ActiveRecord::Schema.define(version: 20180218092600) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(version: 20180217204628) do
     t.string "tokenization_method"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_stripe_cards_on_deleted_at"
     t.index ["stripe_customer_id"], name: "index_stripe_cards_on_stripe_customer_id"
   end
 
@@ -566,6 +568,8 @@ ActiveRecord::Schema.define(version: 20180217204628) do
     t.datetime "created"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_stripe_sources_on_deleted_at"
   end
 
   create_table "stripe_subscription_items", id: false, force: :cascade do |t|
