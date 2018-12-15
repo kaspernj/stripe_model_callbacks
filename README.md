@@ -17,7 +17,7 @@ gem 'stripe_model_callbacks'
 
 And then execute:
 ```bash
-$ bundle
+bundle
 ```
 
 You also need to install and setup the gems `public_activity`, `stripe` and `stripe_event`. Do this:
@@ -36,12 +36,12 @@ end
 
 Do something like this in `config/initializers/stripe.rb`:
 ```ruby
-Stripe.api_key = "fake-key"
-StripeEvent.signing_secret = "fake-signing-key"
+Stripe.api_key = ENV.fetch("STRIPE_PUBLIC_KEY")
+StripeEvent.signing_secret = ENV.fetch("STRIPE_SIGNING_KEY")
 
 Rails.configuration.stripe = {
-  publishable_key: "fake-public-key",
-  secret_key: "fake-secret-key"
+  publishable_key: ENV.fetch("STRIPE_PUBLIC_KEY"),
+  secret_key: ENV.fetch("STRIPE_SECRET_KEY")
 }
 
 StripeEvent.configure do |events|
@@ -59,6 +59,8 @@ You should set up your Stripe account to post events to your website using a URL
 
 Your application should now receive event webhooks from Stripe and then create, update, mark as deleted,
 log and more automatically using the ActiveRecord models.
+
+You can use a service like Ultrahook to set up a proxy for your local development machine to test against.
 
 ## Usage
 
