@@ -1,8 +1,9 @@
 class AddNewPrimaryIdAndRenameOld < ActiveRecord::Migration[5.2]
   def change
     tables = %w[
-      charges coupons customers invoice_items invoices orders payouts plans
-      products recipients refunds skus sources subscriptions transfers
+      bank_accounts cards charges coupons customers disputes invoice_items invoices
+      orders payouts plans products recipients refunds reviews skus sources
+      subscription_items subscriptions transfers
     ]
 
     tables.each do |table|
