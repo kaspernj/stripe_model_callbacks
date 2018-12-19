@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_02_18_092600) do
+ActiveRecord::Schema.define(version: 2018_12_19_121712) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -342,7 +342,9 @@ ActiveRecord::Schema.define(version: 2018_02_18_092600) do
     t.string "order_item_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_id", null: false
     t.index ["parent_id"], name: "index_stripe_order_items_on_parent_id"
+    t.index ["stripe_id"], name: "index_stripe_order_items_on_stripe_id"
     t.index ["stripe_order_id"], name: "index_stripe_order_items_on_stripe_order_id"
   end
 
