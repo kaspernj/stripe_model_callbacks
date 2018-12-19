@@ -3,7 +3,7 @@ class AddNewPrimaryIdAndRenameOld < ActiveRecord::Migration[5.2]
     bank_accounts cards charges coupons customers disputes invoice_items invoices
     orders payouts plans products recipients refunds reviews skus sources
     subscription_items subscriptions transfers
-  ]
+  ].freeze
 
   def up
     TABLES.each do |table|
