@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "plan updated" do
-  let!(:stripe_product) { create :stripe_product, id: "prod_00000000000000", name: "Test product" }
+  let!(:stripe_product) { create :stripe_product, stripe_id: "prod_00000000000000", name: "Test product" }
 
   describe "#execute!" do
     it "marks the charge as refunded" do
@@ -12,7 +12,7 @@ describe "plan updated" do
 
       expect(response.code).to eq "200"
 
-      expect(plan.id).to eq "peak_00000000000000"
+      expect(plan.stripe_id).to eq "peak_00000000000000"
       expect(plan.amount.format).to eq "60.00 kr."
       expect(plan.created).to eq Time.zone.parse("2018-02-07 07:56:13")
       expect(plan.metadata).to eq "{}"

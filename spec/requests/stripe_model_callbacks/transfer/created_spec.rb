@@ -10,7 +10,7 @@ describe "transfer created" do
 
       expect(response.code).to eq "200"
 
-      expect(created_transfer.id).to eq "tr_00000000000000"
+      expect(created_transfer.stripe_id).to eq "tr_00000000000000"
       expect(created_transfer.amount.format).to eq "$11.00"
       expect(created_transfer.amount_reversed.format).to eq "$0.00"
       expect(created_transfer.balance_transaction).to eq "txn_00000000000000"

@@ -10,7 +10,7 @@ describe "coupon created" do
 
       expect(response.code).to eq "200"
 
-      expect(created_coupon.id).to eq "25OFF_00000000000000"
+      expect(created_coupon.stripe_id).to eq "25OFF_00000000000000"
       expect(created_coupon.amount_off).to eq nil
       expect(created_coupon.created).to eq Time.zone.parse("2018-02-06 09:27:55")
       expect(created_coupon.currency).to eq nil

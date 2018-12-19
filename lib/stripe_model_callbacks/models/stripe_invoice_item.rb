@@ -1,10 +1,8 @@
 class StripeInvoiceItem < StripeModelCallbacks::ApplicationRecord
-  self.primary_key = "id"
-
-  belongs_to :stripe_customer, optional: true
-  belongs_to :stripe_invoice, optional: true
-  belongs_to :stripe_subscription_item, optional: true
-  belongs_to :stripe_plan, optional: true
+  belongs_to :stripe_customer, optional: true, primary_key: "stripe_id"
+  belongs_to :stripe_invoice, optional: true, primary_key: "stripe_id"
+  belongs_to :stripe_subscription_item, optional: true, primary_key: "stripe_id"
+  belongs_to :stripe_plan, optional: true, primary_key: "stripe_id"
 
   monetize :amount_cents
 

@@ -1,6 +1,6 @@
 class StripeModelCallbacks::Product::UpdatedService < StripeModelCallbacks::BaseEventService
   def execute!
-    product = StripeProduct.find_or_initialize_by(id: object.id)
+    product = StripeProduct.find_or_initialize_by(stripe_id: object.id)
     product.assign_from_stripe(object)
     product.deleted_at ||= Time.zone.now if event.type == "product.deleted"
 

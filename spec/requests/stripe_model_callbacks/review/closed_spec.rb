@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "review closed" do
-  let!(:review) { create :stripe_review, id: "prv_00000000000000" }
+  let!(:review) { create :stripe_review, stripe_id: "prv_00000000000000" }
 
   describe "#execute!" do
     it "creates the subscription" do
@@ -13,7 +13,7 @@ describe "review closed" do
 
       expect(response.code).to eq "200"
 
-      expect(review.id).to eq "prv_00000000000000"
+      expect(review.stripe_id).to eq "prv_00000000000000"
       expect(review.stripe_charge_id).to eq "ch_00000000000000"
       expect(review.created).to eq Time.zone.parse("2018-02-08 12:07:22")
       expect(review.livemode).to eq false

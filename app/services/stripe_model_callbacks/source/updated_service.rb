@@ -26,6 +26,6 @@ private
   end
 
   def source
-    @_source ||= StripeSource.find_or_initialize_by(id: object.id)
+    @_source ||= StripeSource.find_or_initialize_by(stripe_id: object.id)
   end
 end

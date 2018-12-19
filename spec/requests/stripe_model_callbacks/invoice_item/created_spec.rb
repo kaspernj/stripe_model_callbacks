@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "subscription creation" do
-  let!(:customer) { create :stripe_customer, id: "cus_00000000000000" }
+  let!(:customer) { create :stripe_customer, stripe_id: "cus_00000000000000" }
 
   describe "#execute!" do
     it "creates the subscription" do

@@ -1,9 +1,9 @@
 require "rails_helper"
 
 describe "customer discount updated" do
-  let!(:old_coupon) { create :stripe_coupon, id: "OLD_COUPON_ID" }
-  let!(:coupon) { create :stripe_coupon, id: "25OFF_00000000000000" }
-  let!(:customer) { create :stripe_customer, id: "cus_00000000000000" }
+  let!(:old_coupon) { create :stripe_coupon, stripe_id: "OLD_COUPON_ID" }
+  let!(:coupon) { create :stripe_coupon, stripe_id: "25OFF_00000000000000" }
+  let!(:customer) { create :stripe_customer, stripe_id: "cus_00000000000000" }
   let!(:discount) { create :stripe_discount, stripe_coupon: old_coupon, stripe_customer: customer }
 
   describe "#execute!" do

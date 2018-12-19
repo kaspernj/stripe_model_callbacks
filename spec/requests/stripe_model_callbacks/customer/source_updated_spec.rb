@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "customer source updated" do
-  let!(:stripe_source) { create :stripe_source, id: "src_00000000000000" }
+  let!(:stripe_source) { create :stripe_source, stripe_id: "src_00000000000000" }
 
   describe "#execute!" do
     it "updates the given source" do
@@ -12,7 +12,7 @@ describe "customer source updated" do
 
       expect(response.code).to eq "200"
 
-      expect(stripe_source.id).to eq "src_00000000000000"
+      expect(stripe_source.stripe_id).to eq "src_00000000000000"
       expect(stripe_source.currency).to eq "usd"
       expect(stripe_source.created).to eq Time.zone.parse("2018-02-04 19:29:53")
       expect(stripe_source.owner_email).to eq "jenny.rosen@example.com"

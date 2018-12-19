@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "invoice payment succeeded" do
-  let!(:stripe_customer) { create :stripe_customer, id: "cus_CGNFgjPGtHlvXI" }
+  let!(:stripe_customer) { create :stripe_customer, stripe_id: "cus_CGNFgjPGtHlvXI" }
 
   describe "#execute!" do
     it "updates the invoice and adds a payment succeeded log" do
@@ -14,7 +14,7 @@ describe "invoice payment succeeded" do
 
       expect(response.code).to eq "200"
 
-      expect(created_invoice.id).to eq "in_1BrsEhAT5SYrvIfdlmd9sZns"
+      expect(created_invoice.stripe_id).to eq "in_1BrsEhAT5SYrvIfdlmd9sZns"
       expect(created_invoice.application_fee).to eq nil
       expect(created_invoice.attempt_count).to eq 0
       expect(created_invoice.attempted?).to eq true

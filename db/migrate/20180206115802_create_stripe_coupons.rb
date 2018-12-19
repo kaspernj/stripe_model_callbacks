@@ -1,7 +1,7 @@
 class CreateStripeCoupons < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_coupons, id: false do |t|
-      t.string :id, primary: true, null: false
+    create_table :stripe_coupons do |t|
+      t.string :stripe_id, index: true, null: false
       t.integer :amount_off_cents
       t.string :amount_off_currency
       t.datetime :created

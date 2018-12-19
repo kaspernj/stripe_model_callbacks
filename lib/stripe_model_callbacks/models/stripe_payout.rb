@@ -1,6 +1,4 @@
 class StripePayout < StripeModelCallbacks::ApplicationRecord
-  self.primary_key = "id"
-
   monetize :amount_cents, allow_nil: true
 
   def self.stripe_class

@@ -1,7 +1,7 @@
 class CreateStripeInvoiceItems < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_invoice_items, id: false do |t|
-      t.string :id, primary: true, null: false
+    create_table :stripe_invoice_items do |t|
+      t.string :stripe_id, index: true, null: false
       t.integer :amount_cents
       t.string :amount_currency
       t.string :stripe_customer_id, index: true

@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe "plan deleted" do
-  let!(:plan) { create :stripe_plan, id: "peak_00000000000000", stripe_product: product }
-  let!(:product) { create :stripe_product, id: "prod_00000000000000", name: "Test product" }
+  let!(:plan) { create :stripe_plan, stripe_id: "peak_00000000000000", stripe_product: product }
+  let!(:product) { create :stripe_product, stripe_id: "prod_00000000000000", name: "Test product" }
 
   describe "#execute!" do
     it "marks the charge as refunded" do
@@ -14,7 +14,7 @@ describe "plan deleted" do
 
       expect(response.code).to eq "200"
 
-      expect(plan.id).to eq "peak_00000000000000"
+      expect(plan.stripe_id).to eq "peak_00000000000000"
       expect(plan.amount.format).to eq "60.00 kr."
       expect(plan.created).to eq Time.zone.parse("2018-02-07 07:56:13")
       expect(plan.metadata).to eq "{}"

@@ -11,8 +11,8 @@ require "factory_bot_rails"
 require "pry-rails"
 require "public_activity/testing"
 
-FactoryBot.definition_file_paths << File.join(File.dirname(__FILE__), "factories")
-FactoryBot.find_definitions
+# FactoryBot.definition_file_paths << File.join(File.dirname(__FILE__), "factories")
+# FactoryBot.find_definitions
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -32,6 +32,8 @@ FactoryBot.find_definitions
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
+
+Money.locale_backend = :i18n
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods

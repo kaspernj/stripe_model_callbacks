@@ -11,7 +11,7 @@ describe "review opened" do
 
       expect(response.code).to eq "200"
 
-      expect(created_review.id).to eq "prv_00000000000000"
+      expect(created_review.stripe_id).to eq "prv_00000000000000"
       expect(created_review.stripe_charge_id).to eq "ch_00000000000000"
       expect(created_review.created).to eq Time.zone.parse("2018-02-08 12:06:46")
       expect(created_review.livemode).to eq false

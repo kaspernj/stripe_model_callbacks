@@ -1,7 +1,7 @@
 class CreateStripeCustomers < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_customers, id: false do |t|
-      t.string :id, primary: true, null: false
+    create_table :stripe_customers do |t|
+      t.string :stripe_id, index: true, null: false
       t.integer :account_balance, null: false
       t.string :business_vat_id
       t.datetime :deleted_at, index: true

@@ -1,7 +1,7 @@
 class CreateStripeCharges < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_charges, id: false do |t|
-      t.string :id, primary: true, null: false
+    create_table :stripe_charges do |t|
+      t.string :stripe_id, index: true, null: false
       amount_columns(t)
       dispute_failure_and_fraud_columns(t)
       recipient_columns(t)

@@ -1,7 +1,7 @@
 class CreateStripeRecipients < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_recipients, id: false do |t|
-      t.string :id, primary: true, null: false
+    create_table :stripe_recipients do |t|
+      t.string :stripe_id, index: true, null: false
       t.string :active_account
       t.string :description
       t.datetime :deleted_at, index: true

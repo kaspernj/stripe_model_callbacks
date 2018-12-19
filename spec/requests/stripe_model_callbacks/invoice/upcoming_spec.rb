@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe "invoice upcoming" do
-  let!(:stripe_customer) { create :stripe_customer, id: "cus_CGNFgjPGtHlvXI" }
-  let!(:stripe_invoice) { create :stripe_invoice, id: "in_00000000000000" }
+  let!(:stripe_customer) { create :stripe_customer, stripe_id: "cus_CGNFgjPGtHlvXI" }
+  let!(:stripe_invoice) { create :stripe_invoice, stripe_id: "in_00000000000000" }
 
   describe "#execute!" do
     xit "updates the invoice and adds a log" do
@@ -15,7 +15,7 @@ describe "invoice upcoming" do
 
       expect(response.code).to eq "200"
 
-      expect(created_invoice.id).to eq "in_00000000000000"
+      expect(created_invoice.stripe_id).to eq "in_00000000000000"
       expect(created_invoice.application_fee).to eq nil
       expect(created_invoice.attempt_count).to eq 1
       expect(created_invoice.attempted?).to eq true

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "sku deleted" do
-  let!(:sku) { create :stripe_sku, id: "sku_00000000000000" }
+  let!(:sku) { create :stripe_sku, stripe_id: "sku_00000000000000" }
 
   describe "#execute!" do
     it "creates the subscription" do
@@ -12,7 +12,7 @@ describe "sku deleted" do
 
       expect(response.code).to eq "200"
 
-      expect(sku.id).to eq "sku_00000000000000"
+      expect(sku.stripe_id).to eq "sku_00000000000000"
       expect(sku.inventory_quantity).to eq 50
       expect(sku.inventory_type).to eq "finite"
       expect(sku.inventory_value).to eq nil

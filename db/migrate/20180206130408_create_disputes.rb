@@ -1,7 +1,7 @@
 class CreateDisputes < ActiveRecord::Migration[5.1]
   def change
-    create_table :stripe_disputes, id: false do |t|
-      t.string :id, primary: true, null: false
+    create_table :stripe_disputes do |t|
+      t.string :stripe_id, index: true, null: false
       t.datetime :created
       t.integer :amount_cents
       t.string :amount_currency

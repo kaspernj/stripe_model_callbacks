@@ -1,6 +1,4 @@
 class StripeDispute < StripeModelCallbacks::ApplicationRecord
-  self.primary_key = "id"
-
   monetize :amount_cents
 
   def self.stripe_class

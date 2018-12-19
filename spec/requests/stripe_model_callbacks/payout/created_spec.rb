@@ -10,7 +10,7 @@ describe "payout created" do
 
       expect(response.code).to eq "200"
 
-      expect(created_payout.id).to eq "po_00000000000000"
+      expect(created_payout.stripe_id).to eq "po_00000000000000"
       expect(created_payout.amount.format).to eq "$11.00"
       expect(created_payout.arrival_date).to eq Time.zone.parse("2018-02-06 09:52:50")
       expect(created_payout.automatic).to eq true

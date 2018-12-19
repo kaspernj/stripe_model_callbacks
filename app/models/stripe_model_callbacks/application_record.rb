@@ -22,7 +22,7 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
   end
 
   def to_stripe
-    @_stripe_object ||= self.class.stripe_class.retrieve(id)
+    @_stripe_object ||= self.class.stripe_class.retrieve(stripe_id)
   end
 
   def reload_from_stripe!

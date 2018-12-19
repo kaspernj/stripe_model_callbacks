@@ -1,6 +1,4 @@
 class StripeBankAccount < StripeModelCallbacks::ApplicationRecord
-  self.primary_key = "id"
-
   def self.stripe_class
     Stripe::BankAccount
   end

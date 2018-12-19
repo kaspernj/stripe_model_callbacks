@@ -1,6 +1,4 @@
 class StripeSku < StripeModelCallbacks::ApplicationRecord
-  self.primary_key = "id"
-
   monetize :price_cents
 
   def self.stripe_class

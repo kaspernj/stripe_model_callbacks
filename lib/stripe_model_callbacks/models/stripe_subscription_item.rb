@@ -1,10 +1,8 @@
 class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
-  self.primary_key = "id"
+  belongs_to :stripe_plan, optional: true, primary_key: "stripe_id"
+  belongs_to :stripe_subscription, optional: true, primary_key: "stripe_id"
 
-  belongs_to :stripe_plan, optional: true
-  belongs_to :stripe_subscription, optional: true
-
-  has_many :stripe_invoice_items
+  has_many :stripe_invoice_items, primary_key: "stripe_id"
 
   def self.stripe_class
     Stripe::SubscriptionItem

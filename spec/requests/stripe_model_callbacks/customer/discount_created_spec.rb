@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe "customer discount creation" do
-  let!(:coupon) { create :stripe_coupon, id: "25OFF_00000000000000" }
-  let!(:customer) { create :stripe_customer, id: "cus_00000000000000" }
+  let!(:coupon) { create :stripe_coupon, stripe_id: "25OFF_00000000000000" }
+  let!(:customer) { create :stripe_customer, stripe_id: "cus_00000000000000" }
 
   describe "#execute!" do
     it "adds a new discount" do

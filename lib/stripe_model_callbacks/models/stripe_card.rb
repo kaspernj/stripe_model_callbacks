@@ -1,7 +1,5 @@
 class StripeCard < StripeModelCallbacks::ApplicationRecord
-  self.primary_key = "id"
-
-  belongs_to :stripe_customer, optional: true
+  belongs_to :stripe_customer, optional: true, primary_key: "stripe_id"
 
   def self.stripe_class
     Stripe::Card

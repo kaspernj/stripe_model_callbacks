@@ -1,7 +1,7 @@
 class CreateStripeSubscriptions < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_subscriptions, id: false do |t|
-      t.string :id, primary: true, null: false
+    create_table :stripe_subscriptions do |t|
+      t.string :stripe_id, index: true, null: false
       t.integer :application_fee_percent
       t.string :billing
       t.boolean :cancel_at_period_end
