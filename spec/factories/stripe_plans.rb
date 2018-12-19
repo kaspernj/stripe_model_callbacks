@@ -12,7 +12,7 @@ FactoryBot.define do
     trait :with_stripe_mock do
       after :create do |stripe_plan|
         mock_plan = Stripe::Plan.create(
-          id: stripe_plan.id,
+          id: stripe_plan.stripe_id,
           amount: stripe_plan.amount_cents,
           currency: stripe_plan.currency,
           name: "No name any more - waiting for Stripe mock to be updated",
