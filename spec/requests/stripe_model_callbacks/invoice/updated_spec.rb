@@ -5,7 +5,7 @@ describe "invoice updated" do
   let!(:stripe_invoice) { create :stripe_invoice, stripe_id: "in_00000000000000" }
   let!(:stripe_invoice_item) do
     create :stripe_invoice_item,
-      id: "sub_CHS7NOE0WD1Jro",
+      stripe_id: "sub_CHS7NOE0WD1Jro",
       stripe_invoice: stripe_invoice,
       stripe_plan: stripe_plan,
       stripe_subscription_item: stripe_subscription_item
