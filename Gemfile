@@ -8,6 +8,7 @@ group :development, :test do
   gem "rails_best_practices", "1.19.0"
   gem "rubocop", "0.52.1"
   gem "sqlite3", "1.3.13"
+  gem "tzinfo-data"
 end
 
 group :test do
