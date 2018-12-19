@@ -31,8 +31,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_121712) do
     t.index ["trackable_type", "trackable_id"], name: "index_activities_on_trackable_type_and_trackable_id"
   end
 
-  create_table "stripe_bank_accounts", id: false, force: :cascade do |t|
-    t.string "id", null: false
+  create_table "stripe_bank_accounts", force: :cascade do |t|
     t.string "stripe_account_id"
     t.string "account_holder_name"
     t.string "account_holder_type"
@@ -47,12 +46,13 @@ ActiveRecord::Schema.define(version: 2018_12_19_121712) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_id", null: false
     t.index ["status"], name: "index_stripe_bank_accounts_on_status"
     t.index ["stripe_account_id"], name: "index_stripe_bank_accounts_on_stripe_account_id"
+    t.index ["stripe_id"], name: "index_stripe_bank_accounts_on_stripe_id"
   end
 
-  create_table "stripe_cards", id: false, force: :cascade do |t|
-    t.string "id", null: false
+  create_table "stripe_cards", force: :cascade do |t|
     t.string "address_city"
     t.string "address_country"
     t.string "address_line1"
@@ -77,8 +77,10 @@ ActiveRecord::Schema.define(version: 2018_12_19_121712) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "deleted_at"
+    t.string "stripe_id", null: false
     t.index ["deleted_at"], name: "index_stripe_cards_on_deleted_at"
     t.index ["stripe_customer_id"], name: "index_stripe_cards_on_stripe_customer_id"
+    t.index ["stripe_id"], name: "index_stripe_cards_on_stripe_id"
   end
 
   create_table "stripe_charges", force: :cascade do |t|
@@ -195,8 +197,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_121712) do
     t.index ["stripe_subscription_id"], name: "index_stripe_discounts_on_stripe_subscription_id"
   end
 
-  create_table "stripe_disputes", id: false, force: :cascade do |t|
-    t.string "id", null: false
+  create_table "stripe_disputes", force: :cascade do |t|
     t.datetime "created"
     t.integer "amount_cents"
     t.string "amount_currency"
@@ -241,8 +242,10 @@ ActiveRecord::Schema.define(version: 2018_12_19_121712) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_id", null: false
     t.index ["balance_transaction_id"], name: "index_stripe_disputes_on_balance_transaction_id"
     t.index ["stripe_charge_id"], name: "index_stripe_disputes_on_stripe_charge_id"
+    t.index ["stripe_id"], name: "index_stripe_disputes_on_stripe_id"
   end
 
   create_table "stripe_invoice_items", force: :cascade do |t|
@@ -492,8 +495,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_121712) do
     t.index ["stripe_id"], name: "index_stripe_refunds_on_stripe_id"
   end
 
-  create_table "stripe_reviews", id: false, force: :cascade do |t|
-    t.string "id", null: false
+  create_table "stripe_reviews", force: :cascade do |t|
     t.string "stripe_charge_id"
     t.datetime "created"
     t.boolean "livemode", default: false, null: false
@@ -501,8 +503,10 @@ ActiveRecord::Schema.define(version: 2018_12_19_121712) do
     t.string "reason"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_id", null: false
     t.index ["reason"], name: "index_stripe_reviews_on_reason"
     t.index ["stripe_charge_id"], name: "index_stripe_reviews_on_stripe_charge_id"
+    t.index ["stripe_id"], name: "index_stripe_reviews_on_stripe_id"
   end
 
   create_table "stripe_skus", force: :cascade do |t|
@@ -585,8 +589,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_121712) do
     t.index ["stripe_id"], name: "index_stripe_sources_on_stripe_id"
   end
 
-  create_table "stripe_subscription_items", id: false, force: :cascade do |t|
-    t.string "id", null: false
+  create_table "stripe_subscription_items", force: :cascade do |t|
     t.datetime "created"
     t.string "stripe_subscription_id"
     t.string "stripe_plan_id"
@@ -595,6 +598,8 @@ ActiveRecord::Schema.define(version: 2018_12_19_121712) do
     t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_id", null: false
+    t.index ["stripe_id"], name: "index_stripe_subscription_items_on_stripe_id"
     t.index ["stripe_plan_id"], name: "index_stripe_subscription_items_on_stripe_plan_id"
     t.index ["stripe_subscription_id"], name: "index_stripe_subscription_items_on_stripe_subscription_id"
   end
