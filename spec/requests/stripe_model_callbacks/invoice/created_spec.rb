@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe "invoice created" do
-  let!(:stripe_coupon) { create :stripe_coupon, id: "some-coupon" }
-  let!(:stripe_customer) { create :stripe_customer, id: "cus_CGNFgjPGtHlvXI" }
+  let!(:stripe_coupon) { create :stripe_coupon, stripe_id: "some-coupon" }
+  let!(:stripe_customer) { create :stripe_customer, stripe_id: "cus_CGNFgjPGtHlvXI" }
 
   describe "#execute!" do
     it "creates an invoice" do
@@ -15,7 +15,7 @@ describe "invoice created" do
 
       expect(response.code).to eq "200"
 
-      expect(created_invoice.id).to eq "in_00000000000000"
+      expect(created_invoice.stripe_id).to eq "in_00000000000000"
       expect(created_invoice.application_fee).to eq nil
       expect(created_invoice.attempt_count).to eq 1
       expect(created_invoice.attempted?).to eq false
@@ -57,7 +57,7 @@ describe "invoice created" do
                 "start": 1_518_896_595,
                 "subscription": "sub_CLIA1HwHyqUO2L",
                 "coupon": {
-                  "id": stripe_coupon.id,
+                  "id": stripe_coupon.stripe_id,
                   "object": "coupon",
                   "amount_off": nil,
                   "created": 1_518_896_553,

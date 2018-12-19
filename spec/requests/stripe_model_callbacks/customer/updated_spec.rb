@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "customer updating" do
-  let!(:stripe_customer) { create :stripe_customer, id: "cus_00000000000000" }
+  let!(:stripe_customer) { create :stripe_customer, stripe_id: "cus_00000000000000" }
 
   describe "#execute!" do
     it "updates the given customer" do

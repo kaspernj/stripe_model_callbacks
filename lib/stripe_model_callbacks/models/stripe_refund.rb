@@ -1,7 +1,5 @@
 class StripeRefund < StripeModelCallbacks::ApplicationRecord
-  self.primary_key = "id"
-
-  belongs_to :stripe_charge, optional: true
+  belongs_to :stripe_charge, optional: true, primary_key: "stripe_id"
 
   monetize :amount_cents, allow_nil: true
 

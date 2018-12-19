@@ -1,7 +1,7 @@
 class CreateStripeCards < ActiveRecord::Migration[5.1]
   def change
-    create_table :stripe_cards, id: false do |t|
-      t.string :id, primary: true, null: false
+    create_table :stripe_cards do |t|
+      t.string :stripe_id, index: true, null: false
       t.string :address_city
       t.string :address_country
       t.string :address_line1

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "coupon deleted" do
-  let!(:coupon) { create :stripe_coupon, id: "25OFF_00000000000000" }
+  let!(:coupon) { create :stripe_coupon, stripe_id: "25OFF_00000000000000" }
 
   describe "#execute!" do
     it "marks the coupon as deleted" do
@@ -12,7 +12,7 @@ describe "coupon deleted" do
 
       expect(response.code).to eq "200"
 
-      expect(coupon.id).to eq "25OFF_00000000000000"
+      expect(coupon.stripe_id).to eq "25OFF_00000000000000"
       expect(coupon.amount_off).to eq nil
       expect(coupon.created).to eq Time.zone.parse("2018-02-06 09:28:16")
       expect(coupon.currency).to eq nil

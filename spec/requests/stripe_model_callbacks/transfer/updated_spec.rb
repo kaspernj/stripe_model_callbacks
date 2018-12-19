@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "transfer updated" do
-  let!(:transfer) { create :stripe_transfer, id: "tr_00000000000000" }
+  let!(:transfer) { create :stripe_transfer, stripe_id: "tr_00000000000000" }
 
   describe "#execute!" do
     it "updates the transfer" do
@@ -12,7 +12,7 @@ describe "transfer updated" do
 
       expect(response.code).to eq "200"
 
-      expect(transfer.id).to eq "tr_00000000000000"
+      expect(transfer.stripe_id).to eq "tr_00000000000000"
       expect(transfer.amount.format).to eq "$11.00"
       expect(transfer.amount_reversed.format).to eq "$0.00"
       expect(transfer.balance_transaction).to eq "txn_00000000000000"

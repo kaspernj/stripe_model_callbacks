@@ -10,7 +10,7 @@ describe "product created" do
 
       expect(response.code).to eq "200"
 
-      expect(created_product.id).to eq "prod_00000000000000"
+      expect(created_product.stripe_id).to eq "prod_00000000000000"
     end
   end
 end

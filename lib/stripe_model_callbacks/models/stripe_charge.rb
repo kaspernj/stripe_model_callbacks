@@ -1,10 +1,8 @@
 class StripeCharge < StripeModelCallbacks::ApplicationRecord
-  self.primary_key = "id"
-
-  belongs_to :stripe_customer, optional: true
-  has_many :stripe_orders
-  has_many :stripe_refunds
-  has_many :stripe_reviews
+  belongs_to :stripe_customer, optional: true, primary_key: "stripe_id"
+  has_many :stripe_orders, primary_key: "stripe_id"
+  has_many :stripe_refunds, primary_key: "stripe_id"
+  has_many :stripe_reviews, primary_key: "stripe_id"
 
   monetize :amount_cents
   monetize :amount_refunded_cents, allow_nil: true

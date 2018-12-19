@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "payout failed" do
-  let!(:payout) { create :stripe_payout, id: "po_00000000000000" }
+  let!(:payout) { create :stripe_payout, stripe_id: "po_00000000000000" }
 
   describe "#execute!" do
     it "adds an activity and updates the payout" do
@@ -13,7 +13,7 @@ describe "payout failed" do
 
       expect(response.code).to eq "200"
 
-      expect(payout.id).to eq "po_00000000000000"
+      expect(payout.stripe_id).to eq "po_00000000000000"
       expect(payout.amount.format).to eq "$11.00"
       expect(payout.arrival_date).to eq Time.zone.parse("2018-02-06 09:53:06")
       expect(payout.automatic).to eq true

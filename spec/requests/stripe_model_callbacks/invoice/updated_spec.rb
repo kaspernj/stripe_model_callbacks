@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe "invoice updated" do
-  let!(:stripe_customer) { create :stripe_customer, id: "cus_CGNFgjPGtHlvXI" }
-  let!(:stripe_invoice) { create :stripe_invoice, id: "in_00000000000000" }
+  let!(:stripe_customer) { create :stripe_customer, stripe_id: "cus_CGNFgjPGtHlvXI" }
+  let!(:stripe_invoice) { create :stripe_invoice, stripe_id: "in_00000000000000" }
   let!(:stripe_invoice_item) do
     create :stripe_invoice_item,
       id: "sub_CHS7NOE0WD1Jro",
@@ -10,8 +10,8 @@ describe "invoice updated" do
       stripe_plan: stripe_plan,
       stripe_subscription_item: stripe_subscription_item
   end
-  let!(:stripe_plan) { create :stripe_plan, id: "peak_flow_build" }
-  let!(:stripe_subscription_item) { create :stripe_subscription_item, id: "si_CHS7VAL80FwJv7" }
+  let!(:stripe_plan) { create :stripe_plan, stripe_id: "peak_flow_build" }
+  let!(:stripe_subscription_item) { create :stripe_subscription_item, stripe_id: "si_CHS7VAL80FwJv7" }
 
   describe "#execute!" do
     it "updates the given invoice" do
@@ -25,7 +25,7 @@ describe "invoice updated" do
 
       expect(response.code).to eq "200"
 
-      expect(stripe_invoice.id).to eq "in_00000000000000"
+      expect(stripe_invoice.stripe_id).to eq "in_00000000000000"
       expect(stripe_invoice.application_fee).to eq nil
       expect(stripe_invoice.attempt_count).to eq 1
       expect(stripe_invoice.attempted?).to eq true

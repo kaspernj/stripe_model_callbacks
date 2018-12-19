@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "source chargeable" do
-  let!(:source) { create :stripe_source, id: "src_00000000000000" }
+  let!(:source) { create :stripe_source, stripe_id: "src_00000000000000" }
 
   describe "#execute!" do
     it "creates an activity and updates the source" do
@@ -14,7 +14,7 @@ describe "source chargeable" do
       expect(response.code).to eq "200"
 
       expect(source.currency).to eq "usd"
-      expect(source.id).to eq "src_00000000000000"
+      expect(source.stripe_id).to eq "src_00000000000000"
       expect(source.flow).to eq "receiver"
       expect(source.created).to eq Time.zone.parse("2018-02-06 08:41:50")
       expect(source.livemode).to eq false

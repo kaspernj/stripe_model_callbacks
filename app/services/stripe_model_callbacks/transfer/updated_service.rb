@@ -13,6 +13,6 @@ class StripeModelCallbacks::Transfer::UpdatedService < StripeModelCallbacks::Bas
 private
 
   def transfer
-    @_transfer ||= StripeTransfer.find_or_initialize_by(id: object.id)
+    @_transfer ||= StripeTransfer.find_or_initialize_by(stripe_id: object.id)
   end
 end

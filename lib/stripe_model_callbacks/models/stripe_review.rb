@@ -1,7 +1,5 @@
 class StripeReview < StripeModelCallbacks::ApplicationRecord
-  self.primary_key = "id"
-
-  belongs_to :stripe_charge, optional: true
+  belongs_to :stripe_charge, optional: true, primary_key: "stripe_id"
 
   def self.stripe_class
     Stripe::Review

@@ -10,7 +10,13 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
   def execute!
     attributes.each do |attribute|
       next unless stripe_model.respond_to?(attribute)
-      setter_method = "#{attribute}="
+
+      if attribute == "id"
+        setter_method = "stripe_id="
+      else
+        setter_method = "#{attribute}="
+      end
+
       value = stripe_model.__send__(attribute)
 
       if attribute == "metadata"

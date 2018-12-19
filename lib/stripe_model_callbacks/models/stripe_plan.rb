@@ -1,10 +1,8 @@
 class StripePlan < StripeModelCallbacks::ApplicationRecord
-  self.primary_key = "id"
+  belongs_to :stripe_product, optional: true, primary_key: "stripe_id"
 
-  belongs_to :stripe_product, optional: true
-
-  has_many :stripe_invoice_items
-  has_many :stripe_subscriptions
+  has_many :stripe_invoice_items, primary_key: "stripe_id"
+  has_many :stripe_subscriptions, primary_key: "stripe_id"
 
   scope :not_deleted, -> { where(deleted_at: nil) }
 

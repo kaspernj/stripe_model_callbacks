@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "customer source created" do
-  let!(:stripe_customer) { create :stripe_customer, id: "cus_000000000" }
+  let!(:stripe_customer) { create :stripe_customer, stripe_id: "cus_000000000" }
 
   describe "#execute!" do
     it "creates a source for the customer" do
@@ -12,7 +12,7 @@ describe "customer source created" do
 
       expect(response.code).to eq "200"
 
-      expect(created_source.id).to eq "src_00000000000000"
+      expect(created_source.stripe_id).to eq "src_00000000000000"
       expect(created_source.currency).to eq "usd"
       expect(created_source.created).to eq Time.zone.parse("2018-02-06 12:18:52")
       expect(created_source.owner_email).to eq "jenny.rosen@example.com"
@@ -26,7 +26,7 @@ describe "customer source created" do
 
       expect(response.code).to eq "200"
 
-      expect(created_card.id).to eq "card_000000000"
+      expect(created_card.stripe_id).to eq "card_000000000"
       expect(created_card.address_city).to eq ""
       expect(created_card.address_country).to eq ""
       expect(created_card.address_line1).to eq ""

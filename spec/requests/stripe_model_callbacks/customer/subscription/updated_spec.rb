@@ -1,11 +1,11 @@
 require "rails_helper"
 
 describe "subscription updating" do
-  let!(:stripe_customer) { create :stripe_customer, id: "cus_00000000000000" }
-  let!(:stripe_plan) { create :stripe_plan, id: "silver-express-898" }
-  let!(:stripe_subscription) { create :stripe_subscription, id: "sub_CGPu5KqP1TORKF" }
+  let!(:stripe_customer) { create :stripe_customer, stripe_id: "cus_00000000000000" }
+  let!(:stripe_plan) { create :stripe_plan, stripe_id: "silver-express-898" }
+  let!(:stripe_subscription) { create :stripe_subscription, stripe_id: "sub_CGPu5KqP1TORKF" }
   let!(:stripe_subscription_item) do
-    create :stripe_subscription_item, stripe_plan: stripe_plan, stripe_subscription: stripe_subscription, id: "si_CGPuxYgJ7bx2UW"
+    create :stripe_subscription_item, stripe_plan: stripe_plan, stripe_subscription: stripe_subscription, stripe_id: "si_CGPuxYgJ7bx2UW"
   end
 
   describe "#execute!" do

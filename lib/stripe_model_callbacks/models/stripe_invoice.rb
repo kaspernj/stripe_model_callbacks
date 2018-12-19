@@ -1,11 +1,9 @@
 class StripeInvoice < StripeModelCallbacks::ApplicationRecord
-  self.primary_key = "id"
+  belongs_to :stripe_customer, optional: true, primary_key: "stripe_id"
+  belongs_to :stripe_discount, optional: true, primary_key: "stripe_id"
+  belongs_to :stripe_subscription, optional: true, primary_key: "stripe_id"
 
-  belongs_to :stripe_customer, optional: true
-  belongs_to :stripe_discount, optional: true
-  belongs_to :stripe_subscription, optional: true
-
-  has_many :stripe_invoice_items, autosave: true
+  has_many :stripe_invoice_items, autosave: true, primary_key: "stripe_id"
 
   monetize :amount_due_cents, allow_nil: true
   monetize :application_fee_cents, allow_nil: true
@@ -59,7 +57,7 @@ private
     object.lines.each do |item|
       # Has to be found this way to actually update the values
       invoice_item = stripe_invoice_items.find do |invoice_item_i|
-        invoice_item_i.id == item.id &&
+        invoice_item_i.stripe_id == item.id &&
           invoice_item_i.stripe_subscription_item_id == item.subscription_item &&
           invoice_item_i.stripe_plan_id == item.plan&.id
       end

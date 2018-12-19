@@ -10,7 +10,7 @@ describe "recipient created" do
 
       expect(response.code).to eq "200"
 
-      expect(created_recipient.id).to eq "rp_00000000000000"
+      expect(created_recipient.stripe_id).to eq "rp_00000000000000"
       expect(created_recipient.description).to eq "Recipient for John Doe"
       expect(created_recipient.email).to eq "test@example.com"
       expect(created_recipient.name).to eq "John Doe"

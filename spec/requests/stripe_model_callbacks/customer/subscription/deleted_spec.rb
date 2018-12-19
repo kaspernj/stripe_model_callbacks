@@ -1,9 +1,9 @@
 require "rails_helper"
 
 describe "subscription deletion" do
-  let!(:customer) { create :stripe_customer, id: "cus_00000000000000" }
-  let!(:plan) { create :stripe_plan, id: "silver-express-898_00000000000000" }
-  let!(:subscription) { create :stripe_subscription, stripe_customer: customer, stripe_plan: plan, id: "sub_00000000000000" }
+  let!(:customer) { create :stripe_customer, stripe_id: "cus_00000000000000" }
+  let!(:plan) { create :stripe_plan, stripe_id: "silver-express-898_00000000000000" }
+  let!(:subscription) { create :stripe_subscription, stripe_customer: customer, stripe_plan: plan, stripe_id: "sub_00000000000000" }
 
   describe "#execute!" do
     it "ends the subscription" do

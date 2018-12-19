@@ -17,9 +17,9 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails", ">= 5.0.0"
-  s.add_runtime_dependency "money-rails", ">= 1.10.0"
-  s.add_runtime_dependency "public_activity", ">= 1.5.0"
-  s.add_runtime_dependency "service_pattern", ">= 0.0.3"
+  s.add_runtime_dependency "money-rails"
+  s.add_runtime_dependency "public_activity"
+  s.add_runtime_dependency "service_pattern"
   s.add_runtime_dependency "stripe", ">= 3.9.1"
   s.add_runtime_dependency "stripe-ruby-mock", ">= 2.5.1"
   s.add_runtime_dependency "stripe_event", ">= 2.1.1"

@@ -13,6 +13,6 @@ class StripeModelCallbacks::Coupon::UpdatedService < StripeModelCallbacks::BaseE
 private
 
   def coupon
-    @_coupon ||= StripeCoupon.find_or_initialize_by(id: object.id)
+    @_coupon ||= StripeCoupon.find_or_initialize_by(stripe_id: object.id)
   end
 end

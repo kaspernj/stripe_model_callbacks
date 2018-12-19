@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :stripe_refund do
-    sequence(:id) { |n| "stripe-refund-#{n}" }
+    sequence(:stripe_id) { |n| "stripe-refund-#{n}" }
     stripe_charge
-    currency "usd"
-    amount Money.new(1000, "USD")
-    livemode false
+    currency { "usd" }
+    amount { Money.new(1000, "USD") }
+    livemode { false }
   end
 end

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "product updated" do
-  let!(:product) { create :stripe_product, id: "prod_00000000000000" }
+  let!(:product) { create :stripe_product, stripe_id: "prod_00000000000000" }
 
   describe "#execute!" do
     it "creates the subscription" do
@@ -12,7 +12,7 @@ describe "product updated" do
 
       expect(response.code).to eq "200"
 
-      expect(product.id).to eq "prod_00000000000000"
+      expect(product.stripe_id).to eq "prod_00000000000000"
       expect(product.active?).to eq false
       expect(product.created).to eq Time.zone.parse("2018-02-04 16:49:05")
       expect(product.updated).to eq Time.zone.parse("2018-02-04 16:49:05")

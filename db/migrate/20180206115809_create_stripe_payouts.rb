@@ -1,7 +1,7 @@
 class CreateStripePayouts < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_payouts, id: false do |t|
-      t.string :id, primary: true, null: false
+    create_table :stripe_payouts do |t|
+      t.string :stripe_id, index: true, null: false
       t.integer :amount_cents
       t.string :amount_currency
       t.datetime :arrival_date

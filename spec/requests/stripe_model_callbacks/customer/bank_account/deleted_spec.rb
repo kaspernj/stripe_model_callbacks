@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "customer bank account deleted" do
-  let!(:bank_account) { create :stripe_bank_account, id: "ba_00000000000000" }
+  let!(:bank_account) { create :stripe_bank_account, stripe_id: "ba_00000000000000" }
 
   describe "#execute!" do
     it "ends the subscription" do
@@ -12,7 +12,7 @@ describe "customer bank account deleted" do
 
       expect(response.code).to eq "200"
 
-      expect(bank_account.id).to eq "ba_00000000000000"
+      expect(bank_account.stripe_id).to eq "ba_00000000000000"
       expect(bank_account.stripe_account_id).to eq "acct_00000000000000"
       expect(bank_account.account_holder_name).to eq "Jane Austen"
       expect(bank_account.account_holder_type).to eq "individual"

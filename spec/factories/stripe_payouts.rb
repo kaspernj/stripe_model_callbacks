@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :stripe_payout do
-    sequence(:id) { |n| "stripe-payout-#{n}" }
+    sequence(:stripe_id) { |n| "stripe-payout-#{n}" }
   end
 end

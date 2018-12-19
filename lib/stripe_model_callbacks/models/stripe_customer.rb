@@ -1,13 +1,11 @@
 class StripeCustomer < StripeModelCallbacks::ApplicationRecord
-  self.primary_key = "id"
-
-  has_many :stripe_cards
-  has_many :stripe_charges
-  has_many :stripe_discounts
-  has_many :stripe_invoices
-  has_many :stripe_invoice_items
-  has_many :stripe_orders
-  has_many :stripe_subscriptions
+  has_many :stripe_cards, primary_key: "stripe_id"
+  has_many :stripe_charges, primary_key: "stripe_id"
+  has_many :stripe_discounts, primary_key: "stripe_id"
+  has_many :stripe_invoices, primary_key: "stripe_id"
+  has_many :stripe_invoice_items, primary_key: "stripe_id"
+  has_many :stripe_orders, primary_key: "stripe_id"
+  has_many :stripe_subscriptions, primary_key: "stripe_id"
 
   def self.stripe_class
     Stripe::Customer

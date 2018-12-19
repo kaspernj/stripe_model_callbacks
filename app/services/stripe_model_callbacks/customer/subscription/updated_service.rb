@@ -23,6 +23,6 @@ private
   end
 
   def subscription
-    @_subscription ||= StripeSubscription.find_or_initialize_by(id: object.id)
+    @_subscription ||= StripeSubscription.find_or_initialize_by(stripe_id: object.id)
   end
 end

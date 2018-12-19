@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe "invoice payment failed" do
-  let!(:stripe_customer) { create :stripe_customer, id: "cus_00000000000000" }
-  let!(:stripe_invoice) { create :stripe_invoice, id: "in_00000000000000" }
+  let!(:stripe_customer) { create :stripe_customer, stripe_id: "cus_00000000000000" }
+  let!(:stripe_invoice) { create :stripe_invoice, stripe_id: "in_00000000000000" }
 
   describe "#execute!" do
     it "updates the invoice and adds a payment failed log" do
@@ -15,7 +15,7 @@ describe "invoice payment failed" do
 
       expect(response.code).to eq "200"
 
-      expect(stripe_invoice.id).to eq "in_00000000000000"
+      expect(stripe_invoice.stripe_id).to eq "in_00000000000000"
       expect(stripe_invoice.application_fee).to eq nil
       expect(stripe_invoice.attempt_count).to eq 0
       expect(stripe_invoice.attempted?).to eq true

@@ -9,7 +9,8 @@ describe "customer creation" do
       created_customer = StripeCustomer.last
 
       expect(response.code).to eq "200"
-      expect(created_customer.id).to eq "cus_2wm5EgmRGEiyPO"
+      expect(created_customer.id).to be > 0
+      expect(created_customer.stripe_id).to eq "cus_2wm5EgmRGEiyPO"
       expect(created_customer.livemode).to eq false
       expect(created_customer.description).to eq "id:12345"
       expect(created_customer.delinquent).to eq false

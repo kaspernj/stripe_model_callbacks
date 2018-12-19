@@ -12,7 +12,7 @@ describe "order creation" do
 
       expect(response.code).to eq "200"
 
-      expect(created_order.id).to eq "or_00000000000000"
+      expect(created_order.stripe_id).to eq "or_00000000000000"
       expect(created_order.amount.format).to eq "$15.00"
       expect(created_order.amount_returned).to eq nil
       expect(created_order.application).to eq nil

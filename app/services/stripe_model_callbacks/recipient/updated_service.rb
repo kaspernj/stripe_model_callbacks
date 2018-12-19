@@ -1,6 +1,6 @@
 class StripeModelCallbacks::Recipient::UpdatedService < StripeModelCallbacks::BaseEventService
   def execute!
-    recipient = StripeRecipient.find_or_initialize_by(id: object.id)
+    recipient = StripeRecipient.find_or_initialize_by(stripe_id: object.id)
     recipient.assign_from_stripe(object)
     recipient.deleted_at ||= Time.zone.now if event.type == "recipient.deleted"
 

@@ -1,12 +1,10 @@
 class StripeSubscription < StripeModelCallbacks::ApplicationRecord
-  self.primary_key = "id"
-
-  belongs_to :stripe_customer, optional: true
-  belongs_to :stripe_discount, optional: true
-  belongs_to :stripe_plan, optional: true
-  has_many :stripe_invoices
-  has_many :stripe_discounts
-  has_many :stripe_subscription_items, autosave: true
+  belongs_to :stripe_customer, optional: true, primary_key: "stripe_id"
+  belongs_to :stripe_discount, optional: true, primary_key: "stripe_id"
+  belongs_to :stripe_plan, optional: true, primary_key: "stripe_id"
+  has_many :stripe_invoices, primary_key: "stripe_id"
+  has_many :stripe_discounts, primary_key: "stripe_id"
+  has_many :stripe_subscription_items, autosave: true, primary_key: "stripe_id"
 
   STATES = %w[trialing active past_due canceled unpaid].freeze
 
@@ -45,7 +43,7 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
     items = []
     stripe_subscription_items.each do |item|
       items << {
-        id: item.id,
+        id: item.stripe_id,
         plan: item.stripe_plan_id,
         quantity: item.quantity
       }
@@ -72,7 +70,7 @@ private
         sub_item = stripe_subscription_items.build
       elsif item.respond_to?(:id)
         # Has to be found this way to actually update the values
-        sub_item = stripe_subscription_items.find { |sub_item_i| sub_item_i.id == item.id }
+        sub_item = stripe_subscription_items.find { |sub_item_i| sub_item_i.stripe_id == item.id }
       end
 
       sub_item&.assign_from_stripe(item)

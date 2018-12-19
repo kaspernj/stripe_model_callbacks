@@ -1,6 +1,4 @@
 class StripeTransfer < StripeModelCallbacks::ApplicationRecord
-  self.primary_key = "id"
-
   monetize :amount_cents
   monetize :amount_reversed_cents
 
