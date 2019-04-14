@@ -39,7 +39,7 @@ describe "subscription creation" do
               discount: {
                 coupon: {
                   amount_off: nil,
-                  created: 1518806752,
+                  created: 1_518_806_752,
                   currency: nil,
                   duration: "forever",
                   duration_in_months: nil,
@@ -54,7 +54,7 @@ describe "subscription creation" do
                 customer: stripe_customer.stripe_id,
                 end: nil,
                 percent_off: 50,
-                start: 1518820551,
+                start: 1_518_820_551,
                 subscription: "sub_CGPXJjUMVXBLSx"
               }
             }
@@ -83,7 +83,7 @@ describe "subscription creation" do
               discount: {
                 coupon: {
                   amount_off: nil,
-                  created: 1518806752,
+                  created: 1_518_806_752,
                   currency: nil,
                   duration: "forever",
                   duration_in_months: nil,
@@ -98,7 +98,7 @@ describe "subscription creation" do
                 customer: stripe_customer.stripe_id,
                 end: nil,
                 percent_off: 50,
-                start: 1518820551,
+                start: 1_518_820_551,
                 subscription: "sub_CGPXJjUMVXBLSx"
               }
             }
