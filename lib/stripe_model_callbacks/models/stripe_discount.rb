@@ -1,6 +1,7 @@
 class StripeDiscount < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_coupon, optional: true, primary_key: "stripe_id"
   belongs_to :stripe_customer, optional: true, primary_key: "stripe_id"
+  belongs_to :stripe_discount, optional: true, primary_key: "stripe_id"
   belongs_to :stripe_subscription, optional: true, primary_key: "stripe_id"
 
   has_many :stripe_invoices, primary_key: "stripe_id"
