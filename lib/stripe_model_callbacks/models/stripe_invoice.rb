@@ -20,12 +20,12 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
       stripe_charge_id: object.charge,
       stripe_customer_id: object.customer,
       stripe_subscription_id: object.subscription,
-      date: Time.zone.at(object.date),
       due_date: object.due_date ? Time.zone.at(object.due_date) : nil,
       period_start: Time.zone.at(object.period_start),
       period_end: Time.zone.at(object.period_end)
     )
 
+    assign_created(object)
     assign_amounts(object)
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
@@ -51,6 +51,15 @@ private
       tax: object.tax ? Money.new(object.tax, object.currency) : nil,
       total: object.total ? Money.new(object.total, object.currency) : nil
     )
+  end
+
+  def assign_created(object)
+    # The date-field was renamed to created on 2019-03-14
+    if object.respond_to?(:date)
+      self.created = Time.zone.at(object.date)
+    else
+      self.created = Time.zone.at(object.created)
+    end
   end
 
   def assign_invoice_items(object)

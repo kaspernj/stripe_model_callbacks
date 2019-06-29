@@ -24,7 +24,7 @@ describe "invoice upcoming" do
       expect(created_invoice.closed?).to eq true
       expect(created_invoice.currency).to eq "dkk"
       expect(created_invoice.stripe_customer_id).to eq "cus_00000000000000"
-      expect(created_invoice.date).to eq Time.zone.parse("2018-02-04 17:02:25")
+      expect(created_invoice.created).to eq Time.zone.parse("2018-02-04 17:02:25")
       expect(created_invoice.description).to eq nil
       expect(created_invoice.discount).to eq nil
       expect(created_invoice.due_date).to eq nil
