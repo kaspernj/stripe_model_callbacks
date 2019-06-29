@@ -6,8 +6,8 @@ FactoryBot.define do
     attempted { false }
     billing { "charge_automatically" }
     closed { false }
+    created { 2.days.ago }
     currency { "usd" }
-    date { 2.days.ago }
     forgiven { false }
     livemode { false }
     paid { false }

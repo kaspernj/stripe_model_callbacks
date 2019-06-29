@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_19_121712) do
+ActiveRecord::Schema.define(version: 2019_06_29_112050) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -304,7 +304,7 @@ ActiveRecord::Schema.define(version: 2018_12_19_121712) do
     t.boolean "attempted", null: false
     t.datetime "next_payment_attempt"
     t.boolean "closed", null: false
-    t.datetime "date", null: false
+    t.datetime "created", null: false
     t.datetime "due_date"
     t.boolean "livemode", default: true, null: false
     t.text "metadata"
