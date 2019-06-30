@@ -12,4 +12,8 @@ module StripeModelCallbacks
 
   autoload :Configuration, "#{path}/configuration"
   autoload :EventMocker, "#{path}/event_mocker"
+
+  def self.configure
+    yield StripeModelCallbacks::Configuration.current
+  end
 end
