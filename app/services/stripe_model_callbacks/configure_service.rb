@@ -6,8 +6,6 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
   end
 
   def execute!
-    # subscribe "source.transaction.created"
-
     all_events
     charge_refund_events
     customer_bank_account_events
