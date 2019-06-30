@@ -114,6 +114,8 @@ stripe_subscription.reload_from_stripe!
 
 ## Testing
 
+### Factories
+
 If you need some FactoryBot factories, then you can do like this in `spec/rails_helper.rb`:
 ```ruby
 require "stripe_model_callbacks/factory_bot_definitions"
@@ -121,6 +123,28 @@ require "stripe_model_callbacks/factory_bot_definitions"
 
 You can take a look at the factories here:
 https://github.com/kaspernj/stripe_model_callbacks/tree/master/spec/factories
+
+### Mock events
+
+You can mock Stripe events by using the helper method `mock_stripe_event` by including this helper:
+
+```
+RSpec.configure do |config|
+  config.include StripeModelCallbacks::EventMocker
+end
+```
+
+You can find all the events you can mock here: https://github.com/kaspernj/stripe_model_callbacks/tree/master/spec/fixtures/stripe_events
+
+You can mock the events by their file name like this:
+```ruby
+mock_stripe_event("charge.refunded")
+```
+
+You can change the data of the event like this:
+```ruby
+mock_stripe_event("invoice.created", data: {object: {discount: {"customer": "cus_CLI9d5IHGcdWBY"}}})
+```
 
 ## Contributing
 Contribution directions go here.
