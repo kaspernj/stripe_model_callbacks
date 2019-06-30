@@ -13,9 +13,9 @@ class StripeModelCallbacks::Configuration
 
   def with_error_handling(args: nil)
     yield
-  rescue => error
+  rescue => error # rubocop:disable Style/RescueStandardError
     @on_error_callbacks.each do |callback|
-      callback(args: args, error: error)
+      callback.call(args: args, error: error)
     end
 
     raise error
