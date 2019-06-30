@@ -10,5 +10,10 @@ require "stripe_model_callbacks/autoload_models"
 module StripeModelCallbacks
   path = "#{File.dirname(__FILE__)}/stripe_model_callbacks"
 
+  autoload :Configuration, "#{path}/configuration"
   autoload :EventMocker, "#{path}/event_mocker"
+
+  def self.configure
+    yield StripeModelCallbacks::Configuration.current
+  end
 end
