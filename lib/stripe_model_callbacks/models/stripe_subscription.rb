@@ -73,14 +73,12 @@ private
 
   def assign_items(object)
     object.items.each do |item|
-      if new_record?
-        sub_item = stripe_subscription_items.build
-      elsif item.respond_to?(:id)
-        # Has to be found this way to actually update the values
-        sub_item = stripe_subscription_items.find { |sub_item_i| sub_item_i.stripe_id == item.id }
-      end
+      # binding.pry
 
-      sub_item&.assign_from_stripe(item)
+      sub_item = find_item_by_stripe_item(item) if persisted?
+      sub_item ||= stripe_subscription_items.build
+      sub_item.assign_from_stripe(item)
+      sub_item.save! if persisted?
     end
   end
 
@@ -92,5 +90,15 @@ private
       trial_start: object.trial_start ? Time.zone.at(object.trial_start) : nil,
       trial_end: object.trial_end ? Time.zone.at(object.trial_end) : nil
     )
+  end
+
+  def find_item_by_stripe_item(item)
+    stripe_subscription_items.find do |sub_item|
+      if item.plan.is_a?(String)
+        sub_item.stripe_plan_id == item.plan
+      else
+        sub_item.stripe_plan_id == item.plan.id
+      end
+    end
   end
 end

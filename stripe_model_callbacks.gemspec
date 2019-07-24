@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "money-rails"
   s.add_runtime_dependency "public_activity"
   s.add_runtime_dependency "service_pattern"
-  s.add_runtime_dependency "stripe", ">= 3.9.1"
-  s.add_runtime_dependency "stripe-ruby-mock", ">= 2.5.1"
-  s.add_runtime_dependency "stripe_event", ">= 2.1.1"
+  s.add_runtime_dependency "stripe"
+  s.add_runtime_dependency "stripe-ruby-mock"
+  s.add_runtime_dependency "stripe_event"
 end
