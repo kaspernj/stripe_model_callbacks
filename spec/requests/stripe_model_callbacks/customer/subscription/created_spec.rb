@@ -5,7 +5,7 @@ describe "subscription creation" do
   let!(:stripe_customer) { create :stripe_customer, stripe_id: "cus_00000000000000" }
   let(:stripe_discount) { create :stripe_discount, stripe_coupon: stripe_coupon, coupon_times_redeemed: 4 }
   let!(:stripe_plan) { create :stripe_plan, stripe_id: "silver-express-898" }
-  let(:stripe_subscription) { create :stripe_subscription, stripe_customer: stripe_customer, stripe_discount: stripe_discount }
+  let(:stripe_subscription) { create :stripe_subscription, stripe_customer: stripe_customer, stripe_discount: stripe_discount, stripe_id: "sub_CGPu5KqP1TORKF" }
 
   describe "#execute!" do
     it "creates the subscription" do
@@ -111,13 +111,17 @@ describe "subscription creation" do
 
       expect { send_event_action.call }
         .to change(StripeSubscription, :count).by(0)
-        .and change(StripeSubscriptionItem, :count).by(0)
+        .and change(StripeSubscriptionItem, :count).by(1)
         .and change(StripeDiscount, :count).by(0)
 
       created_subscription = StripeSubscription.last
+      created_subscription_item = StripeSubscriptionItem.last
 
       expect(created_subscription.stripe_discount_id).to eq stripe_discount.id.to_s
       expect(created_subscription.stripe_discount).to eq stripe_discount
+      expect(created_subscription_item.stripe_subscription).to eq created_subscription
+      expect(created_subscription_item.quantity).to eq 1
+      expect(created_subscription_item.stripe_plan_id).to eq "silver-express-898"
       expect(stripe_discount.reload.coupon_times_redeemed).to eq 4
     end
   end

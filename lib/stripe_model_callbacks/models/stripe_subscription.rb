@@ -73,8 +73,6 @@ private
 
   def assign_items(object)
     object.items.each do |item|
-      # binding.pry
-
       sub_item = find_item_by_stripe_item(item) if persisted?
       sub_item ||= stripe_subscription_items.build
       sub_item.assign_from_stripe(item)
