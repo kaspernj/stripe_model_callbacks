@@ -1,3 +1,4 @@
+# This migration comes from stripe_model_callbacks (originally 20180206130408)
 class CreateDisputes < ActiveRecord::Migration[5.1]
   def change
     create_table :stripe_disputes do |table|
