@@ -1,5 +1,5 @@
 class StripeModelCallbacks::Refund::UpdatedService < StripeModelCallbacks::BaseEventService
-  def execute!
+  def execute
     refund = StripeRefund.find_or_initialize_by(stripe_id: object.id)
     refund.assign_from_stripe(object)
 

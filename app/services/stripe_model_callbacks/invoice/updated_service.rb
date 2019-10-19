@@ -1,5 +1,5 @@
 class StripeModelCallbacks::Invoice::UpdatedService < StripeModelCallbacks::BaseEventService
-  def execute!
+  def execute
     invoice.assign_from_stripe(object)
 
     if invoice.save

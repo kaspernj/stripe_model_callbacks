@@ -1,5 +1,5 @@
 class StripeModelCallbacks::Coupon::UpdatedService < StripeModelCallbacks::BaseEventService
-  def execute!
+  def execute
     coupon.assign_from_stripe(object)
     coupon.deleted_at ||= Time.zone.now if event.type == "coupon.deleted"
 

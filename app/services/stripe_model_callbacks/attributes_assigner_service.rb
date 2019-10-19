@@ -7,7 +7,7 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
     @stripe_model = stripe_model
   end
 
-  def execute!
+  def execute
     attributes.each do |attribute|
       next unless stripe_model.respond_to?(attribute)
       value = stripe_model.__send__(attribute)
@@ -20,6 +20,8 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
 
       model.__send__(setter_method(attribute), value)
     end
+
+    ServicePattern::Response.new(success: true)
   end
 
   def setter_method(attribute)

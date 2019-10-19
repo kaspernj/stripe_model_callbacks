@@ -1,7 +1,7 @@
 class StripeModelCallbacks::BaseService < ServicePattern::Service
   def self.reported_execute!(*args, &blk)
     with_exception_notifications do
-      response = execute!(*args, &blk)
+      response = execute(*args, &blk)
       raise response.errors.join(". ") unless response.success?
       return response
     end
