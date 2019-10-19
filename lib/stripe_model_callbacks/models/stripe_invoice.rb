@@ -79,7 +79,7 @@ private
 
   def stripe_discount_id_from_object(object)
     return nil unless object.discount
-    response = StripeModelCallbacks::Customer::DiscountUpdatedService.execute!(object: object.discount)
+    response = StripeModelCallbacks::Customer::DiscountUpdatedService.execute(object: object.discount)
     raise response.errors.join(". ") if response.errors.any?
     response.result.id
   end
