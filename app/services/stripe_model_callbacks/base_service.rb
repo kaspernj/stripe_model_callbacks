@@ -3,6 +3,7 @@ class StripeModelCallbacks::BaseService < ServicePattern::Service
     with_exception_notifications do
       response = execute(*args, &blk)
       raise response.errors.join(". ") unless response.success?
+
       return response
     end
   end

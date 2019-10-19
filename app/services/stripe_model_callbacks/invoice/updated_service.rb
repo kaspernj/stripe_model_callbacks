@@ -21,6 +21,6 @@ private
   end
 
   def invoice
-    @_invoice ||= StripeInvoice.find_or_initialize_by(stripe_id: object.id)
+    @invoice ||= StripeInvoice.find_or_initialize_by(stripe_id: object.id)
   end
 end

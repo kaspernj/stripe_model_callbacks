@@ -18,11 +18,11 @@ private
   end
 
   def first_part
-    @_first_part ||= name.split(".").first
+    @first_part ||= name.split(".").first
   end
 
   def fixture_path
-    @_fixture_path ||= "#{File.dirname(__FILE__)}/../../../spec/fixtures/stripe_events/#{first_part}/#{name}.json"
+    @fixture_path ||= "#{File.dirname(__FILE__)}/../../../spec/fixtures/stripe_events/#{first_part}/#{name}.json"
   end
 
   def payload

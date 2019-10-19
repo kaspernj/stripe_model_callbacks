@@ -3,10 +3,13 @@ source "https://rubygems.org"
 gemspec
 
 group :development, :test do
-  gem "best_practice_project"
+  gem "best_practice_project", git: "https://github.com/kaspernj/best_practice_project.git"
   gem "pry-rails"
   gem "rails_best_practices"
-  gem "rubocop", "0.52.1"
+  gem "rubocop", require: false
+  gem "rubocop-performance", require: false
+  gem "rubocop-rails", require: false
+  gem "rubocop-rspec", require: false
   gem "sqlite3"
   gem "tzinfo-data"
 end

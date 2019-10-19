@@ -1,6 +1,6 @@
 class StripeModelCallbacks::Configuration
   def self.current
-    @configuration ||= StripeModelCallbacks::Configuration.new
+    @current ||= StripeModelCallbacks::Configuration.new
   end
 
   def initialize
@@ -13,11 +13,11 @@ class StripeModelCallbacks::Configuration
 
   def with_error_handling(args: nil)
     yield
-  rescue => error # rubocop:disable Style/RescueStandardError
+  rescue => e # rubocop:disable Style/RescueStandardError
     @on_error_callbacks.each do |callback|
-      callback.call(args: args, error: error)
+      callback.call(args: args, error: e)
     end
 
-    raise error
+    raise e
   end
 end

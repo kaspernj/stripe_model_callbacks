@@ -1,72 +1,76 @@
 class CreateDisputes < ActiveRecord::Migration[5.1]
   def change
-    create_table :stripe_disputes do |t|
-      t.string :stripe_id, index: true, null: false
-      t.datetime :created
-      t.integer :amount_cents
-      t.string :amount_currency
-      t.string :balance_transaction_id, index: true
-      t.string :stripe_charge_id, index: true
-      t.string :currency
-      t.text :evidence_access_activity_log
-      t.text :evidence_billing_address
-      evidence_cancellation_duplicate_columns(t)
-      evidence_customer_columns(t)
-      t.text :evidence_product_description
-      t.text :evidence_receipt
-      evidence_refund_service_columns(t)
-      evidence_shipping_columns(t)
-      t.text :evidence_uncategorized_file
-      t.text :evidence_uncategorized_text
-      evidence_details_columns(t)
-      t.boolean :is_charge_refundable
-      t.boolean :livemode
-      t.text :metadata
-      t.string :reason
-      t.string :status
-      t.timestamps
+    create_table :stripe_disputes do |table|
+      table.string :stripe_id, index: true, null: false
+      table.datetime :created
+      amount_columns(table)
+      table.string :balance_transaction_id, index: true
+      table.string :stripe_charge_id, index: true
+      table.string :currency
+      table.text :evidence_access_activity_log
+      table.text :evidence_billing_address
+      evidence_cancellation_duplicate_columns(table)
+      evidence_customer_columns(table)
+      table.text :evidence_product_description
+      table.text :evidence_receipt
+      evidence_refund_service_columns(table)
+      evidence_shipping_columns(table)
+      table.text :evidence_uncategorized_file
+      table.text :evidence_uncategorized_text
+      evidence_details_columns(table)
+      table.boolean :is_charge_refundable
+      table.boolean :livemode
+      table.text :metadata
+      table.string :reason
+      table.string :status
+      table.timestamps
     end
   end
 
 private
 
-  def evidence_cancellation_duplicate_columns(t)
-    t.text :evidence_cancellation_policy
-    t.text :evidence_cancellation_policy_disclosure
-    t.text :evidence_cancellation_rebuttal
-    t.text :evidence_duplicate_charge_documentation
-    t.text :evidence_duplicate_charge_explanation
-    t.string :evidence_duplicate_charge_id
+  def amount_columns(table)
+    table.integer :amount_cents
+    table.string :amount_currency
   end
 
-  def evidence_customer_columns(t)
-    t.text :evidence_customer_communication
-    t.string :evidence_customer_email_address
-    t.string :evidence_customer_name
-    t.string :evidence_customer_purchase_ip
-    t.text :evidence_customer_signature
+  def evidence_cancellation_duplicate_columns(table)
+    table.text :evidence_cancellation_policy
+    table.text :evidence_cancellation_policy_disclosure
+    table.text :evidence_cancellation_rebuttal
+    table.text :evidence_duplicate_charge_documentation
+    table.text :evidence_duplicate_charge_explanation
+    table.string :evidence_duplicate_charge_id
   end
 
-  def evidence_refund_service_columns(t)
-    t.text :evidence_refund_policy
-    t.text :evidence_refund_policy_disclosure
-    t.text :evidence_refund_refusal_explanation
-    t.text :evidence_service_date
-    t.text :evidence_service_documentation
+  def evidence_customer_columns(table)
+    table.text :evidence_customer_communication
+    table.string :evidence_customer_email_address
+    table.string :evidence_customer_name
+    table.string :evidence_customer_purchase_ip
+    table.text :evidence_customer_signature
   end
 
-  def evidence_shipping_columns(t)
-    t.text :evidence_shipping_address
-    t.text :evidence_shipping_carrier
-    t.text :evidence_shipping_date
-    t.text :evidence_shipping_documentation
-    t.text :evidence_shipping_tracking_number
+  def evidence_refund_service_columns(table)
+    table.text :evidence_refund_policy
+    table.text :evidence_refund_policy_disclosure
+    table.text :evidence_refund_refusal_explanation
+    table.text :evidence_service_date
+    table.text :evidence_service_documentation
   end
 
-  def evidence_details_columns(t)
-    t.datetime :evidence_details_due_by
-    t.boolean :evidence_details_has_evidence
-    t.boolean :evidence_details_past_due
-    t.integer :evidence_details_submission_count
+  def evidence_shipping_columns(table)
+    table.text :evidence_shipping_address
+    table.text :evidence_shipping_carrier
+    table.text :evidence_shipping_date
+    table.text :evidence_shipping_documentation
+    table.text :evidence_shipping_tracking_number
+  end
+
+  def evidence_details_columns(table)
+    table.datetime :evidence_details_due_by
+    table.boolean :evidence_details_has_evidence
+    table.boolean :evidence_details_past_due
+    table.integer :evidence_details_submission_count
   end
 end

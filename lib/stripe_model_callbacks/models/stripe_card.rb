@@ -20,6 +20,6 @@ class StripeCard < StripeModelCallbacks::ApplicationRecord
   end
 
   def to_stripe
-    @_stripe_object ||= Stripe::Customer.retrieve(stripe_customer_id).sources.retrieve(stripe_id)
+    @to_stripe ||= Stripe::Customer.retrieve(stripe_customer_id).sources.retrieve(stripe_id)
   end
 end
