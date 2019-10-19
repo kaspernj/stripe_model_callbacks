@@ -1,5 +1,5 @@
 class StripeModelCallbacks::InvoiceItem::UpdatedService < StripeModelCallbacks::BaseEventService
-  def execute!
+  def execute
     invoice_item = ::StripeInvoiceItem.find_or_initialize_by(stripe_id: object.id)
     invoice_item.assign_from_stripe(object)
     invoice_item.deleted_at = Time.zone.now if event.type == "invoiceitem.deleted"

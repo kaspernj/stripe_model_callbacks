@@ -1,5 +1,5 @@
 class StripeModelCallbacks::Charge::UpdatedService < StripeModelCallbacks::BaseEventService
-  def execute!
+  def execute
     charge.assign_from_stripe(object)
 
     if charge.save

@@ -1,5 +1,5 @@
 class StripeModelCallbacks::Customer::DeletedService < StripeModelCallbacks::BaseEventService
-  def execute!
+  def execute
     customer = StripeCustomer.find_or_initialize_by(stripe_id: object.id)
     customer.assign_from_stripe(object)
     customer.deleted_at = Time.zone.now

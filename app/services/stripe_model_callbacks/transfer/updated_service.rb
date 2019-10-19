@@ -1,5 +1,5 @@
 class StripeModelCallbacks::Transfer::UpdatedService < StripeModelCallbacks::BaseEventService
-  def execute!
+  def execute
     transfer.assign_from_stripe(object)
 
     if transfer.save

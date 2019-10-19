@@ -1,5 +1,5 @@
 class StripeModelCallbacks::Charge::DisputeUpdatedService < StripeModelCallbacks::BaseEventService
-  def execute!
+  def execute
     dispute.assign_from_stripe(object)
 
     if dispute.save

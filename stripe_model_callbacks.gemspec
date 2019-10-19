@@ -22,5 +22,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "service_pattern"
   s.add_runtime_dependency "stripe"
   s.add_runtime_dependency "stripe-ruby-mock"
-  s.add_runtime_dependency "stripe_event"
+  s.add_runtime_dependency "stripe_event", ">= 0.0.4"
 end

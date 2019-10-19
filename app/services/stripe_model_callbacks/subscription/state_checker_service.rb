@@ -6,7 +6,7 @@ class StripeModelCallbacks::Subscription::StateCheckerService < StripeModelCallb
     @state = state.to_s
   end
 
-  def execute!
+  def execute
     if state.is_a?(Array)
       state.each do |state_i|
         response = Subscription::StateCheckerService.execute!(allowed: allowed, state: state_i)

@@ -5,7 +5,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     @events = events
   end
 
-  def execute!
+  def execute
     all_events
     charge_refund_events
     customer_bank_account_events
@@ -28,6 +28,8 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     source_events
     subscription_events
     transfer_events
+
+    ServicePattern::Response.new(success: true)
   end
 
 private
