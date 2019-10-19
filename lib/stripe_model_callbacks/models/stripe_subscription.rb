@@ -9,8 +9,7 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   STATES = %w[trialing active past_due canceled unpaid].freeze
 
   scope :with_state, lambda { |states|
-    response = StripeModelCallbacks::Subscription::StateCheckerService.execute!(allowed: STATES, state: states)
-    raise response.errors.join(".") unless response.success?
+    StripeModelCallbacks::Subscription::StateCheckerService.execute!(allowed: STATES, state: states)
     where(status: states)
   }
 
