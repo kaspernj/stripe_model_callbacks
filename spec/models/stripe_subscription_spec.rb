@@ -29,4 +29,16 @@ describe StripeSubscription, :stripe_mock do
       subscription_cancel_at_period_end.reactivate!
     end
   end
+
+  describe "#with_state" do
+    it "finds the right subscriptions" do
+      subscriptions = StripeSubscription.with_state(:active)
+      expect(subscriptions).to eq [subscription]
+    end
+
+    it "raises an error if given an invalid state" do
+      expect { StripeSubscription.with_state(:invalid_state) }
+        .to raise_error(ServicePattern::FailedError, "Not allowed: invalid_state")
+    end
+  end
 end
