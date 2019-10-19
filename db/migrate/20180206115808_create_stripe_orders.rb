@@ -1,46 +1,46 @@
 class CreateStripeOrders < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_orders do |t|
-      t.string :stripe_id, index: true, null: false
-      amount_columns(t)
-      t.string :stripe_charge_id, index: true
-      t.string :currency, null: false
-      t.string :stripe_customer_id, index: true
-      t.string :email
-      t.boolean :livemode, default: true, null: false
-      t.text :metadata
-      shipping_columns(t)
-      t.string :status, null: false
-      t.datetime :created
-      t.datetime :updated
-      t.timestamps
+    create_table :stripe_orders do |table|
+      table.string :stripe_id, index: true, null: false
+      amount_columns(table)
+      table.string :stripe_charge_id, index: true
+      table.string :currency, null: false
+      table.string :stripe_customer_id, index: true
+      table.string :email
+      table.boolean :livemode, default: true, null: false
+      table.text :metadata
+      shipping_columns(table)
+      table.string :status, null: false
+      table.datetime :created
+      table.datetime :updated
+      table.timestamps
     end
   end
 
 private
 
-  def amount_columns(t)
-    t.integer :amount_cents, null: false
-    t.string :amount_currency, null: false
-    t.integer :amount_returned_cents
-    t.string :amount_returned_currency
-    t.integer :application_cents
-    t.string :application_currency
-    t.integer :application_fee
+  def amount_columns(table)
+    table.integer :amount_cents, null: false
+    table.string :amount_currency, null: false
+    table.integer :amount_returned_cents
+    table.string :amount_returned_currency
+    table.integer :application_cents
+    table.string :application_currency
+    table.integer :application_fee
   end
 
-  def shipping_columns(t)
-    t.string :selected_shipping_method
-    t.string :shipping_address_city
-    t.string :shipping_address_country
-    t.string :shipping_address_line1
-    t.string :shipping_address_line2
-    t.string :shipping_address_postal_code
-    t.string :shipping_address_state
-    t.string :shipping_carrier
-    t.string :shipping_name
-    t.string :shipping_phone
-    t.string :shipping_tracking_number
-    t.string :shipping_methods
+  def shipping_columns(table)
+    table.string :selected_shipping_method
+    table.string :shipping_address_city
+    table.string :shipping_address_country
+    table.string :shipping_address_line1
+    table.string :shipping_address_line2
+    table.string :shipping_address_postal_code
+    table.string :shipping_address_state
+    table.string :shipping_carrier
+    table.string :shipping_name
+    table.string :shipping_phone
+    table.string :shipping_tracking_number
+    table.string :shipping_methods
   end
 end

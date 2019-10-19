@@ -1,54 +1,54 @@
 class CreateStripeCharges < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_charges do |t|
-      t.string :stripe_id, index: true, null: false
-      amount_columns(t)
-      dispute_failure_and_fraud_columns(t)
-      recipient_columns(t)
-      t.boolean :livemode, default: true, null: false
-      t.text :metadata
-      t.string :source_transfer
-      t.string :statement_descriptor
-      t.string :status
-      t.string :transfer_group
-      t.datetime :created
-      t.timestamps
+    create_table :stripe_charges do |table|
+      table.string :stripe_id, index: true, null: false
+      amount_columns(table)
+      dispute_failure_and_fraud_columns(table)
+      recipient_columns(table)
+      table.boolean :livemode, default: true, null: false
+      table.text :metadata
+      table.string :source_transfer
+      table.string :statement_descriptor
+      table.string :status
+      table.string :transfer_group
+      table.datetime :created
+      table.timestamps
     end
   end
 
 private
 
-  def amount_columns(t)
-    t.integer :amount_cents, null: false
-    t.string :amount_currency, null: false
-    t.integer :amount_refunded_cents
-    t.string :amount_refunded_currency
-    t.integer :application_cents
-    t.string :application_currency
-    t.string :currency, null: false
-    t.boolean :captured, null: false
-    t.boolean :paid, null: false
+  def amount_columns(table)
+    table.integer :amount_cents, null: false
+    table.string :amount_currency, null: false
+    table.integer :amount_refunded_cents
+    table.string :amount_refunded_currency
+    table.integer :application_cents
+    table.string :application_currency
+    table.string :currency, null: false
+    table.boolean :captured, null: false
+    table.boolean :paid, null: false
   end
 
-  def dispute_failure_and_fraud_columns(t)
-    t.string :dispute
-    t.string :failure_code
-    t.string :failure_message
-    t.text :fraud_details
-    t.text :outcome
-    t.boolean :refunded, null: false
-    t.string :review
+  def dispute_failure_and_fraud_columns(table)
+    table.string :dispute
+    table.string :failure_code
+    table.string :failure_message
+    table.text :fraud_details
+    table.text :outcome
+    table.boolean :refunded, null: false
+    table.string :review
   end
 
-  def recipient_columns(t)
-    t.string :description
-    t.string :stripe_customer_id, index: true
-    t.string :stripe_order_id, index: true
-    t.string :stripe_source_id, index: true
-    t.string :stripe_invoice_id, index: true
-    t.string :on_behalf_of
-    t.string :receipt_email
-    t.string :receipt_number
-    t.text :shipping
+  def recipient_columns(table)
+    table.string :description
+    table.string :stripe_customer_id, index: true
+    table.string :stripe_order_id, index: true
+    table.string :stripe_source_id, index: true
+    table.string :stripe_invoice_id, index: true
+    table.string :on_behalf_of
+    table.string :receipt_email
+    table.string :receipt_number
+    table.text :shipping
   end
 end

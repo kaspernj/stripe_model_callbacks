@@ -6,7 +6,10 @@ group :development, :test do
   gem "best_practice_project"
   gem "pry-rails"
   gem "rails_best_practices"
-  gem "rubocop", "0.75.1"
+  gem "rubocop", require: false
+  gem "rubocop-performance", require: false
+  gem "rubocop-rails", require: false
+  gem "rubocop-rspec", require: false
   gem "sqlite3"
   gem "tzinfo-data"
 end

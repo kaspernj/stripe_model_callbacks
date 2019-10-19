@@ -23,6 +23,6 @@ private
   end
 
   def order
-    @_order ||= StripeOrder.find_or_initialize_by(stripe_id: object.id)
+    @order ||= StripeOrder.find_or_initialize_by(stripe_id: object.id)
   end
 end

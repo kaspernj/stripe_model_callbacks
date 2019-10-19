@@ -1,70 +1,70 @@
 class CreateStripeSources < ActiveRecord::Migration[5.0]
   def change
-    create_table :stripe_sources do |t|
-      t.string :stripe_id, index: true, null: false
-      t.integer :amount_cents
-      t.string :amount_currency
-      t.string :client_secret, null: false
-      t.string :currency
-      t.string :flow, null: false
-      t.boolean :livemode, default: true, null: false
-      t.string :metadata
-      create_owner_columns(t)
-      create_receiver_columns(t)
-      t.string :redirect_failure_reason
-      t.string :redirect_return_url
-      t.string :redirect_status
-      t.text :redirect_url
-      t.string :statement_descriptor
-      t.string :status
-      t.string :stripe_type
-      t.string :usage
-      create_ach_columns(t)
-      t.datetime :created
-      t.timestamps
+    create_table :stripe_sources do |table|
+      table.string :stripe_id, index: true, null: false
+      table.integer :amount_cents
+      table.string :amount_currency
+      table.string :client_secret, null: false
+      table.string :currency
+      table.string :flow, null: false
+      table.boolean :livemode, default: true, null: false
+      table.string :metadata
+      create_owner_columns(table)
+      create_receiver_columns(table)
+      table.string :redirect_failure_reason
+      table.string :redirect_return_url
+      table.string :redirect_status
+      table.text :redirect_url
+      table.string :statement_descriptor
+      table.string :status
+      table.string :stripe_type
+      table.string :usage
+      create_ach_columns(table)
+      table.datetime :created
+      table.timestamps
     end
   end
 
 private
 
-  def create_owner_columns(t)
-    t.string :owner_address_city
-    t.string :owner_address_country
-    t.string :owner_address_line1
-    t.string :owner_address_line2
-    t.string :owner_address_postal_code
-    t.string :owner_address_state
-    t.string :owner_email
-    t.string :owner_name
-    t.string :owner_phone
-    t.string :owner_verified_address_city
-    t.string :owner_verified_address_country
-    t.string :owner_verified_address_line1
-    t.string :owner_verified_address_line2
-    t.string :owner_verified_address_postal_code
-    t.string :owner_verified_address_state
-    t.string :owner_verified_email
-    t.string :owner_verified_name
-    t.string :owner_verified_phone
+  def create_owner_columns(table)
+    table.string :owner_address_city
+    table.string :owner_address_country
+    table.string :owner_address_line1
+    table.string :owner_address_line2
+    table.string :owner_address_postal_code
+    table.string :owner_address_state
+    table.string :owner_email
+    table.string :owner_name
+    table.string :owner_phone
+    table.string :owner_verified_address_city
+    table.string :owner_verified_address_country
+    table.string :owner_verified_address_line1
+    table.string :owner_verified_address_line2
+    table.string :owner_verified_address_postal_code
+    table.string :owner_verified_address_state
+    table.string :owner_verified_email
+    table.string :owner_verified_name
+    table.string :owner_verified_phone
   end
 
-  def create_receiver_columns(t)
-    t.string :receiver_address
-    t.integer :receiver_amount_charged_cents
-    t.string :receiver_amount_charged_currency
-    t.integer :receiver_amount_received_cents
-    t.string :receiver_amount_received_currency
-    t.integer :receiver_amount_returned_cents
-    t.string :receiver_amount_returned_currency
-    t.string :receiver_refund_attributes_method
-    t.string :receiver_refund_attributes_status
+  def create_receiver_columns(table)
+    table.string :receiver_address
+    table.integer :receiver_amount_charged_cents
+    table.string :receiver_amount_charged_currency
+    table.integer :receiver_amount_received_cents
+    table.string :receiver_amount_received_currency
+    table.integer :receiver_amount_returned_cents
+    table.string :receiver_amount_returned_currency
+    table.string :receiver_refund_attributes_method
+    table.string :receiver_refund_attributes_status
   end
 
-  def create_ach_columns(t)
-    t.string :ach_credit_transfer_account_number
-    t.string :ach_credit_transfer_routing_number
-    t.string :ach_credit_transfer_fingerprint
-    t.string :ach_credit_transfer_bank_name
-    t.string :ach_credit_transfer_swift_code
+  def create_ach_columns(table)
+    table.string :ach_credit_transfer_account_number
+    table.string :ach_credit_transfer_routing_number
+    table.string :ach_credit_transfer_fingerprint
+    table.string :ach_credit_transfer_bank_name
+    table.string :ach_credit_transfer_swift_code
   end
 end

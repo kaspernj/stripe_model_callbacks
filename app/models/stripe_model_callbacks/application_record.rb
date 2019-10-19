@@ -4,6 +4,8 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
 
   self.abstract_class = true
 
+  attr_writer :stripe_object
+
   def self.create_from_stripe!(object)
     model = new
     model.stripe_object = object
@@ -17,12 +19,8 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
     create_from_stripe!(object)
   end
 
-  def stripe_object=(object)
-    @_stripe_object = object
-  end
-
   def to_stripe
-    @_stripe_object ||= self.class.stripe_class.retrieve(stripe_id)
+    @to_stripe ||= self.class.stripe_class.retrieve(stripe_id)
   end
 
   def reload_from_stripe!
@@ -31,7 +29,7 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
   end
 
   def reload!(*args, &blk)
-    @_to_stripe = nil
+    @to_stripe = nil
     super
   end
 
