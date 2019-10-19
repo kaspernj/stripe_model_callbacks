@@ -3,7 +3,7 @@ source "https://rubygems.org"
 gemspec
 
 group :development, :test do
-  gem "best_practice_project"
+  gem "best_practice_project", git: "https://github.com/kaspernj/best_practice_project.git"
   gem "pry-rails"
   gem "rails_best_practices"
   gem "rubocop", require: false
