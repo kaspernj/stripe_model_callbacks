@@ -5,9 +5,9 @@ class StripeModelCallbacks::Customer::DiscountUpdatedService < StripeModelCallba
 
     if discount.save
       create_activity
-      ServicePattern::Response.new(result: discount)
+      succeed! discount
     else
-      ServicePattern::Response.new(errors: discount.errors.full_messages)
+      fail! discount.errors.full_messages
     end
   end
 

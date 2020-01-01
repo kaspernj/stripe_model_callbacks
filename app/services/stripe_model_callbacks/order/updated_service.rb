@@ -5,9 +5,9 @@ class StripeModelCallbacks::Order::UpdatedService < StripeModelCallbacks::BaseEv
     if order.save
       create_order_items
 
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: order.errors.full_messages)
+      fail! order.errors.full_messages
     end
   end
 

@@ -5,9 +5,9 @@ class StripeModelCallbacks::Customer::BankAccount::DeletedService < StripeModelC
 
     if bank_account.save
       bank_account.create_activity :customer_bank_account_deleted if event.type == "customer.bank_account.deleted"
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: bank_account.errors.full_messages)
+      fail! bank_account.errors.full_messages
     end
   end
 end

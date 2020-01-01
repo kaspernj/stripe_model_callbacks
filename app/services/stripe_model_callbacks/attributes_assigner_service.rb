@@ -22,7 +22,7 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
       model.__send__(setter_method(attribute), value)
     end
 
-    ServicePattern::Response.new(success: true)
+    succeed!
   end
 
   def setter_method(attribute)

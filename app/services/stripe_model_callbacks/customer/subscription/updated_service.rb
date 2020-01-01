@@ -5,9 +5,9 @@ class StripeModelCallbacks::Customer::Subscription::UpdatedService < StripeModel
 
     if subscription.save
       create_activity
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: subscription.errors.full_messages)
+      fail! subscription.errors.full_messages
     end
   end
 

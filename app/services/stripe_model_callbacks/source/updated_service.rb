@@ -4,9 +4,9 @@ class StripeModelCallbacks::Source::UpdatedService < StripeModelCallbacks::BaseE
 
     if source.save
       create_activity
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: source.errors.full_messages)
+      fail! source.errors.full_messages
     end
   end
 

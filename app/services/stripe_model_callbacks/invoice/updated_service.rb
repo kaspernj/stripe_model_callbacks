@@ -5,9 +5,9 @@ class StripeModelCallbacks::Invoice::UpdatedService < StripeModelCallbacks::Base
     if invoice.save
       create_activity
 
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: invoice.errors.full_messages)
+      fail! invoice.errors.full_messages
     end
   end
 

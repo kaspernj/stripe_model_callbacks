@@ -4,9 +4,9 @@ class StripeModelCallbacks::Coupon::UpdatedService < StripeModelCallbacks::BaseE
     coupon.deleted_at ||= Time.zone.now if event.type == "coupon.deleted"
 
     if coupon.save
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: coupon.errors.full_messages)
+      fail! coupon.errors.full_messages
     end
   end
 

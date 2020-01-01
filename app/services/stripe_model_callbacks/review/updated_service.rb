@@ -5,9 +5,9 @@ class StripeModelCallbacks::Review::UpdatedService < StripeModelCallbacks::BaseE
 
     if review.save
       review.create_activity :closed if event.type == "review.closed"
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: review.errors.full_messages)
+      fail! review.errors.full_messages
     end
   end
 end

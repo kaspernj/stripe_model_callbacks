@@ -13,9 +13,9 @@ class StripeModelCallbacks::Subscription::StateCheckerService < StripeModelCallb
         return response unless response.success?
       end
     elsif !allowed.include?(state)
-      return ServicePattern::Response.new(errors: ["Not allowed: #{state}"])
+      return fail! ["Not allowed: #{state}"]
     end
 
-    ServicePattern::Response.new(success: true)
+    succeed!
   end
 end

@@ -5,9 +5,9 @@ class StripeModelCallbacks::InvoiceItem::UpdatedService < StripeModelCallbacks::
     invoice_item.deleted_at = Time.zone.now if event.type == "invoiceitem.deleted"
 
     if invoice_item.save
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: invoice_item.errors.full_messages)
+      fail! invoice_item.errors.full_messages
     end
   end
 end

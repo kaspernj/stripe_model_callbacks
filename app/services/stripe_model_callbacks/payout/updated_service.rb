@@ -4,9 +4,9 @@ class StripeModelCallbacks::Payout::UpdatedService < StripeModelCallbacks::BaseE
 
     if payout.save
       create_activity
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: payout.errors.full_messages)
+      fail! payout.errors.full_messages
     end
   end
 

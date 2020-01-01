@@ -5,9 +5,9 @@ class StripeModelCallbacks::Charge::UpdatedService < StripeModelCallbacks::BaseE
     if charge.save
       create_refunds if event.type == "charge.refunded"
       create_activity
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: charge.errors.full_messages)
+      fail! charge.errors.full_messages
     end
   end
 

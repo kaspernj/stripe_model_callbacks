@@ -29,7 +29,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     subscription_events
     transfer_events
 
-    ServicePattern::Response.new(success: true)
+    succeed!
   end
 
 private
