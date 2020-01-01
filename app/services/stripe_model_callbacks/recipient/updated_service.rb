@@ -6,9 +6,9 @@ class StripeModelCallbacks::Recipient::UpdatedService < StripeModelCallbacks::Ba
 
     if recipient.save
       recipient.create_activity :deleted if event.type == "recipient.deleted"
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: recipient.errors.full_messages)
+      fail! recipient.errors.full_messages
     end
   end
 end

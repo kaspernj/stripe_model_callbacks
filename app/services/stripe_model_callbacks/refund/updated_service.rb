@@ -4,9 +4,9 @@ class StripeModelCallbacks::Refund::UpdatedService < StripeModelCallbacks::BaseE
     refund.assign_from_stripe(object)
 
     if refund.save
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: refund.errors.full_messages)
+      fail! refund.errors.full_messages
     end
   end
 end

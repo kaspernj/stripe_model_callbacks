@@ -4,9 +4,9 @@ class StripeModelCallbacks::Transfer::UpdatedService < StripeModelCallbacks::Bas
 
     if transfer.save
       transfer.create_activity :reversed if event.type == "transfer.reversed"
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: transfer.errors.full_messages)
+      fail! transfer.errors.full_messages
     end
   end
 

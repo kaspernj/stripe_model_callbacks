@@ -6,9 +6,9 @@ class StripeModelCallbacks::Product::UpdatedService < StripeModelCallbacks::Base
 
     if product.save
       product.create_activity :deleted if event.type == "product.deleted"
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: product.errors.full_messages)
+      fail! product.errors.full_messages
     end
   end
 end

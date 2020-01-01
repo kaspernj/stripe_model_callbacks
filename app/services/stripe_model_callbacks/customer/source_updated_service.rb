@@ -7,9 +7,9 @@ class StripeModelCallbacks::Customer::SourceUpdatedService < StripeModelCallback
     if source.save
       source.create_activity :deleted if event.type == "customer.source.deleted"
       source.create_activity :expiring if event.type == "customer.source.expiring"
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: source.errors.full_messages)
+      fail! source.errors.full_messages
     end
   end
 

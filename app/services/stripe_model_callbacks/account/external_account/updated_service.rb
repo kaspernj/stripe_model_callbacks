@@ -5,9 +5,9 @@ class StripeModelCallbacks::Account::ExternalAccount::UpdatedService < StripeMod
 
     if bank_account.save
       bank_account.create_activity :deleted if event.type == "account.external_account.deleted"
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: bank_account.errors.full_messages)
+      fail! bank_account.errors.full_messages
     end
   end
 end

@@ -4,9 +4,9 @@ class StripeModelCallbacks::Charge::DisputeUpdatedService < StripeModelCallbacks
 
     if dispute.save
       create_activity
-      ServicePattern::Response.new(success: true)
+      succeed!
     else
-      ServicePattern::Response.new(errors: dispute.errors.full_messages)
+      fail! dispute.errors.full_messages
     end
   end
 
