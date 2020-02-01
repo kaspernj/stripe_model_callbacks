@@ -219,7 +219,7 @@ GEM
     rubocop-rspec (1.37.1)
       rubocop (>= 0.68.1)
     ruby-progressbar (1.10.1)
-    service_pattern (0.0.5)
+    service_pattern (0.0.6)
     sexp_processor (4.13.0)
     sprockets (4.0.0)
       concurrent-ruby (~> 1.0)
