@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    stripe_model_callbacks (0.1.1)
+    stripe_model_callbacks (0.1.2)
       money-rails
       public_activity
       rails (>= 5.0.0)
