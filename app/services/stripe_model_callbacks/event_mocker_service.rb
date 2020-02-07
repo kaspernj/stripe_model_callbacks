@@ -22,7 +22,7 @@ private
   end
 
   def fixture_path
-    @fixture_path ||= "#{File.dirname(__FILE__)}/../../../spec/fixtures/stripe_events/#{first_part}/#{name}.json"
+    @fixture_path ||= "#{File.dirname(__FILE__)}/../../../lib/stripe_model_callbacks/fixtures/stripe_events/#{first_part}/#{name}.json"
   end
 
   def payload
