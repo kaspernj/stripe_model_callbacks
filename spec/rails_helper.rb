@@ -8,6 +8,7 @@ require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
 
 require "factory_bot_rails"
+require "stripe_model_callbacks/factory_bot_definitions"
 require "pry-rails"
 require "public_activity/testing"
 
