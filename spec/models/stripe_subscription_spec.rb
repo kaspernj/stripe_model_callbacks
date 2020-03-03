@@ -30,6 +30,16 @@ describe StripeSubscription, :stripe_mock do
     end
   end
 
+  describe "#stripe_plan" do
+    let(:plan) { create :stripe_plan, stripe_id: "plan_123" }
+    let(:subscription) { create :stripe_subscription, stripe_plan_id: "plan_123" }
+
+    it "returns the plan for the subscription" do
+      plan
+      expect(subscription.stripe_plans).to eq plan
+    end
+  end
+
   describe "#with_state" do
     it "finds the right subscriptions" do
       subscriptions = StripeSubscription.with_state(:active)
