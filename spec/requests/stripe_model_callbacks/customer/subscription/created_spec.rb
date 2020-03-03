@@ -18,16 +18,20 @@ describe "subscription creation" do
 
       expect(response.code).to eq "200"
 
-      expect(created_subscription.stripe_customer).to eq stripe_customer
-      expect(created_subscription.stripe_plan).to eq stripe_plan
-      expect(created_subscription.stripe_discount).to eq nil
-      expect(created_subscription.stripe_discount_id).to eq nil
-
-      expect(created_subscription_item.stripe_id).to eq "si_CGPX2RZhm2pE0o"
-      expect(created_subscription_item.stripe_subscription_id).to eq "sub_CGPXJjUMVXBLSx"
-      expect(created_subscription_item.stripe_subscription).to eq created_subscription
-      expect(created_subscription_item.stripe_plan_id).to eq "silver-express-898"
-      expect(created_subscription_item.stripe_plan).to eq stripe_plan
+      expect(created_subscription).to have_attributes(
+        stripe_customer: stripe_customer,
+        stripe_plan: stripe_plan,
+        stripe_plans: [stripe_plan],
+        stripe_discount: nil,
+        stripe_discount_id: nil
+      )
+      expect(created_subscription_item).to have_attributes(
+        stripe_id: "si_CGPX2RZhm2pE0o",
+        stripe_subscription_id: "sub_CGPXJjUMVXBLSx",
+        stripe_subscription: created_subscription,
+        stripe_plan_id: "silver-express-898",
+        stripe_plan: stripe_plan
+      )
     end
 
     it "sets a discount" do
@@ -69,8 +73,12 @@ describe "subscription creation" do
       created_discount = StripeDiscount.last
       created_subscription = StripeSubscription.last
 
-      expect(created_subscription.stripe_discount_id).to eq created_discount.id.to_s
-      expect(created_subscription.stripe_discount).to eq created_discount
+      expect(created_subscription).to have_attributes(
+        stripe_discount_id: created_discount.id.to_s,
+        stripe_discount: created_discount,
+        stripe_plan: stripe_plan,
+        stripe_plans: [stripe_plan]
+      )
     end
 
     it "updates a subscription with an existing discount" do
@@ -117,11 +125,18 @@ describe "subscription creation" do
       created_subscription = StripeSubscription.last
       created_subscription_item = StripeSubscriptionItem.last
 
-      expect(created_subscription.stripe_discount_id).to eq stripe_discount.id.to_s
-      expect(created_subscription.stripe_discount).to eq stripe_discount
-      expect(created_subscription_item.stripe_subscription).to eq created_subscription
-      expect(created_subscription_item.quantity).to eq 1
-      expect(created_subscription_item.stripe_plan_id).to eq "silver-express-898"
+      expect(created_subscription).to have_attributes(
+        stripe_discount_id: stripe_discount.id.to_s,
+        stripe_discount: stripe_discount,
+        stripe_plan: stripe_plan,
+        stripe_plans: [stripe_plan]
+      )
+      expect(created_subscription_item).to have_attributes(
+        stripe_subscription: created_subscription,
+        quantity: 1,
+        stripe_plan_id: "silver-express-898",
+        stripe_plan: stripe_plan
+      )
       expect(stripe_discount.reload.coupon_times_redeemed).to eq 4
     end
   end

@@ -47,7 +47,7 @@
               "trial_period_days": null
             },
             "quantity": 1,
-            "subscription": "sub_CGPlqkdRaAAkq4"
+            "subscription": "sub_00000000000000"
           }
         ],
         "has_more": false,
@@ -58,7 +58,7 @@
       "metadata": {
       },
       "plan": {
-        "id": "silver-express-898_00000000000000",
+        "id": "silver-express-898",
         "object": "plan",
         "amount": 999,
         "created": 1506381458,

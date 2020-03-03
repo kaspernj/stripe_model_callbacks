@@ -19,12 +19,16 @@ describe "subscription updating" do
 
       expect(response.code).to eq "200"
 
-      expect(stripe_subscription.stripe_customer).to eq stripe_customer
-      expect(stripe_subscription.stripe_plan).to eq stripe_plan
-      expect(stripe_subscription.current_period_end).to eq Time.zone.at(1_520_191_372)
-
-      expect(stripe_subscription_item.stripe_subscription).to eq stripe_subscription
-      expect(stripe_subscription_item.stripe_plan).to eq stripe_plan
+      expect(stripe_subscription).to have_attributes(
+        stripe_customer: stripe_customer,
+        stripe_plan: stripe_plan,
+        stripe_plans: [stripe_plan],
+        current_period_end: Time.zone.at(1_520_191_372)
+      )
+      expect(stripe_subscription_item).to have_attributes(
+        stripe_subscription: stripe_subscription,
+        stripe_plan: stripe_plan
+      )
     end
   end
 end
