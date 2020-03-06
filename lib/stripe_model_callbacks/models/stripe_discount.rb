@@ -14,12 +14,18 @@ class StripeDiscount < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
+    if object.respond_to?(:customer)
+      customer_id = object.customer
+    else
+      customer_id = Stripe::Subscription.retrieve(object.subscription).customer
+    end
+
     assign_attributes(
       created: object.respond_to?(:created) ? Time.zone.at(object.created) : nil,
       start: Time.zone.at(object.start),
       end: object.end ? Time.zone.at(object.end) : nil,
       stripe_coupon_id: object.coupon.id,
-      stripe_customer_id: object.customer,
+      stripe_customer_id: customer_id,
       stripe_subscription_id: object.subscription
     )
 
@@ -32,11 +38,11 @@ private
   def assign_coupon_attributes(object)
     assign_attributes(
       coupon_amount_off_cents: object.coupon.amount_off ? Money.new(object.coupon.amount_off, object.coupon.currency) : nil,
-      coupon_created: Time.zone.at(object.coupon.created),
+      coupon_created: object.coupon.respond_to?(:created) ? Time.zone.at(object.coupon.created) : nil,
       coupon_currency: object.coupon.currency,
       coupon_duration: object.coupon.duration,
       coupon_duration_in_months: object.coupon.duration_in_months,
-      coupon_livemode: object.coupon.livemode
+      coupon_livemode: object.coupon.respond_to?(:livemode) ? object.coupon.livemode : nil
     )
   end
 
