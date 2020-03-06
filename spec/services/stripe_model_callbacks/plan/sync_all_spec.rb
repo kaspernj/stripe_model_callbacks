@@ -4,7 +4,7 @@ describe StripeModelCallbacks::Plan::SyncAll, :stripe_mock do
   let(:stripe_product) { create :stripe_product }
 
   it "creates the model locally" do
-    mock_plan = Stripe::Plan.create(amount: 1000, id: "test-plan", currency: "usd", name: "Test plan", interval: 1, product: stripe_product.stripe_id)
+    Stripe::Plan.create(amount: 1000, id: "test-plan", currency: "usd", name: "Test plan", interval: 1, product: stripe_product.stripe_id)
 
     expect { StripeModelCallbacks::Plan::SyncAll.execute! }
       .to change(StripePlan, :count).by(1)
