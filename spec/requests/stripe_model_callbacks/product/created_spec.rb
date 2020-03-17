@@ -10,7 +10,10 @@ describe "product created" do
 
       expect(response.code).to eq "200"
 
-      expect(created_product.stripe_id).to eq "prod_00000000000000"
+      expect(created_product).to have_attributes(
+        product_type: "service",
+        stripe_id: "prod_00000000000000"
+      )
     end
   end
 end
