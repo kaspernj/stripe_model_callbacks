@@ -16,7 +16,7 @@ describe "source failed" do
       expect(source.currency).to eq "usd"
       expect(source.stripe_id).to eq "src_00000000000000"
       expect(source.flow).to eq "receiver"
-      expect(source.created).to eq Time.zone.parse("2018-02-06 07:42:29")
+      expect(source.created).to eq Time.zone.parse("2020-03-17 07:42:29")
       expect(source.livemode).to eq false
       expect(source.client_secret).to eq "src_client_secret_CGz4B3s2LM5ZBtZuTHwuPxgc"
       expect(source.owner_email).to eq "jenny.rosen@example.com"

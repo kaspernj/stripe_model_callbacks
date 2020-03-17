@@ -15,10 +15,10 @@ describe "payout failed" do
 
       expect(payout.stripe_id).to eq "po_00000000000000"
       expect(payout.amount.format).to eq "$11.00"
-      expect(payout.arrival_date).to eq Time.zone.parse("2018-02-06 09:53:06")
+      expect(payout.arrival_date).to eq Time.zone.parse("2020-03-17 09:53:06")
       expect(payout.automatic).to eq true
       expect(payout.balance_transaction).to eq "txn_00000000000000"
-      expect(payout.created).to eq Time.zone.parse("2018-02-06 09:53:06")
+      expect(payout.created).to eq Time.zone.parse("2020-03-17 09:53:06")
       expect(payout.currency).to eq "usd"
       expect(payout.description).to eq "STRIPE TRANSFER"
       expect(payout.destination).to eq "ba_1BsT8QAT5SYrvIfduKND65c8"

@@ -14,7 +14,7 @@ describe "disputes closed" do
       expect(response.code).to eq "200"
 
       expect(dispute.stripe_id).to eq "dp_00000000000000"
-      expect(dispute.created).to eq Time.zone.parse("2018-02-06 13:11:54")
+      expect(dispute.created).to eq Time.zone.parse("2020-03-17 13:11:54")
       expect(dispute.amount.format).to eq "$10.00"
       expect(dispute.balance_transaction_id).to eq "txn_00000000000000"
       expect(dispute.stripe_charge_id).to eq "ch_00000000000000"

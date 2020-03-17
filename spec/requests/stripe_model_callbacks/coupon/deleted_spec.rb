@@ -14,7 +14,7 @@ describe "coupon deleted" do
 
       expect(coupon.stripe_id).to eq "25OFF_00000000000000"
       expect(coupon.amount_off).to eq nil
-      expect(coupon.created).to eq Time.zone.parse("2018-02-06 09:28:16")
+      expect(coupon.created).to eq Time.zone.parse("2020-03-17 09:28:16")
       expect(coupon.currency).to eq nil
       expect(coupon.duration).to eq "repeating"
       expect(coupon.duration_in_months).to eq 3

@@ -12,7 +12,7 @@ describe "coupon created" do
 
       expect(created_coupon.stripe_id).to eq "25OFF_00000000000000"
       expect(created_coupon.amount_off).to eq nil
-      expect(created_coupon.created).to eq Time.zone.parse("2018-02-06 09:27:55")
+      expect(created_coupon.created).to eq Time.zone.parse("2020-03-17 09:27:55")
       expect(created_coupon.currency).to eq nil
       expect(created_coupon.duration).to eq "repeating"
       expect(created_coupon.duration_in_months).to eq 3

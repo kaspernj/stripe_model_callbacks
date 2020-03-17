@@ -18,7 +18,7 @@ describe "customer discount creation" do
       expect(created_discount.stripe_customer_id).to eq "cus_00000000000000"
       expect(created_discount.stripe_customer).to eq customer
       expect(created_discount.coupon_amount_off).to eq nil
-      expect(created_discount.coupon_created).to eq Time.zone.parse("2018-02-06 12:29:34")
+      expect(created_discount.coupon_created).to eq Time.zone.parse("2020-03-17 12:29:34")
       expect(created_discount.coupon_currency).to eq nil
       expect(created_discount.coupon_duration).to eq "repeating"
       expect(created_discount.coupon_duration_in_months).to eq 3
@@ -29,7 +29,7 @@ describe "customer discount creation" do
       expect(created_discount.coupon_redeem_by).to eq nil
       expect(created_discount.coupon_times_redeemed).to eq 0
       expect(created_discount.coupon_valid).to eq true
-      expect(created_discount.start).to eq Time.zone.parse("2018-02-06 12:29:34")
+      expect(created_discount.start).to eq Time.zone.parse("2020-03-17 12:29:34")
       expect(created_discount.end).to eq Time.zone.parse("2018-05-06 12:29:34")
       expect(created_discount.stripe_subscription_id).to eq nil
       expect(created_discount.stripe_subscription).to eq nil

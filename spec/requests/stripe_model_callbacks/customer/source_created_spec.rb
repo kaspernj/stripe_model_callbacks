@@ -14,7 +14,7 @@ describe "customer source created" do
 
       expect(created_source.stripe_id).to eq "src_00000000000000"
       expect(created_source.currency).to eq "usd"
-      expect(created_source.created).to eq Time.zone.parse("2018-02-06 12:18:52")
+      expect(created_source.created).to eq Time.zone.parse("2020-03-17 12:18:52")
       expect(created_source.owner_email).to eq "jenny.rosen@example.com"
     end
 

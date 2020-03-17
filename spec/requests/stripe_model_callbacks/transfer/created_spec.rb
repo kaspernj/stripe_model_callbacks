@@ -10,22 +10,24 @@ describe "transfer created" do
 
       expect(response.code).to eq "200"
 
-      expect(created_transfer.stripe_id).to eq "tr_00000000000000"
-      expect(created_transfer.amount.format).to eq "$11.00"
-      expect(created_transfer.amount_reversed.format).to eq "$0.00"
-      expect(created_transfer.balance_transaction).to eq "txn_00000000000000"
-      expect(created_transfer.created).to eq Time.zone.parse("2018-02-06 08:53:31")
-      expect(created_transfer.currency).to eq "usd"
-      expect(created_transfer.description).to eq nil
-      expect(created_transfer.destination).to eq "acct_1Brq15AT5SYrvIfd"
-      expect(created_transfer.destination_payment).to eq "py_CH0DW4ihzdQQCd"
-      expect(created_transfer.livemode).to eq false
-      expect(created_transfer.metadata).to eq "{}"
-      expect(created_transfer.reversed?).to eq false
-      expect(created_transfer.source_transaction).to eq nil
-      expect(created_transfer.source_type).to eq "card"
-      expect(created_transfer.transfer_group).to eq nil
-      expect(created_transfer.status).to eq "pending"
+      expect(created_transfer).to have_attributes(
+        stripe_id: "tr_00000000000000",
+        amount: Money.new(11_00, "USD"),
+        amount_reversed: Money.new(0, "USD"),
+        balance_transaction: "txn_00000000000000",
+        created: Time.zone.parse("2020-03-17 18:53:55"),
+        currency: "usd",
+        description: nil,
+        destination: "acct_1Bsw4fEKaFxLwikq",
+        destination_payment: "py_GvblzJUDmEpmMd",
+        livemode: false,
+        metadata: "{}",
+        reversed: false,
+        source_transaction: nil,
+        source_type: "card",
+        transfer_group: nil,
+        status: "pending"
+      )
     end
   end
 end
