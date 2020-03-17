@@ -16,7 +16,7 @@ describe "invoice created" do
       expect(response.code).to eq "200"
 
       expect(created_invoice.stripe_id).to eq "in_00000000000000"
-      expect(created_invoice.application_fee).to eq nil
+      expect(created_invoice.application_fee_amount).to eq nil
       expect(created_invoice.attempt_count).to eq 1
       expect(created_invoice.attempted?).to eq false
       expect(created_invoice.billing).to eq "charge_automatically"

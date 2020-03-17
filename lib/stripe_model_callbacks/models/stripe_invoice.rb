@@ -6,7 +6,7 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
   has_many :stripe_invoice_items, autosave: true, primary_key: "stripe_id"
 
   monetize :amount_due_cents, allow_nil: true
-  monetize :application_fee_cents, allow_nil: true
+  monetize :application_fee_amount_cents, allow_nil: true
   monetize :subtotal_cents, allow_nil: true
   monetize :tax_cents, allow_nil: true
   monetize :total_cents, allow_nil: true
@@ -45,7 +45,7 @@ private
   def assign_amounts(object)
     assign_attributes(
       amount_due: Money.new(object.amount_due, object.currency),
-      application_fee: object.application_fee ? Money.new(object.application_fee, object.currency) : nil,
+      application_fee_amount: object.application_fee_amount ? Money.new(object.application_fee_amount, object.currency) : nil,
       stripe_discount_id: stripe_discount_id_from_object(object),
       subtotal: Money.new(object.subtotal, object.currency),
       tax: object.tax ? Money.new(object.tax, object.currency) : nil,
