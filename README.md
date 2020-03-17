@@ -27,6 +27,11 @@ Install the migration for Public Activity, which will provide logging:
 rails g public_activity:migration
 ```
 
+You can install the migrations (or update an existing installation) with this command:
+```bash
+rails stripe_model_callbacks:install:migrations
+```
+
 Do something like this in `config/routes.rb`:
 ```ruby
 Rails.application.routes.draw do
