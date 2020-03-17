@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe StripeModelCallbacks::ApplicationRecord, :stripe_mock do
-  let(:stripe_product) { create :stripe_product }
+  let(:stripe_product) { create :stripe_product, :with_stripe_mock }
   let(:subscription) { create :stripe_subscription, :with_stripe_mock }
 
   describe "#to_stripe" do
@@ -31,7 +31,7 @@ describe StripeModelCallbacks::ApplicationRecord, :stripe_mock do
 
   describe "#create_from_stripe" do
     it "creates a record from a Stripe object" do
-      mock_plan = Stripe::Plan.create(amount: 1000, id: "test-plan", currency: "usd", name: "Test plan", interval: 1, product: stripe_product.stripe_id)
+      mock_plan = Stripe::Plan.create(amount: 1000, id: "test-plan", currency: "usd", name: "Test plan", interval: "month", product: stripe_product.stripe_id)
       stripe_plan = StripePlan.create_from_stripe!(mock_plan)
 
       expect(stripe_plan.stripe_id).to eq "test-plan"

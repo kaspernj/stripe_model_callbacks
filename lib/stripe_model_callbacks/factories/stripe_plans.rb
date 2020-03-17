@@ -4,12 +4,14 @@ FactoryBot.define do
     amount_cents { 10_000 }
     amount_currency { "USD" }
     currency { "usd" }
-    interval { "months" }
+    interval { "month" }
     interval_count { 1 }
     livemode { false }
     stripe_product
 
     trait :with_stripe_mock do
+      association :stripe_product, factory: [:stripe_product, :with_stripe_mock]
+
       after :create do |stripe_plan|
         mock_plan = Stripe::Plan.create(
           id: stripe_plan.stripe_id,
