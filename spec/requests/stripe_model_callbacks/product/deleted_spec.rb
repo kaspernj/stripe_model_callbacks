@@ -13,11 +13,14 @@ describe "product deleted" do
 
       expect(response.code).to eq "200"
 
-      expect(product.stripe_id).to eq "prod_00000000000000"
-      expect(product.active?).to eq false
-      expect(product.created).to eq Time.zone.parse("2018-02-04 16:49:05")
-      expect(product.updated).to eq Time.zone.parse("2018-02-04 16:49:05")
-      expect(product.name).to eq "Extra Large"
+      expect(product).to have_attributes(
+        stripe_id: "prod_00000000000000",
+        active: false,
+        created: Time.zone.parse("2018-02-04 16:49:05"),
+        updated: Time.zone.parse("2018-02-04 16:49:05"),
+        name: "Extra Large",
+        product_type: "service"
+      )
       expect(product.deleted_at).to be > 1.minute.ago
     end
   end

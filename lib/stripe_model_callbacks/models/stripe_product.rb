@@ -14,6 +14,7 @@ class StripeProduct < StripeModelCallbacks::ApplicationRecord
       package_dimensions_length: object.package_dimensions&.length,
       package_dimensions_weight: object.package_dimensions&.weight,
       package_dimensions_width: object.package_dimensions&.width,
+      product_type: object.type,
       shippable: object.shippable == true
     )
 
