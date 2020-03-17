@@ -6,18 +6,16 @@
   "object": "event",
   "request": null,
   "pending_webhooks": 1,
-  "api_version": "2018-01-23",
+  "api_version": "2020-03-02",
   "data": {
     "object": {
       "id": "dp_00000000000000",
       "object": "dispute",
       "amount": 1000,
-      "balance_transaction": "txn_00000000000000",
       "balance_transactions": [
-
       ],
       "charge": "ch_00000000000000",
-      "created": 1517922714,
+      "created": 1584470541,
       "currency": "usd",
       "evidence": {
         "access_activity_log": null,
@@ -49,15 +47,16 @@
         "uncategorized_text": "Here is some evidence"
       },
       "evidence_details": {
-        "due_by": 1519603199,
+        "due_by": 1586131199,
         "has_evidence": false,
         "past_due": false,
         "submission_count": 0
       },
-      "is_charge_refundable": false,
+      "is_charge_refundable": true,
       "livemode": false,
       "metadata": {
       },
+      "payment_intent": null,
       "reason": "general",
       "status": "won"
     }

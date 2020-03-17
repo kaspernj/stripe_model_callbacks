@@ -16,7 +16,7 @@
       "account_holder_type": "individual",
       "bank_name": "STRIPE TEST BANK",
       "country": "US",
-      "currency": "dkk",
+      "currency": "usd",
       "default_for_currency": false,
       "fingerprint": "8hxBTDA6RPbX37IN",
       "last4": "6789",

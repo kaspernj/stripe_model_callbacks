@@ -6,16 +6,22 @@
   "object": "event",
   "request": null,
   "pending_webhooks": 1,
-  "api_version": "2018-02-05",
+  "api_version": "2020-03-02",
   "data": {
     "object": {
       "id": "prv_00000000000000",
       "object": "review",
+      "billing_zip": null,
       "charge": "ch_00000000000000",
-      "created": 1518091642,
+      "closed_reason": null,
+      "created": 1584471140,
+      "ip_address": null,
+      "ip_address_location": null,
       "livemode": false,
       "open": true,
-      "reason": "rule"
+      "opened_reason": "rule",
+      "reason": "rule",
+      "session": null
     }
   }
 }

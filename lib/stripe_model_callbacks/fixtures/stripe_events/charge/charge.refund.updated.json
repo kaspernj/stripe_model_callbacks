@@ -6,7 +6,7 @@
   "object": "event",
   "request": null,
   "pending_webhooks": 1,
-  "api_version": "2018-01-23",
+  "api_version": "2020-03-02",
   "data": {
     "object": {
       "id": "re_00000000000000",
@@ -14,15 +14,21 @@
       "amount": 100,
       "balance_transaction": null,
       "charge": "ch_00000000000000",
-      "created": 1517848627,
+      "created": 1584470629,
       "currency": "usd",
       "metadata": {
       },
+      "payment_intent": null,
       "reason": null,
       "receipt_number": null,
-      "status": "succeeded"
+      "source_transfer_reversal": null,
+      "status": "succeeded",
+      "transfer_reversal": null
     },
     "previous_attributes": {
+      "metadata": {
+        "order_id": "old_order_id"
+      }
     }
   }
 }

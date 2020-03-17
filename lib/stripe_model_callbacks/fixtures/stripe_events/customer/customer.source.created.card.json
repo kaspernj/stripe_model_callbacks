@@ -1,7 +1,7 @@
 {
   "id": "evt_bgfsbgservsreg",
   "object": "event",
-  "api_version": "2018-02-06",
+  "api_version": "2020-03-17",
   "created": "1518896523",
   "livemode": "true",
   "pending_webhooks": "1",
@@ -15,7 +15,7 @@
   "webhook": {
     "id": "evt_bgfsbgservsreg",
     "object": "event",
-    "api_version": "2018-02-06",
+    "api_version": "2020-03-17",
     "created": "1518896523",
     "livemode": "true",
     "pending_webhooks": "1",

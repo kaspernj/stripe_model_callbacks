@@ -6,7 +6,7 @@
   "object": "event",
   "request": null,
   "pending_webhooks": 1,
-  "api_version": "2018-02-05",
+  "api_version": "2020-03-02",
   "data": {
     "object": {
       "id": "ba_00000000000000",
@@ -16,9 +16,8 @@
       "account_holder_type": "individual",
       "bank_name": "STRIPE TEST BANK",
       "country": "US",
-      "currency": "dkk",
-      "default_for_currency": false,
-      "fingerprint": "8hxBTDA6RPbX37IN",
+      "currency": "usd",
+      "fingerprint": "1JWtPxqbdX5Gamtz",
       "last4": "6789",
       "metadata": {
       },
@@ -26,6 +25,7 @@
       "status": "new"
     },
     "previous_attributes": {
+      "description": "Old description"
     }
   }
 }

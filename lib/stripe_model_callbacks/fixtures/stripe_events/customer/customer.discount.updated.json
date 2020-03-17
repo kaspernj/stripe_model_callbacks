@@ -6,15 +6,15 @@
   "object": "event",
   "request": null,
   "pending_webhooks": 1,
-  "api_version": "2018-01-23",
+  "api_version": "2020-03-02",
   "data": {
     "object": {
       "object": "discount",
       "coupon": {
-        "id": "25OFF_00000000000000",
+        "id": "25_00000000000000",
         "object": "coupon",
         "amount_off": null,
-        "created": 1517920191,
+        "created": 1584470752,
         "currency": null,
         "duration": "repeating",
         "duration_in_months": 3,
@@ -22,22 +22,23 @@
         "max_redemptions": null,
         "metadata": {
         },
-        "percent_off": 25,
+        "name": "25.5% off",
+        "percent_off": 25.5,
         "redeem_by": null,
         "times_redeemed": 0,
         "valid": true
       },
       "customer": "cus_00000000000000",
-      "end": 1525609791,
-      "start": 1517920191,
+      "end": 1592419552,
+      "start": 1584470752,
       "subscription": null
     },
     "previous_attributes": {
       "coupon": {
-        "id": "OLD_COUPON_ID",
+        "id": "OLD_00000000000000",
         "object": "coupon",
         "amount_off": null,
-        "created": 1517920191,
+        "created": 1584470752,
         "currency": null,
         "duration": "repeating",
         "duration_in_months": 3,
@@ -45,7 +46,8 @@
         "max_redemptions": null,
         "metadata": {
         },
-        "percent_off": 25,
+        "name": "25.5% off",
+        "percent_off": 25.5,
         "redeem_by": null,
         "times_redeemed": 0,
         "valid": true

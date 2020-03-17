@@ -6,16 +6,16 @@
   "object": "event",
   "request": null,
   "pending_webhooks": 1,
-  "api_version": "2018-01-23",
+  "api_version": "2020-03-02",
   "data": {
     "object": {
       "id": "btctxn_00000000000000",
       "object": "bitcoin_transaction",
-      "amount": 300,
-      "bitcoin_amount": 3000000,
-      "created": 1517906694,
+      "amount": 100,
+      "bitcoin_amount": 1757908,
+      "created": 1584471222,
       "currency": "usd",
-      "receiver": "btcrcv_1B2J9N2eZvKYlo2C9nVfoiuu"
+      "receiver": "btcrcv_15XziN4Lf1hyuG3tvHC5DgGA"
     }
   }
 }

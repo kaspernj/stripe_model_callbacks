@@ -6,7 +6,7 @@
   "object": "event",
   "request": null,
   "pending_webhooks": 1,
-  "api_version": "2018-01-23",
+  "api_version": "2020-03-02",
   "data": {
     "object": {
       "id": "rp_00000000000000",
@@ -15,13 +15,11 @@
       "cards": {
         "object": "list",
         "data": [
-
         ],
         "has_more": false,
-        "total_count": 0,
-        "url": "/v1/recipients/rp_1BsGduAT5SYrvIfdk3BOUh7c/cards"
+        "url": "/v1/recipients/rp_1GNkWLEKaFxLwikqQQW6ZoD2/cards"
       },
-      "created": 1517862766,
+      "created": 1584471129,
       "default_card": null,
       "description": "Recipient for John Doe",
       "email": "test@example.com",
@@ -30,10 +28,10 @@
       },
       "migrated_to": null,
       "name": "John Doe",
-      "type": "individual",
-      "verified": false
+      "type": "individual"
     },
     "previous_attributes": {
+      "description": "Old description"
     }
   }
 }

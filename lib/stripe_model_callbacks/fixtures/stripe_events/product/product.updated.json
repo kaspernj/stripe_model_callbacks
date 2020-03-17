@@ -6,45 +6,29 @@
   "object": "event",
   "request": null,
   "pending_webhooks": 1,
-  "api_version": "2018-01-23",
+  "api_version": "2020-03-02",
   "data": {
     "object": {
       "id": "prod_00000000000000",
       "object": "product",
-      "active": null,
+      "active": true,
       "attributes": [
-
       ],
-      "caption": null,
-      "created": 1517762945,
-      "deactivate_on": [
-
-      ],
+      "created": 1518040780,
       "description": null,
       "images": [
-
       ],
       "livemode": false,
       "metadata": {
       },
-      "name": "Extra Large",
-      "package_dimensions": null,
-      "shippable": null,
-      "skus": {
-        "object": "list",
-        "data": [
-
-        ],
-        "has_more": false,
-        "total_count": 0,
-        "url": "/v1/skus?product=prod_CGNQiDdCjKYLxz\u0026active=true"
-      },
+      "name": "Manage translations for an app",
       "statement_descriptor": null,
       "type": "service",
-      "updated": 1517762945,
-      "url": null
+      "unit_label": null,
+      "updated": 1565087621
     },
     "previous_attributes": {
+      "active": false
     }
   }
 }

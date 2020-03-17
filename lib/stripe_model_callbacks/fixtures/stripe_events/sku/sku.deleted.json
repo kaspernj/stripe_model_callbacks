@@ -6,7 +6,7 @@
   "object": "event",
   "request": null,
   "pending_webhooks": 1,
-  "api_version": "2018-01-23",
+  "api_version": "2020-03-02",
   "data": {
     "object": {
       "id": "sku_00000000000000",
@@ -16,7 +16,7 @@
         "size": "Medium",
         "gender": "Unisex"
       },
-      "created": 1517860796,
+      "created": 1584471169,
       "currency": "usd",
       "image": null,
       "inventory": {
@@ -30,7 +30,7 @@
       "package_dimensions": null,
       "price": 1500,
       "product": "prod_00000000000000",
-      "updated": 1517860796
+      "updated": 1584471169
     }
   }
 }

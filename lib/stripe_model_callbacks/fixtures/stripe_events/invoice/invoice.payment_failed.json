@@ -6,85 +6,149 @@
   "object": "event",
   "request": null,
   "pending_webhooks": 1,
-  "api_version": "2018-01-23",
+  "api_version": "2020-03-02",
   "data": {
     "object": {
       "id": "in_00000000000000",
       "object": "invoice",
-      "amount_due": 0,
+      "account_country": "DK",
+      "account_name": "PeakFlowStaging",
+      "amount_due": 20000,
+      "amount_paid": 20000,
+      "amount_remaining": 0,
       "application_fee_amount": null,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "attempted": true,
-      "billing": "charge_automatically",
-      "charge": null,
-      "closed": false,
+      "auto_advance": false,
+      "billing_reason": null,
+      "charge": "ch_00000000000000",
+      "collection_method": "charge_automatically",
+      "created": 1518182597,
       "currency": "usd",
+      "custom_fields": null,
       "customer": "cus_00000000000000",
-      "date": 1517847362,
+      "customer_address": null,
+      "customer_email": "kaspernj@gmail.com",
+      "customer_name": null,
+      "customer_phone": null,
+      "customer_shipping": null,
+      "customer_tax_exempt": "none",
+      "customer_tax_ids": [
+      ],
+      "default_payment_method": null,
+      "default_source": null,
+      "default_tax_rates": [
+        {
+          "id": "txr_00000000000000",
+          "object": "tax_rate",
+          "active": true,
+          "created": 1524766962,
+          "description": null,
+          "display_name": "Tax",
+          "inclusive": false,
+          "jurisdiction": null,
+          "livemode": false,
+          "metadata": {
+          },
+          "percentage": 25
+        }
+      ],
       "description": null,
       "discount": null,
       "due_date": null,
-      "ending_balance": null,
-      "forgiven": false,
+      "ending_balance": 0,
+      "footer": null,
+      "hosted_invoice_url": "https://pay.stripe.com/invoice/acct_1Bsw4fEKaFxLwikq/invst_lISxsd7UyhNvE2KDgL22xpZ2YZ",
+      "invoice_pdf": "https://pay.stripe.com/invoice/acct_1Bsw4fEKaFxLwikq/invst_lISxsd7UyhNvE2KDgL22xpZ2YZ/pdf",
       "lines": {
         "data": [
           {
-            "id": "sub_CGk7QTdZmtlscW",
+            "id": "il_00000000000000",
             "object": "line_item",
-            "amount": 999,
+            "amount": 60000,
             "currency": "usd",
-            "description": "1x Silver Express (at $9.99)",
+            "description": "10 × Build on PeakFlow servers (at 60.00 kr / month)",
             "discountable": true,
-            "livemode": true,
+            "livemode": false,
             "metadata": {
             },
             "period": {
-              "start": 1517847363,
-              "end": 1520266563
+              "end": 1589185183,
+              "start": 1586593183
             },
             "plan": {
-              "id": "gold",
+              "id": "peak_00000000000000",
               "object": "plan",
-              "amount": 2000,
-              "created": 1517847363,
+              "active": true,
+              "aggregate_usage": null,
+              "amount": 6000,
+              "amount_decimal": "6000",
+              "billing_scheme": "per_unit",
+              "created": 1518040777,
               "currency": "usd",
               "interval": "month",
               "interval_count": 1,
               "livemode": false,
               "metadata": {
               },
-              "name": "Extra Large",
-              "statement_descriptor": null,
-              "trial_period_days": null
+              "nickname": "PeakFlow Build",
+              "product": "prod_00000000000000",
+              "tiers": null,
+              "tiers_mode": null,
+              "transform_usage": null,
+              "trial_period_days": null,
+              "usage_type": "licensed"
             },
             "proration": false,
-            "quantity": 1,
-            "subscription": null,
-            "subscription_item": "si_CGk7XyC1ml0Jz7",
+            "quantity": 10,
+            "subscription": "sub_00000000000000",
+            "subscription_item": "si_00000000000000",
+            "tax_amounts": [
+            ],
+            "tax_rates": [
+            ],
             "type": "subscription"
           }
         ],
         "has_more": false,
         "object": "list",
-        "url": "/v1/invoices/in_1BsCdTAT5SYrvIfdU0puHC0J/lines"
+        "url": "/v1/invoices/in_1BtbqTEKaFxLwikqzrUC3Of9/lines"
       },
       "livemode": false,
       "metadata": {
       },
-      "next_payment_attempt": 1517850962,
-      "number": "5a331c0634-0001",
+      "next_payment_attempt": null,
+      "number": "895670246a-0001",
       "paid": false,
-      "period_end": 1517847362,
-      "period_start": 1517847362,
+      "payment_intent": null,
+      "period_end": 1518182597,
+      "period_start": 1518182597,
+      "post_payment_credit_notes_amount": 0,
+      "pre_payment_credit_notes_amount": 0,
       "receipt_number": null,
       "starting_balance": 0,
       "statement_descriptor": null,
-      "subscription": null,
-      "subtotal": 0,
-      "tax": null,
-      "tax_percent": null,
-      "total": 0,
-      "webhooks_delivered_at": null
+      "status": "paid",
+      "status_transitions": {
+        "finalized_at": 1518182597,
+        "marked_uncollectible_at": null,
+        "paid_at": 1518182597,
+        "voided_at": null
+      },
+      "subscription": "sub_00000000000000",
+      "subtotal": 16000,
+      "tax": 4000,
+      "tax_percent": 25,
+      "total": 20000,
+      "total_tax_amounts": [
+        {
+          "amount": 4000,
+          "inclusive": false,
+          "tax_rate": "txr_00000000000000"
+        }
+      ],
+      "webhooks_delivered_at": 1518182606,
+      "closed": false
     }
   }
 }

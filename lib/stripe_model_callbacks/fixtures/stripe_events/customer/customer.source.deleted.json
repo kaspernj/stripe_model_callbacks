@@ -6,14 +6,21 @@
   "object": "event",
   "request": null,
   "pending_webhooks": 1,
-  "api_version": "2018-01-23",
+  "api_version": "2020-03-02",
   "data": {
     "object": {
       "id": "src_00000000000000",
       "object": "source",
+      "ach_credit_transfer": {
+        "account_number": "test_52796e3294dc",
+        "routing_number": "110000000",
+        "fingerprint": "ecpwEzmBOSMOqQTL",
+        "bank_name": "TEST BANK",
+        "swift_code": "TSTEZ122"
+      },
       "amount": null,
-      "client_secret": "src_client_secret_CH3fKkVUyIODCrflIRRSxhnm",
-      "created": 1517920047,
+      "client_secret": "src_client_secret_vM2XkcXaacB1kxrzmyg65Seq",
+      "created": 1584470783,
       "currency": "usd",
       "flow": "receiver",
       "livemode": false,
@@ -40,14 +47,7 @@
       "statement_descriptor": null,
       "status": "pending",
       "type": "ach_credit_transfer",
-      "usage": "reusable",
-      "ach_credit_transfer": {
-        "account_number": "test_52796e3294dc",
-        "routing_number": "110000000",
-        "fingerprint": "ecpwEzmBOSMOqQTL",
-        "bank_name": "TEST BANK",
-        "swift_code": "TSTEZ122"
-      }
+      "usage": "reusable"
     }
   }
 }
