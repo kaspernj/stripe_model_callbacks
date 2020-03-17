@@ -15,7 +15,7 @@ describe "invoice payment succeeded" do
       expect(response.code).to eq "200"
 
       expect(created_invoice.stripe_id).to eq "in_1BrsEhAT5SYrvIfdlmd9sZns"
-      expect(created_invoice.application_fee).to eq nil
+      expect(created_invoice.application_fee_amount).to eq nil
       expect(created_invoice.attempt_count).to eq 0
       expect(created_invoice.attempted?).to eq true
       expect(created_invoice.billing).to eq "charge_automatically"

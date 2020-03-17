@@ -12,7 +12,7 @@
       "id": "in_00000000000000",
       "object": "invoice",
       "amount_due": 0,
-      "application_fee": null,
+      "application_fee_amount": null,
       "attempt_count": 0,
       "attempted": true,
       "billing": "charge_automatically",
