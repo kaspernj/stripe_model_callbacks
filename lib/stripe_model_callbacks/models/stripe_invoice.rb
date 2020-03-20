@@ -27,11 +27,12 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
 
     assign_created(object)
     assign_amounts(object)
+    assign_status_transitions(object)
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
       attributes: %w[
-        attempted attempt_count billing closed currency description forgiven id livemode
+        attempted attempt_count billing closed currency description id livemode
         ending_balance forgiven next_payment_attempt number paid receipt_number
         starting_balance statement_descriptor tax_percent
       ]
@@ -75,6 +76,21 @@ private
       invoice_item.stripe_invoice_id = object.id
       invoice_item&.assign_from_stripe(item)
     end
+  end
+
+
+  def assign_status_transitions(object)
+    self.status = object.status if object.respond_to?(:status)
+
+    return unless object.respond_to?(:status_transitions)
+
+    status_transitions = {}
+    status_transitions[:finalized_at] = Time.zone.at(object.finalized_at) if object.finalized_at.present?
+    status_transitions[:marked_uncollectible_at] = Time.zone.at(object.marked_uncollectible_at) if object.marked_uncollectible_at.present?
+    status_transitions[:paid_at] = Time.zone.at(object.paid_at) if object.paid_at.present?
+    status_transitions[:voided_at] = Time.zone.at(object.voided_at) if object.voided_at.present?
+
+    assign_attributes(status_transitions) if status_transitions.any?
   end
 
   def stripe_discount_id_from_object(object)

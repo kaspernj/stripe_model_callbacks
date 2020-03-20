@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_20_105432) do
+ActiveRecord::Schema.define(version: 2020_03_20_114959) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -304,7 +304,7 @@ ActiveRecord::Schema.define(version: 2020_03_20_105432) do
     t.string "stripe_subscription_id"
     t.boolean "attempted", null: false
     t.datetime "next_payment_attempt"
-    t.boolean "closed", null: false
+    t.boolean "closed"
     t.datetime "created", null: false
     t.datetime "due_date"
     t.boolean "livemode", default: true, null: false
@@ -324,6 +324,13 @@ ActiveRecord::Schema.define(version: 2020_03_20_105432) do
     t.integer "ending_balance"
     t.integer "starting_balance"
     t.string "stripe_discount_id"
+    t.boolean "auto_advance", default: false
+    t.string "billing_reason"
+    t.string "status", default: "draft"
+    t.datetime "finalized_at"
+    t.datetime "marked_uncollectible_at"
+    t.datetime "paid_at"
+    t.datetime "voided_at"
     t.index ["stripe_charge_id"], name: "index_stripe_invoices_on_stripe_charge_id"
     t.index ["stripe_customer_id"], name: "index_stripe_invoices_on_stripe_customer_id"
     t.index ["stripe_discount_id"], name: "index_stripe_invoices_on_stripe_discount_id"
