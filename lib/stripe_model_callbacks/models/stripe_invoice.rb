@@ -81,13 +81,13 @@ private
   def assign_status_transitions(object)
     return unless object.respond_to?(:status_transitions)
 
-    status_transitions = {}
-    status_transitions[:finalized_at] = Time.zone.at(object.finalized_at) if object.finalized_at.present?
-    status_transitions[:marked_uncollectible_at] = Time.zone.at(object.marked_uncollectible_at) if object.marked_uncollectible_at.present?
-    status_transitions[:paid_at] = Time.zone.at(object.paid_at) if object.paid_at.present?
-    status_transitions[:voided_at] = Time.zone.at(object.voided_at) if object.voided_at.present?
+    transition_dates = {}
+    %i[finalized_at marked_uncollectible_at paid_at voided_at].each do |date_attribute|
+      date_value = object.status_transitions.__send__(date_attribute)
+      transition_dates[date_attribute] = Time.zone.at(date_value) if date_value.present?
+    end
 
-    assign_attributes(status_transitions) if status_transitions.any?
+    assign_attributes(transition_dates) if transition_dates.any?
   end
 
   def stripe_discount_id_from_object(object)
