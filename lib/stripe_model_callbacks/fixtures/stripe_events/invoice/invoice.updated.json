@@ -15,9 +15,10 @@
       "application_fee_amount": null,
       "attempt_count": 1,
       "attempted": true,
+      "auto_advance": false,
       "billing": "charge_automatically",
+      "billing_reason": "subscription_create",
       "charge": "ch_00000000000000",
-      "closed": true,
       "currency": "dkk",
       "customer": "cus_00000000000000",
       "date": 1517763745,
@@ -25,7 +26,6 @@
       "discount": null,
       "due_date": null,
       "ending_balance": 0,
-      "forgiven": false,
       "lines": {
         "data": [
           {
@@ -79,6 +79,13 @@
       "receipt_number": null,
       "starting_balance": 0,
       "statement_descriptor": null,
+      "status": "draft",
+      "status_transitions": {
+        "finalized_at": null,
+        "marked_uncollectible_at": null,
+        "paid_at": null,
+        "voided_at": null
+      },
       "subscription": "sub_00000000000000",
       "subtotal": 3500,
       "tax": null,

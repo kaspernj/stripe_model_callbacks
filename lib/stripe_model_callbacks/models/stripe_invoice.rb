@@ -25,15 +25,18 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
       period_end: Time.zone.at(object.period_end)
     )
 
+    assign_closed(object)
     assign_created(object)
     assign_amounts(object)
+    assign_forgiven(object)
+    assign_status_transitions(object)
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
       attributes: %w[
-        attempted attempt_count billing closed currency description forgiven id livemode
-        ending_balance forgiven next_payment_attempt number paid receipt_number
-        starting_balance statement_descriptor tax_percent
+        attempted attempt_count auto_advance billing billing_reason currency description id livemode
+        ending_balance next_payment_attempt number paid receipt_number
+        starting_balance statement_descriptor status tax_percent
       ]
     )
 
@@ -53,12 +56,30 @@ private
     )
   end
 
+  def assign_closed(object)
+    # The date-field was changed to auto_advance on 2018-11-08
+    if object.respond_to?(:closed)
+      self.closed = object.closed
+    else
+      self.closed = object.auto_advance == false
+    end
+  end
+
   def assign_created(object)
     # The date-field was renamed to created on 2019-03-14
     if object.respond_to?(:date)
       self.created = Time.zone.at(object.date)
     else
       self.created = Time.zone.at(object.created)
+    end
+  end
+
+  def assign_forgiven(object)
+    # The date-field was changed 2018-11-08
+    if object.respond_to?(:forgiven)
+      self.forgiven = object.forgiven
+    else
+      self.forgiven = object.status == "uncollectible"
     end
   end
 
@@ -75,6 +96,18 @@ private
       invoice_item.stripe_invoice_id = object.id
       invoice_item&.assign_from_stripe(item)
     end
+  end
+
+  def assign_status_transitions(object)
+    return unless object.respond_to?(:status_transitions)
+
+    transition_dates = {}
+    %i[finalized_at marked_uncollectible_at paid_at voided_at].each do |date_attribute|
+      date_value = object.status_transitions.__send__(date_attribute)
+      transition_dates[date_attribute] = Time.zone.at(date_value) if date_value.present?
+    end
+
+    assign_attributes(transition_dates) if transition_dates.any?
   end
 
   def stripe_discount_id_from_object(object)

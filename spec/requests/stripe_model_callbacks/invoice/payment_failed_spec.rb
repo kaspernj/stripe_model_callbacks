@@ -29,7 +29,7 @@ describe "invoice payment failed" do
       expect(stripe_invoice.description).to eq nil
       expect(stripe_invoice.stripe_discount).to eq nil
       expect(stripe_invoice.due_date).to eq nil
-      expect(stripe_invoice.forgiven?).to eq false
+      expect(stripe_invoice.forgiven?).to eq true
       expect(stripe_invoice.next_payment_attempt).to eq nil
       expect(stripe_invoice.number).to eq "5a331c0634-0001"
       expect(stripe_invoice.paid?).to eq false
@@ -43,6 +43,15 @@ describe "invoice payment failed" do
       expect(stripe_invoice.tax).to eq nil
       expect(stripe_invoice.tax_percent).to eq nil
       expect(stripe_invoice.total.format).to eq "$0.00"
+      # VERSION 2019-05-16
+      expect(stripe_invoice.auto_advance).to eq true
+      expect(stripe_invoice.billing_reason).to eq "subscription_create"
+      expect(stripe_invoice.status).to eq "uncollectible"
+      # VERSION 2019-05-16 - status_transitions
+      expect(stripe_invoice.finalized_at).to eq Time.zone.parse("2019-06-29 11:05:35")
+      expect(stripe_invoice.marked_uncollectible_at).to eq nil
+      expect(stripe_invoice.paid_at).to eq nil
+      expect(stripe_invoice.voided_at).to eq nil
     end
   end
 end
