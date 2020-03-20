@@ -34,7 +34,7 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
       attributes: %w[
         attempted attempt_count billing closed currency description id livemode
         ending_balance forgiven next_payment_attempt number paid receipt_number
-        starting_balance statement_descriptor tax_percent
+        starting_balance statement_descriptor status tax_percent
       ]
     )
 
@@ -78,10 +78,7 @@ private
     end
   end
 
-
   def assign_status_transitions(object)
-    self.status = object.status if object.respond_to?(:status)
-
     return unless object.respond_to?(:status_transitions)
 
     status_transitions = {}
