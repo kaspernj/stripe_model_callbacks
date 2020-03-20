@@ -42,6 +42,15 @@ describe "invoice created" do
       expect(created_invoice.tax).to eq nil
       expect(created_invoice.tax_percent).to eq nil
       expect(created_invoice.total.format).to eq "35.00 kr."
+      # VERSION 2019-05-16
+      expect(created_invoice.auto_advance).to eq false
+      expect(created_invoice.billing_reason).to eq "subscription_create"
+      expect(created_invoice.status).to eq "draft"
+      # VERSION 2019-05-16 - status_transitions
+      expect(created_invoice.finalized_at).to eq nil
+      expect(created_invoice.marked_uncollectible_at).to eq nil
+      expect(created_invoice.paid_at).to eq nil
+      expect(created_invoice.voided_at).to eq nil
     end
 
     it "sets the discount reference if given" do

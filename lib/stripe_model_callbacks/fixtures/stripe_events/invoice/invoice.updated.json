@@ -19,7 +19,6 @@
       "billing": "charge_automatically",
       "billing_reason": "subscription_create",
       "charge": "ch_00000000000000",
-      "closed": true,
       "currency": "dkk",
       "customer": "cus_00000000000000",
       "date": 1517763745,
@@ -27,7 +26,6 @@
       "discount": null,
       "due_date": null,
       "ending_balance": 0,
-      "forgiven": false,
       "lines": {
         "data": [
           {
@@ -83,7 +81,7 @@
       "statement_descriptor": null,
       "status": "draft",
       "status_transitions": {
-        "finalized_at": 1561806335,
+        "finalized_at": null,
         "marked_uncollectible_at": null,
         "paid_at": null,
         "voided_at": null

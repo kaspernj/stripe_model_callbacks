@@ -52,7 +52,16 @@ describe "invoice updated" do
         subtotal: Money.new(35_00, "DKK"),
         tax: nil,
         tax_percent: nil,
-        total: Money.new(35_00, "DKK")
+        total: Money.new(35_00, "DKK"),
+        # VERSION 2019-05-16
+        auto_advance: false,
+        billing_reason: "subscription_create",
+        status: "draft",
+        # VERSION 2019-05-16 - status_transitions
+        finalized_at: nil,
+        marked_uncollectible_at: nil,
+        paid_at: nil,
+        voided_at: nil
       )
       expect(stripe_invoice_item.stripe_subscription_item_id).to eq "si_CHS7VAL80FwJv7"
       expect(stripe_invoice_item.stripe_subscription_item).to eq stripe_subscription_item
