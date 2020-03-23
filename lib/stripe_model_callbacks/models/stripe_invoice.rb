@@ -6,6 +6,8 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
   has_many :stripe_invoice_items, autosave: true, primary_key: "stripe_id"
 
   monetize :amount_due_cents, allow_nil: true
+  monetize :amount_paid_cents, allow_nil: true
+  monetize :amount_remaining_cents, allow_nil: true
   monetize :application_fee_amount_cents, allow_nil: true
   monetize :subtotal_cents, allow_nil: true
   monetize :tax_cents, allow_nil: true
@@ -34,9 +36,11 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
       attributes: %w[
-        attempted attempt_count auto_advance billing billing_reason currency description id livemode
-        ending_balance next_payment_attempt number paid receipt_number
-        starting_balance statement_descriptor status tax_percent
+        attempted attempt_count auto_advance billing billing_reason
+        collection_method currency description ending_balance hosted_invoice_url
+        id invoice_pdf livemode next_payment_attempt number
+        paid receipt_number starting_balance statement_descriptor
+        status tax_percent
       ]
     )
 
@@ -48,6 +52,8 @@ private
   def assign_amounts(object)
     assign_attributes(
       amount_due: Money.new(object.amount_due, object.currency),
+      amount_paid: Money.new(object.amount_paid, object.currency),
+      amount_remaining: Money.new(object.amount_remaining, object.currency),
       application_fee_amount: object.application_fee_amount ? Money.new(object.application_fee_amount, object.currency) : nil,
       stripe_discount_id: stripe_discount_id_from_object(object),
       subtotal: Money.new(object.subtotal, object.currency),

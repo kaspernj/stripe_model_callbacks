@@ -27,10 +27,14 @@ describe "invoice updated" do
 
       expect(stripe_invoice).to have_attributes(
         stripe_id: "in_00000000000000",
+        amount_due: Money.new(35_00, "DKK"),
+        amount_paid: Money.new(35_00, "DKK"),
+        amount_remaining: Money.new(0, "DKK"),
         application_fee_amount: nil,
         attempt_count: 1,
         attempted: true,
         billing: "charge_automatically",
+        collection_method: "charge_automatically",
         stripe_charge_id: "ch_00000000000000",
         closed: true,
         currency: "dkk",
@@ -53,6 +57,8 @@ describe "invoice updated" do
         tax: nil,
         tax_percent: nil,
         total: Money.new(35_00, "DKK"),
+        invoice_pdf: nil,
+        hosted_invoice_url: nil,
         # VERSION 2019-05-16
         auto_advance: false,
         billing_reason: "subscription_create",

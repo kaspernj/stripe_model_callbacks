@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_20_114959) do
+ActiveRecord::Schema.define(version: 2020_03_23_145728) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -331,6 +331,13 @@ ActiveRecord::Schema.define(version: 2020_03_20_114959) do
     t.datetime "marked_uncollectible_at"
     t.datetime "paid_at"
     t.datetime "voided_at"
+    t.integer "amount_paid_cents"
+    t.string "amount_paid_currency"
+    t.integer "amount_remaining_cents"
+    t.string "amount_remaining_currency"
+    t.string "collection_method"
+    t.string "hosted_invoice_url"
+    t.string "invoice_pdf"
     t.index ["stripe_charge_id"], name: "index_stripe_invoices_on_stripe_charge_id"
     t.index ["stripe_customer_id"], name: "index_stripe_invoices_on_stripe_customer_id"
     t.index ["stripe_discount_id"], name: "index_stripe_invoices_on_stripe_discount_id"

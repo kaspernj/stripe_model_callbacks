@@ -16,10 +16,14 @@ describe "invoice payment failed" do
       expect(response.code).to eq "200"
 
       expect(stripe_invoice.stripe_id).to eq "in_00000000000000"
+      expect(stripe_invoice.amount_due.format).to eq "$35.00"
+      expect(stripe_invoice.amount_paid.format).to eq "$0.00"
+      expect(stripe_invoice.amount_remaining.format).to eq "$35.00"
       expect(stripe_invoice.application_fee_amount).to eq nil
       expect(stripe_invoice.attempt_count).to eq 0
       expect(stripe_invoice.attempted?).to eq true
       expect(stripe_invoice.billing).to eq "charge_automatically"
+      expect(stripe_invoice.collection_method).to eq "charge_automatically"
       expect(stripe_invoice.stripe_charge_id).to eq nil
       expect(stripe_invoice.closed?).to eq false
       expect(stripe_invoice.currency).to eq "usd"
@@ -43,6 +47,8 @@ describe "invoice payment failed" do
       expect(stripe_invoice.tax).to eq nil
       expect(stripe_invoice.tax_percent).to eq nil
       expect(stripe_invoice.total.format).to eq "$0.00"
+      expect(stripe_invoice.invoice_pdf).to eq nil
+      expect(stripe_invoice.hosted_invoice_url).to eq nil
       # VERSION 2019-05-16
       expect(stripe_invoice.auto_advance).to eq true
       expect(stripe_invoice.billing_reason).to eq "subscription_create"

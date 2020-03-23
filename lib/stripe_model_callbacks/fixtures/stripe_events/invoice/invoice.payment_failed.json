@@ -11,7 +11,9 @@
     "object": {
       "id": "in_00000000000000",
       "object": "invoice",
-      "amount_due": 0,
+      "amount_due": 3500,
+      "amount_paid": 0,
+      "amount_remaining": 3500,
       "application_fee_amount": null,
       "attempt_count": 0,
       "attempted": true,
@@ -19,6 +21,7 @@
       "billing": "charge_automatically",
       "billing_reason": "subscription_create",
       "charge": null,
+      "collection_method": "charge_automatically",
       "currency": "usd",
       "customer": "cus_00000000000000",
       "date": 1517847362,

@@ -8,6 +8,8 @@
       "id": "in_1BrsEhAT5SYrvIfdlmd9sZns",
       "object": "invoice",
       "amount_due": 10000,
+      "amount_paid": 10000,
+      "amount_remaining": 0,
       "application_fee_amount": null,
       "attempt_count": 0,
       "attempted": true,
@@ -15,6 +17,7 @@
       "billing": "charge_automatically",
       "billing_reason": "subscription_create",
       "charge": "ch_1BrsEhAT5SYrvIfdDOd8ifsb",
+      "collection_method": "charge_automatically",
       "currency": "dkk",
       "customer": "cus_CGNFgjPGtHlvXI",
       "date": 1517768947,
@@ -22,6 +25,8 @@
       "discount": null,
       "due_date": null,
       "ending_balance": 0,
+      "hosted_invoice_url": "https://pay.stripe.com/invoice/XX/invst_YY",
+      "invoice_pdf": "https://pay.stripe.com/invoice/XX/invst_YY/pdf",
       "lines": {
         "object": "list",
         "data": [

@@ -16,10 +16,14 @@ describe "invoice upcoming" do
       expect(response.code).to eq "200"
 
       expect(created_invoice.stripe_id).to eq "in_00000000000000"
-      expect(created_invoice.application_fee).to eq nil
+      expect(created_invoice.amount_due.format).to eq "35.00 kr."
+      expect(created_invoice.amount_paid.format).to eq "35.00 kr."
+      expect(created_invoice.amount_remaining.format).to eq "0.00 kr."
+      expect(created_invoice.application_fee_amount).to eq nil
       expect(created_invoice.attempt_count).to eq 1
       expect(created_invoice.attempted?).to eq true
       expect(created_invoice.billing).to eq "charge_automatically"
+      expect(created_invoice.collection_method).to eq "charge_automatically"
       expect(created_invoice.stripe_charge_id).to eq "ch_00000000000000"
       expect(created_invoice.closed?).to eq true
       expect(created_invoice.currency).to eq "dkk"
@@ -42,6 +46,8 @@ describe "invoice upcoming" do
       expect(created_invoice.tax).to eq nil
       expect(created_invoice.tax_percent).to eq nil
       expect(created_invoice.total.format).to eq "35.00 kr."
+      expect(created_invoice.invoice_pdf).to eq "x"
+      expect(created_invoice.hosted_invoice_url).to eq "x"
       # VERSION 2019-05-16
       expect(created_invoice.auto_advance).to eq false
       expect(created_invoice.billing_reason).to eq "subscription_create"
