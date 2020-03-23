@@ -1,4 +1,5 @@
 class StripeInvoice < StripeModelCallbacks::ApplicationRecord
+  belongs_to :stripe_charge, optional: true, primary_key: "stripe_id"
   belongs_to :stripe_customer, optional: true, primary_key: "stripe_id"
   belongs_to :stripe_discount, optional: true
   belongs_to :stripe_subscription, optional: true, primary_key: "stripe_id"
