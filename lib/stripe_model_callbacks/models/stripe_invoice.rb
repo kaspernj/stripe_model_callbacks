@@ -29,7 +29,11 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
 
     assign_closed(object)
     assign_created(object)
+
     assign_amounts(object)
+    assign_discount_item(object)
+    assign_tax(object)
+
     assign_forgiven(object)
     assign_status_transitions(object)
 
@@ -55,9 +59,7 @@ private
       amount_paid: Money.new(object.amount_paid, object.currency),
       amount_remaining: Money.new(object.amount_remaining, object.currency),
       application_fee_amount: object.application_fee_amount ? Money.new(object.application_fee_amount, object.currency) : nil,
-      stripe_discount_id: stripe_discount_id_from_object(object),
       subtotal: Money.new(object.subtotal, object.currency),
-      tax: object.tax ? Money.new(object.tax, object.currency) : nil,
       total: object.total ? Money.new(object.total, object.currency) : nil
     )
   end
@@ -78,6 +80,10 @@ private
     else
       self.created = Time.zone.at(object.created)
     end
+  end
+
+  def assign_discount_item(object)
+    self.stripe_discount_id = stripe_discount_id_from_object(object)
   end
 
   def assign_forgiven(object)
@@ -114,6 +120,12 @@ private
     end
 
     assign_attributes(transition_dates) if transition_dates.any?
+  end
+
+  def assign_tax(object)
+    return unless object.tax
+
+    self.tax = Money.new(object.tax, object.currency)
   end
 
   def stripe_discount_id_from_object(object)
