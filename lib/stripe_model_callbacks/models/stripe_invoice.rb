@@ -1,4 +1,5 @@
 class StripeInvoice < StripeModelCallbacks::ApplicationRecord
+  belongs_to :stripe_charge, optional: true, primary_key: "stripe_id"
   belongs_to :stripe_customer, optional: true, primary_key: "stripe_id"
   belongs_to :stripe_discount, optional: true
   belongs_to :stripe_subscription, optional: true, primary_key: "stripe_id"
@@ -6,6 +7,8 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
   has_many :stripe_invoice_items, autosave: true, primary_key: "stripe_id"
 
   monetize :amount_due_cents, allow_nil: true
+  monetize :amount_paid_cents, allow_nil: true
+  monetize :amount_remaining_cents, allow_nil: true
   monetize :application_fee_amount_cents, allow_nil: true
   monetize :subtotal_cents, allow_nil: true
   monetize :tax_cents, allow_nil: true
@@ -27,16 +30,22 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
 
     assign_closed(object)
     assign_created(object)
+
     assign_amounts(object)
+    assign_discount_item(object)
+    assign_tax(object)
+
     assign_forgiven(object)
     assign_status_transitions(object)
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
       attributes: %w[
-        attempted attempt_count auto_advance billing billing_reason currency description id livemode
-        ending_balance next_payment_attempt number paid receipt_number
-        starting_balance statement_descriptor status tax_percent
+        attempted attempt_count auto_advance billing billing_reason
+        collection_method currency description ending_balance hosted_invoice_url
+        id invoice_pdf livemode next_payment_attempt number
+        paid receipt_number starting_balance statement_descriptor
+        status tax_percent
       ]
     )
 
@@ -48,10 +57,10 @@ private
   def assign_amounts(object)
     assign_attributes(
       amount_due: Money.new(object.amount_due, object.currency),
+      amount_paid: Money.new(object.amount_paid, object.currency),
+      amount_remaining: Money.new(object.amount_remaining, object.currency),
       application_fee_amount: object.application_fee_amount ? Money.new(object.application_fee_amount, object.currency) : nil,
-      stripe_discount_id: stripe_discount_id_from_object(object),
       subtotal: Money.new(object.subtotal, object.currency),
-      tax: object.tax ? Money.new(object.tax, object.currency) : nil,
       total: object.total ? Money.new(object.total, object.currency) : nil
     )
   end
@@ -72,6 +81,10 @@ private
     else
       self.created = Time.zone.at(object.created)
     end
+  end
+
+  def assign_discount_item(object)
+    self.stripe_discount_id = stripe_discount_id_from_object(object)
   end
 
   def assign_forgiven(object)
@@ -108,6 +121,12 @@ private
     end
 
     assign_attributes(transition_dates) if transition_dates.any?
+  end
+
+  def assign_tax(object)
+    return unless object.tax
+
+    self.tax = Money.new(object.tax, object.currency)
   end
 
   def stripe_discount_id_from_object(object)
