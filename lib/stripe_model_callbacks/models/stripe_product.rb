@@ -28,7 +28,8 @@ class StripeProduct < StripeModelCallbacks::ApplicationRecord
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
       attributes: %w[
-        caption created description id livemode name metadata statement_descriptor
+        caption created description id livemode
+        name metadata statement_descriptor unit_label
       ]
     )
   end

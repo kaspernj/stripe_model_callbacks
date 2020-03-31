@@ -14,14 +14,16 @@ class StripePlan < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
+    self.active = object.active == true if object.respond_to?(:active)
     assign_attributes(amount: Money.new(object.amount, object.currency))
     self.stripe_product_id = object.product if object.respond_to?(:product)
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
       attributes: %w[
+        aggregate_usage amount_decimal billing_scheme
         created currency id interval interval_count livemode metadata nickname statement_descriptor
-        trial_period_days
+        trial_period_days usage_type
       ]
     )
   end

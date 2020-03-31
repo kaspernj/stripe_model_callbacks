@@ -11,8 +11,12 @@ describe "product created" do
       expect(response.code).to eq "200"
 
       expect(created_product).to have_attributes(
+        active: false,
+        deleted_at: nil,
+        name: "Extra Large",
         product_type: "service",
-        stripe_id: "prod_00000000000000"
+        stripe_id: "prod_00000000000000",
+        unit_label: "request"
       )
     end
   end

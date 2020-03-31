@@ -41,6 +41,7 @@
       },
       "statement_descriptor": null,
       "type": "service",
+      "unit_label": "request",
       "updated": 1517762945,
       "url": null
     }
