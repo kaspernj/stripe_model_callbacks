@@ -11,7 +11,11 @@
     "object": {
       "id": "peak_00000000000000",
       "object": "plan",
+      "active": true,
+      "aggregate_usage": "sum",
       "amount": 6000,
+      "amount_decimal": "6000",
+      "billing_scheme": "per_unit",
       "created": 1517990173,
       "currency": "dkk",
       "interval": "month",
@@ -19,9 +23,10 @@
       "livemode": false,
       "metadata": {
       },
-      "nickname": null,
+      "nickname": "number of requests",
       "product": "prod_00000000000000",
-      "trial_period_days": null
+      "trial_period_days": null,
+      "usage_type": "metered"
     }
   }
 }
