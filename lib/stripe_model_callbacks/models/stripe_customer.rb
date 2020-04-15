@@ -15,8 +15,8 @@ class StripeCustomer < StripeModelCallbacks::ApplicationRecord
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
       attributes: %w[
-        account_balance currency created delinquent description discount email id
-        livemode metadata
+        account_balance currency created default_source delinquent description discount email
+        id livemode metadata
       ]
     )
   end
