@@ -14,7 +14,7 @@
       "account_balance": 0,
       "created": 1517772278,
       "currency": "usd",
-      "default_source": null,
+      "default_source": "card_000000000",
       "delinquent": false,
       "description": null,
       "discount": null,

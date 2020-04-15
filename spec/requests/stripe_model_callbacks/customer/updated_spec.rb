@@ -11,6 +11,7 @@ describe "customer updating" do
 
       expect(response.code).to eq "200"
       expect(stripe_customer.email).to eq "test@example.com"
+      expect(stripe_customer.default_source).to eq "card_000000000"
     end
   end
 end
