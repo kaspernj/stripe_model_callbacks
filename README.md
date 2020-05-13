@@ -154,5 +154,8 @@ mock_stripe_event("invoice.created", data: {object: {discount: {"customer": "cus
 ## Contributing
 Contribution directions go here.
 
+# capybara-webkit installation issue
+Instruction how to solve the issue: https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#macOS-catalina-1015
+
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
