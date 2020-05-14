@@ -1,14 +1,13 @@
 class StripeModelCallbacks::Invoice::UpdatedService < StripeModelCallbacks::BaseEventService
   def execute
-    invoice.assign_from_stripe(object)
+  invoice.assign_from_stripe(object)
+  return success_actions if invoice.save
 
-    if invoice.save
-      create_activity
+  fail!(invoice.errors.full_messages)
+  rescue ActiveRecord::RecordNotUnique, PG::UniqueViolation
+    return succeed! if event.type == "invoice.created"
 
-      succeed!
-    else
-      fail! invoice.errors.full_messages
-    end
+    raise ActiveRecord::RecordNotUnique
   end
 
 private
@@ -22,5 +21,10 @@ private
 
   def invoice
     @invoice ||= StripeInvoice.find_or_initialize_by(stripe_id: object.id)
+  end
+
+  def success_actions
+    create_activity
+    succeed!
   end
 end
