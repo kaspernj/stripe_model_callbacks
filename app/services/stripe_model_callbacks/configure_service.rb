@@ -34,6 +34,14 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
 
 private
 
+  def subscribe(event_name)
+    events.subscribe(event_name) do |event|
+      StripeModelCallbacks::Configuration.current.with_error_handling(args: {event: event}) do
+        yield event
+      end
+    end
+  end
+
   def account_external_account_events
     %w[created deleted updated].each do |external_account_event|
       subscribe "account.external_account.#{external_account_event}" do |event|
@@ -187,14 +195,6 @@ private
     %w[canceled chargeable failed mandate_notification].each do |source_event|
       subscribe "source.#{source_event}" do |event|
         StripeModelCallbacks::Source::UpdatedService.reported_execute!(event: event)
-      end
-    end
-  end
-
-  def subscribe(event_name)
-    events.subscribe(event_name) do |event|
-      StripeModelCallbacks::Configuration.current.with_error_handling(args: {event: event}) do
-        yield event
       end
     end
   end
