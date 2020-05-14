@@ -1,11 +1,11 @@
 class StripeModelCallbacks::Invoice::UpdatedService < StripeModelCallbacks::BaseEventService
-  ACTIVITY_TYPES = {
+  TRACKED_ACTIVITIES = {
     "invoice.payment_failed": :payment_failed,
     "invoice.payment_succeeded": :payment_succeeded,
     "invoice.sent": :sent,
     "invoice.upcoming": :upcoming
   }.freeze.with_indifferent_access
-  private_constant :ACTIVITY_TYPES
+  private_constant :TRACKED_ACTIVITIES
 
   def execute
     invoice.assign_from_stripe(object)
@@ -28,7 +28,11 @@ private
   end
 
   def create_activity
-    invoice.create_activity(ACTIVITY_TYPES[event.type]) if ACTIVITY_TYPES.fetch(event.type, nil)
+    invoice.create_activity(tracked_activities[event.type]) if tracked_activities.fetch(event.type, nil)
+  end
+
+  def tracked_activities
+    TRACKED_ACTIVITIES
   end
 
   def invoice
