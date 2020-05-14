@@ -8,10 +8,10 @@ class StripeModelCallbacks::Invoice::UpdatedService < StripeModelCallbacks::Base
   private_constant :ACTIVITY_TYPES
 
   def execute
-  invoice.assign_from_stripe(object)
-  return success_actions if invoice.save
+    invoice.assign_from_stripe(object)
+    return success_actions if invoice.save
 
-  fail!(invoice.errors.full_messages)
+    fail!(invoice.errors.full_messages)
   rescue ActiveRecord::RecordNotUnique, PG::UniqueViolation, SQLite3::ConstraintException
     return succeed! if event.type == "invoice.created"
 
