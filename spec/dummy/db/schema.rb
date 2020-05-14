@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_075422) do
+ActiveRecord::Schema.define(version: 2020_05_14_132957) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -341,7 +341,7 @@ ActiveRecord::Schema.define(version: 2020_03_31_075422) do
     t.index ["stripe_charge_id"], name: "index_stripe_invoices_on_stripe_charge_id"
     t.index ["stripe_customer_id"], name: "index_stripe_invoices_on_stripe_customer_id"
     t.index ["stripe_discount_id"], name: "index_stripe_invoices_on_stripe_discount_id"
-    t.index ["stripe_id"], name: "index_stripe_invoices_on_stripe_id"
+    t.index ["stripe_id"], name: "index_stripe_invoices_on_stripe_id", unique: true
     t.index ["stripe_subscription_id"], name: "index_stripe_invoices_on_stripe_subscription_id"
   end
 
