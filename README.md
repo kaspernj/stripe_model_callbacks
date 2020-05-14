@@ -157,10 +157,10 @@ Contribution directions go here.
 # capybara-webkit installation issue
 Instruction how to solve the issue: https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#macOS-catalina-1015
 
-# Add new migration
-  1. Run ```rails g migration AddStripeIdUniqToStripeInvoices```
-  2. Inside spec/dummy run ```rails db:migrate```
-  3. Inside spec/dummy run ```rake stripe_model_callbacks:install:migrations```
+# Database schema changes
+  1. Add migration: ```rails g migration AddStripeIdUniqToStripeInvoices```
+  2. Define model changes: `spec/dummy` run ```rails db:migrate```
+  3. Copy changes to  `spec/dummy/db/schema.rb` run ```rake stripe_model_callbacks:install:migrations```
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

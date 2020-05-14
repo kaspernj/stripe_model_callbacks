@@ -13,7 +13,7 @@ class StripeModelCallbacks::Invoice::UpdatedService < StripeModelCallbacks::Base
 
     fail!(invoice.errors.full_messages)
   rescue ActiveRecord::RecordNotUnique, PG::UniqueViolation, SQLite3::ConstraintException => e
-    # We expect that data of invoice.created is outdated . As invoice does already exist - due too the
+    # We expect that data of invoice.created is outdated. As invoice does already exist - due too the
     # https://stripe.com/docs/webhooks/best-practices#event-ordering
     return succeed! if event.type == "invoice.created"
 
@@ -28,7 +28,9 @@ private
   end
 
   def create_activity
-    invoice.create_activity(tracked_activities[event.type]) if tracked_activities.fetch(event.type, nil)
+    return unless tracked_activities[event.type]
+
+    invoice.create_activity(tracked_activities[event.type])
   end
 
   def tracked_activities
