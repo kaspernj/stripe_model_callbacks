@@ -12,7 +12,7 @@ describe StripeModelCallbacks::Invoice::UpdatedService do
       data: JSON.parse(event_payload, symbolize_names: true)
     }
   end
-  let(:stripe_id) { "in_1GiGbYGJAmuZ9ZZZmstXLFQx" }
+  let(:stripe_id) { "in_1GxxxxxxZ9ZZZxxXLFQx" }
 
   shared_examples "do not create new invoice" do
     it "does not create new stripe invoice" do
