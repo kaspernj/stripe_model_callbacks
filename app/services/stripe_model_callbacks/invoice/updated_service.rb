@@ -12,10 +12,12 @@ class StripeModelCallbacks::Invoice::UpdatedService < StripeModelCallbacks::Base
     return success_actions if invoice.save
 
     fail!(invoice.errors.full_messages)
-  rescue ActiveRecord::RecordNotUnique, PG::UniqueViolation, SQLite3::ConstraintException
+  rescue ActiveRecord::RecordNotUnique, PG::UniqueViolation, SQLite3::ConstraintException => e
+    # We expect that data of invoice.created is outdated . As invoice does already exist - due too the
+    # https://stripe.com/docs/webhooks/best-practices#event-ordering
     return succeed! if event.type == "invoice.created"
 
-    raise ActiveRecord::RecordNotUnique
+    raise e
   end
 
 private
