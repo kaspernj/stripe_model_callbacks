@@ -1,15 +1,19 @@
 class StripeModelCallbacks::SubscriptionSchedule::UpdatedService < StripeModelCallbacks::BaseEventService
   def execute
     subscription_schedule.assign_from_stripe(object)
-    subscription_schedule.canceled_at ||= Time.zone.now if event.type == "subscription_schedule.canceled"
+    subscription_schedule.canceled_at ||= Time.zone.now if cancel?
     subscription_schedule.subscription_schedule_phases = new_subscription_schedule_phases
 
     if subscription_schedule.save
-      subscription_schedule.create_activity :canceled if event.type == "subscription_schedule.canceled"
+      subscription_schedule.create_activity :canceled if cancel?
       succeed!
     else
       fail! subscription_schedule.errors.full_messages
     end
+  end
+
+  def cancel?
+    @cancel ||= event.type == "subscription_schedule.canceled"
   end
 
   def subscription_schedule
