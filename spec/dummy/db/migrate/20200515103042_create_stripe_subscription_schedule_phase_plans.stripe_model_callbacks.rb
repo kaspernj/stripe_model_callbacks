@@ -7,6 +7,8 @@ class CreateStripeSubscriptionSchedulePhasePlans < ActiveRecord::Migration[6.0]
       t.string :stripe_plan_id, index: {name: "index_subscription_schedule_phase_plans_on_stripe_plan_id"}
       t.string :stripe_price_id, index: {name: "index_subscription_schedule_phase_plans_on_stripe_price_id"}
       t.integer :quantity
+
+      t.timestamps
     end
   end
 end

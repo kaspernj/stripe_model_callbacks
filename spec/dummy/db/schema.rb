@@ -631,6 +631,8 @@ ActiveRecord::Schema.define(version: 2020_05_15_103042) do
     t.string "stripe_plan_id"
     t.string "stripe_price_id"
     t.integer "quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["stripe_plan_id"], name: "index_subscription_schedule_phase_plans_on_stripe_plan_id"
     t.index ["stripe_price_id"], name: "index_subscription_schedule_phase_plans_on_stripe_price_id"
     t.index ["stripe_subscription_schedule_phase_id"], name: "index_subscription_schedule_phase_plans_on_schedule_phase_id"
@@ -650,6 +652,8 @@ ActiveRecord::Schema.define(version: 2020_05_15_103042) do
     t.string "proration_behavior"
     t.datetime "start_date"
     t.datetime "trial_end"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["stripe_coupon_id"], name: "index_stripe_subscription_schedule_phases_on_stripe_coupon_id"
     t.index ["stripe_subscription_schedule_id"], name: "index_subscription_schedule_phases_on_subscription_schedule_id"
   end

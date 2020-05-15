@@ -15,6 +15,8 @@ class CreateStripeSubscriptionSchedulePhases < ActiveRecord::Migration[6.0]
       t.string :proration_behavior
       t.datetime :start_date
       t.datetime :trial_end
+
+      t.timestamps
     end
   end
 end
