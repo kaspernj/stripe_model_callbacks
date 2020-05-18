@@ -20,7 +20,7 @@ describe "subscription_schedule created" do
         .to change(StripeSubscriptionSchedule, :count).by(1)
     end
 
-    it "assigns data from stripe", :aggregate_failures do
+    it "saves data from stripe", :aggregate_failures do
       stripe_event
 
       expect(stripe_subscription_schedule.stripe_id).to eq stripe_id
@@ -53,7 +53,7 @@ describe "subscription_schedule created" do
         .to change(StripeSubscriptionSchedulePhase, :count).by(1)
     end
 
-    it "assigns subscription_schedule_phases data from stripe", :aggregate_failures do
+    it "saves subscription_schedule_phases data from stripe", :aggregate_failures do
       stripe_event
 
       expect(stripe_subscription_schedule_phase.stripe_subscription_schedule_id).to eq stripe_id
@@ -76,7 +76,7 @@ describe "subscription_schedule created" do
         .to change(StripeSubscriptionSchedulePhasePlan, :count).by(1)
     end
 
-    it "assigns subscription_schedule_phase_plan data from stripe", :aggregate_failures do
+    it "saves subscription_schedule_phase_plan data from stripe", :aggregate_failures do
       stripe_event
 
       expect(stripe_subscription_schedule_phase_plan.billing_thresholds_usage_gte).to eq nil

@@ -9,11 +9,20 @@ describe "subscription_schedule created" do
     let(:stripe_subscription_schedule_phase_plan) { stripe_subscription_schedule_phase.stripe_subscription_schedule_phase_plans.first }
     let(:stripe_subscription_schedule_phase) { stripe_subscription_schedule.stripe_subscription_schedule_phases.first }
 
-    it "creates the subscription_schedule", :aggregate_failures do
-      expect { stripe_event }
-        .to change(StripeSubscriptionSchedule, :count).by(1)
+    it "responses with 200" do
+      stripe_event
 
       expect(response).to have_http_status(:ok)
+    end
+
+    it "creates a subscription_schedule" do
+      expect { stripe_event }
+        .to change(StripeSubscriptionSchedule, :count).by(1)
+    end
+
+    it "saves data from stripe", :aggregate_failures do
+      stripe_event
+
       expect(stripe_subscription_schedule.stripe_id).to eq stripe_id
       expect(stripe_subscription_schedule.billing).to eq "charge_automatically"
       expect(stripe_subscription_schedule.billing_thresholds_amount_gte).to eq nil
@@ -39,18 +48,20 @@ describe "subscription_schedule created" do
       expect(stripe_subscription_schedule.stripe_subscription_id).to eq nil
     end
 
-    it "creates a activity for canceled", :aggregate_failures do
-      expect { PublicActivity.with_tracking { stripe_event } }
-        .to change(StripeSubscriptionSchedule, :count).by(1)
-        .and change(PublicActivity::Activity.where(key: "stripe_subscription_schedule.canceled"), :count).by(1)
-    end
-
-    it "creates the subscription_schedule_phases", :aggregate_failures do
+    it "creates the subscription_schedule_phases" do
       expect { stripe_event }
         .to change(StripeSubscriptionSchedulePhase, :count).by(1)
+    end
+
+    it "creates a activity for canceled", :aggregate_failures do
+      expect { PublicActivity.with_tracking { stripe_event } }
+        .to change(PublicActivity::Activity.where(key: "stripe_subscription_schedule.canceled"), :count).by(1)
+    end
+
+    it "saves subscription_schedule_phases data from stripe", :aggregate_failures do
+      stripe_event
 
       expect(stripe_subscription_schedule_phase.stripe_subscription_schedule_id).to eq stripe_id
-
       expect(stripe_subscription_schedule_phase.application_fee_percent).to eq nil
       expect(stripe_subscription_schedule_phase.billing_thresholds_amount_gte).to eq nil
       expect(stripe_subscription_schedule_phase.billing_thresholds_reset_billing_cycle_anchor).to eq nil
@@ -65,9 +76,13 @@ describe "subscription_schedule created" do
       expect(stripe_subscription_schedule_phase.trial_end).to eq nil
     end
 
-    it "creates the subscription_schedule_phase_plan", :aggregate_failures do
+    it "creates the subscription_schedule_phase_plan" do
       expect { stripe_event }
         .to change(StripeSubscriptionSchedulePhasePlan, :count).by(1)
+    end
+
+    it "saves subscription_schedule_phase_plan data from stripe", :aggregate_failures do
+      stripe_event
 
       expect(stripe_subscription_schedule_phase_plan.billing_thresholds_usage_gte).to eq nil
       expect(stripe_subscription_schedule_phase_plan.stripe_plan_id).to eq "plan_HG4dIu1k8KqRWi"
