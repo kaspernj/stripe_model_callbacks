@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_075422) do
+ActiveRecord::Schema.define(version: 2020_05_15_103042) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -623,6 +623,70 @@ ActiveRecord::Schema.define(version: 2020_03_31_075422) do
     t.index ["stripe_id"], name: "index_stripe_subscription_items_on_stripe_id"
     t.index ["stripe_plan_id"], name: "index_stripe_subscription_items_on_stripe_plan_id"
     t.index ["stripe_subscription_id"], name: "index_stripe_subscription_items_on_stripe_subscription_id"
+  end
+
+  create_table "stripe_subscription_schedule_phase_plans", force: :cascade do |t|
+    t.string "stripe_subscription_schedule_phase_id", null: false
+    t.integer "billing_thresholds_usage_gte"
+    t.string "stripe_plan_id"
+    t.string "stripe_price_id"
+    t.integer "quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stripe_plan_id"], name: "index_subscription_schedule_phase_plans_on_stripe_plan_id"
+    t.index ["stripe_price_id"], name: "index_subscription_schedule_phase_plans_on_stripe_price_id"
+    t.index ["stripe_subscription_schedule_phase_id"], name: "index_subscription_schedule_phase_plans_on_schedule_phase_id"
+  end
+
+  create_table "stripe_subscription_schedule_phases", force: :cascade do |t|
+    t.string "stripe_subscription_schedule_id", null: false
+    t.integer "application_fee_percent"
+    t.integer "billing_thresholds_amount_gte"
+    t.boolean "billing_thresholds_reset_billing_cycle_anchor"
+    t.string "collection_method"
+    t.string "stripe_coupon_id"
+    t.string "default_payment_method"
+    t.datetime "end_date"
+    t.integer "invoice_settings_days_until_due"
+    t.boolean "prorate"
+    t.string "proration_behavior"
+    t.datetime "start_date"
+    t.datetime "trial_end"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stripe_coupon_id"], name: "index_stripe_subscription_schedule_phases_on_stripe_coupon_id"
+    t.index ["stripe_subscription_schedule_id"], name: "index_subscription_schedule_phases_on_subscription_schedule_id"
+  end
+
+  create_table "stripe_subscription_schedules", force: :cascade do |t|
+    t.string "stripe_id", null: false
+    t.string "billing"
+    t.integer "billing_thresholds_amount_gte"
+    t.boolean "billing_thresholds_reset_billing_cycle_anchor"
+    t.datetime "canceled_at"
+    t.string "collection_method"
+    t.datetime "completed_at"
+    t.datetime "created"
+    t.datetime "current_phase_start_date"
+    t.datetime "current_phase_end_date"
+    t.string "stripe_customer_id"
+    t.string "default_payment_method"
+    t.string "default_source"
+    t.string "end_behavior"
+    t.integer "invoice_settings_days_until_due"
+    t.boolean "livemode"
+    t.text "metadata"
+    t.datetime "released_at"
+    t.string "released_stripe_subscription_id"
+    t.string "renewal_behavior"
+    t.string "renewal_interval"
+    t.string "status"
+    t.string "stripe_subscription_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stripe_customer_id"], name: "index_stripe_subscription_schedules_on_stripe_customer_id"
+    t.index ["stripe_id"], name: "index_stripe_subscription_schedules_on_stripe_id", unique: true
+    t.index ["stripe_subscription_id"], name: "index_stripe_subscription_schedules_on_stripe_subscription_id"
   end
 
   create_table "stripe_subscriptions", force: :cascade do |t|
