@@ -1,19 +1,26 @@
 class StripeSubscriptionSchedulePhasePlan < StripeModelCallbacks::ApplicationRecord
-  belongs_to :stripe_subscription_schedule_phase, primary_key: "stripe_id"
+  belongs_to :stripe_subscription_schedule_phase
 
-  def assign_from_plan_hash(plan_hash)
-    assign_billing_thresholds
+  has_one :stripe_subscription_schedule, through: :stripe_subscription_schedule_phase
+
+  def assign_from_stripe(object)
+    StripeModelCallbacks::AttributesAssignerService.execute!(
+      model: self,
+      stripe_model: object,
+      attributes: %w[quantity]
+    )
 
     assign_attributes(
-      stripe_plan_id: plan_hash.dig(:plan),
-      stripe_price_id: plan_hash.dig(:price),
-      quantity: plan_hash.dig(:quantity)
+      stripe_plan_id: object.plan,
+      stripe_price_id: object.price
     )
+
+    assign_billing_thresholds(object)
   end
 
-  def assign_billing_thresholds(phase_hash)
-    billing_thresholds = phase_hash.dig(:billing_thresholds)
+  def assign_billing_thresholds(object)
+    billing_thresholds = object.billing_thresholds
 
-    self.billing_thresholds_usage_gte = billing_thresholds&.dig(:usage_gte)
+    self.billing_thresholds_usage_gte = billing_thresholds&.usage_gte
   end
 end

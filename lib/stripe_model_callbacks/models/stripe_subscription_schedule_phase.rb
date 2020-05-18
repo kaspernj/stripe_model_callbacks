@@ -1,38 +1,57 @@
 class StripeSubscriptionSchedulePhase < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_subscription_schedule, primary_key: "stripe_id"
 
-  has_many :subscription_schedule_phase_plans, primary_key: "stripe_id"
+  has_many :stripe_subscription_schedule_phase_plans, dependent: :destroy
 
-  def assign_from_phase_hash(phase_hash)
-    assign_attributes(
-      end_date: Time.zone.at(phase_hash.dig(:end_date)),
-      start_date: Time.zone.at(phase_hash.dig(:start_date)),
-      trial_end: Time.zone.at(phase_hash.dig(:trial_end)),
-      **phase_hash.slice(
-        %w[
-          application_fee_percent
-          collection_method
-          default_payment_method
-          prorate
-          proration_behavior
-        ]
-      )
+  def assign_from_stripe(object)
+    StripeModelCallbacks::AttributesAssignerService.execute!(
+      model: self,
+      stripe_model: object,
+      attributes: %w[
+        application_fee_percent
+        collection_method
+        default_payment_method
+        prorate
+        proration_behavior
+      ]
     )
 
-    assign_billing_thresholds(phase_hash)
-    assign_invoice_settings(phase_hash)
+    assign_billing_thresholds(object)
+    assign_invoice_settings(object)
+    assign_timestamps(object)
+
+    assign_subscription_schedule_phase_plans(object)
   end
 
-  def assign_billing_thresholds(phase_hash)
-    billing_thresholds = phase_hash.dig(:billing_thresholds)
+  def assign_billing_thresholds(object)
+    billing_thresholds = object.billing_thresholds
 
-    self.billing_thresholds_amount_gte = billing_thresholds&.dig(:amount_gte)
-    self.billing_thresholds_reset_billing_cycle_anchor = billing_thresholds&.dig(:reset_billing_cycle_anchor)
+    self.billing_thresholds_amount_gte = billing_thresholds&.amount_gte
+    self.billing_thresholds_reset_billing_cycle_anchor = billing_thresholds&.reset_billing_cycle_anchor
   end
 
-  def assign_invoice_settings(phase_hash)
-    invoice_settings = phase_hash.dig(:invoice_settings)
+  def assign_invoice_settings(object)
+    invoice_settings = object.invoice_settings
 
-    self.invoice_settings_days_until_due = invoice_settings&.dig(:days_until_due)
+    self.invoice_settings_days_until_due = invoice_settings&.days_until_due
+  end
+
+  def assign_timestamps(object)
+    %i[end_date start_date trial_end].each do |timestamp|
+      object_timestamp = object.__send__(timestamp)
+      __send__("#{timestamp}=", Time.zone.at(object_timestamp)) if object_timestamp
+    end
+  end
+
+  def assign_subscription_schedule_phase_plans(object)
+    self.stripe_subscription_schedule_phase_plans = new_stripe_subscription_schedule_phase_plans(object)
+  end
+
+  def new_stripe_subscription_schedule_phase_plans(object)
+    @new_stripe_subscription_schedule_phases ||= object.plans.collect do |plan|
+      subscription_schedule_phase_plan = StripeSubscriptionSchedulePhasePlan.new(stripe_subscription_schedule_phase: self)
+      subscription_schedule_phase_plan.assign_from_stripe(plan)
+      subscription_schedule_phase_plan
+    end
   end
 end

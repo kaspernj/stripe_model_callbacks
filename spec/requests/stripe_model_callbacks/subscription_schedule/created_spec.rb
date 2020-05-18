@@ -2,30 +2,69 @@ require "rails_helper"
 
 describe "subscription_schedule created" do
   describe "#execute!" do
-    it "creates the subscription_schedule" do
+    subject(:subscription_schedule) { StripeSubscriptionSchedule.last }
+
+    let(:subscription_schedule_phase) { subscription_schedule.stripe_subscription_schedule_phases.first }
+    let(:stripe_subscription_schedule_phase_plan) { subscription_schedule_phase.stripe_subscription_schedule_phase_plans.first }
+
+    it "creates the subscription_schedule", :aggregate_failures do
       expect { mock_stripe_event("subscription_schedule.created") }
         .to change(StripeSubscriptionSchedule, :count).by(1)
 
-      created_transfer = StripeSubscriptionSchedule.last
-
       expect(response.code).to eq "200"
+      expect(subscription_schedule.stripe_id).to eq "sub_sched_1GhwDXJ3a8kmO8fm97mybWCy"
+      expect(subscription_schedule.billing).to eq "charge_automatically"
+      expect(subscription_schedule.billing_thresholds_amount_gte).to eq nil
+      expect(subscription_schedule.billing_thresholds_reset_billing_cycle_anchor).to eq nil
+      expect(subscription_schedule.canceled_at).to eq nil
+      expect(subscription_schedule.collection_method).to eq "charge_automatically"
+      expect(subscription_schedule.completed_at).to eq nil
+      expect(subscription_schedule.created).to eq Time.zone.parse("2020-05-12 11:24:11")
+      expect(subscription_schedule.current_phase_end_date).to eq nil
+      expect(subscription_schedule.current_phase_start_date).to eq nil
+      expect(subscription_schedule.stripe_customer_id).to eq "cus_HG9JJV3LEHUjhO"
+      expect(subscription_schedule.default_payment_method).to eq nil
+      expect(subscription_schedule.default_source).to eq nil
+      expect(subscription_schedule.end_behavior).to eq "cancel"
+      expect(subscription_schedule.invoice_settings_days_until_due).to eq nil
+      expect(subscription_schedule.livemode).to eq false
+      expect(subscription_schedule.metadata).to eq "{}"
+      expect(subscription_schedule.released_at).to eq nil
+      expect(subscription_schedule.released_stripe_subscription_id).to eq nil
+      expect(subscription_schedule.renewal_behavior).to eq "cancel"
+      expect(subscription_schedule.renewal_interval).to eq nil
+      expect(subscription_schedule.status).to eq "not_started"
+      expect(subscription_schedule.stripe_subscription_id).to eq nil
+    end
 
-      expect(created_transfer.stripe_id).to eq "tr_00000000000000"
-      expect(created_transfer.amount.format).to eq "$11.00"
-      expect(created_transfer.amount_reversed.format).to eq "$0.00"
-      expect(created_transfer.balance_transaction).to eq "txn_00000000000000"
-      expect(created_transfer.created).to eq Time.zone.parse("2018-02-06 08:53:31")
-      expect(created_transfer.currency).to eq "usd"
-      expect(created_transfer.description).to eq nil
-      expect(created_transfer.destination).to eq "acct_1Brq15AT5SYrvIfd"
-      expect(created_transfer.destination_payment).to eq "py_CH0DW4ihzdQQCd"
-      expect(created_transfer.livemode).to eq false
-      expect(created_transfer.metadata).to eq "{}"
-      expect(created_transfer.reversed?).to eq false
-      expect(created_transfer.source_transaction).to eq nil
-      expect(created_transfer.source_type).to eq "card"
-      expect(created_transfer.transfer_group).to eq nil
-      expect(created_transfer.status).to eq "pending"
+    it "creates the subscription_schedule_phases", :aggregate_failures do
+      expect { mock_stripe_event("subscription_schedule.created") }
+        .to change(StripeSubscriptionSchedulePhase, :count).by(1)
+
+      expect(subscription_schedule_phase.stripe_subscription_schedule_id).to eq "sub_sched_1GhwDXJ3a8kmO8fm97mybWCy"
+
+      expect(subscription_schedule_phase.application_fee_percent).to eq nil
+      expect(subscription_schedule_phase.billing_thresholds_amount_gte).to eq nil
+      expect(subscription_schedule_phase.billing_thresholds_reset_billing_cycle_anchor).to eq nil
+      expect(subscription_schedule_phase.collection_method).to eq "charge_automatically"
+      expect(subscription_schedule_phase.stripe_coupon_id).to eq nil
+      expect(subscription_schedule_phase.default_payment_method).to eq nil
+      expect(subscription_schedule_phase.end_date).to eq Time.zone.parse("2020-12-01 00:00:00")
+      expect(subscription_schedule_phase.invoice_settings_days_until_due).to eq nil
+      expect(subscription_schedule_phase.prorate).to eq true
+      expect(subscription_schedule_phase.proration_behavior).to eq "create_prorations"
+      expect(subscription_schedule_phase.start_date).to eq Time.zone.parse("2020-06-01 00:00:00")
+      expect(subscription_schedule_phase.trial_end).to eq nil
+    end
+
+    it "creates the subscription_schedule_phase_plan", :aggregate_failures do
+      expect { mock_stripe_event("subscription_schedule.created") }
+        .to change(StripeSubscriptionSchedulePhasePlan, :count).by(1)
+
+      expect(stripe_subscription_schedule_phase_plan.billing_thresholds_usage_gte).to eq nil
+      expect(stripe_subscription_schedule_phase_plan.stripe_plan_id).to eq "plan_HG4dIu1k8KqRWi"
+      expect(stripe_subscription_schedule_phase_plan.stripe_price_id).to eq "plan_HG4dIu1k8KqRWi"
+      expect(stripe_subscription_schedule_phase_plan.quantity).to eq 2
     end
   end
 end
