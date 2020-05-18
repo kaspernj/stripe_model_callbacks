@@ -6,8 +6,8 @@ describe "subscription_schedule created" do
 
     let(:stripe_id) { "sub_sched_1GhwDXJ3a8kmO8fm97mybWCy" }
     let(:stripe_subscription_schedule) { StripeSubscriptionSchedule.last }
-    let(:stripe_subscription_schedule_phase_plan) { stripe_subscription_schedule_phase.stripe_subscription_schedule_phase_plans.first }
     let(:stripe_subscription_schedule_phase) { stripe_subscription_schedule.stripe_subscription_schedule_phases.first }
+    let(:stripe_subscription_schedule_phase_plan) { stripe_subscription_schedule_phase.stripe_subscription_schedule_phase_plans.first }
 
     it "responses with 200" do
       stripe_event
@@ -20,32 +20,34 @@ describe "subscription_schedule created" do
         .to change(StripeSubscriptionSchedule, :count).by(1)
     end
 
-    it "saves data from stripe", :aggregate_failures do
+    it "saves data from stripe" do
       stripe_event
 
-      expect(stripe_subscription_schedule.stripe_id).to eq stripe_id
-      expect(stripe_subscription_schedule.billing).to eq "charge_automatically"
-      expect(stripe_subscription_schedule.billing_thresholds_amount_gte).to eq nil
-      expect(stripe_subscription_schedule.billing_thresholds_reset_billing_cycle_anchor).to eq nil
-      expect(stripe_subscription_schedule.canceled_at).to eq nil
-      expect(stripe_subscription_schedule.collection_method).to eq "charge_automatically"
-      expect(stripe_subscription_schedule.completed_at).to eq nil
-      expect(stripe_subscription_schedule.created).to eq Time.zone.parse("2020-05-12 11:24:11")
-      expect(stripe_subscription_schedule.current_phase_end_date).to eq nil
-      expect(stripe_subscription_schedule.current_phase_start_date).to eq nil
-      expect(stripe_subscription_schedule.stripe_customer_id).to eq "cus_HG9JJV3LEHUjhO"
-      expect(stripe_subscription_schedule.default_payment_method).to eq nil
-      expect(stripe_subscription_schedule.default_source).to eq nil
-      expect(stripe_subscription_schedule.end_behavior).to eq "cancel"
-      expect(stripe_subscription_schedule.invoice_settings_days_until_due).to eq nil
-      expect(stripe_subscription_schedule.livemode).to eq false
-      expect(stripe_subscription_schedule.metadata).to eq "{}"
-      expect(stripe_subscription_schedule.released_at).to eq nil
-      expect(stripe_subscription_schedule.released_stripe_subscription_id).to eq nil
-      expect(stripe_subscription_schedule.renewal_behavior).to eq "cancel"
-      expect(stripe_subscription_schedule.renewal_interval).to eq nil
-      expect(stripe_subscription_schedule.status).to eq "not_started"
-      expect(stripe_subscription_schedule.stripe_subscription_id).to eq nil
+      expect(stripe_subscription_schedule).to have_attributes(
+        stripe_id: stripe_id,
+        billing: "charge_automatically",
+        billing_thresholds_amount_gte: nil,
+        billing_thresholds_reset_billing_cycle_anchor: nil,
+        canceled_at: nil,
+        collection_method: "charge_automatically",
+        completed_at: nil,
+        created: Time.zone.parse("2020-05-12 11:24:11"),
+        current_phase_end_date: nil,
+        current_phase_start_date: nil,
+        stripe_customer_id: "cus_HG9JJV3LEHUjhO",
+        default_payment_method: nil,
+        default_source: nil,
+        end_behavior: "cancel",
+        invoice_settings_days_until_due: nil,
+        livemode: false,
+        metadata: "{}",
+        released_at: nil,
+        released_stripe_subscription_id: nil,
+        renewal_behavior: "cancel",
+        renewal_interval: nil,
+        status: "not_started",
+        stripe_subscription_id: nil
+      )
     end
 
     it "creates the subscription_schedule_phases" do
@@ -53,22 +55,24 @@ describe "subscription_schedule created" do
         .to change(StripeSubscriptionSchedulePhase, :count).by(1)
     end
 
-    it "saves subscription_schedule_phases data from stripe", :aggregate_failures do
+    it "saves subscription_schedule_phases data from stripe" do
       stripe_event
 
-      expect(stripe_subscription_schedule_phase.stripe_subscription_schedule_id).to eq stripe_id
-      expect(stripe_subscription_schedule_phase.application_fee_percent).to eq nil
-      expect(stripe_subscription_schedule_phase.billing_thresholds_amount_gte).to eq nil
-      expect(stripe_subscription_schedule_phase.billing_thresholds_reset_billing_cycle_anchor).to eq nil
-      expect(stripe_subscription_schedule_phase.collection_method).to eq "charge_automatically"
-      expect(stripe_subscription_schedule_phase.stripe_coupon_id).to eq nil
-      expect(stripe_subscription_schedule_phase.default_payment_method).to eq nil
-      expect(stripe_subscription_schedule_phase.end_date).to eq Time.zone.parse("2020-12-01 00:00:00")
-      expect(stripe_subscription_schedule_phase.invoice_settings_days_until_due).to eq nil
-      expect(stripe_subscription_schedule_phase.prorate).to eq true
-      expect(stripe_subscription_schedule_phase.proration_behavior).to eq "create_prorations"
-      expect(stripe_subscription_schedule_phase.start_date).to eq Time.zone.parse("2020-06-01 00:00:00")
-      expect(stripe_subscription_schedule_phase.trial_end).to eq nil
+      expect(stripe_subscription_schedule_phase).to have_attributes(
+        stripe_subscription_schedule_id: stripe_id,
+        application_fee_percent: nil,
+        billing_thresholds_amount_gte: nil,
+        billing_thresholds_reset_billing_cycle_anchor: nil,
+        collection_method: "charge_automatically",
+        stripe_coupon_id: nil,
+        default_payment_method: nil,
+        end_date: Time.zone.parse("2020-12-01 00:00:00"),
+        invoice_settings_days_until_due: nil,
+        prorate: true,
+        proration_behavior: "create_prorations",
+        start_date: Time.zone.parse("2020-06-01 00:00:00"),
+        trial_end: nil
+      )
     end
 
     it "creates the subscription_schedule_phase_plan" do
@@ -76,13 +80,15 @@ describe "subscription_schedule created" do
         .to change(StripeSubscriptionSchedulePhasePlan, :count).by(1)
     end
 
-    it "saves subscription_schedule_phase_plan data from stripe", :aggregate_failures do
+    it "saves subscription_schedule_phase_plan data from stripe" do
       stripe_event
 
-      expect(stripe_subscription_schedule_phase_plan.billing_thresholds_usage_gte).to eq nil
-      expect(stripe_subscription_schedule_phase_plan.stripe_plan_id).to eq "plan_HG4dIu1k8KqRWi"
-      expect(stripe_subscription_schedule_phase_plan.stripe_price_id).to eq "plan_HG4dIu1k8KqRWi"
-      expect(stripe_subscription_schedule_phase_plan.quantity).to eq 2
+      expect(stripe_subscription_schedule_phase_plan).to have_attributes(
+        billing_thresholds_usage_gte: nil,
+        stripe_plan_id: "plan_HG4dIu1k8KqRWi",
+        stripe_price_id: "plan_HG4dIu1k8KqRWi",
+        quantity: 2
+      )
     end
   end
 end
