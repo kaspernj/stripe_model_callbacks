@@ -13,7 +13,7 @@ describe "subscription_schedule created" do
       expect { stripe_event }
         .to change(StripeSubscriptionSchedule, :count).by(1)
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status(:ok)
       expect(stripe_subscription_schedule.stripe_id).to eq stripe_id
       expect(stripe_subscription_schedule.billing).to eq "charge_automatically"
       expect(stripe_subscription_schedule.billing_thresholds_amount_gte).to eq nil

@@ -12,7 +12,7 @@ describe "subscription_schedule created" do
     it "responses with 200" do
       stripe_event
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status(:ok)
     end
 
     it "creates a subscription_schedule" do
