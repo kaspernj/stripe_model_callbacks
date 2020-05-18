@@ -48,7 +48,7 @@ class StripeSubscriptionSchedulePhase < StripeModelCallbacks::ApplicationRecord
   end
 
   def new_stripe_subscription_schedule_phase_plans(object)
-    @new_stripe_subscription_schedule_phases ||= object.plans.collect do |plan|
+    @new_stripe_subscription_schedule_phase_plans ||= object.plans.collect do |plan|
       subscription_schedule_phase_plan = StripeSubscriptionSchedulePhasePlan.new(stripe_subscription_schedule_phase: self)
       subscription_schedule_phase_plan.assign_from_stripe(plan)
       subscription_schedule_phase_plan

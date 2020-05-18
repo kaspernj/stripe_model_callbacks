@@ -38,6 +38,12 @@ describe "subscription_schedule created" do
       expect(stripe_subscription_schedule.stripe_subscription_id).to eq nil
     end
 
+    it "creates a activity for canceled", :aggregate_failures do
+      expect { PublicActivity.with_tracking { stripe_event } }
+        .to change(StripeSubscriptionSchedule, :count).by(1)
+        .and change(PublicActivity::Activity.where(key: "stripe_subscription_schedule.canceled"), :count).by(1)
+    end
+
     it "creates the subscription_schedule_phases", :aggregate_failures do
       expect { stripe_event }
         .to change(StripeSubscriptionSchedulePhase, :count).by(1)

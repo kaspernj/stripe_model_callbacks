@@ -9,7 +9,7 @@ describe "subscription_schedule created" do
     let(:stripe_subscription_schedule_phase) { stripe_subscription_schedule.stripe_subscription_schedule_phases.first }
 
     it "creates the subscription_schedule", :aggregate_failures do
-      expect { mock_stripe_event("subscription_schedule.created") }
+      expect { stripe_event }
         .to change(StripeSubscriptionSchedule, :count).by(1)
 
       expect(response.code).to eq "200"
@@ -39,7 +39,7 @@ describe "subscription_schedule created" do
     end
 
     it "creates the subscription_schedule_phases", :aggregate_failures do
-      expect { mock_stripe_event("subscription_schedule.created") }
+      expect { stripe_event }
         .to change(StripeSubscriptionSchedulePhase, :count).by(1)
 
       expect(stripe_subscription_schedule_phase.stripe_subscription_schedule_id).to eq "sub_sched_1GhwDXJ3a8kmO8fm97mybWCy"
@@ -59,7 +59,7 @@ describe "subscription_schedule created" do
     end
 
     it "creates the subscription_schedule_phase_plan", :aggregate_failures do
-      expect { mock_stripe_event("subscription_schedule.created") }
+      expect { stripe_event }
         .to change(StripeSubscriptionSchedulePhasePlan, :count).by(1)
 
       expect(stripe_subscription_schedule_phase_plan.billing_thresholds_usage_gte).to eq nil
