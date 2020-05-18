@@ -1,7 +1,7 @@
 class StripeModelCallbacks::SubscriptionSchedule::UpdatedService < StripeModelCallbacks::BaseEventService
   TRACKED_ACTIVITIES = {
     "subscription_schedule.canceled": :canceled
-  }.freeze.with_indifferent_access
+  }.with_indifferent_access.freeze
   private_constant :TRACKED_ACTIVITIES
 
   def execute
