@@ -1,4 +1,13 @@
 class StripeSubscriptionSchedule < StripeModelCallbacks::ApplicationRecord
+  MATCHING_STRIPE_ATTRIBUTES = %w[
+    billing created collection_method
+    default_payment_method default_source
+    end_behavior metadata livemode
+    renewal_behavior renewal_interval
+    status
+  ].freeze
+  private_constant :MATCHING_STRIPE_ATTRIBUTES
+
   has_many :stripe_subscription_schedule_phases, primary_key: "stripe_id", dependent: :destroy
 
   def self.stripe_class
@@ -20,17 +29,13 @@ class StripeSubscriptionSchedule < StripeModelCallbacks::ApplicationRecord
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self,
       stripe_model: object,
-      attributes: %w[
-        billing created collection_method
-        default_payment_method default_source
-        end_behavior metadata livemode
-        renewal_behavior renewal_interval
-        status
-      ]
+      attributes: MATCHING_STRIPE_ATTRIBUTES
     )
 
     assign_subscription_schedule_phases(object)
   end
+
+private
 
   def assign_billing_thresholds(object)
     billing_thresholds = object.billing_thresholds
@@ -50,9 +55,7 @@ class StripeSubscriptionSchedule < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_invoice_settings(object)
-    invoice_settings = object.invoice_settings
-
-    self.invoice_settings_days_until_due = invoice_settings&.days_until_due
+    self.invoice_settings_days_until_due = object.invoice_settings&.days_until_due
   end
 
   def assign_timestamps(object)

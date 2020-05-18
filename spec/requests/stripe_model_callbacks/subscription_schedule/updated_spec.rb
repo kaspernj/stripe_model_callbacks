@@ -5,6 +5,7 @@ describe "subscription_schedule created" do
     subject(:stripe_subscription_schedule) { StripeSubscriptionSchedule.last }
 
     let(:stripe_event) { mock_stripe_event("subscription_schedule.updated") }
+    let(:stripe_id) { "sub_sched_1GhdpNJ3a8kmO8fmNG2vKBYY" }
     let(:stripe_subscription_schedule_phase_plan) { stripe_subscription_schedule_phase.stripe_subscription_schedule_phase_plans.first }
     let(:stripe_subscription_schedule_phase) { stripe_subscription_schedule.stripe_subscription_schedule_phases.first }
 
@@ -13,7 +14,7 @@ describe "subscription_schedule created" do
         .to change(StripeSubscriptionSchedule, :count).by(1)
 
       expect(response.code).to eq "200"
-      expect(stripe_subscription_schedule.stripe_id).to eq "sub_sched_1GhdpNJ3a8kmO8fmNG2vKBYY"
+      expect(stripe_subscription_schedule.stripe_id).to eq stripe_id
       expect(stripe_subscription_schedule.billing).to eq "charge_automatically"
       expect(stripe_subscription_schedule.billing_thresholds_amount_gte).to eq nil
       expect(stripe_subscription_schedule.billing_thresholds_reset_billing_cycle_anchor).to eq nil
@@ -42,7 +43,7 @@ describe "subscription_schedule created" do
       expect { stripe_event }
         .to change(StripeSubscriptionSchedulePhase, :count).by(1)
 
-      expect(stripe_subscription_schedule_phase.stripe_subscription_schedule_id).to eq "sub_sched_1GhdpNJ3a8kmO8fmNG2vKBYY"
+      expect(stripe_subscription_schedule_phase.stripe_subscription_schedule_id).to eq stripe_id
 
       expect(stripe_subscription_schedule_phase.application_fee_percent).to eq nil
       expect(stripe_subscription_schedule_phase.billing_thresholds_amount_gte).to eq nil

@@ -1,4 +1,13 @@
 class StripeSubscriptionSchedulePhase < ApplicationRecord
+  MATCHING_STRIPE_ATTRIBUTES = %w[
+    application_fee_percent
+    collection_method
+    default_payment_method
+    prorate
+    proration_behavior
+  ].freeze
+  private_constant :MATCHING_STRIPE_ATTRIBUTES
+
   belongs_to :stripe_subscription_schedule, primary_key: "stripe_id"
 
   has_many :stripe_subscription_schedule_phase_plans, dependent: :destroy
@@ -7,13 +16,7 @@ class StripeSubscriptionSchedulePhase < ApplicationRecord
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self,
       stripe_model: object,
-      attributes: %w[
-        application_fee_percent
-        collection_method
-        default_payment_method
-        prorate
-        proration_behavior
-      ]
+      attributes: MATCHING_STRIPE_ATTRIBUTES
     )
 
     assign_billing_thresholds(object)
@@ -22,6 +25,8 @@ class StripeSubscriptionSchedulePhase < ApplicationRecord
 
     assign_subscription_schedule_phase_plans(object)
   end
+
+private
 
   def assign_billing_thresholds(object)
     billing_thresholds = object.billing_thresholds
