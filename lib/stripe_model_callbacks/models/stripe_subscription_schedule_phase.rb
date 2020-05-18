@@ -1,4 +1,4 @@
-class StripeSubscriptionSchedulePhase < StripeModelCallbacks::ApplicationRecord
+class StripeSubscriptionSchedulePhase < ApplicationRecord
   belongs_to :stripe_subscription_schedule, primary_key: "stripe_id"
 
   has_many :stripe_subscription_schedule_phase_plans, dependent: :destroy

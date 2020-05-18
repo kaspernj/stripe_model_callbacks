@@ -1,4 +1,4 @@
-class StripeSubscriptionSchedulePhasePlan < StripeModelCallbacks::ApplicationRecord
+class StripeSubscriptionSchedulePhasePlan < ApplicationRecord
   belongs_to :stripe_subscription_schedule_phase
 
   has_one :stripe_subscription_schedule, through: :stripe_subscription_schedule_phase
