@@ -4,20 +4,20 @@ describe "subscription_schedule created" do
   describe "#execute!" do
     subject(:stripe_subscription_schedule) { StripeSubscriptionSchedule.last }
 
-    let(:stripe_event) { mock_stripe_event("subscription_schedule.created") }
+    let(:stripe_event) { mock_stripe_event("subscription_schedule.canceled") }
     let(:stripe_subscription_schedule_phase_plan) { stripe_subscription_schedule_phase.stripe_subscription_schedule_phase_plans.first }
     let(:stripe_subscription_schedule_phase) { stripe_subscription_schedule.stripe_subscription_schedule_phases.first }
 
     it "creates the subscription_schedule", :aggregate_failures do
-      expect { mock_stripe_event("subscription_schedule.created") }
+      expect { stripe_event }
         .to change(StripeSubscriptionSchedule, :count).by(1)
 
       expect(response.code).to eq "200"
-      expect(stripe_subscription_schedule.stripe_id).to eq "sub_sched_1GhwDXJ3a8kmO8fm97mybWCy"
+      expect(stripe_subscription_schedule.stripe_id).to eq "sub_sched_1GhwDXJ3a8kmO8fmxeer3WCy"
       expect(stripe_subscription_schedule.billing).to eq "charge_automatically"
       expect(stripe_subscription_schedule.billing_thresholds_amount_gte).to eq nil
       expect(stripe_subscription_schedule.billing_thresholds_reset_billing_cycle_anchor).to eq nil
-      expect(stripe_subscription_schedule.canceled_at).to eq nil
+      expect(stripe_subscription_schedule.canceled_at).to eq Time.zone.parse("2020-05-12 13:13:31")
       expect(stripe_subscription_schedule.collection_method).to eq "charge_automatically"
       expect(stripe_subscription_schedule.completed_at).to eq nil
       expect(stripe_subscription_schedule.created).to eq Time.zone.parse("2020-05-12 11:24:11")
@@ -34,15 +34,15 @@ describe "subscription_schedule created" do
       expect(stripe_subscription_schedule.released_stripe_subscription_id).to eq nil
       expect(stripe_subscription_schedule.renewal_behavior).to eq "cancel"
       expect(stripe_subscription_schedule.renewal_interval).to eq nil
-      expect(stripe_subscription_schedule.status).to eq "not_started"
+      expect(stripe_subscription_schedule.status).to eq "canceled"
       expect(stripe_subscription_schedule.stripe_subscription_id).to eq nil
     end
 
     it "creates the subscription_schedule_phases", :aggregate_failures do
-      expect { mock_stripe_event("subscription_schedule.created") }
+      expect { stripe_event }
         .to change(StripeSubscriptionSchedulePhase, :count).by(1)
 
-      expect(stripe_subscription_schedule_phase.stripe_subscription_schedule_id).to eq "sub_sched_1GhwDXJ3a8kmO8fm97mybWCy"
+      expect(stripe_subscription_schedule_phase.stripe_subscription_schedule_id).to eq "sub_sched_1GhwDXJ3a8kmO8fmxeer3WCy"
 
       expect(stripe_subscription_schedule_phase.application_fee_percent).to eq nil
       expect(stripe_subscription_schedule_phase.billing_thresholds_amount_gte).to eq nil
@@ -59,13 +59,13 @@ describe "subscription_schedule created" do
     end
 
     it "creates the subscription_schedule_phase_plan", :aggregate_failures do
-      expect { mock_stripe_event("subscription_schedule.created") }
+      expect { stripe_event }
         .to change(StripeSubscriptionSchedulePhasePlan, :count).by(1)
 
       expect(stripe_subscription_schedule_phase_plan.billing_thresholds_usage_gte).to eq nil
       expect(stripe_subscription_schedule_phase_plan.stripe_plan_id).to eq "plan_HG4dIu1k8KqRWi"
       expect(stripe_subscription_schedule_phase_plan.stripe_price_id).to eq "plan_HG4dIu1k8KqRWi"
-      expect(stripe_subscription_schedule_phase_plan.quantity).to eq 2
+      expect(stripe_subscription_schedule_phase_plan.quantity).to eq 1
     end
   end
 end
