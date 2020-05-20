@@ -8,16 +8,15 @@ class StripeModelCallbacks::Invoice::UpdatedService < StripeModelCallbacks::Base
   private_constant :TRACKED_ACTIVITIES
 
   def execute
-    invoice.assign_from_stripe(object)
-    return success_actions if invoice.save
+    StripeModelCallbacks::ApplicationRecord.with_advisory_lock("stripe_invoice-id#{object.id}") do
+      invoice.assign_from_stripe(object)
+      # The difference between the stripe events is about a few milliseconds - with advisory_lock
+      # we will prevent from creating invoice duplicates due to race condition.
+      # https://stripe.com/docs/webhooks/best-practices#event-ordering
+      return success_actions if invoice.save
 
-    fail!(invoice.errors.full_messages)
-  rescue ActiveRecord::RecordNotUnique, PG::UniqueViolation, SQLite3::ConstraintException => e
-    # We expect that data of invoice.created is outdated. As invoice does already exist - due too the
-    # https://stripe.com/docs/webhooks/best-practices#event-ordering
-    return succeed! if event.type == "invoice.created"
-
-    raise e
+      fail!(invoice.errors.full_messages)
+    end
   end
 
 private

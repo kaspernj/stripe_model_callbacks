@@ -58,7 +58,7 @@ describe StripeModelCallbacks::Invoice::UpdatedService do
       before { allow(StripeInvoice).to receive(:find_or_initialize_by).with(stripe_id: stripe_id) { StripeInvoice.new } }
 
       it "raises an error" do
-        expect { updated_service }.to raise_error(ActiveRecord::RecordNotUnique)
+        expect { updated_service }.to raise_error(ServicePattern::FailedError).with_message("Stripe has already been taken")
       end
     end
   end
