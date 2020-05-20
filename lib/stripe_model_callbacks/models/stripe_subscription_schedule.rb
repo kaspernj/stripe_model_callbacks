@@ -9,7 +9,7 @@ class StripeSubscriptionSchedule < StripeModelCallbacks::ApplicationRecord
   private_constant :MATCHING_STRIPE_ATTRIBUTES
 
   belongs_to :stripe_customer, primary_key: "stripe_id"
-  belongs_to :stripe_subscription, primary_key: "stripe_id"
+  belongs_to :stripe_subscription, primary_key: "stripe_id", optional: true
 
   has_many :stripe_subscription_schedule_phases, primary_key: "stripe_id", dependent: :destroy
 
