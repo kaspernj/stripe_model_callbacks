@@ -76,4 +76,13 @@ RSpec.configure do |config|
   config.after(:each, stripe_mock: true) do
     StripeMock.stop
   end
+
+  # remove with_advisory_lock lock files created during running specs
+  config.before do
+    ENV["FLOCK_DIR"] = Dir.mktmpdir
+  end
+
+  config.after do
+    FileUtils.remove_entry_secure ENV["FLOCK_DIR"]
+  end
 end
