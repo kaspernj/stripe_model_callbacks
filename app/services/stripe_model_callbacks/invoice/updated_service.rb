@@ -8,11 +8,11 @@ class StripeModelCallbacks::Invoice::UpdatedService < StripeModelCallbacks::Base
   private_constant :TRACKED_ACTIVITIES
 
   def execute
+    # The difference between the stripe events is about a few milliseconds - with advisory_lock
+    # we will prevent from creating invoice duplicates due to race condition.
+    # https://stripe.com/docs/webhooks/best-practices#event-ordering
     StripeModelCallbacks::ApplicationRecord.with_advisory_lock("stripe_invoice-id#{object.id}") do
       invoice.assign_from_stripe(object)
-      # The difference between the stripe events is about a few milliseconds - with advisory_lock
-      # we will prevent from creating invoice duplicates due to race condition.
-      # https://stripe.com/docs/webhooks/best-practices#event-ordering
       return success_actions if invoice.save
 
       fail!(invoice.errors.full_messages)

@@ -1,0 +1,87 @@
+{
+  "id": "evt_1Ghw7aJ3a8kmO8fm2vPIdi50",
+  "object": "event",
+  "api_version": "2019-05-16",
+  "created": 1589282282,
+  "data": {
+    "object": {
+      "id": "sub_sched_1GhdpNJ3a8kmO8fmNG2vKBYY",
+      "object": "subscription_schedule",
+      "billing": "charge_automatically",
+      "billing_thresholds": null,
+      "canceled_at": null,
+      "collection_method": "charge_automatically",
+      "completed_at": null,
+      "created": 1589211961,
+      "current_phase": null,
+      "customer": "cus_HG9VgDZsSjwhZG",
+      "default_payment_method": null,
+      "default_settings": {
+        "billing_thresholds": null,
+        "collection_method": "charge_automatically",
+        "default_payment_method": null,
+        "default_source": null,
+        "invoice_settings": {
+          "days_until_due": null
+        }
+      },
+      "default_source": null,
+      "end_behavior": "release",
+      "invoice_settings": {
+        "days_until_due": null
+      },
+      "livemode": false,
+      "metadata": {
+      },
+      "phases": [
+        {
+          "add_invoice_items": [
+          ],
+          "application_fee_percent": null,
+          "billing_thresholds": null,
+          "collection_method": "charge_automatically",
+          "coupon": null,
+          "default_payment_method": null,
+          "default_tax_rates": [
+          ],
+          "end_date": 1623456000,
+          "invoice_settings": null,
+          "plans": [
+            {
+              "billing_thresholds": null,
+              "plan": "plan_HG4dIu1k8KqRWi",
+              "price": "plan_HG4dIu1k8KqRWi",
+              "quantity": 1,
+              "tax_rates": [
+              ]
+            }
+          ],
+          "prorate": true,
+          "proration_behavior": "create_prorations",
+          "start_date": 1620777600,
+          "tax_percent": null,
+          "trial_end": null
+        }
+      ],
+      "released_at": null,
+      "released_subscription": null,
+      "renewal_behavior": "release",
+      "renewal_interval": null,
+      "status": "not_started",
+      "subscription": null
+    },
+    "previous_attributes": {
+      "default_settings": {
+        "invoice_settings": null
+      },
+      "invoice_settings": null
+    }
+  },
+  "livemode": false,
+  "pending_webhooks": 2,
+  "request": {
+    "id": "req_sx6SHFvO3ZyCYh",
+    "idempotency_key": null
+  },
+  "type": "subscription_schedule.updated"
+}

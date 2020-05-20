@@ -1,0 +1,77 @@
+{
+  "id": "evt_1GhwDXJ3a8kmO8fm05cNl8dF",
+  "object": "event",
+  "api_version": "2019-05-16",
+  "created": 1589282651,
+  "data": {
+    "object": {
+      "id": "sub_sched_1GhwDXJ3a8kmO8fm97mybWCy",
+      "object": "subscription_schedule",
+      "billing": "charge_automatically",
+      "billing_thresholds": null,
+      "canceled_at": null,
+      "collection_method": "charge_automatically",
+      "completed_at": null,
+      "created": 1589282651,
+      "current_phase": null,
+      "customer": "cus_HG9JJV3LEHUjhO",
+      "default_payment_method": null,
+      "default_settings": {
+        "billing_thresholds": null,
+        "collection_method": "charge_automatically",
+        "default_payment_method": null,
+        "default_source": null,
+        "invoice_settings": null
+      },
+      "default_source": null,
+      "end_behavior": "cancel",
+      "invoice_settings": null,
+      "livemode": false,
+      "metadata": {
+      },
+      "phases": [
+        {
+          "add_invoice_items": [
+          ],
+          "application_fee_percent": null,
+          "billing_thresholds": null,
+          "collection_method": "charge_automatically",
+          "coupon": null,
+          "default_payment_method": null,
+          "default_tax_rates": [
+          ],
+          "end_date": 1606780800,
+          "invoice_settings": null,
+          "plans": [
+            {
+              "billing_thresholds": null,
+              "plan": "plan_HG4dIu1k8KqRWi",
+              "price": "plan_HG4dIu1k8KqRWi",
+              "quantity": 2,
+              "tax_rates": [
+              ]
+            }
+          ],
+          "prorate": true,
+          "proration_behavior": "create_prorations",
+          "start_date": 1590969600,
+          "tax_percent": null,
+          "trial_end": null
+        }
+      ],
+      "released_at": null,
+      "released_subscription": null,
+      "renewal_behavior": "cancel",
+      "renewal_interval": null,
+      "status": "not_started",
+      "subscription": null
+    }
+  },
+  "livemode": false,
+  "pending_webhooks": 1,
+  "request": {
+    "id": "req_5afiaPgOrP3nYc",
+    "idempotency_key": null
+  },
+  "type": "subscription_schedule.created"
+}

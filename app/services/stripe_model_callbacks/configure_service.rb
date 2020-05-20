@@ -27,6 +27,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     sku_events
     source_events
     subscription_events
+    subscription_schedule_events
     transfer_events
 
     succeed!
@@ -203,6 +204,14 @@ private
     %w[created deleted trial_will_end updated].each do |subscription_event|
       subscribe "customer.subscription.#{subscription_event}" do |event|
         StripeModelCallbacks::Customer::Subscription::UpdatedService.reported_execute!(event: event)
+      end
+    end
+  end
+
+  def subscription_schedule_events
+    %w[canceled created updated].each do |subscription_event|
+      subscribe "subscription_schedule.#{subscription_event}" do |event|
+        StripeModelCallbacks::SubscriptionSchedule::UpdatedService.reported_execute!(event: event)
       end
     end
   end
