@@ -2,7 +2,7 @@ class StripeSubscriptionSchedule < StripeModelCallbacks::ApplicationRecord
   MATCHING_STRIPE_ATTRIBUTES = %w[
     billing created collection_method
     default_payment_method default_source
-    end_behavior metadata livemode
+    end_behavior id metadata livemode
     renewal_behavior renewal_interval
     status
   ].freeze
