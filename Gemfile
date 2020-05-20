@@ -12,6 +12,7 @@ group :development, :test do
   gem "rubocop-rspec", require: false
   gem "sqlite3"
   gem "tzinfo-data"
+  gem "with_advisory_lock"
 end
 
 group :test do
