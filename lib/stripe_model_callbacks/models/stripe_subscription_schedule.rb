@@ -8,8 +8,8 @@ class StripeSubscriptionSchedule < StripeModelCallbacks::ApplicationRecord
   ].freeze
   private_constant :MATCHING_STRIPE_ATTRIBUTES
 
-  belongs_to :stripe_customer, primary_key: "stripe_id"
-  belongs_to :stripe_subscription, primary_key: "stripe_id", optional: true
+  belongs_to :stripe_customer, optional: true, primary_key: "stripe_id"
+  belongs_to :stripe_subscription, optional: true, primary_key: "stripe_id"
 
   has_many :stripe_subscription_schedule_phases, primary_key: "stripe_id", dependent: :destroy
 

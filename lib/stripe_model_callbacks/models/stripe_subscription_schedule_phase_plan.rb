@@ -2,7 +2,7 @@ class StripeSubscriptionSchedulePhasePlan < ApplicationRecord
   MATCHING_STRIPE_ATTRIBUTES = %w[quantity].freeze
   private_constant :MATCHING_STRIPE_ATTRIBUTES
 
-  belongs_to :stripe_plan, primary_key: "stripe_id"
+  belongs_to :stripe_plan, optional: true, primary_key: "stripe_id"
   belongs_to :stripe_subscription_schedule_phase
 
   has_one :stripe_subscription_schedule, through: :stripe_subscription_schedule_phase
