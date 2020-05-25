@@ -1,12 +1,4 @@
 class StripeModelCallbacks::Invoice::UpdatedService < StripeModelCallbacks::BaseEventService
-  TRACKED_ACTIVITIES = {
-    "invoice.payment_failed": :payment_failed,
-    "invoice.payment_succeeded": :payment_succeeded,
-    "invoice.sent": :sent,
-    "invoice.upcoming": :upcoming
-  }.freeze.with_indifferent_access
-  private_constant :TRACKED_ACTIVITIES
-
   def execute
     invoice.assign_from_stripe(object)
     return success_actions if invoice.save
@@ -22,13 +14,10 @@ private
   end
 
   def create_activity
-    return unless tracked_activities[event.type]
-
-    invoice.create_activity(tracked_activities[event.type])
-  end
-
-  def tracked_activities
-    TRACKED_ACTIVITIES
+    invoice.create_activity :payment_failed if event.type == "invoice.payment_failed"
+    invoice.create_activity :payment_succeeded if event.type == "invoice.payment_succeeded"
+    invoice.create_activity :sent if event.type == "invoice.sent"
+    invoice.create_activity :upcoming if event.type == "invoice.upcoming"
   end
 
   def invoice
