@@ -9,7 +9,7 @@ describe "error handling" do
     configuration.instance_variable_set(:@on_error_callbacks, [])
   end
 
-  it "creates an invoice" do
+  it "creates an invoice", :aggregate_failure do
     expect(StripeModelCallbacks::Invoice::UpdatedService).to receive(:reported_execute!).and_raise("BOOM!")
 
     called = false
