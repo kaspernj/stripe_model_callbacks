@@ -1,17 +1,17 @@
 class StripeModelCallbacks::Invoice::UpdatedService < StripeModelCallbacks::BaseEventService
   def execute
     invoice.assign_from_stripe(object)
-    return success_actions if invoice.save
 
-    fail!(invoice.errors.full_messages)
+    if invoice.save
+      create_activity
+
+      succeed!
+    else
+      fail! invoice.errors.full_messages
+    end
   end
 
 private
-
-  def success_actions
-    create_activity
-    succeed!
-  end
 
   def create_activity
     invoice.create_activity :payment_failed if event.type == "invoice.payment_failed"
