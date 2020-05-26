@@ -16,7 +16,7 @@ describe StripeModelCallbacks::Invoice::UpdatedService do
 
   shared_examples "do not create new invoice" do
     it "does not create new stripe invoice" do
-      expect { updated_service }.not_to change(StripeInvoice.all, :size)
+      expect { updated_service }.not_to change(StripeInvoice.all, :count)
     end
   end
 
