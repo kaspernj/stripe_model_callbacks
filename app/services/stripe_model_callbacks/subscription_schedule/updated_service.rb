@@ -10,7 +10,7 @@ class StripeModelCallbacks::SubscriptionSchedule::UpdatedService < StripeModelCa
 
     return success_actions if subscription_schedule.save
 
-    fail!(invoice.subscription_schedule.full_messages)
+    fail!(subscription_schedule.errors.full_messages)
   end
 
 private

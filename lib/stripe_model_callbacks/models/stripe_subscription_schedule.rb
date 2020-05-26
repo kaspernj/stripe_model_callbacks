@@ -2,11 +2,14 @@ class StripeSubscriptionSchedule < StripeModelCallbacks::ApplicationRecord
   MATCHING_STRIPE_ATTRIBUTES = %w[
     billing created collection_method
     default_payment_method default_source
-    end_behavior metadata livemode
+    end_behavior id metadata livemode
     renewal_behavior renewal_interval
     status
   ].freeze
   private_constant :MATCHING_STRIPE_ATTRIBUTES
+
+  belongs_to :stripe_customer, optional: true, primary_key: "stripe_id"
+  belongs_to :stripe_subscription, optional: true, primary_key: "stripe_id"
 
   has_many :stripe_subscription_schedule_phases, primary_key: "stripe_id", dependent: :destroy
 
@@ -33,6 +36,17 @@ class StripeSubscriptionSchedule < StripeModelCallbacks::ApplicationRecord
     )
 
     assign_subscription_schedule_phases(object)
+  end
+
+  def cancel_on_stripe
+    to_stripe.cancel
+    update!(canceled_at: Time.zone.now) if respond_to?(:canceled_at)
+    reload_from_stripe!
+    true
+  end
+
+  def cancel_on_stripe!
+    raise ActiveRecord::RecordInvalid, self unless cancel_on_stripe
   end
 
 private

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_15_103042) do
+ActiveRecord::Schema.define(version: 2020_05_20_152659) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -626,7 +626,7 @@ ActiveRecord::Schema.define(version: 2020_05_15_103042) do
   end
 
   create_table "stripe_subscription_schedule_phase_plans", force: :cascade do |t|
-    t.string "stripe_subscription_schedule_phase_id", null: false
+    t.bigint "stripe_subscription_schedule_phase_id", null: false
     t.integer "billing_thresholds_usage_gte"
     t.string "stripe_plan_id"
     t.string "stripe_price_id"
