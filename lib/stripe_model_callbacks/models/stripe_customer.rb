@@ -6,6 +6,7 @@ class StripeCustomer < StripeModelCallbacks::ApplicationRecord
   has_many :stripe_invoice_items, primary_key: "stripe_id"
   has_many :stripe_orders, primary_key: "stripe_id"
   has_many :stripe_subscriptions, primary_key: "stripe_id"
+  has_many :stripe_subscription_schedules, primary_key: "stripe_id"
 
   def self.stripe_class
     Stripe::Customer
