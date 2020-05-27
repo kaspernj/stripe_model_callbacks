@@ -341,7 +341,7 @@ ActiveRecord::Schema.define(version: 2020_05_20_152659) do
     t.index ["stripe_charge_id"], name: "index_stripe_invoices_on_stripe_charge_id"
     t.index ["stripe_customer_id"], name: "index_stripe_invoices_on_stripe_customer_id"
     t.index ["stripe_discount_id"], name: "index_stripe_invoices_on_stripe_discount_id"
-    t.index ["stripe_id"], name: "index_stripe_invoices_on_stripe_id"
+    t.index ["stripe_id"], name: "index_stripe_invoices_on_stripe_id", unique: true
     t.index ["stripe_subscription_id"], name: "index_stripe_invoices_on_stripe_subscription_id"
   end
 
