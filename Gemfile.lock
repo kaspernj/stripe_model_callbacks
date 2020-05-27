@@ -9,6 +9,7 @@ PATH
       stripe
       stripe-ruby-mock (= 3.0.1)
       stripe_event (>= 0.0.4)
+      with_advisory_lock (>= 4.6.0)
 
 GEM
   remote: https://rubygems.org/
