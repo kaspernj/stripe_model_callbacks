@@ -6,6 +6,8 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
 
   has_many :stripe_invoice_items, autosave: true, primary_key: "stripe_id"
 
+  validates :stripe_id, uniqueness: true
+
   monetize :amount_due_cents, allow_nil: true
   monetize :amount_paid_cents, allow_nil: true
   monetize :amount_remaining_cents, allow_nil: true

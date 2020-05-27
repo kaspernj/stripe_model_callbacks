@@ -1,6 +1,6 @@
 class StripeModelCallbacks::Configuration
   def self.current
-    @current ||= StripeModelCallbacks::Configuration.new
+    @current ||= new
   end
 
   def initialize

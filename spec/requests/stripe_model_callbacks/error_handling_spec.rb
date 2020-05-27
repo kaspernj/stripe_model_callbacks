@@ -10,7 +10,7 @@ describe "error handling" do
   end
 
   it "creates an invoice" do
-    expect(StripeModelCallbacks::Invoice::UpdatedService).to receive(:reported_execute!).and_raise("BOOM!")
+    expect(StripeModelCallbacks::Invoice::UpdatedService).to receive(:execute_with_advisory_lock!).and_raise("BOOM!")
 
     called = false
     callback = proc do

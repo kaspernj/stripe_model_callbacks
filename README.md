@@ -154,5 +154,14 @@ mock_stripe_event("invoice.created", data: {object: {discount: {"customer": "cus
 ## Contributing
 Contribution directions go here.
 
+# capybara-webkit installation issue
+Instruction how to solve the issue: https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#macOS-catalina-1015
+
+# Database schema changes
+  1. Add migration to `/db/migrate`: ```rails g migration AddStripeIdUniqToStripeInvoices```
+  2. Go to directory: `spec/dummy`
+  3. Run ```rails stripe_model_callbacks:install:migrations``` to copy missing migrations
+  4. Run `rails db:migrate` to apply schema changes
+
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
