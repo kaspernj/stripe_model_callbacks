@@ -6,6 +6,7 @@ require "stripe"
 require "stripe_event"
 require "stripe_model_callbacks/engine"
 require "stripe_model_callbacks/autoload_models"
+require "with_advisory_lock"
 
 module StripeModelCallbacks
   path = "#{File.dirname(__FILE__)}/stripe_model_callbacks"
