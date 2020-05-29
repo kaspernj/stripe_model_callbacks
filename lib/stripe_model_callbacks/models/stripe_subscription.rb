@@ -22,8 +22,9 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   def assign_from_stripe(object)
     assign_attributes(
       canceled_at: object.canceled_at ? Time.zone.at(object.canceled_at) : nil,
-      stripe_customer_id: object.customer,
       ended_at: object.ended_at ? Time.zone.at(object.ended_at) : nil,
+      latest_stripe_invoice_id: latest_invoice_id(object),
+      stripe_customer_id: object.customer,
       stripe_plan_id: object.plan&.id
     )
 
@@ -99,5 +100,11 @@ private
         sub_item.stripe_plan_id == item.plan.id
       end
     end
+  end
+
+  def latest_invoice_id(object)
+    return object.latest_invoice if object.latest_invoice&.is_a?(String)
+
+    object&.latest_invoice&.id
   end
 end

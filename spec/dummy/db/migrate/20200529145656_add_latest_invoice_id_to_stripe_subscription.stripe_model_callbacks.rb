@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # This migration comes from stripe_model_callbacks (originally 20200529144649)
 
 class AddLatestInvoiceIdToStripeSubscription < ActiveRecord::Migration[6.0]
