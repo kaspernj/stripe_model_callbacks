@@ -103,7 +103,8 @@ private
   end
 
   def latest_invoice_id(object)
-    return object.latest_invoice if object.latest_invoice&.is_a?(String)
+    return unless object.keys.include?(:latest_invoice)
+    return object.latest_invoice if object.latest_invoice.is_a?(String)
 
     object&.latest_invoice&.id
   end
