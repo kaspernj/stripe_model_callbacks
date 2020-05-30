@@ -103,9 +103,12 @@ private
   end
 
   def latest_invoice_id(object)
+    # rubocop:disable Performance/InefficientHashSearch
+    # stripe object does not respond to Hash#key? method
     return unless object.keys.include?(:latest_invoice)
     return object.latest_invoice if object.latest_invoice.is_a?(String)
 
-    object&.latest_invoice&.id
+    object.latest_invoice&.id
+    # rubocop:enable Performance/InefficientHashSearch
   end
 end
