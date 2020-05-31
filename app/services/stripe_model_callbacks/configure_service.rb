@@ -113,7 +113,8 @@ private
     # Upcoming event doesnt send an invoice ID. Dunno what to do about it... Disabling for now
     # upcoming
 
-    %w[created payment_failed payment_succeeded sent updated].each do |invoice_event|
+    # https://stripe.com/docs/billing/invoices/overview#invoice-status-transition-endpoints-and-webhooks
+    %w[created deleted marked_uncollectible payment_failed payment_succeeded sent updated voided].each do |invoice_event|
       subscribe "invoice.#{invoice_event}" do |event|
         StripeModelCallbacks::Invoice::UpdatedService.execute_with_advisory_lock!(event: event)
       end
