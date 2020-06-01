@@ -54,6 +54,7 @@
         "total_count": 1,
         "url": "/v1/subscription_items?subscription=sub_CGPXJjUMVXBLSx"
       },
+      "latest_invoice": "in_1GoYq1J3a8kmO8fmMn28KIy2",
       "livemode": false,
       "metadata": {
       },
