@@ -240,7 +240,7 @@ GEM
       dante (>= 0.2.0)
       multi_json (~> 1.0)
       stripe (> 5, < 6)
-    stripe_event (2.3.0)
+    stripe_event (2.3.1)
       activesupport (>= 3.1)
       stripe (>= 2.8, < 6)
     thor (1.0.1)
