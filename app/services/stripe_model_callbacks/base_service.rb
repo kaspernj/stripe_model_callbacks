@@ -45,9 +45,14 @@ class StripeModelCallbacks::BaseService < ServicePattern::Service
   end
 
   def self.advisory_lock_id(stripe_event_data)
+    return stripe_event_data.id if stripe_event_data.respond_to?(:id)
     return stripe_event_data.coupon.id if stripe_event_data.object == "discount"
-    return unless stripe_event_data.respond_to?(:id)
+    return unless stripe_event_data.respond_to?(:customer)
 
-    stripe_event_data.id
+    if stripe_event_data.customer.is_a?(String)
+      stripe_event_data.customer
+    else
+      stripe_event_data.customer.id
+    end
   end
 end
