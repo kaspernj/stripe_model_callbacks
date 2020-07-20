@@ -40,8 +40,14 @@ class StripeModelCallbacks::BaseService < ServicePattern::Service
 
   def self.advisory_lock_name(*args)
     stripe_event_data = args.first[:event].data.object
-    object_id = stripe_event_data.object == "discount" ? stripe_event_data.coupon.id : stripe_event_data.id
 
-    ["stripe", stripe_event_data.object, "id", object_id].join("-")
+    ["stripe", stripe_event_data.object, "id", advisory_lock_id(stripe_event_data)].join("-")
+  end
+
+  def self.advisory_lock_id(stripe_event_data)
+    return stripe_event_data.coupon.id if stripe_event_data.object == "discount"
+    return unless stripe_event_data.respond_to?(:id)
+
+    stripe_event_data.id
   end
 end
