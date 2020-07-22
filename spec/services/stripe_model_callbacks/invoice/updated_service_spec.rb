@@ -17,6 +17,12 @@ describe StripeModelCallbacks::Invoice::UpdatedService do
   context "when 'invoice.created' event was sent" do
     let(:event_type) { "invoice.created" }
 
+    describe ".advisory_lock_name" do
+      it "returns correct value" do
+        expect(described_class.advisory_lock_name(event: stripe_event)).to eq "stripe-invoice-id-in_1GxxxxxxZ9ZZZxxXLFQx"
+      end
+    end
+
     context "when invoice don't exist" do
       it "creates stripe invoice" do
         expect { updated_service_results }.to change { StripeInvoice.all.size }.by(1)
