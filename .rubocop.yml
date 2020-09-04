@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
@@ -5,6 +7,7 @@ AllCops:
     - db/data_schema.rb
     - db/schema.rb
     - spec/dummy/db/schema.rb
+  NewCops: enable
 
 require:
   - rubocop-performance
