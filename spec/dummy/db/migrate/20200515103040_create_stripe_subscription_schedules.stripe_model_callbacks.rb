@@ -1,6 +1,6 @@
 # This migration comes from stripe_model_callbacks (originally 20200513131105)
 class CreateStripeSubscriptionSchedules < ActiveRecord::Migration[6.0]
-  def change
+  def change # rubocop:disable Metrics/AbcSize
     create_table :stripe_subscription_schedules do |t|
       t.string :stripe_id, index: {unique: true}, null: false
       t.string :billing
