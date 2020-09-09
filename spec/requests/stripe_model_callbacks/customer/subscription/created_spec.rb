@@ -6,6 +6,7 @@ describe "subscription creation" do
   let(:stripe_discount) { create :stripe_discount, stripe_coupon: stripe_coupon, coupon_times_redeemed: 4 }
   let!(:stripe_plan) { create :stripe_plan, stripe_id: "silver-express-898" }
   let(:stripe_subscription) { create :stripe_subscription, stripe_customer: stripe_customer, stripe_discount: stripe_discount, stripe_id: "sub_CGPu5KqP1TORKF" }
+  let(:latest_invoice_id) { "in_1GoYq1J3a8kmO8fmMn28KIy2" }
 
   describe "#execute!" do
     it "creates the subscription" do
@@ -19,6 +20,7 @@ describe "subscription creation" do
       expect(response.code).to eq "200"
 
       expect(created_subscription).to have_attributes(
+        latest_stripe_invoice_id: latest_invoice_id,
         stripe_customer: stripe_customer,
         stripe_plan: stripe_plan,
         stripe_plans: [stripe_plan],
