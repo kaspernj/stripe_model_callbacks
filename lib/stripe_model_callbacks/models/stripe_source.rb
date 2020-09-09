@@ -28,7 +28,7 @@ class StripeSource < StripeModelCallbacks::ApplicationRecord
 
 private
 
-  def assign_owner(object)
+  def assign_owner(object) # rubocop:disable Metrics/AbcSize
     assign_attributes(
       owner_address_city: object.owner.address&.city,
       owner_address_country: object.owner.address&.country,
@@ -42,7 +42,7 @@ private
     )
   end
 
-  def assign_owner_verified(object)
+  def assign_owner_verified(object) # rubocop:disable Metrics/AbcSize
     assign_attributes(
       owner_verified_address_city: object.owner.verified_address&.city,
       owner_verified_address_country: object.owner.verified_address&.country,

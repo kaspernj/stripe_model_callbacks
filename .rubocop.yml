@@ -8,6 +8,7 @@ AllCops:
     - db/schema.rb
     - spec/dummy/db/schema.rb
   NewCops: enable
+  TargetRubyVersion: 2.5
 
 require:
   - rubocop-performance
@@ -58,6 +59,9 @@ Lint/DeprecatedOpenSSLConstant:
 
 Lint/DuplicateElsifCondition:
   Enabled: true
+
+Lint/MissingSuper:
+  Enabled: false
 
 Lint/MixedRegexpCaptureTypes:
   Enabled: true
