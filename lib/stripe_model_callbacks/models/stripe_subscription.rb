@@ -1,5 +1,5 @@
 class StripeSubscription < StripeModelCallbacks::ApplicationRecord
-  belongs_to :stripe_customer, optional: true, primary_key: "stripe_id"
+  belongs_to :stripe_customer, optional: true, primary_key: "stripe_id", touch: true
   belongs_to :stripe_discount, optional: true
   belongs_to :stripe_plan, optional: true, primary_key: "stripe_id"
   has_many :stripe_invoices, primary_key: "stripe_id"
@@ -7,6 +7,8 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   has_many :stripe_subscription_items, autosave: true, primary_key: "stripe_id"
   has_many :stripe_subscription_schedules, primary_key: "stripe_id"
   has_many :stripe_plans, through: :stripe_subscription_items
+
+  validates :stripe_id, presence: true
 
   STATES = %w[trialing active past_due canceled unpaid].freeze
 
