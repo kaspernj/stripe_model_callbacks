@@ -148,6 +148,9 @@ RSpec/NamedSubject:
 RSpec/NestedGroups:
   Enabled: false
 
+RSpec/StubbedMock:
+  Enabled: false
+
 Style/AccessorGrouping:
   Enabled: true
 
