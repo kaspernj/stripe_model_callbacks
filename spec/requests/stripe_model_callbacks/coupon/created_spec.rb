@@ -20,7 +20,7 @@ describe "coupon created" do
       expect(created_coupon.max_redemptions).to eq nil
       expect(created_coupon.metadata).to eq "{}"
       expect(created_coupon.percent_off).to eq 25
-      expect(created_coupon.redeem_by).to eq nil
+      expect(created_coupon.redeem_by).to eq Time.zone.parse("2020-12-31 22:59:00")
       expect(created_coupon.times_redeemed).to eq 0
       expect(created_coupon.stripe_valid).to eq true
     end
