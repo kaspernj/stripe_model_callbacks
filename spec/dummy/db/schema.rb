@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_23_173143) do
+ActiveRecord::Schema.define(version: 2020_12_23_202918) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -722,6 +722,20 @@ ActiveRecord::Schema.define(version: 2020_12_23_173143) do
     t.index ["stripe_discount_id"], name: "index_stripe_subscriptions_on_stripe_discount_id"
     t.index ["stripe_id"], name: "index_stripe_subscriptions_on_stripe_id"
     t.index ["stripe_plan_id"], name: "index_stripe_subscriptions_on_stripe_plan_id"
+  end
+
+  create_table "stripe_tax_rates", force: :cascade do |t|
+    t.string "stripe_id", null: false
+    t.string "display_name"
+    t.text "description"
+    t.string "jurisdiction"
+    t.float "percentage"
+    t.boolean "inclusive"
+    t.boolean "active"
+    t.datetime "created"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stripe_id"], name: "index_stripe_tax_rates_on_stripe_id"
   end
 
   create_table "stripe_transfers", force: :cascade do |t|
