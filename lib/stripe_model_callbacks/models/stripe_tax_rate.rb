@@ -6,14 +6,13 @@ class StripeTaxRate < StripeModelCallbacks::ApplicationRecord
   def assign_from_stripe(object)
     assign_attributes(
       created: Time.zone.at(object.created),
-      inclusive: object.inclusive == true,
-      jurisdiction: object.jurisdiction == true
+      inclusive: object.inclusive == true
     )
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self,
       stripe_model: object,
-      attributes: %w[display_name description percentage inclusive]
+      attributes: %w[display_name description jurisdiction percentage inclusive]
     )
   end
 end
