@@ -1,0 +1,26 @@
+{
+  "created": 1326853478,
+  "livemode": false,
+  "id": "evt_00000000000000",
+  "type": "tax_rate.created",
+  "object": "event",
+  "request": null,
+  "pending_webhooks": 1,
+  "api_version": "2018-02-06",
+  "data": {
+    "object": {
+      "id": "txr_00000000000000",
+      "object": "tax_rate",
+      "active": true,
+      "created": 1608755171,
+      "description": "VAT Germany",
+      "display_name": "VAT",
+      "inclusive": false,
+      "jurisdiction": "DE",
+      "livemode": false,
+      "metadata": {
+      },
+      "percentage": 16
+    }
+  }
+}

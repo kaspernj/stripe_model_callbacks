@@ -28,6 +28,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     source_events
     subscription_events
     subscription_schedule_events
+    tax_rate_events
     transfer_events
 
     succeed!
@@ -213,6 +214,14 @@ private
     %w[canceled created updated].each do |subscription_event|
       subscribe "subscription_schedule.#{subscription_event}" do |event|
         StripeModelCallbacks::SubscriptionSchedule::UpdatedService.execute_with_advisory_lock!(event: event)
+      end
+    end
+  end
+
+  def tax_rate_events
+    %w[created updated].each do |transfer_event|
+      subscribe "tax_rate.#{transfer_event}" do |event|
+        StripeModelCallbacks::TaxRate::UpdatedService.execute_with_advisory_lock!(event: event)
       end
     end
   end
