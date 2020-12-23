@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_31_173413) do
+ActiveRecord::Schema.define(version: 2020_12_23_173143) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -705,7 +705,7 @@ ActiveRecord::Schema.define(version: 2020_05_31_173413) do
     t.text "metadata"
     t.string "stripe_plan_id"
     t.integer "quantity"
-    t.datetime "start"
+    t.datetime "start_date"
     t.integer "tax_percent"
     t.string "status"
     t.datetime "trial_start"

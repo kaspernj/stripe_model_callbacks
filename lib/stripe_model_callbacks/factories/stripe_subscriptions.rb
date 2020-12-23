@@ -9,7 +9,7 @@ FactoryBot.define do
     stripe_customer
     livemode { false }
     stripe_plan
-    start { 1.month.ago.beginning_of_month }
+    start_date { 1.month.ago.beginning_of_month }
 
     trait :active do
       status { "active" }

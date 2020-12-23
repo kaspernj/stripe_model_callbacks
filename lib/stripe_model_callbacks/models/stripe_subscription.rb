@@ -83,10 +83,16 @@ private
   end
 
   def assign_periods(object)
+    start_date = if object.respond_to?(:start_date)
+      object.start_date
+    else
+      object.start
+    end
+
     assign_attributes(
       current_period_start: Time.zone.at(object.current_period_start),
       current_period_end: Time.zone.at(object.current_period_end),
-      start: Time.zone.at(object.start),
+      start_date: Time.zone.at(start_date),
       trial_start: object.trial_start ? Time.zone.at(object.trial_start) : nil,
       trial_end: object.trial_end ? Time.zone.at(object.trial_end) : nil
     )
