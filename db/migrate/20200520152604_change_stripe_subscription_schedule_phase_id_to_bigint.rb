@@ -10,8 +10,8 @@ class ChangeStripeSubscriptionSchedulePhaseIdToBigint < ActiveRecord::Migration[
       change_column(
         :stripe_subscription_schedule_phase_plans,
         :stripe_subscription_schedule_phase_id,
-        "bigint USING CAST(stripe_subscription_schedule_phase_id AS bigint)
-      "
+        "bigint USING CAST(stripe_subscription_schedule_phase_id AS bigint"
+      )
     else
       change_column :stripe_subscription_schedule_phase_plans, :stripe_subscription_schedule_phase_id, :bigint
     end
