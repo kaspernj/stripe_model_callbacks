@@ -28,7 +28,7 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
       ended_at: object.ended_at ? Time.zone.at(object.ended_at) : nil,
       latest_stripe_invoice_id: latest_invoice_id(object),
       stripe_customer_id: object.customer,
-      stripe_plan_id: object.plan&.id
+      stripe_plan_id: object.respond_to?(:plan) ? object.plan&.id : nil
     )
 
     assign_discount(object)

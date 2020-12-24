@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_23_202918) do
+ActiveRecord::Schema.define(version: 2020_12_24_122607) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -450,6 +450,31 @@ ActiveRecord::Schema.define(version: 2020_12_23_202918) do
     t.index ["stripe_product_id"], name: "index_stripe_plans_on_stripe_product_id"
   end
 
+  create_table "stripe_prices", force: :cascade do |t|
+    t.string "stripe_id", null: false
+    t.boolean "active"
+    t.string "billing_scheme"
+    t.datetime "created"
+    t.string "currency"
+    t.string "lookup_key"
+    t.json "metadata"
+    t.string "nickname"
+    t.string "stripe_product_id"
+    t.boolean "recurring_aggregate_usage"
+    t.string "recurring_interval"
+    t.integer "recurring_interval_count"
+    t.string "recurring_usage_type"
+    t.string "tiers_mode"
+    t.integer "transform_quantity_divide_by"
+    t.string "transform_quantity_round"
+    t.string "price_type"
+    t.integer "unit_amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stripe_id"], name: "index_stripe_prices_on_stripe_id"
+    t.index ["stripe_product_id"], name: "index_stripe_prices_on_stripe_product_id"
+  end
+
   create_table "stripe_products", force: :cascade do |t|
     t.string "stripe_id", null: false
     t.boolean "active", default: false, null: false
@@ -610,6 +635,15 @@ ActiveRecord::Schema.define(version: 2020_12_23_202918) do
     t.index ["stripe_id"], name: "index_stripe_sources_on_stripe_id"
   end
 
+  create_table "stripe_subscription_default_tax_rates", force: :cascade do |t|
+    t.integer "stripe_subscription_id", null: false
+    t.integer "stripe_tax_rate_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stripe_subscription_id"], name: "index_on_subscription"
+    t.index ["stripe_tax_rate_id"], name: "index_on_tax_rate"
+  end
+
   create_table "stripe_subscription_items", force: :cascade do |t|
     t.string "stripe_id", null: false
     t.datetime "created"
@@ -762,4 +796,6 @@ ActiveRecord::Schema.define(version: 2020_12_23_202918) do
     t.index ["stripe_id"], name: "index_stripe_transfers_on_stripe_id"
   end
 
+  add_foreign_key "stripe_subscription_default_tax_rates", "stripe_subscriptions"
+  add_foreign_key "stripe_subscription_default_tax_rates", "stripe_tax_rates"
 end
