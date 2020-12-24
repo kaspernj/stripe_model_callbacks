@@ -8,7 +8,7 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   has_many :stripe_subscription_items, autosave: true, primary_key: "stripe_id"
   has_many :stripe_subscription_schedules, primary_key: "stripe_id"
   has_many :stripe_plans, through: :stripe_subscription_items
-  has_many :stripe_tax_rates
+  has_many :default_tax_rates, source: :stripe_tax_rate, through: :stripe_subscription_default_tax_rates
 
   STATES = %w[trialing active past_due canceled unpaid].freeze
 
@@ -31,6 +31,7 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
       stripe_plan_id: object.respond_to?(:plan) ? object.plan&.id : nil
     )
 
+    assign_default_tax_rates(object)
     assign_discount(object)
     assign_items(object)
     assign_periods(object)
@@ -68,6 +69,26 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   end
 
 private
+
+  def assign_default_tax_rates(object)
+    return unless object.try(:default_tax_rates)
+
+    found_ids = []
+
+    object.default_tax_rates.each do |default_tax_rate|
+      tax_rate = StripeModelCallbacks::TaxRate::UpdatedService.execute!(object: default_tax_rate)
+
+      if new_record?
+        stripe_subscription_default_tax_rates.build(stripe_subscription_id: object.id, stripe_tax_rate_id: tax_rate.id)
+      else
+        default_tax_rate = StripeSubscriptionDefaultTaxRate.find_by(stripe_subscription_id: object.id, stripe_tax_rate_id: tax_rate.id)
+        stripe_subscription_default_tax_rates.build(stripe_subscription_id: object.id, stripe_tax_rate_id: tax_rate.id) unless default_tax_rate
+        found_ids << default_tax_rate.id
+      end
+    end
+
+    stripe_subscription_default_tax_rates.where.not(id: found_ids).destroy_all
+  end
 
   def assign_discount(object)
     return if object.discount.blank?

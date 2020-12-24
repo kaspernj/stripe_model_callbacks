@@ -6,6 +6,12 @@ describe "subscription creation" do
   let(:stripe_discount) { create :stripe_discount, stripe_coupon: stripe_coupon, coupon_times_redeemed: 4 }
   let!(:stripe_plan) { create :stripe_plan, stripe_id: "silver-express-898" }
   let(:stripe_subscription) { create :stripe_subscription, stripe_customer: stripe_customer, stripe_discount: stripe_discount, stripe_id: "sub_CGPu5KqP1TORKF" }
+  let(:stripe_subscription_default_tax_rate) do
+    create :stripe_subscription_default_tax_rate,
+      stripe_subscription: stripe_subscription,
+      stripe_tax_rate: stripe_tax_rate
+  end
+  let(:stripe_tax_rate) { create :stripe_tax_rate }
   let(:latest_invoice_id) { "in_1GoYq1J3a8kmO8fmMn28KIy2" }
 
   describe "#execute!" do
@@ -38,13 +44,16 @@ describe "subscription creation" do
 
     it "creates the subscription from 2020-12-24" do
       expect { mock_stripe_event("customer.subscription.created.2020-12-24") }
-        .to change(StripePrice, :count).by(1)
+        .to change(StripeSubscriptionDefaultTaxRate, :count).by(1)
+        .and change(StripePrice, :count).by(1)
         .and change(StripeSubscription, :count).by(1)
         .and change(StripeSubscriptionItem, :count).by(1)
+        .and change(StripeTaxRate, :count).by(1)
 
       created_price = StripePrice.last!
       created_subscription = StripeSubscription.last
       created_subscription_item = StripeSubscriptionItem.last
+      created_tax_rate = StripeTaxRate.last!
 
       expect(response.code).to eq "200"
 
@@ -52,6 +61,7 @@ describe "subscription creation" do
         stripe_product_id: "prod_00000000000000"
       )
       expect(created_subscription).to have_attributes(
+        default_tax_rates: [created_tax_rate],
         latest_stripe_invoice_id: latest_invoice_id,
         stripe_customer: stripe_customer,
         stripe_plan: nil,
@@ -67,6 +77,25 @@ describe "subscription creation" do
         stripe_plan_id: nil,
         stripe_plan: nil
       )
+      expect(created_tax_rate).to have_attributes(
+        created: Time.zone.parse("2020-12-24 09:34:12"),
+        description: nil,
+        display_name: "VAT DK",
+        inclusive: false,
+        jurisdiction: nil,
+        percentage: 25.0,
+        stripe_id: "txr_1I1qD2AT5SYrvIfd69tAvJe2"
+      )
+    end
+
+    it "destroys default tax rates no longer found" do
+      stripe_subscription
+      stripe_subscription_default_tax_rate
+
+      expect { mock_stripe_event("customer.subscription.created.2020-12-24", data: {object: {default_tax_rates: [], id: "sub_CGPu5KqP1TORKF"}}) }
+        .to change(StripeSubscription, :count).by(0)
+        .and change(StripeSubscriptionDefaultTaxRate, :count).by(-1)
+        .and change(StripeTaxRate, :count).by(0)
     end
 
     it "sets a discount" do
