@@ -8,7 +8,7 @@ PATH
       rails (>= 5.0.0)
       service_pattern
       stripe
-      stripe-ruby-mock (= 3.0.1)
+      stripe-ruby-mock (>= 3.0.1)
       stripe_event (>= 0.0.4)
       with_advisory_lock (>= 4.6.0)
 
@@ -122,14 +122,14 @@ GEM
     minitest (5.14.2)
     monetize (1.9.4)
       money (~> 6.12)
-    money (6.13.7)
+    money (6.13.8)
       i18n (>= 0.6.4, <= 2)
     money-rails (1.13.3)
       activesupport (>= 3.0)
       monetize (~> 1.9.0)
       money (~> 6.13.2)
       railties (>= 3.0)
-    multi_json (1.14.1)
+    multi_json (1.15.0)
     nio4r (2.5.4)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
