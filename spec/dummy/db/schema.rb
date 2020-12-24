@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_24_122607) do
+ActiveRecord::Schema.define(version: 2020_12_24_123911) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -452,6 +452,7 @@ ActiveRecord::Schema.define(version: 2020_12_24_122607) do
 
   create_table "stripe_prices", force: :cascade do |t|
     t.string "stripe_id", null: false
+    t.datetime "deleted_at"
     t.boolean "active"
     t.string "billing_scheme"
     t.datetime "created"
@@ -654,8 +655,10 @@ ActiveRecord::Schema.define(version: 2020_12_24_122607) do
     t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_price_id"
     t.index ["stripe_id"], name: "index_stripe_subscription_items_on_stripe_id"
     t.index ["stripe_plan_id"], name: "index_stripe_subscription_items_on_stripe_plan_id"
+    t.index ["stripe_price_id"], name: "index_stripe_subscription_items_on_stripe_price_id"
     t.index ["stripe_subscription_id"], name: "index_stripe_subscription_items_on_stripe_subscription_id"
   end
 

@@ -3,6 +3,7 @@ class CreateStripePrices < ActiveRecord::Migration[6.0]
   def change
     create_table :stripe_prices do |t|
       t.string :stripe_id, index: true, null: false
+      t.datetime :deleted_at
       t.boolean :active
       t.string :billing_scheme
       t.datetime :created
