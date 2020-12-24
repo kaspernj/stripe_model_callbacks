@@ -6,6 +6,7 @@ class StripeDispute < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object)
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
       balance_transaction_id: object.balance_transaction,

@@ -6,7 +6,24 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
 
   attr_writer :stripe_object
 
+  def self.check_object_is_stripe_class(object, allowed = nil)
+    raise "'stripe_class' not defined on #{name}" unless respond_to?(:stripe_class)
+
+    # Ignore general objects
+    return if object.class.name == "Stripe::StripeObject" # rubocop:disable Style/ClassEqualityComparison:
+
+    allowed ||= [stripe_class]
+
+    raise "Expected #{object.class.name} to be a #{allowed.map(&:name).join(", ")}" unless allowed.any? { |stripe_class| object.is_a?(stripe_class) }
+  end
+
+  def check_object_is_stripe_class(object, allowed = nil)
+    self.class.check_object_is_stripe_class(object, allowed)
+  end
+
   def self.create_from_stripe!(object)
+    check_object_is_stripe_class(object)
+
     model = new
     model.stripe_object = object
     model.assign_from_stripe(object)

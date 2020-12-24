@@ -1,4 +1,4 @@
-class StripeSubscriptionSchedulePhasePlan < ApplicationRecord
+class StripeSubscriptionSchedulePhasePlan < StripeModelCallbacks::ApplicationRecord
   MATCHING_STRIPE_ATTRIBUTES = %w[quantity].freeze
   private_constant :MATCHING_STRIPE_ATTRIBUTES
 
@@ -7,7 +7,12 @@ class StripeSubscriptionSchedulePhasePlan < ApplicationRecord
 
   has_one :stripe_subscription_schedule, through: :stripe_subscription_schedule_phase
 
+  def self.stripe_class
+    Stripe::SubscriptionSchedulePhasePlan
+  end
+
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object)
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self,
       stripe_model: object,
