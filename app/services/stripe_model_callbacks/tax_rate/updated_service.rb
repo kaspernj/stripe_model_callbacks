@@ -3,8 +3,8 @@ class StripeModelCallbacks::TaxRate::UpdatedService < StripeModelCallbacks::Base
     tax_rate.assign_from_stripe(object)
 
     if tax_rate.save
-      create_activity
-      succeed!
+      create_activity if event
+      succeed! tax_rate
     else
       fail! tax_rate.errors.full_messages
     end
