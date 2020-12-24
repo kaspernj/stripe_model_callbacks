@@ -20,6 +20,7 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object)
     assign_attributes(
       canceled_at: object.canceled_at ? Time.zone.at(object.canceled_at) : nil,
       ended_at: object.ended_at ? Time.zone.at(object.ended_at) : nil,

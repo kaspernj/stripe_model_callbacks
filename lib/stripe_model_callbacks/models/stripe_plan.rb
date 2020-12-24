@@ -14,6 +14,7 @@ class StripePlan < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object)
     self.active = object.active == true if object.respond_to?(:active)
     assign_attributes(amount: Money.new(object.amount, object.currency))
     self.stripe_product_id = object.product if object.respond_to?(:product)

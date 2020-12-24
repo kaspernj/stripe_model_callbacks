@@ -8,6 +8,7 @@ class StripeCoupon < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object)
     assign_attributes(
       amount_off: object.amount_off ? Money.new(object.amount_off, object.currency) : nil,
       stripe_valid: object.valid

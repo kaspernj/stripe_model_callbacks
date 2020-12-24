@@ -2,10 +2,11 @@ class StripeSku < StripeModelCallbacks::ApplicationRecord
   monetize :price_cents
 
   def self.stripe_class
-    Stripe::Sku
+    Stripe::SKU
   end
 
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object)
     assign_attributes(
       active: object.active == true,
       created: Time.zone.at(object.created),

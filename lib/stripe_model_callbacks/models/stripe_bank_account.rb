@@ -4,6 +4,7 @@ class StripeBankAccount < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object)
     assign_attributes(stripe_account_id: object.account)
 
     StripeModelCallbacks::AttributesAssignerService.execute!(

@@ -9,6 +9,7 @@ class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object)
     self.stripe_subscription_id = object.subscription if object.respond_to?(:subscription)
     self.stripe_plan_id = object.plan.id if object.plan.respond_to?(:id)
 

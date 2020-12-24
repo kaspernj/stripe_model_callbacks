@@ -15,6 +15,7 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object)
     assign_attributes(
       created: Time.zone.at(object.created),
       stripe_customer_id: object.customer,
