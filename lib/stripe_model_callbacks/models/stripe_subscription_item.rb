@@ -46,7 +46,7 @@ private
 
     # Make sure price is created
     price = StripePrice.find_by(stripe_id: object.price.id)
-    price ||= StripePrice.create_from_stripe!(object.price)
+    StripePrice.create_from_stripe!(object.price) unless price
 
     # Set stripe ID on the subscription item
     self.stripe_price_id = object.price.id
