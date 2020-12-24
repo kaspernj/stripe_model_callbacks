@@ -1,4 +1,6 @@
 class StripeTaxRate < StripeModelCallbacks::ApplicationRecord
+  has_many :stripe_subscription_default_tax_rates, dependent: :destroy
+
   def self.stripe_class
     Stripe::TaxRate
   end
