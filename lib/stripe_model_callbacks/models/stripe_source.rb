@@ -10,7 +10,6 @@ class StripeSource < StripeModelCallbacks::ApplicationRecord
 
   def assign_from_stripe(object)
     check_object_is_stripe_class(object)
-    check_object_is_stripe_class(object)
 
     self.stripe_type = object.type
     self.amount = Money.new(object.amount, object.currency) if object.respond_to?(:amount)
