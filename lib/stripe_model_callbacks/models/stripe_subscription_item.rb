@@ -1,5 +1,6 @@
 class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_plan, optional: true, primary_key: "stripe_id"
+  belongs_to :stripe_price, optional: true, primary_key: "stripe_id"
   belongs_to :stripe_subscription, optional: true, primary_key: "stripe_id"
 
   has_many :stripe_invoice_items, primary_key: "stripe_id"
@@ -11,7 +12,9 @@ class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
   def assign_from_stripe(object)
     check_object_is_stripe_class(object)
     self.stripe_subscription_id = object.subscription if object.respond_to?(:subscription)
-    self.stripe_plan_id = object.plan.id if object.plan.respond_to?(:id)
+    self.stripe_plan_id = object.plan.id if object.try(:plan).respond_to?(:id)
+
+    assign_price_from_stripe(object)
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
@@ -33,5 +36,19 @@ class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
 
     stripe_subscription.reload_from_stripe!
     nil
+  end
+
+private
+
+  def assign_price_from_stripe(object)
+    # Older versions doesn't support price
+    return unless object.try(:price).respond_to?(:id)
+
+    # Make sure price is created
+    price = StripePrice.find_by(stripe_id: object.price.id)
+    StripePrice.create_from_stripe!(object.price) unless price
+
+    # Set stripe ID on the subscription item
+    self.stripe_price_id = object.price.id
   end
 end

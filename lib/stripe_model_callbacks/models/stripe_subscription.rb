@@ -4,9 +4,11 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_plan, optional: true, primary_key: "stripe_id"
   has_many :stripe_invoices, primary_key: "stripe_id"
   has_many :stripe_discounts, primary_key: "stripe_id"
+  has_many :stripe_subscription_default_tax_rates, dependent: :destroy
   has_many :stripe_subscription_items, autosave: true, primary_key: "stripe_id"
   has_many :stripe_subscription_schedules, primary_key: "stripe_id"
   has_many :stripe_plans, through: :stripe_subscription_items
+  has_many :stripe_tax_rates
 
   STATES = %w[trialing active past_due canceled unpaid].freeze
 
@@ -26,7 +28,7 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
       ended_at: object.ended_at ? Time.zone.at(object.ended_at) : nil,
       latest_stripe_invoice_id: latest_invoice_id(object),
       stripe_customer_id: object.customer,
-      stripe_plan_id: object.plan&.id
+      stripe_plan_id: object.respond_to?(:plan) ? object.plan&.id : nil
     )
 
     assign_discount(object)
