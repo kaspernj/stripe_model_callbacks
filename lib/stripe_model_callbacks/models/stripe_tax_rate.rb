@@ -6,7 +6,8 @@ class StripeTaxRate < StripeModelCallbacks::ApplicationRecord
   def assign_from_stripe(object)
     assign_attributes(
       created: Time.zone.at(object.created),
-      inclusive: object.inclusive == true
+      inclusive: object.inclusive == true,
+      stripe_id: object.id
     )
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
