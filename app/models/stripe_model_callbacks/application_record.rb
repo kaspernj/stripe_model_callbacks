@@ -10,7 +10,7 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
     raise "'stripe_class' not defined on #{name}" unless respond_to?(:stripe_class)
 
     # Ignore general objects
-    return if object.class.name == "Stripe::StripeObject"
+    return if object.class.name == "Stripe::StripeObject" # rubocop:disable Style/ClassEqualityComparison:
 
     allowed ||= [stripe_class]
 
