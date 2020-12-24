@@ -2,8 +2,7 @@ require "rails_helper"
 
 describe StripeTaxRate do
   describe "#create_on_stripe!" do
-    # Stripe Ruby Mock doesn't support this yet
-    xit "creates a tax rate on Stripe" do
+    it "creates a tax rate on Stripe", :stripe_mock do
       created_vat_rate = StripeTaxRate.create_on_stripe!(
         display_name: "Test tax rate",
         inclusive: false,
