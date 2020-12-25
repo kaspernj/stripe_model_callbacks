@@ -5,7 +5,7 @@ describe StripeCard do
 
   describe "#to_stripe" do
     it "returns a Stripe::Card instance" do
-      fake_card = double(brand: "Peakcorp Card")
+      fake_card = double(brand: "Peakcorp Card") # rubocop:disable RSpec/VerifiedDoubles
 
       expect(Stripe::Customer)
         .to receive(:retrieve_source).with(a_string_matching(/\Acustomer-identifier-(\d+)\Z/), a_string_matching(/\Astripe-card-(\d+)\Z/)).and_return(fake_card)

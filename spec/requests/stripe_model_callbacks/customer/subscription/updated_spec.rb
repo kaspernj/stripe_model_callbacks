@@ -43,7 +43,7 @@ describe "subscription updating" do
           "id": "txr_1I1qD2AT5SYrvIfd69tAvJe2",
           "object": "tax_rate",
           "active": true,
-          "created": 1608802452,
+          "created": 1_608_802_452,
           "description": nil,
           "display_name": "VAT DK",
           "inclusive": false,

@@ -87,11 +87,12 @@ private
       end
     end
 
-    # Clean up default tax rates no longer found
-    if persisted?
-      stripe_subscription_default_tax_rates.select(&:persisted?).each do |subscription_default_tax_rate|
-        subscription_default_tax_rate.mark_for_destruction if found_ids.exclude?(subscription_default_tax_rate.stripe_tax_rate_id)
-      end
+    clean_up_default_tax_rates_not_found(found_ids) if persisted?
+  end
+
+  def clean_up_default_tax_rates_not_found(found_ids)
+    stripe_subscription_default_tax_rates.select(&:persisted?).each do |subscription_default_tax_rate|
+      subscription_default_tax_rate.mark_for_destruction if found_ids.exclude?(subscription_default_tax_rate.stripe_tax_rate_id)
     end
   end
 
