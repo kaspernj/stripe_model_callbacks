@@ -4,7 +4,7 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_plan, optional: true, primary_key: "stripe_id"
   has_many :stripe_invoices, primary_key: "stripe_id"
   has_many :stripe_discounts, primary_key: "stripe_id"
-  has_many :stripe_subscription_default_tax_rates, dependent: :destroy
+  has_many :stripe_subscription_default_tax_rates, autosave: true, dependent: :destroy
   has_many :stripe_subscription_items, autosave: true, primary_key: "stripe_id"
   has_many :stripe_subscription_schedules, primary_key: "stripe_id"
   has_many :stripe_plans, through: :stripe_subscription_items
@@ -83,11 +83,16 @@ private
       else
         default_tax_rate = StripeSubscriptionDefaultTaxRate.find_by(stripe_subscription_id: object.id, stripe_tax_rate_id: tax_rate.id)
         stripe_subscription_default_tax_rates.build(stripe_subscription_id: object.id, stripe_tax_rate_id: tax_rate.id) unless default_tax_rate
-        found_ids << default_tax_rate.id
+        found_ids << default_tax_rate.id if default_tax_rate
       end
     end
 
-    stripe_subscription_default_tax_rates.where.not(id: found_ids).destroy_all
+    # Clean up default tax rates no longer found
+    if persisted?
+      stripe_subscription_default_tax_rates.select(&:persisted?).each do |subscription_default_tax_rate|
+        subscription_default_tax_rate.mark_for_destruction if found_ids.exclude?(subscription_default_tax_rate.stripe_tax_rate_id)
+      end
+    end
   end
 
   def assign_discount(object)
@@ -124,10 +129,14 @@ private
 
   def find_item_by_stripe_item(item)
     stripe_subscription_items.find do |sub_item|
-      if item.plan.is_a?(String)
-        sub_item.stripe_plan_id == item.plan
+      if item.try(:plan)
+        if item.plan.is_a?(String)
+          sub_item.stripe_plan_id == item.plan
+        else
+          sub_item.stripe_plan_id == item.plan.id
+        end
       else
-        sub_item.stripe_plan_id == item.plan.id
+        sub_item.stripe_price_id == item.price.id
       end
     end
   end
