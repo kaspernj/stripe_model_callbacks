@@ -12,6 +12,7 @@ class StripeInvoiceItem < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object, [Stripe::InvoiceItem, Stripe::InvoiceLineItem])
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
       stripe_customer_id: object.try(:customer),

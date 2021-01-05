@@ -1,4 +1,4 @@
-class StripeSubscriptionSchedulePhase < ApplicationRecord
+class StripeSubscriptionSchedulePhase < StripeModelCallbacks::ApplicationRecord
   MATCHING_STRIPE_ATTRIBUTES = %w[
     application_fee_percent
     collection_method
@@ -12,7 +12,12 @@ class StripeSubscriptionSchedulePhase < ApplicationRecord
 
   has_many :stripe_subscription_schedule_phase_plans, dependent: :destroy
 
+  def self.stripe_class
+    Stripe::SubscriptionSchedulePhase
+  end
+
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object)
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self,
       stripe_model: object,

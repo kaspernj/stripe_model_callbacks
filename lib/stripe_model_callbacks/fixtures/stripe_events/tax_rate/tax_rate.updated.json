@@ -1,0 +1,29 @@
+{
+  "created": 1326853478,
+  "livemode": false,
+  "id": "evt_00000000000000",
+  "type": "tax_rate.updated",
+  "object": "event",
+  "request": null,
+  "pending_webhooks": 1,
+  "api_version": "2018-02-06",
+  "data": {
+    "object": {
+      "id": "txr_00000000000000",
+      "object": "tax_rate",
+      "active": true,
+      "created": 1608755201,
+      "description": "VAT Germany",
+      "display_name": "VAT",
+      "inclusive": false,
+      "jurisdiction": "DE",
+      "livemode": false,
+      "metadata": {
+      },
+      "percentage": 16
+    },
+    "previous_attributes": {
+      "display_name": "Old name"
+    }
+  }
+}

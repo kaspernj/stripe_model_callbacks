@@ -36,6 +36,52 @@ describe "subscription creation" do
       )
     end
 
+    it "creates the subscription from 2020-12-24" do
+      expect { mock_stripe_event("customer.subscription.created.2020-12-24") }
+        .to change(StripeSubscriptionDefaultTaxRate, :count).by(1)
+        .and change(StripePrice, :count).by(1)
+        .and change(StripeSubscription, :count).by(1)
+        .and change(StripeSubscriptionItem, :count).by(1)
+        .and change(StripeTaxRate, :count).by(1)
+
+      created_price = StripePrice.last!
+      created_subscription = StripeSubscription.last
+      created_subscription_item = StripeSubscriptionItem.last
+      created_tax_rate = StripeTaxRate.last!
+
+      expect(response.code).to eq "200"
+
+      expect(created_price).to have_attributes(
+        stripe_product_id: "prod_00000000000000"
+      )
+      expect(created_subscription).to have_attributes(
+        default_tax_rates: [created_tax_rate],
+        latest_stripe_invoice_id: latest_invoice_id,
+        stripe_customer: stripe_customer,
+        stripe_plan: nil,
+        stripe_discount: nil,
+        stripe_discount_id: nil
+      )
+      expect(created_subscription.stripe_plans).to be_empty
+      expect(created_subscription_item).to have_attributes(
+        stripe_id: "si_00000000000000",
+        stripe_price: created_price,
+        stripe_subscription_id: "sub_00000000000000",
+        stripe_subscription: created_subscription,
+        stripe_plan_id: nil,
+        stripe_plan: nil
+      )
+      expect(created_tax_rate).to have_attributes(
+        created: Time.zone.parse("2020-12-24 09:34:12"),
+        description: nil,
+        display_name: "VAT DK",
+        inclusive: false,
+        jurisdiction: nil,
+        percentage: 25.0,
+        stripe_id: "txr_1I1qD2AT5SYrvIfd69tAvJe2"
+      )
+    end
+
     it "sets a discount" do
       send_event_action = proc do
         mock_stripe_event(

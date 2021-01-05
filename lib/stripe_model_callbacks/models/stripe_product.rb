@@ -7,6 +7,7 @@ class StripeProduct < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object, [Stripe::Product, Stripe::Subscription])
     assign_attributes(
       active: object.active == true,
       product_type: object.type,

@@ -6,6 +6,7 @@ class StripeCard < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object)
     self.stripe_customer_id = object.customer if object.respond_to?(:customer)
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
@@ -20,6 +21,6 @@ class StripeCard < StripeModelCallbacks::ApplicationRecord
   end
 
   def to_stripe
-    @to_stripe ||= Stripe::Customer.retrieve(stripe_customer_id).sources.retrieve(stripe_id)
+    @to_stripe ||= Stripe::Customer.retrieve_source(stripe_customer_id, stripe_id)
   end
 end
