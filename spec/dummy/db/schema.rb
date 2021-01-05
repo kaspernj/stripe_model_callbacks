@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_05_084553) do
+ActiveRecord::Schema.define(version: 2021_01_05_141146) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -611,6 +611,15 @@ ActiveRecord::Schema.define(version: 2021_01_05_084553) do
     t.index ["stripe_id"], name: "index_stripe_sources_on_stripe_id"
   end
 
+  create_table "stripe_subscription_default_tax_rates", force: :cascade do |t|
+    t.integer "stripe_subscription_id", null: false
+    t.integer "stripe_tax_rate_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stripe_subscription_id"], name: "index_on_subscription"
+    t.index ["stripe_tax_rate_id"], name: "index_on_tax_rate"
+  end
+
   create_table "stripe_subscription_items", force: :cascade do |t|
     t.string "stripe_id", null: false
     t.datetime "created"
@@ -725,6 +734,20 @@ ActiveRecord::Schema.define(version: 2021_01_05_084553) do
     t.index ["stripe_plan_id"], name: "index_stripe_subscriptions_on_stripe_plan_id"
   end
 
+  create_table "stripe_tax_rates", force: :cascade do |t|
+    t.string "stripe_id", null: false
+    t.string "display_name"
+    t.text "description"
+    t.string "jurisdiction"
+    t.float "percentage"
+    t.boolean "inclusive"
+    t.boolean "active"
+    t.datetime "created"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stripe_id"], name: "index_stripe_tax_rates_on_stripe_id"
+  end
+
   create_table "stripe_transfers", force: :cascade do |t|
     t.string "stripe_id", null: false
     t.integer "amount_cents", null: false
@@ -749,4 +772,6 @@ ActiveRecord::Schema.define(version: 2021_01_05_084553) do
     t.index ["stripe_id"], name: "index_stripe_transfers_on_stripe_id"
   end
 
+  add_foreign_key "stripe_subscription_default_tax_rates", "stripe_subscriptions"
+  add_foreign_key "stripe_subscription_default_tax_rates", "stripe_tax_rates"
 end

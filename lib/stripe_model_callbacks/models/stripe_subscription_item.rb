@@ -10,7 +10,9 @@ class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
 
   def assign_from_stripe(object)
     self.stripe_subscription_id = object.subscription if object.respond_to?(:subscription)
-    self.stripe_plan_id = object.plan.id if object.plan.respond_to?(:id)
+
+    plan = object.respond_to?(:plan) ? object.plan : nil
+    self.stripe_plan_id = plan.id if plan.respond_to?(:id)
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
