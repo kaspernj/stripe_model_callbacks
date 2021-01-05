@@ -20,7 +20,7 @@ class StripeCoupon < StripeModelCallbacks::ApplicationRecord
       model: self, stripe_model: object,
       attributes: %w[
         currency created duration duration_in_months id livemode max_redemptions metadata
-        percent_off times_redeemed
+        name percent_off times_redeemed
       ]
     )
   end
