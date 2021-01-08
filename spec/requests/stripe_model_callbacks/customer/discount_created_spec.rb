@@ -26,7 +26,7 @@ describe "customer discount creation" do
       expect(created_discount.coupon_max_redemptions).to eq nil
       expect(created_discount.coupon_metadata).to eq "{}"
       expect(created_discount.coupon_percent_off).to eq 25
-      expect(created_discount.coupon_redeem_by).to eq nil
+      expect(created_discount.coupon_redeem_by).to eq Time.zone.parse("2021-03-21 22:59:00")
       expect(created_discount.coupon_times_redeemed).to eq 0
       expect(created_discount.coupon_valid).to eq true
       expect(created_discount.start).to eq Time.zone.parse("2018-02-06 12:29:34")

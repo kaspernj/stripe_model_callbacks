@@ -28,7 +28,7 @@ describe "customer discount deleted" do
       expect(discount.coupon_max_redemptions).to eq nil
       expect(discount.coupon_metadata).to eq "{}"
       expect(discount.coupon_percent_off).to eq 25
-      expect(discount.coupon_redeem_by).to eq nil
+      expect(discount.coupon_redeem_by).to eq Time.zone.parse("2021-03-21 22:59:00")
       expect(discount.coupon_times_redeemed).to eq 0
       expect(discount.coupon_valid).to eq true
       expect(discount.start).to eq Time.zone.parse("2018-02-06 12:29:43")
