@@ -3,7 +3,7 @@ require "rails_helper"
 describe "customer discount deleted" do
   let!(:coupon) { create :stripe_coupon, stripe_id: "25OFF_00000000000000" }
   let!(:customer) { create :stripe_customer, stripe_id: "cus_00000000000000" }
-  let!(:discount) { create :stripe_discount, stripe_coupon: coupon, stripe_customer: customer }
+  let!(:discount) { create :stripe_discount, stripe_id: "di_00000000000000", stripe_coupon: coupon, stripe_customer: customer }
 
   describe "#execute!" do
     it "adds an activity and updates the existing discount" do
@@ -15,6 +15,7 @@ describe "customer discount deleted" do
 
       expect(response.code).to eq "200"
 
+      expect(discount.stripe_id).to eq "di_00000000000000"
       expect(discount.stripe_coupon_id).to eq "25OFF_00000000000000"
       expect(discount.stripe_coupon).to eq coupon
       expect(discount.stripe_customer_id).to eq "cus_00000000000000"
