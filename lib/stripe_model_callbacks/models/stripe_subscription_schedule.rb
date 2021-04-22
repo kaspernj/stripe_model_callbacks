@@ -18,6 +18,7 @@ class StripeSubscriptionSchedule < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object)
     assign_attributes(
       released_stripe_subscription_id: object.released_subscription,
       stripe_customer_id: object.customer,

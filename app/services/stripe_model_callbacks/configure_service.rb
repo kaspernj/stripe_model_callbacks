@@ -5,7 +5,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     @events = events
   end
 
-  def execute
+  def execute # rubocop:disable Metrics/AbcSize
     all_events
     charge_refund_events
     customer_bank_account_events
@@ -22,6 +22,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     recipient_events
     payout_events
     plan_events
+    price_events
     product_events
     review_events
     sku_events
@@ -166,6 +167,14 @@ private
     %w[created deleted updated].each do |sku_event|
       subscribe "sku.#{sku_event}" do |event|
         StripeModelCallbacks::Sku::UpdatedService.execute_with_advisory_lock!(event: event)
+      end
+    end
+  end
+
+  def price_events
+    %w[created deleted updated].each do |price_event|
+      subscribe "price.#{price_event}" do |event|
+        StripeModelCallbacks::Price::UpdatedService.execute_with_advisory_lock!(event: event)
       end
     end
   end

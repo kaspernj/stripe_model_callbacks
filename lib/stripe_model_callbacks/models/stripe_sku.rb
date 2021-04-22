@@ -2,10 +2,22 @@ class StripeSku < StripeModelCallbacks::ApplicationRecord
   monetize :price_cents
 
   def self.stripe_class
-    Stripe::Sku
+    Stripe::SKU
   end
 
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object)
+    assign_base_attributes(object)
+
+    StripeModelCallbacks::AttributesAssignerService.execute!(
+      model: self, stripe_model: object,
+      attributes: %w[currency]
+    )
+  end
+
+private
+
+  def assign_base_attributes(object)
     assign_attributes(
       active: object.active == true,
       created: Time.zone.at(object.created),
@@ -18,11 +30,6 @@ class StripeSku < StripeModelCallbacks::ApplicationRecord
       metadata: JSON.generate(object.metadata),
       price: Money.new(object.price, object.currency),
       stripe_product_id: object.product
-    )
-
-    StripeModelCallbacks::AttributesAssignerService.execute!(
-      model: self, stripe_model: object,
-      attributes: %w[currency]
     )
   end
 end

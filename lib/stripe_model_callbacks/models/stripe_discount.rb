@@ -14,6 +14,7 @@ class StripeDiscount < StripeModelCallbacks::ApplicationRecord
   end
 
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object)
     if object.respond_to?(:customer)
       customer_id = object.customer
     else

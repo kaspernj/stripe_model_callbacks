@@ -2,10 +2,11 @@ class StripePayout < StripeModelCallbacks::ApplicationRecord
   monetize :amount_cents, allow_nil: true
 
   def self.stripe_class
-    Stripe::Subscription
+    Stripe::Payout
   end
 
   def assign_from_stripe(object)
+    check_object_is_stripe_class(object)
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
       arrival_date: Time.zone.at(object.arrival_date),

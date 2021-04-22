@@ -453,6 +453,32 @@ ActiveRecord::Schema.define(version: 2021_01_11_120130) do
     t.index ["stripe_product_id"], name: "index_stripe_plans_on_stripe_product_id"
   end
 
+  create_table "stripe_prices", force: :cascade do |t|
+    t.string "stripe_id", null: false
+    t.datetime "deleted_at"
+    t.boolean "active"
+    t.string "billing_scheme"
+    t.datetime "created"
+    t.string "currency"
+    t.string "lookup_key"
+    t.json "metadata"
+    t.string "nickname"
+    t.string "stripe_product_id"
+    t.boolean "recurring_aggregate_usage"
+    t.string "recurring_interval"
+    t.integer "recurring_interval_count"
+    t.string "recurring_usage_type"
+    t.string "tiers_mode"
+    t.integer "transform_quantity_divide_by"
+    t.string "transform_quantity_round"
+    t.string "price_type"
+    t.integer "unit_amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stripe_id"], name: "index_stripe_prices_on_stripe_id"
+    t.index ["stripe_product_id"], name: "index_stripe_prices_on_stripe_product_id"
+  end
+
   create_table "stripe_products", force: :cascade do |t|
     t.string "stripe_id", null: false
     t.boolean "active", default: false, null: false
@@ -632,8 +658,10 @@ ActiveRecord::Schema.define(version: 2021_01_11_120130) do
     t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_price_id"
     t.index ["stripe_id"], name: "index_stripe_subscription_items_on_stripe_id"
     t.index ["stripe_plan_id"], name: "index_stripe_subscription_items_on_stripe_plan_id"
+    t.index ["stripe_price_id"], name: "index_stripe_subscription_items_on_stripe_price_id"
     t.index ["stripe_subscription_id"], name: "index_stripe_subscription_items_on_stripe_subscription_id"
   end
 
@@ -717,7 +745,7 @@ ActiveRecord::Schema.define(version: 2021_01_11_120130) do
     t.text "metadata"
     t.string "stripe_plan_id"
     t.integer "quantity"
-    t.datetime "start"
+    t.datetime "start_date"
     t.integer "tax_percent"
     t.string "status"
     t.datetime "trial_start"
