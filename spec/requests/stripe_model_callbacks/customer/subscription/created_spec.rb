@@ -3,7 +3,7 @@ require "rails_helper"
 describe "subscription creation" do
   let(:stripe_coupon) { create :stripe_coupon }
   let!(:stripe_customer) { create :stripe_customer, stripe_id: "cus_00000000000000" }
-  let(:stripe_discount) { create :stripe_discount, stripe_coupon: stripe_coupon, coupon_times_redeemed: 4 }
+  let(:stripe_discount) { create :stripe_discount, stripe_id: "di_00000000000000", stripe_coupon: stripe_coupon, coupon_times_redeemed: 4 }
   let!(:stripe_plan) { create :stripe_plan, stripe_id: "silver-express-898" }
   let(:stripe_subscription) { create :stripe_subscription, stripe_customer: stripe_customer, stripe_discount: stripe_discount, stripe_id: "sub_CGPu5KqP1TORKF" }
   let(:latest_invoice_id) { "in_1GoYq1J3a8kmO8fmMn28KIy2" }
@@ -89,6 +89,7 @@ describe "subscription creation" do
           data: {
             object: {
               discount: {
+                id: "di_00000000000000",
                 coupon: {
                   amount_off: nil,
                   created: 1_518_806_752,
@@ -122,7 +123,7 @@ describe "subscription creation" do
       created_subscription = StripeSubscription.last
 
       expect(created_subscription).to have_attributes(
-        stripe_discount_id: created_discount.id.to_s,
+        stripe_discount_id: "di_00000000000000",
         stripe_discount: created_discount,
         stripe_plan: stripe_plan,
         stripe_plans: [stripe_plan]
@@ -137,6 +138,7 @@ describe "subscription creation" do
             object: {
               id: stripe_subscription.stripe_id,
               discount: {
+                id: "di_00000000000000",
                 coupon: {
                   amount_off: nil,
                   created: 1_518_806_752,
@@ -174,7 +176,7 @@ describe "subscription creation" do
       created_subscription_item = StripeSubscriptionItem.last
 
       expect(created_subscription).to have_attributes(
-        stripe_discount_id: stripe_discount.id.to_s,
+        stripe_discount_id: "di_00000000000000",
         stripe_discount: stripe_discount,
         stripe_plan: stripe_plan,
         stripe_plans: [stripe_plan]

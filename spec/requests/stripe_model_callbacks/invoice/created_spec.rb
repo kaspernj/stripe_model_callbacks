@@ -66,6 +66,7 @@ describe "invoice created" do
           data: {
             object: {
               discount: {
+                "id": "di_00000000000000",
                 "object": "discount",
                 "customer": "cus_CLI9d5IHGcdWBY",
                 "end": nil,

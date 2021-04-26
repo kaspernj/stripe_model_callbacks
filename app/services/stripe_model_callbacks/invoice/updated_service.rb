@@ -14,6 +14,7 @@ class StripeModelCallbacks::Invoice::UpdatedService < StripeModelCallbacks::Base
 private
 
   def create_activity
+    invoice.create_activity :delete if event.type == "invoice.deleted"
     invoice.create_activity :payment_failed if event.type == "invoice.payment_failed"
     invoice.create_activity :payment_succeeded if event.type == "invoice.payment_succeeded"
     invoice.create_activity :sent if event.type == "invoice.sent"

@@ -103,9 +103,10 @@ private
     object.lines.each do |item|
       # Has to be found this way to actually update the values
       invoice_item = stripe_invoice_items.find do |invoice_item_i|
-        invoice_item_i.stripe_id == item.id &&
-          invoice_item_i.stripe_subscription_item_id == item.subscription_item &&
-          invoice_item_i.stripe_plan_id == item.plan&.id
+        matching = invoice_item_i.stripe_id == item.id && invoice_item_i.stripe_plan_id == item.plan&.id
+        matching &&= invoice_item_i.stripe_subscription_item_id == item.subscription_item if item.respond_to?(:subscription_item)
+
+        matching
       end
 
       invoice_item ||= stripe_invoice_items.build

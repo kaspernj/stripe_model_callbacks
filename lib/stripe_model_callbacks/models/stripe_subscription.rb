@@ -1,7 +1,8 @@
 class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_customer, optional: true, primary_key: "stripe_id", touch: true
-  belongs_to :stripe_discount, optional: true
+  belongs_to :stripe_discount, optional: true, primary_key: "stripe_id"
   belongs_to :stripe_plan, optional: true, primary_key: "stripe_id"
+
   has_many :stripe_invoices, primary_key: "stripe_id"
   has_many :stripe_discounts, primary_key: "stripe_id"
   has_many :stripe_subscription_default_tax_rates, autosave: true, dependent: :destroy

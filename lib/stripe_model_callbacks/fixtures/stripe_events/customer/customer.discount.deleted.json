@@ -9,6 +9,7 @@
   "api_version": "2018-01-23",
   "data": {
     "object": {
+      "id": "di_00000000000000",
       "object": "discount",
       "coupon": {
         "id": "25OFF_00000000000000",
@@ -23,7 +24,7 @@
         "metadata": {
         },
         "percent_off": 25,
-        "redeem_by": null,
+        "redeem_by": 1616367540,
         "times_redeemed": 0,
         "valid": true
       },

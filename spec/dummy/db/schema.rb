@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_24_123911) do
+ActiveRecord::Schema.define(version: 2021_01_11_120130) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -144,6 +144,7 @@ ActiveRecord::Schema.define(version: 2020_12_24_123911) do
     t.boolean "stripe_valid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
     t.index ["deleted_at"], name: "index_stripe_coupons_on_deleted_at"
     t.index ["stripe_id"], name: "index_stripe_coupons_on_stripe_id"
   end
@@ -183,7 +184,6 @@ ActiveRecord::Schema.define(version: 2020_12_24_123911) do
     t.integer "coupon_max_redemptions"
     t.text "coupon_metadata"
     t.integer "coupon_percent_off"
-    t.integer "coupon_redeem_by"
     t.integer "coupon_times_redeemed"
     t.boolean "coupon_valid"
     t.datetime "created"
@@ -192,8 +192,11 @@ ActiveRecord::Schema.define(version: 2020_12_24_123911) do
     t.datetime "end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "coupon_redeem_by"
+    t.string "stripe_id", null: false
     t.index ["stripe_coupon_id"], name: "index_stripe_discounts_on_stripe_coupon_id"
     t.index ["stripe_customer_id"], name: "index_stripe_discounts_on_stripe_customer_id"
+    t.index ["stripe_id"], name: "index_stripe_discounts_on_stripe_id"
     t.index ["stripe_subscription_id"], name: "index_stripe_discounts_on_stripe_subscription_id"
   end
 
