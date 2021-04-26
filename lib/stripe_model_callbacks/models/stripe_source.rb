@@ -59,13 +59,16 @@ private
   end
 
   def assign_receiver(object)
+    receiver = object.receiver
+    return unless receiver
+
     assign_attributes(
-      receiver_address: object.receiver.address,
-      receiver_amount_charged: Money.new(object.receiver.amount_charged, object.currency),
-      receiver_amount_received: Money.new(object.receiver.amount_received, object.currency),
-      receiver_amount_returned: Money.new(object.receiver.amount_returned, object.currency),
-      receiver_refund_attributes_method: object.receiver.refund_attributes_method,
-      receiver_refund_attributes_status: object.receiver.refund_attributes_status
+      receiver_address: receiver.address,
+      receiver_amount_charged: Money.new(receiver.amount_charged, object.currency),
+      receiver_amount_received: Money.new(receiver.amount_received, object.currency),
+      receiver_amount_returned: Money.new(receiver.amount_returned, object.currency),
+      receiver_refund_attributes_method: receiver.refund_attributes_method,
+      receiver_refund_attributes_status: receiver.refund_attributes_status
     )
   end
 
