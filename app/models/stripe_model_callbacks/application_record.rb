@@ -14,7 +14,7 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
 
     allowed ||= [stripe_class]
 
-    raise "Expected #{object.class.name} to be a #{allowed.map(&:name).join(", ")}" unless allowed.any? { |stripe_class| object.is_a?(stripe_class) }
+    raise "Expected #{object.class.name} to be a #{allowed.map(&:name).join(", ")}" unless allowed.any?(stripe_class)
   end
 
   def check_object_is_stripe_class(object, allowed = nil)
