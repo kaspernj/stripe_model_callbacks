@@ -1,5 +1,5 @@
 class StripeModelCallbacks::Payout::UpdatedService < StripeModelCallbacks::BaseEventService
-  def execute
+  def perform
     payout.assign_from_stripe(object)
 
     if payout.save

@@ -1,5 +1,5 @@
 class StripeModelCallbacks::Customer::BankAccount::DeletedService < StripeModelCallbacks::BaseEventService
-  def execute
+  def perform
     bank_account = StripeBankAccount.find_or_initialize_by(stripe_id: object.id)
     bank_account.assign_from_stripe(object)
 

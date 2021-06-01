@@ -1,5 +1,5 @@
 class StripeModelCallbacks::Review::UpdatedService < StripeModelCallbacks::BaseEventService
-  def execute
+  def perform
     review = StripeReview.find_or_initialize_by(stripe_id: object.id)
     review.assign_from_stripe(object)
 
