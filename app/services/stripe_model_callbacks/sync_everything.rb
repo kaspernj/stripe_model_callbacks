@@ -1,5 +1,5 @@
 class StripeModelCallbacks::SyncEverything < StripeModelCallbacks::BaseService
-  def execute
+  def perform
     StripeModelCallbacks::Coupon::SyncAll.execute!
     StripeModelCallbacks::Plan::SyncAll.execute!
 

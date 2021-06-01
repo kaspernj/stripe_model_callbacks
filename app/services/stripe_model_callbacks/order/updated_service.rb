@@ -1,5 +1,5 @@
 class StripeModelCallbacks::Order::UpdatedService < StripeModelCallbacks::BaseEventService
-  def execute
+  def perform
     order.assign_from_stripe(object)
 
     if order.save

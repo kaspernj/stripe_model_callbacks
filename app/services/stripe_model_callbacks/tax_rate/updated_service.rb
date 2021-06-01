@@ -1,5 +1,5 @@
 class StripeModelCallbacks::TaxRate::UpdatedService < StripeModelCallbacks::BaseEventService
-  def execute
+  def perform
     tax_rate.assign_from_stripe(object)
 
     if tax_rate.save

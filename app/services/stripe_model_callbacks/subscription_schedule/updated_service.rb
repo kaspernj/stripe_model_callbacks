@@ -4,7 +4,7 @@ class StripeModelCallbacks::SubscriptionSchedule::UpdatedService < StripeModelCa
   }.with_indifferent_access.freeze
   private_constant :TRACKED_ACTIVITIES
 
-  def execute
+  def perform
     subscription_schedule.assign_from_stripe(object)
     set_cancellation_date if canceled?
 

@@ -1,5 +1,5 @@
 class StripeModelCallbacks::NotifierService < StripeModelCallbacks::BaseEventService
-  def execute
+  def perform
     Rails.logger.info "New Stripe event: #{event.type}"
     succeed!
   end

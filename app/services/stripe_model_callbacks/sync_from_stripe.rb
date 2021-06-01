@@ -5,7 +5,7 @@ class StripeModelCallbacks::SyncFromStripe < StripeModelCallbacks::BaseService
     @stripe_object = stripe_object
   end
 
-  def execute
+  def perform
     model = model_class.find_by(stripe_id: stripe_object.id)
 
     if model

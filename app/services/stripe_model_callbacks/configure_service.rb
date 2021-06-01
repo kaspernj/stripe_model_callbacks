@@ -5,7 +5,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     @events = events
   end
 
-  def execute # rubocop:disable Metrics/AbcSize
+  def perform # rubocop:disable Metrics/AbcSize
     all_events
     charge_refund_events
     customer_bank_account_events

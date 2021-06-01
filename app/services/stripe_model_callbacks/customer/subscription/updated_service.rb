@@ -1,5 +1,5 @@
 class StripeModelCallbacks::Customer::Subscription::UpdatedService < StripeModelCallbacks::BaseEventService
-  def execute
+  def perform
     subscription.assign_from_stripe(object)
     subscription.deleted_at ||= Time.zone.now if event.type == "customer.subscription.deleted"
 
