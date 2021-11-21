@@ -15,32 +15,36 @@ describe "invoice created" do
 
       expect(response.code).to eq "200"
 
-      expect(created_invoice.stripe_id).to eq "in_00000000000000"
+      expect(created_invoice).to have_attributes(
+        stripe_id: "in_00000000000000",
+        application_fee_amount: nil,
+        attempt_count: 1,
+        attempted: false,
+        billing_deprecated: nil,
+        stripe_charge_id: "ch_00000000000000",
+        collection_method: "charge_automatically",
+        closed: true,
+        currency: "dkk",
+        stripe_customer_id: "cus_00000000000000",
+        created: Time.zone.parse("2018-02-04 17:02:25"),
+        description: nil,
+        stripe_discount: nil,
+        due_date: nil,
+        forgiven: false,
+        next_payment_attempt: nil,
+        number: "a04598880b-0007",
+        paid: true,
+        period_end: Time.zone.parse("2018-02-04 17:02:25"),
+        period_start: Time.zone.parse("2018-02-04 17:02:25"),
+        receipt_number: nil,
+        starting_balance: 0,
+        statement_descriptor: nil
+      )
       expect(created_invoice.amount_due.format).to eq "35.00 kr."
       expect(created_invoice.amount_paid.format).to eq "35.00 kr."
       expect(created_invoice.amount_remaining.format).to eq "0.00 kr."
-      expect(created_invoice.application_fee_amount).to eq nil
-      expect(created_invoice.attempt_count).to eq 1
-      expect(created_invoice.attempted?).to eq false
-      expect(created_invoice.billing).to eq "charge_automatically"
-      expect(created_invoice.stripe_charge_id).to eq "ch_00000000000000"
-      expect(created_invoice.collection_method).to eq "charge_automatically"
-      expect(created_invoice.closed?).to eq true
-      expect(created_invoice.currency).to eq "dkk"
-      expect(created_invoice.stripe_customer_id).to eq "cus_00000000000000"
-      expect(created_invoice.created).to eq Time.zone.parse("2018-02-04 17:02:25")
-      expect(created_invoice.description).to eq nil
-      expect(created_invoice.stripe_discount).to eq nil
-      expect(created_invoice.due_date).to eq nil
-      expect(created_invoice.forgiven?).to eq false
-      expect(created_invoice.next_payment_attempt).to eq nil
-      expect(created_invoice.number).to eq "a04598880b-0007"
-      expect(created_invoice.paid?).to eq true
-      expect(created_invoice.period_end).to eq Time.zone.parse("2018-02-04 17:02:25")
-      expect(created_invoice.period_start).to eq Time.zone.parse("2018-02-04 17:02:25")
-      expect(created_invoice.receipt_number).to eq nil
-      expect(created_invoice.starting_balance).to eq 0
-      expect(created_invoice.statement_descriptor).to eq nil
+
+
       expect(created_invoice.stripe_subscription_id).to eq "sub_00000000000000"
       expect(created_invoice.subtotal.format).to eq "35.00 kr."
       expect(created_invoice.tax).to eq nil

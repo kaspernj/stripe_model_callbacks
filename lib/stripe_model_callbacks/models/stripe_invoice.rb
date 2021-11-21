@@ -44,7 +44,7 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
       attributes: %w[
-        attempted attempt_count auto_advance billing billing_reason
+        attempted attempt_count auto_advance billing_reason
         collection_method currency description ending_balance hosted_invoice_url
         id invoice_pdf livemode next_payment_attempt number
         paid receipt_number starting_balance statement_descriptor

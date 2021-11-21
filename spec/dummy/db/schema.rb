@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_24_123911) do
+ActiveRecord::Schema.define(version: 2021_11_21_155750) do
 
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
@@ -285,7 +285,7 @@ ActiveRecord::Schema.define(version: 2020_12_24_123911) do
     t.string "amount_due_currency", null: false
     t.integer "application_fee_amount_cents"
     t.string "application_fee_amount_currency"
-    t.string "billing", null: false
+    t.string "billing_deprecated"
     t.integer "ending_balance_cents"
     t.integer "ending_balance_currency"
     t.string "stripe_charge_id"
@@ -637,8 +637,8 @@ ActiveRecord::Schema.define(version: 2020_12_24_123911) do
   end
 
   create_table "stripe_subscription_default_tax_rates", force: :cascade do |t|
-    t.bigint "stripe_subscription_id", null: false
-    t.bigint "stripe_tax_rate_id", null: false
+    t.integer "stripe_subscription_id", null: false
+    t.integer "stripe_tax_rate_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["stripe_subscription_id"], name: "index_on_subscription"

@@ -22,7 +22,7 @@ describe "invoice payment failed" do
       expect(stripe_invoice.application_fee_amount).to eq nil
       expect(stripe_invoice.attempt_count).to eq 0
       expect(stripe_invoice.attempted?).to eq true
-      expect(stripe_invoice.billing).to eq "charge_automatically"
+      expect(stripe_invoice.billing_deprecated).to eq nil
       expect(stripe_invoice.collection_method).to eq "charge_automatically"
       expect(stripe_invoice.stripe_charge_id).to eq nil
       expect(stripe_invoice.closed?).to eq false
