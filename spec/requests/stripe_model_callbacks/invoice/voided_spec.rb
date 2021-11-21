@@ -32,7 +32,7 @@ describe "invoice updated" do
         application_fee_amount: nil,
         attempt_count: 0,
         attempted: true,
-        billing: "charge_automatically",
+        billing_deprecated: nil,
         collection_method: "charge_automatically",
         stripe_charge_id: nil,
         closed: true,

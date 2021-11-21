@@ -14,27 +14,29 @@ describe "invoice payment succeeded" do
 
       expect(response.code).to eq "200"
 
-      expect(created_invoice.stripe_id).to eq "in_1BrsEhAT5SYrvIfdlmd9sZns"
+      expect(created_invoice).to have_attributes(
+        stripe_id: "in_1BrsEhAT5SYrvIfdlmd9sZns",
+        application_fee_amount: nil,
+        attempt_count: 0,
+        attempted: true,
+        billing_deprecated: nil,
+        collection_method: "charge_automatically",
+        stripe_charge_id: "ch_1BrsEhAT5SYrvIfdDOd8ifsb",
+        closed: true,
+        currency: "dkk",
+        stripe_customer_id: "cus_CGNFgjPGtHlvXI",
+        description: nil,
+        stripe_discount: nil,
+        due_date: nil,
+        forgiven: false,
+        next_payment_attempt: nil,
+        number: "a04598880b-0014",
+        paid: true
+      )
       expect(created_invoice.amount_due.format).to eq "100.00 kr."
       expect(created_invoice.amount_paid.format).to eq "100.00 kr."
       expect(created_invoice.amount_remaining.format).to eq "0.00 kr."
-      expect(created_invoice.application_fee_amount).to eq nil
-      expect(created_invoice.attempt_count).to eq 0
-      expect(created_invoice.attempted?).to eq true
-      expect(created_invoice.billing).to eq "charge_automatically"
-      expect(created_invoice.collection_method).to eq "charge_automatically"
-      expect(created_invoice.stripe_charge_id).to eq "ch_1BrsEhAT5SYrvIfdDOd8ifsb"
-      expect(created_invoice.closed?).to eq true
-      expect(created_invoice.currency).to eq "dkk"
-      expect(created_invoice.stripe_customer_id).to eq "cus_CGNFgjPGtHlvXI"
       expect(created_invoice.created).to eq Time.zone.parse("2018-02-04 18:29:07")
-      expect(created_invoice.description).to eq nil
-      expect(created_invoice.stripe_discount).to eq nil
-      expect(created_invoice.due_date).to eq nil
-      expect(created_invoice.forgiven?).to eq false
-      expect(created_invoice.next_payment_attempt).to eq nil
-      expect(created_invoice.number).to eq "a04598880b-0014"
-      expect(created_invoice.paid?).to eq true
       expect(created_invoice.period_end).to eq Time.zone.parse("2018-02-04 18:29:07")
       expect(created_invoice.period_start).to eq Time.zone.parse("2018-02-04 18:29:07")
       expect(created_invoice.receipt_number).to eq nil

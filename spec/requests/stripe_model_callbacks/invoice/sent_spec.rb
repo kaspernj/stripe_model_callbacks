@@ -22,7 +22,7 @@ describe "invoice sent" do
       expect(created_invoice.application_fee_amount).to eq nil
       expect(created_invoice.attempt_count).to eq 1
       expect(created_invoice.attempted?).to eq true
-      expect(created_invoice.billing).to eq "charge_automatically"
+      expect(created_invoice.billing_deprecated).to eq nil
       expect(created_invoice.collection_method).to eq "charge_automatically"
       expect(created_invoice.stripe_charge_id).to eq "ch_00000000000000"
       expect(created_invoice.closed?).to eq true
