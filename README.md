@@ -67,6 +67,16 @@ log and more automatically using the ActiveRecord models.
 
 You can use a service like Ultrahook to set up a proxy for your local development machine to test against.
 
+### Report errors
+
+```ruby
+StripeModelCallbacks.configure do |config|
+  config.on_error do |args:, error:|
+    PeakFlowUtils::Notifier.notify(error: error)
+  end
+end
+```
+
 ## Usage
 
 ### Queries with ActiveRecord
@@ -133,7 +143,7 @@ https://github.com/kaspernj/stripe_model_callbacks/tree/master/spec/factories
 
 You can mock Stripe events by using the helper method `mock_stripe_event` by including this helper:
 
-```
+```ruby
 RSpec.configure do |config|
   config.include StripeModelCallbacks::EventMocker
 end
