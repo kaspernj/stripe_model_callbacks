@@ -164,9 +164,6 @@ mock_stripe_event("invoice.created", data: {object: {discount: {"customer": "cus
 ## Contributing
 Contribution directions go here.
 
-# capybara-webkit installation issue
-Instruction how to solve the issue: https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#macOS-catalina-1015
-
 # Database schema changes
   1. Add migration to `/db/migrate`: ```rails g migration AddStripeIdUniqToStripeInvoices```
   2. Go to directory: `spec/dummy`
