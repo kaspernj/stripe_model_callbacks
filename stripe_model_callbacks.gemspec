@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
   s.add_dependency "rails", ">= 5.0.0"
+
   s.add_runtime_dependency "auto_autoloader"
   s.add_runtime_dependency "money-rails"
   s.add_runtime_dependency "public_activity"
@@ -25,4 +26,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "stripe"
   s.add_runtime_dependency "stripe_event", ">= 0.0.4"
   s.add_runtime_dependency "with_advisory_lock", ">= 4.6.0"
+
+  s.add_development_dependency "appraisal"
+  s.add_development_dependency "pry"
 end
