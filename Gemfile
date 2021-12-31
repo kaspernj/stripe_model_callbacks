@@ -11,13 +11,13 @@ group :development, :test do
   gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
   gem "sqlite3"
+  gem "stripe-ruby-mock", git: "https://github.com/stripe-ruby-mock/stripe-ruby-mock.git"
   gem "tzinfo-data"
   gem "with_advisory_lock"
 end
 
 group :test do
   gem "capybara"
-  gem "capybara-webkit"
   gem "factory_bot_rails", require: false
   gem "rspec-rails"
 end
