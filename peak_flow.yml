@@ -8,7 +8,7 @@ builds:
     name: Ruby 2.7.5, Rails 6
     script:
       - bundle exec appraisal "rails 6" rspec
-  build_1:
+  build_2:
     environment:
       RUBY_VERSION: 2.7.5
     name: Ruby 2.7.5, Rails 7
