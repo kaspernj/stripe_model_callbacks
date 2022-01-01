@@ -10,7 +10,7 @@ GIT
 PATH
   remote: .
   specs:
-    stripe_model_callbacks (0.1.4)
+    stripe_model_callbacks (0.1.5)
       auto_autoloader
       money-rails
       public_activity
