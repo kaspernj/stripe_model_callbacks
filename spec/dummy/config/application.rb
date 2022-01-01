@@ -18,8 +18,10 @@ module Dummy; end
 class Dummy::Application < Rails::Application
   # Initialize configuration defaults for originally generated Rails version.
   if Gem.loaded_specs["rails"].version.to_s.start_with?("7.")
+    puts "LOAD 7 DEFAULTS"
     config.load_defaults 7.0
   else
+    puts "LOAD 6 DEFAULTS"
     config.load_defaults 6.0
   end
 
