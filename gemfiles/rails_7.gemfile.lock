@@ -1,4 +1,15 @@
 GIT
+  remote: https://github.com/ledermann/public_activity.git
+  revision: 393e1f0a62154bbb2e544138de8a3d308df1578e
+  branch: rails-7
+  specs:
+    public_activity (1.6.4)
+      actionpack (>= 3.0.0)
+      activerecord (>= 3.0)
+      i18n (>= 0.5.0)
+      railties (>= 3.0.0)
+
+GIT
   remote: https://github.com/stripe-ruby-mock/stripe-ruby-mock.git
   revision: 462891fb988b7a743ae39fd58b0e6f8cb3eb29f1
   specs:
@@ -8,7 +19,7 @@ GIT
       stripe (> 5, < 6)
 
 PATH
-  remote: .
+  remote: ..
   specs:
     stripe_model_callbacks (0.1.4)
       auto_autoloader
@@ -131,7 +142,6 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.6.1)
     minitest (5.15.0)
     monetize (1.11.0)
       money (~> 6.12)
@@ -144,8 +154,7 @@ GEM
       railties (>= 3.0)
     multi_json (1.15.0)
     nio4r (2.5.8)
-    nokogiri (1.12.5)
-      mini_portile2 (~> 2.6.1)
+    nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     parallel (1.21.0)
     parser (3.0.3.2)
@@ -155,11 +164,6 @@ GEM
       method_source (~> 1.0)
     pry-rails (0.3.9)
       pry (>= 0.10.4)
-    public_activity (1.6.4)
-      actionpack (>= 3.0.0)
-      activerecord (>= 3.0)
-      i18n (>= 0.5.0)
-      railties (>= 3.0.0)
     public_suffix (4.0.6)
     racc (1.6.0)
     rack (2.2.3)
@@ -266,7 +270,7 @@ GEM
     zeitwerk (2.5.3)
 
 PLATFORMS
-  ruby
+  x86_64-linux
 
 DEPENDENCIES
   appraisal
@@ -275,6 +279,8 @@ DEPENDENCIES
   factory_bot_rails
   pry
   pry-rails
+  public_activity!
+  rails (>= 7.0.0)
   rails_best_practices
   rspec-rails
   rubocop

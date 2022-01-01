@@ -70,25 +70,25 @@ describe "invoice created" do
           data: {
             object: {
               discount: {
-                "object": "discount",
-                "customer": "cus_CLI9d5IHGcdWBY",
-                "end": nil,
-                "start": 1_518_896_595,
-                "subscription": "sub_CLIA1HwHyqUO2L",
-                "coupon": {
-                  "id": stripe_coupon.stripe_id,
-                  "object": "coupon",
-                  "amount_off": nil,
-                  "created": 1_518_896_553,
-                  "currency": "",
-                  "duration": "forever",
-                  "duration_in_months": "",
-                  "livemode": "true",
-                  "max_redemptions": "",
-                  "percent_off": "100",
-                  "redeem_by": nil,
-                  "times_redeemed": "1",
-                  "valid": "true"
+                object: "discount",
+                customer: "cus_CLI9d5IHGcdWBY",
+                end: nil,
+                start: 1_518_896_595,
+                subscription: "sub_CLIA1HwHyqUO2L",
+                coupon: {
+                  id: stripe_coupon.stripe_id,
+                  object: "coupon",
+                  amount_off: nil,
+                  created: 1_518_896_553,
+                  currency: "",
+                  duration: "forever",
+                  duration_in_months: "",
+                  livemode: "true",
+                  max_redemptions: "",
+                  percent_off: "100",
+                  redeem_by: nil,
+                  times_redeemed: "1",
+                  valid: "true"
                 }
               }
             }

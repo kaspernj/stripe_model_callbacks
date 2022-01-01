@@ -40,17 +40,17 @@ describe "subscription updating" do
     it "updates changes to default tax rates" do
       default_tax_rates = [
         {
-          "id": "txr_1I1qD2AT5SYrvIfd69tAvJe2",
-          "object": "tax_rate",
-          "active": true,
-          "created": 1_608_802_452,
-          "description": nil,
-          "display_name": "VAT DK",
-          "inclusive": false,
-          "jurisdiction": nil,
-          "livemode": false,
-          "metadata": {},
-          "percentage": 25.0
+          id: "txr_1I1qD2AT5SYrvIfd69tAvJe2",
+          object: "tax_rate",
+          active: true,
+          created: 1_608_802_452,
+          description: nil,
+          display_name: "VAT DK",
+          inclusive: false,
+          jurisdiction: nil,
+          livemode: false,
+          metadata: {},
+          percentage: 25.0
         }
       ]
 

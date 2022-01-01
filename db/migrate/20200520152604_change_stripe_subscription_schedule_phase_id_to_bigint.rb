@@ -1,19 +1,19 @@
 class ChangeStripeSubscriptionSchedulePhaseIdToBigint < ActiveRecord::Migration[6.0]
   def change
     if postgres?
-      change_column(
+      change_column( # rubocop:disable Rails/ReversibleMigration
         :stripe_subscription_schedule_phase_plans,
         :stripe_subscription_schedule_phase_id,
         "bigint USING stripe_subscription_schedule_phase_id::bigint"
       )
     elsif mysql?
-      change_column(
+      change_column( # rubocop:disable Rails/ReversibleMigration
         :stripe_subscription_schedule_phase_plans,
         :stripe_subscription_schedule_phase_id,
         "bigint USING CAST(stripe_subscription_schedule_phase_id AS bigint"
       )
     else
-      change_column :stripe_subscription_schedule_phase_plans, :stripe_subscription_schedule_phase_id, :bigint
+      change_column :stripe_subscription_schedule_phase_plans, :stripe_subscription_schedule_phase_id, :bigint # rubocop:disable Rails/ReversibleMigration
     end
   end
 
