@@ -20,7 +20,8 @@ class StripeModelCallbacks::BaseService < ServicePattern::Service
       Rails.logger.error e.backtrace.join("\n")
     end
 
-    ExceptionNotifier.notify_exception(e) if Object.const_defined?("ExceptionNotifier")
+    ExceptionNotifier.notify_exception(e) if Object.const_defined?(:ExceptionNotifier)
+    PeakFlowUtils::Notifier.notify(error: e) if Object.const_defined?(:PeakFlowUtils)
     raise e
   end
 

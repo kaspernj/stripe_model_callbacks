@@ -1,2 +1,2 @@
-StripeModelCallbacks::Engine.routes.draw do
+StripeModelCallbacks::Engine.routes.draw do # rubocop:disable Lint/EmptyBlock
 end
