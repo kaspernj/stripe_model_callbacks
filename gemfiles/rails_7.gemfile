@@ -2,6 +2,7 @@
 
 source "https://rubygems.org"
 
+gem "public_activity", git: "https://github.com/ledermann/public_activity.git", branch: "rails-7"
 gem "rails", ">= 7.0.0"
 
 group :development, :test do

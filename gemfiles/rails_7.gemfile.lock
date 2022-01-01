@@ -1,4 +1,15 @@
 GIT
+  remote: https://github.com/ledermann/public_activity.git
+  revision: 393e1f0a62154bbb2e544138de8a3d308df1578e
+  branch: rails-7
+  specs:
+    public_activity (1.6.4)
+      actionpack (>= 3.0.0)
+      activerecord (>= 3.0)
+      i18n (>= 0.5.0)
+      railties (>= 3.0.0)
+
+GIT
   remote: https://github.com/stripe-ruby-mock/stripe-ruby-mock.git
   revision: 462891fb988b7a743ae39fd58b0e6f8cb3eb29f1
   specs:
@@ -153,11 +164,6 @@ GEM
       method_source (~> 1.0)
     pry-rails (0.3.9)
       pry (>= 0.10.4)
-    public_activity (1.6.4)
-      actionpack (>= 3.0.0)
-      activerecord (>= 3.0)
-      i18n (>= 0.5.0)
-      railties (>= 3.0.0)
     public_suffix (4.0.6)
     racc (1.6.0)
     rack (2.2.3)
@@ -273,6 +279,7 @@ DEPENDENCIES
   factory_bot_rails
   pry
   pry-rails
+  public_activity!
   rails (>= 7.0.0)
   rails_best_practices
   rspec-rails
