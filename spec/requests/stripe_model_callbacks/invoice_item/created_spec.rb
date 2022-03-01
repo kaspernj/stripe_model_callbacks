@@ -13,13 +13,13 @@ describe "subscription creation" do
       expect(response.code).to eq "200"
       expect(created_invoice_item.stripe_customer).to eq customer
       expect(created_invoice_item.description).to eq "My First Invoice Item (created for API docs)"
-      expect(created_invoice_item.discountable).to eq true
-      expect(created_invoice_item.stripe_invoice).to eq nil
+      expect(created_invoice_item.discountable).to be true
+      expect(created_invoice_item.stripe_invoice).to be_nil
       expect(created_invoice_item.amount.format).to eq "$10.00"
-      expect(created_invoice_item.livemode).to eq false
+      expect(created_invoice_item.livemode).to be false
       expect(created_invoice_item.period_start).to eq Time.zone.parse("2018-02-04 19:31:56")
       expect(created_invoice_item.period_end).to eq Time.zone.parse("2018-02-04 19:31:56")
-      expect(created_invoice_item.stripe_plan).to eq nil
+      expect(created_invoice_item.stripe_plan).to be_nil
     end
   end
 end

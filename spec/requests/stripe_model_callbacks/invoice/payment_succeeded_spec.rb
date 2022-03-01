@@ -39,25 +39,25 @@ describe "invoice payment succeeded" do
       expect(created_invoice.created).to eq Time.zone.parse("2018-02-04 18:29:07")
       expect(created_invoice.period_end).to eq Time.zone.parse("2018-02-04 18:29:07")
       expect(created_invoice.period_start).to eq Time.zone.parse("2018-02-04 18:29:07")
-      expect(created_invoice.receipt_number).to eq nil
+      expect(created_invoice.receipt_number).to be_nil
       expect(created_invoice.starting_balance).to eq 0
-      expect(created_invoice.statement_descriptor).to eq nil
+      expect(created_invoice.statement_descriptor).to be_nil
       expect(created_invoice.stripe_subscription_id).to eq "sub_CGP2EtRzfVystw"
       expect(created_invoice.subtotal.format).to eq "100.00 kr."
-      expect(created_invoice.tax).to eq nil
-      expect(created_invoice.tax_percent).to eq nil
+      expect(created_invoice.tax).to be_nil
+      expect(created_invoice.tax_percent).to be_nil
       expect(created_invoice.total.format).to eq "100.00 kr."
       expect(created_invoice.invoice_pdf).to eq "https://pay.stripe.com/invoice/XX/invst_YY/pdf"
       expect(created_invoice.hosted_invoice_url).to eq "https://pay.stripe.com/invoice/XX/invst_YY"
       # VERSION 2019-05-16
-      expect(created_invoice.auto_advance).to eq false
+      expect(created_invoice.auto_advance).to be false
       expect(created_invoice.billing_reason).to eq "subscription_create"
       expect(created_invoice.status).to eq "draft"
       # VERSION 2019-05-16 - status_transitions
       expect(created_invoice.finalized_at).to eq Time.zone.parse("2019-06-29 11:05:35")
-      expect(created_invoice.marked_uncollectible_at).to eq nil
+      expect(created_invoice.marked_uncollectible_at).to be_nil
       expect(created_invoice.paid_at).to eq Time.zone.parse("2019-06-29 11:05:37")
-      expect(created_invoice.voided_at).to eq nil
+      expect(created_invoice.voided_at).to be_nil
     end
   end
 end

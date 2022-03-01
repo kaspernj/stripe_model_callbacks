@@ -16,15 +16,15 @@ describe "transfer created" do
       expect(created_transfer.balance_transaction).to eq "txn_00000000000000"
       expect(created_transfer.created).to eq Time.zone.parse("2018-02-06 08:53:31")
       expect(created_transfer.currency).to eq "usd"
-      expect(created_transfer.description).to eq nil
+      expect(created_transfer.description).to be_nil
       expect(created_transfer.destination).to eq "acct_1Brq15AT5SYrvIfd"
       expect(created_transfer.destination_payment).to eq "py_CH0DW4ihzdQQCd"
-      expect(created_transfer.livemode).to eq false
+      expect(created_transfer.livemode).to be false
       expect(created_transfer.metadata).to eq "{}"
-      expect(created_transfer.reversed?).to eq false
-      expect(created_transfer.source_transaction).to eq nil
+      expect(created_transfer.reversed?).to be false
+      expect(created_transfer.source_transaction).to be_nil
       expect(created_transfer.source_type).to eq "card"
-      expect(created_transfer.transfer_group).to eq nil
+      expect(created_transfer.transfer_group).to be_nil
       expect(created_transfer.status).to eq "pending"
     end
   end

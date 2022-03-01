@@ -13,18 +13,18 @@ describe "coupon deleted" do
       expect(response.code).to eq "200"
 
       expect(coupon.stripe_id).to eq "25OFF_00000000000000"
-      expect(coupon.amount_off).to eq nil
+      expect(coupon.amount_off).to be_nil
       expect(coupon.created).to eq Time.zone.parse("2018-02-06 09:28:16")
-      expect(coupon.currency).to eq nil
+      expect(coupon.currency).to be_nil
       expect(coupon.duration).to eq "repeating"
       expect(coupon.duration_in_months).to eq 3
-      expect(coupon.livemode).to eq false
-      expect(coupon.max_redemptions).to eq nil
+      expect(coupon.livemode).to be false
+      expect(coupon.max_redemptions).to be_nil
       expect(coupon.metadata).to eq "{}"
       expect(coupon.percent_off).to eq 25
-      expect(coupon.redeem_by).to eq nil
+      expect(coupon.redeem_by).to be_nil
       expect(coupon.times_redeemed).to eq 0
-      expect(coupon.stripe_valid).to eq true
+      expect(coupon.stripe_valid).to be true
       expect(coupon.deleted_at).to be > 1.minute.ago
     end
   end

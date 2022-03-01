@@ -14,7 +14,7 @@ describe StripeModelCallbacks::ApplicationRecord, :stripe_mock do
     it "updates the data on Stripe" do
       result = subscription.update_on_stripe(tax_percent: 11)
 
-      expect(result).to eq true
+      expect(result).to be true
       expect(subscription.to_stripe.tax_percent).to eq 11
       expect(subscription.tax_percent).to eq 11
     end
@@ -24,7 +24,7 @@ describe StripeModelCallbacks::ApplicationRecord, :stripe_mock do
     it "deletes the object on Stripe" do
       result = subscription.destroy_on_stripe
 
-      expect(result).to eq true
+      expect(result).to be true
       expect(subscription.status).to eq "canceled"
     end
   end

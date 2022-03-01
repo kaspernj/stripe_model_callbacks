@@ -21,13 +21,13 @@ describe "plan updated" do
       expect(plan.interval).to eq "month"
       expect(plan.interval_count).to eq 1
       expect(plan.currency).to eq "dkk"
-      expect(plan.livemode).to eq false
+      expect(plan.livemode).to be false
       expect(plan.name).to eq "Test product"
-      expect(plan.nickname).to eq nil
+      expect(plan.nickname).to be_nil
       expect(plan.stripe_product_id).to eq "prod_00000000000000"
       expect(plan.stripe_product).to eq product
-      expect(plan.statement_descriptor).to eq nil
-      expect(plan.trial_period_days).to eq nil
+      expect(plan.statement_descriptor).to be_nil
+      expect(plan.trial_period_days).to be_nil
     end
   end
 end

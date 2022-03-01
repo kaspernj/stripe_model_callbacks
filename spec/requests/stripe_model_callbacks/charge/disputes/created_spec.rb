@@ -17,7 +17,7 @@ describe "disputes creation" do
       expect(created_dispute.stripe_charge_id).to eq "ch_00000000000000"
       expect(created_dispute.currency).to eq "usd"
       expect(created_dispute.evidence_details_due_by).to eq Time.zone.parse("2018-02-25 23:59:59")
-      expect(created_dispute.is_charge_refundable).to eq false
+      expect(created_dispute.is_charge_refundable).to be false
       expect(created_dispute.status).to eq "needs_response"
       expect(created_dispute.reason).to eq "general"
     end

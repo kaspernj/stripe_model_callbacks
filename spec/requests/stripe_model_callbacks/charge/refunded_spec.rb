@@ -18,7 +18,7 @@ describe "charge refunded" do
       expect(created_charge.amount.format).to eq "$1.00"
       expect(created_charge.amount_refunded.format).to eq "$1.00"
       expect(created_charge.description).to eq "My First Test Charge (created for API docs)"
-      expect(created_charge.refunded?).to eq true
+      expect(created_charge.refunded?).to be true
 
       expect(created_refund.stripe_id).to eq "re_CGQ7INZZQPOC8U"
       expect(created_refund.amount.format).to eq "$1.00"
@@ -27,7 +27,7 @@ describe "charge refunded" do
       expect(created_refund.created).to eq Time.zone.parse("2018-02-04 19:36:09")
       expect(created_refund.currency).to eq "usd"
       expect(created_refund.metadata).to eq "{}"
-      expect(created_refund.reason).to eq nil
+      expect(created_refund.reason).to be_nil
       expect(created_refund.receipt_number).to eq "1527-1121"
       expect(created_refund.status).to eq "succeeded"
     end

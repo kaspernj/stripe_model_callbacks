@@ -23,6 +23,6 @@ describe "error handling" do
       .to raise_error(RuntimeError, "BOOM!")
       .and change(StripeInvoice, :count).by(0)
 
-    expect(called).to eq true
+    expect(called).to be true
   end
 end

@@ -19,15 +19,15 @@ describe "transfer reversed" do
       expect(transfer.balance_transaction).to eq "txn_00000000000000"
       expect(transfer.created).to eq Time.zone.parse("2018-02-06 08:54:49")
       expect(transfer.currency).to eq "usd"
-      expect(transfer.description).to eq nil
+      expect(transfer.description).to be_nil
       expect(transfer.destination).to eq "acct_1Brq15AT5SYrvIfd"
       expect(transfer.destination_payment).to eq "py_CH0EOf6bFQq9g2"
-      expect(transfer.livemode).to eq false
+      expect(transfer.livemode).to be false
       expect(transfer.metadata).to eq "{}"
-      expect(transfer.reversed?).to eq false
-      expect(transfer.source_transaction).to eq nil
+      expect(transfer.reversed?).to be false
+      expect(transfer.source_transaction).to be_nil
       expect(transfer.source_type).to eq "card"
-      expect(transfer.transfer_group).to eq nil
+      expect(transfer.transfer_group).to be_nil
     end
   end
 end
