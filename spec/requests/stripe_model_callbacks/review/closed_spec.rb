@@ -16,8 +16,8 @@ describe "review closed" do
       expect(review.stripe_id).to eq "prv_00000000000000"
       expect(review.stripe_charge_id).to eq "ch_00000000000000"
       expect(review.created).to eq Time.zone.parse("2018-02-08 12:07:22")
-      expect(review.livemode).to eq false
-      expect(review.open).to eq true
+      expect(review.livemode).to be false
+      expect(review.open).to be true
       expect(review.reason).to eq "rule"
     end
   end

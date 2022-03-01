@@ -17,7 +17,7 @@ describe "account external account created" do
       expect(created_bank_account.bank_name).to eq "STRIPE TEST BANK"
       expect(created_bank_account.country).to eq "US"
       expect(created_bank_account.currency).to eq "dkk"
-      expect(created_bank_account.default_for_currency?).to eq false
+      expect(created_bank_account.default_for_currency?).to be false
       expect(created_bank_account.fingerprint).to eq "8hxBTDA6RPbX37IN"
       expect(created_bank_account.last4).to eq "6789"
       expect(created_bank_account.metadata).to eq "{}"

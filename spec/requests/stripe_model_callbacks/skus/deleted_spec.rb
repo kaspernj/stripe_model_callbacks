@@ -15,8 +15,8 @@ describe "sku deleted" do
       expect(sku.stripe_id).to eq "sku_00000000000000"
       expect(sku.inventory_quantity).to eq 50
       expect(sku.inventory_type).to eq "finite"
-      expect(sku.inventory_value).to eq nil
-      expect(sku.livemode).to eq false
+      expect(sku.inventory_value).to be_nil
+      expect(sku.livemode).to be false
       expect(sku.metadata).to eq "{}"
       expect(sku.price.format).to eq "$15.00"
       expect(sku.stripe_product_id).to eq "prod_00000000000000"

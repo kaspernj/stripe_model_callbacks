@@ -11,13 +11,13 @@ describe "customer creation" do
       expect(response.code).to eq "200"
       expect(created_customer.id).to be > 0
       expect(created_customer.stripe_id).to eq "cus_2wm5EgmRGEiyPO"
-      expect(created_customer.livemode).to eq false
+      expect(created_customer.livemode).to be false
       expect(created_customer.description).to eq "id:12345"
-      expect(created_customer.delinquent).to eq false
+      expect(created_customer.delinquent).to be false
       expect(created_customer.metadata).to eq "{}"
       expect(created_customer.email).to eq "user@example.com"
       expect(created_customer.stripe_subscriptions).to be_empty
-      expect(created_customer.discount).to eq nil
+      expect(created_customer.discount).to be_nil
       expect(created_customer.account_balance).to eq 0
     end
   end

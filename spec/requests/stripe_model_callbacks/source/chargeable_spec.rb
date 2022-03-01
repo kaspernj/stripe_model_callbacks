@@ -17,7 +17,7 @@ describe "source chargeable" do
       expect(source.stripe_id).to eq "src_00000000000000"
       expect(source.flow).to eq "receiver"
       expect(source.created).to eq Time.zone.parse("2018-02-06 08:41:50")
-      expect(source.livemode).to eq false
+      expect(source.livemode).to be false
       expect(source.client_secret).to eq "src_client_secret_CH01F485RhmrXTuK10ExxZVs"
       expect(source.owner_email).to eq "jenny.rosen@example.com"
       expect(source.receiver_address).to eq "121042882-38381234567890123"

@@ -14,12 +14,12 @@ describe "refund updated" do
       expect(response.code).to eq "200"
       expect(refund.stripe_charge).to eq charge
       expect(refund.amount.format).to eq "$1.00"
-      expect(refund.balance_transaction).to eq nil
+      expect(refund.balance_transaction).to be_nil
       expect(refund.created).to eq Time.zone.parse("2018-02-05 16:37:07")
       expect(refund.currency).to eq "usd"
       expect(refund.metadata).to eq "{}"
-      expect(refund.reason).to eq nil
-      expect(refund.receipt_number).to eq nil
+      expect(refund.reason).to be_nil
+      expect(refund.receipt_number).to be_nil
       expect(refund.status).to eq "succeeded"
     end
   end

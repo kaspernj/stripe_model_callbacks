@@ -13,7 +13,7 @@ describe "plan updated" do
       expect(response.code).to eq "200"
 
       expect(plan.stripe_id).to eq "peak_00000000000000"
-      expect(plan.active).to eq true
+      expect(plan.active).to be true
       expect(plan.aggregate_usage).to eq "sum"
       expect(plan.amount.format).to eq "60.00 kr."
       expect(plan.amount_decimal).to eq "6000"
@@ -25,9 +25,9 @@ describe "plan updated" do
       expect(plan.currency).to eq "dkk"
       expect(plan.name).to eq "number of requests"
       expect(plan.nickname).to eq "number of requests"
-      expect(plan.livemode).to eq false
-      expect(plan.statement_descriptor).to eq nil
-      expect(plan.trial_period_days).to eq nil
+      expect(plan.livemode).to be false
+      expect(plan.statement_descriptor).to be_nil
+      expect(plan.trial_period_days).to be_nil
       expect(plan.stripe_product_id).to eq "prod_00000000000000"
       expect(plan.stripe_product).to eq stripe_product
       expect(plan.usage_type).to eq "metered"

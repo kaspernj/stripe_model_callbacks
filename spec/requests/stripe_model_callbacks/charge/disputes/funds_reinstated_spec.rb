@@ -20,7 +20,7 @@ describe "disputes funds reinstated" do
       expect(dispute.stripe_charge_id).to eq "ch_00000000000000"
       expect(dispute.currency).to eq "usd"
       expect(dispute.evidence_details_due_by).to eq Time.zone.parse("2018-02-25 23:59:59")
-      expect(dispute.is_charge_refundable).to eq false
+      expect(dispute.is_charge_refundable).to be false
       expect(dispute.status).to eq "needs_response"
       expect(dispute.reason).to eq "general"
     end

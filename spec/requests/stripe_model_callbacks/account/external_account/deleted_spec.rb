@@ -20,7 +20,7 @@ describe "account external account deleted" do
       expect(bank_account.bank_name).to eq "STRIPE TEST BANK"
       expect(bank_account.country).to eq "US"
       expect(bank_account.currency).to eq "dkk"
-      expect(bank_account.default_for_currency?).to eq false
+      expect(bank_account.default_for_currency?).to be false
       expect(bank_account.fingerprint).to eq "8hxBTDA6RPbX37IN"
       expect(bank_account.last4).to eq "6789"
       expect(bank_account.metadata).to eq "{}"

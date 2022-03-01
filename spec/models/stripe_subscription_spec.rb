@@ -8,7 +8,7 @@ describe StripeSubscription, :stripe_mock do
     it "cancels the subscription" do
       subscription.cancel!
 
-      expect(subscription.cancel_at_period_end?).to eq false
+      expect(subscription.cancel_at_period_end?).to be false
       expect(subscription.canceled_at).to be > 10.seconds.ago
       expect(subscription.status).to eq "canceled"
     end
@@ -16,7 +16,7 @@ describe StripeSubscription, :stripe_mock do
     it "cancels the subscription at the period end" do
       subscription.cancel!(at_period_end: true)
 
-      expect(subscription.cancel_at_period_end?).to eq true
+      expect(subscription.cancel_at_period_end?).to be true
       expect(subscription.canceled_at).to be > 10.seconds.ago
       expect(subscription.status).to eq "active"
     end
