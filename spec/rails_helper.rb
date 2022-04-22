@@ -83,6 +83,6 @@ RSpec.configure do |config|
 
   config.after do
     # Remove 'with_advisory_lock' lock files created during running specs.
-    FileUtils.remove_entry_secure ENV["FLOCK_DIR"]
+    FileUtils.remove_entry_secure ENV.fetch("FLOCK_DIR", nil)
   end
 end
