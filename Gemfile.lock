@@ -263,7 +263,7 @@ GEM
     rubocop-rspec (2.10.0)
       rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
-    service_pattern (1.0.5)
+    service_pattern (1.0.6)
     sexp_processor (4.16.0)
     sqlite3 (1.4.2)
     string-cases (0.0.4)
