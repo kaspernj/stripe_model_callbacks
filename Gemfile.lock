@@ -205,7 +205,7 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.4.3)
       loofah (~> 2.3)
-    rails_best_practices (1.23.1)
+    rails_best_practices (1.23.2)
       activesupport
       code_analyzer (~> 0.5.5)
       erubis
@@ -265,7 +265,7 @@ GEM
       rubocop (~> 1.33)
     ruby-progressbar (1.11.0)
     service_pattern (1.0.10)
-    sexp_processor (4.16.0)
+    sexp_processor (4.16.1)
     sqlite3 (1.5.0)
       mini_portile2 (~> 2.8.0)
     string-cases (0.0.4)
