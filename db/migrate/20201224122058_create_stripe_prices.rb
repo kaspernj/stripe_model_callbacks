@@ -8,7 +8,13 @@ class CreateStripePrices < ActiveRecord::Migration[6.0]
       t.datetime :created
       t.string :currency
       t.string :lookup_key
-      t.jsonb :metadata
+
+      if mysql?
+        t.json :metadata
+      else
+        t.jsonb :metadata
+      end
+
       t.string :nickname
       t.string :stripe_product_id, index: true
       t.boolean :recurring_aggregate_usage
@@ -22,5 +28,9 @@ class CreateStripePrices < ActiveRecord::Migration[6.0]
       t.integer :unit_amount
       t.timestamps
     end
+  end
+
+  def mysql?
+    ActiveRecord::Base.connection.adapter_name.downcase.include?("mysql")
   end
 end

@@ -4,6 +4,7 @@ class StripePlan < StripeModelCallbacks::ApplicationRecord
   has_many :stripe_invoice_items, primary_key: "stripe_id"
   has_many :stripe_subscriptions, primary_key: "stripe_id"
   has_many :stripe_subscription_items, primary_key: "stripe_id"
+  has_many :stripe_subscription_schedule_phase_plans, primary_key: "stripe_id"
 
   scope :not_deleted, -> { where(deleted_at: nil) }
 
