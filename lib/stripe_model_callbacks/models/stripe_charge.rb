@@ -6,8 +6,6 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
   has_many :stripe_refunds, primary_key: "stripe_id"
   has_many :stripe_reviews, primary_key: "stripe_id"
 
-  has_one :stripe_invoice, primary_key: "stripe_id"
-
   monetize :amount_cents
   monetize :amount_refunded_cents, allow_nil: true
   monetize :application_cents, allow_nil: true
