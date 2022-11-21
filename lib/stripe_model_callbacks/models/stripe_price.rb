@@ -1,4 +1,6 @@
 class StripePrice < StripeModelCallbacks::ApplicationRecord
+  has_many :stripe_subscription_item, primary_key: "stripe_id"
+
   def self.stripe_class
     Stripe::Price
   end

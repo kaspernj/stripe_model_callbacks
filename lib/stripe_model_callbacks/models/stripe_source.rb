@@ -1,4 +1,6 @@
 class StripeSource < StripeModelCallbacks::ApplicationRecord
+  has_many :stripe_charges, primary_key: "stripe_id"
+
   monetize :amount_cents, allow_nil: true
   monetize :receiver_amount_charged_cents, allow_nil: true
   monetize :receiver_amount_received_cents, allow_nil: true
