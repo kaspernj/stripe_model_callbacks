@@ -25,7 +25,6 @@ describe "invoice upcoming" do
         collection_method: "charge_automatically",
         stripe_charge_id: nil,
         currency: "usd",
-        stripe_customer_id: "customer-identifier-1",
         number: nil,
         period_end: nil,
         period_start: nil,
@@ -57,6 +56,7 @@ describe "invoice upcoming" do
       )
 
       expect(created_invoice.amount_due.format).to eq "$0.00"
+      expect(created_invoice.stripe_customer_id).to match /^customer-identifier-(\d+)$/
     end
   end
 end
