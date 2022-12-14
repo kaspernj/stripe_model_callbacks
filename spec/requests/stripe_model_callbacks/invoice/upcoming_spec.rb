@@ -5,21 +5,20 @@ describe "invoice upcoming" do
   let!(:stripe_invoice) { create :stripe_invoice, stripe_id: "in_00000000000000" }
 
   describe "#execute!" do
-    xit "updates the invoice and adds a log" do
+    it "updates the invoice and adds a log", skip: "Upcoming event doesnt send an invoice ID. Dunno what to do about it..." do
       expect { PublicActivity.with_tracking { mock_stripe_event("invoice.upcoming") } }
         .to change(StripeInvoice, :count).by(0)
         .and change(StripeInvoiceItem, :count).by(1)
         .and change(PublicActivity::Activity.where(key: "stripe_invoice.upcoming"), :count).by(1)
 
-      created_invoice = StripeInvoice.last
+      created_invoice = StripeInvoice.last!
 
       expect(response.code).to eq "200"
 
-      expect(created_invoice.stripe_id).to eq "in_00000000000000"
-      expect(created_invoice.amount_due.format).to eq "35.00 kr."
-      expect(created_invoice.amount_paid.format).to eq "35.00 kr."
-      expect(created_invoice.amount_remaining.format).to eq "0.00 kr."
-      expect(created_invoice.application_fee_amount).to be_nil
+      expect(created_invoice).to have_attributes(
+        stripe_id: "in_00000000000000",
+        application_fee_amount: nil
+      )
       expect(created_invoice.attempt_count).to eq 1
       expect(created_invoice.attempted?).to be true
       expect(created_invoice.billing).to eq "charge_automatically"
@@ -28,6 +27,10 @@ describe "invoice upcoming" do
       expect(created_invoice.closed?).to be true
       expect(created_invoice.currency).to eq "dkk"
       expect(created_invoice.stripe_customer_id).to eq "cus_00000000000000"
+      expect(created_invoice.amount_due.format).to eq "35.00 kr."
+      expect(created_invoice.amount_paid.format).to eq "35.00 kr."
+      expect(created_invoice.amount_remaining.format).to eq "0.00 kr."
+
       expect(created_invoice.created).to eq Time.zone.parse("2018-02-04 17:02:25")
       expect(created_invoice.description).to be_nil
       expect(created_invoice.discount).to be_nil
