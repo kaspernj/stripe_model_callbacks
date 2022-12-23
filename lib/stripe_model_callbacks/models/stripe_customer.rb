@@ -14,10 +14,19 @@ class StripeCustomer < StripeModelCallbacks::ApplicationRecord
 
   def assign_from_stripe(object)
     check_object_is_stripe_class(object)
+
+    if object.respond_to?(:account_balance)
+      self.balance = object.account_balance
+    elsif object.respond_to?(:balance)
+      self.balance = object.balance
+    else
+      Rails.logger.error "Couldn't figure out where to get the customers balance from"
+    end
+
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
       attributes: %w[
-        account_balance currency created default_source delinquent description discount email
+        currency created default_source delinquent description discount email
         id livemode metadata
       ]
     )
