@@ -18,7 +18,7 @@ describe "customer creation" do
       expect(created_customer.email).to eq "user@example.com"
       expect(created_customer.stripe_subscriptions).to be_empty
       expect(created_customer.discount).to be_nil
-      expect(created_customer.account_balance).to eq 0
+      expect(created_customer.balance).to eq 0
     end
   end
 end

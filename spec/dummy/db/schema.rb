@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_21_155750) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_12_23_095544) do
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
     t.string "trackable_id"
@@ -21,8 +20,8 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.text "parameters"
     t.string "recipient_type"
     t.integer "recipient_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
     t.index ["owner_type", "owner_id"], name: "index_activities_on_owner_type_and_owner_id"
     t.index ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
@@ -45,8 +44,8 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.text "metadata"
     t.string "routing_number"
     t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["status"], name: "index_stripe_bank_accounts_on_status"
     t.index ["stripe_account_id"], name: "index_stripe_bank_accounts_on_stripe_account_id"
     t.index ["stripe_id"], name: "index_stripe_bank_accounts_on_stripe_id"
@@ -75,9 +74,9 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.text "metadata"
     t.string "name"
     t.string "tokenization_method"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.index ["deleted_at"], name: "index_stripe_cards_on_deleted_at"
     t.index ["stripe_customer_id"], name: "index_stripe_cards_on_stripe_customer_id"
     t.index ["stripe_id"], name: "index_stripe_cards_on_stripe_id"
@@ -116,9 +115,9 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "statement_descriptor"
     t.string "status"
     t.string "transfer_group"
-    t.datetime "created"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["stripe_customer_id"], name: "index_stripe_charges_on_stripe_customer_id"
     t.index ["stripe_id"], name: "index_stripe_charges_on_stripe_id"
     t.index ["stripe_invoice_id"], name: "index_stripe_charges_on_stripe_invoice_id"
@@ -130,8 +129,8 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "stripe_id", null: false
     t.integer "amount_off_cents"
     t.string "amount_off_currency"
-    t.datetime "created"
-    t.datetime "deleted_at"
+    t.datetime "created", precision: nil
+    t.datetime "deleted_at", precision: nil
     t.string "currency"
     t.string "duration"
     t.integer "duration_in_months"
@@ -139,20 +138,20 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.integer "max_redemptions"
     t.text "metadata"
     t.integer "percent_off"
-    t.datetime "redeem_by"
+    t.datetime "redeem_by", precision: nil
     t.integer "times_redeemed"
     t.boolean "stripe_valid"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["deleted_at"], name: "index_stripe_coupons_on_deleted_at"
     t.index ["stripe_id"], name: "index_stripe_coupons_on_stripe_id"
   end
 
   create_table "stripe_customers", force: :cascade do |t|
     t.string "stripe_id", null: false
-    t.integer "account_balance", null: false
+    t.integer "balance", null: false
     t.string "business_vat_id"
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.string "currency"
     t.string "default_source"
     t.boolean "delinquent", null: false
@@ -162,9 +161,9 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.boolean "livemode", default: true, null: false
     t.text "metadata"
     t.text "shipping"
-    t.datetime "created"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["deleted_at"], name: "index_stripe_customers_on_deleted_at"
     t.index ["stripe_id"], name: "index_stripe_customers_on_stripe_id"
   end
@@ -176,7 +175,7 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.integer "coupon_amount_off_cents"
     t.string "coupon_amount_off_currency"
     t.string "coupon_currency"
-    t.datetime "coupon_created"
+    t.datetime "coupon_created", precision: nil
     t.string "coupon_duration"
     t.integer "coupon_duration_in_months"
     t.boolean "coupon_livemode"
@@ -186,12 +185,12 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.integer "coupon_redeem_by"
     t.integer "coupon_times_redeemed"
     t.boolean "coupon_valid"
-    t.datetime "created"
-    t.datetime "deleted_at"
-    t.datetime "start"
-    t.datetime "end"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created", precision: nil
+    t.datetime "deleted_at", precision: nil
+    t.datetime "start", precision: nil
+    t.datetime "end", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["stripe_coupon_id"], name: "index_stripe_discounts_on_stripe_coupon_id"
     t.index ["stripe_customer_id"], name: "index_stripe_discounts_on_stripe_customer_id"
     t.index ["stripe_subscription_id"], name: "index_stripe_discounts_on_stripe_subscription_id"
@@ -199,7 +198,7 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
 
   create_table "stripe_disputes", force: :cascade do |t|
     t.string "stripe_id", null: false
-    t.datetime "created"
+    t.datetime "created", precision: nil
     t.integer "amount_cents"
     t.string "amount_currency"
     t.string "balance_transaction_id"
@@ -232,7 +231,7 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.text "evidence_shipping_tracking_number"
     t.text "evidence_uncategorized_file"
     t.text "evidence_uncategorized_text"
-    t.datetime "evidence_details_due_by"
+    t.datetime "evidence_details_due_by", precision: nil
     t.boolean "evidence_details_has_evidence"
     t.boolean "evidence_details_past_due"
     t.integer "evidence_details_submission_count"
@@ -241,8 +240,8 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.text "metadata"
     t.string "reason"
     t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["balance_transaction_id"], name: "index_stripe_disputes_on_balance_transaction_id"
     t.index ["stripe_charge_id"], name: "index_stripe_disputes_on_stripe_charge_id"
     t.index ["stripe_id"], name: "index_stripe_disputes_on_stripe_id"
@@ -255,21 +254,21 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "stripe_customer_id"
     t.string "currency", null: false
     t.date "datetime"
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.string "description"
     t.boolean "discountable", null: false
     t.string "stripe_invoice_id"
     t.boolean "livemode", default: true, null: false
     t.text "metadata"
-    t.datetime "period_start"
-    t.datetime "period_end"
+    t.datetime "period_start", precision: nil
+    t.datetime "period_end", precision: nil
     t.string "stripe_plan_id"
     t.boolean "proration", null: false
     t.integer "quantity"
     t.string "stripe_subscription_id"
     t.string "stripe_subscription_item_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["deleted_at"], name: "index_stripe_invoice_items_on_deleted_at"
     t.index ["stripe_customer_id"], name: "index_stripe_invoice_items_on_stripe_customer_id"
     t.index ["stripe_id"], name: "index_stripe_invoice_items_on_stripe_id"
@@ -303,23 +302,23 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "receipt_number"
     t.string "stripe_subscription_id"
     t.boolean "attempted", null: false
-    t.datetime "next_payment_attempt"
+    t.datetime "next_payment_attempt", precision: nil
     t.boolean "closed"
-    t.datetime "created", null: false
-    t.datetime "due_date"
+    t.datetime "created", precision: nil, null: false
+    t.datetime "due_date", precision: nil
     t.boolean "livemode", default: true, null: false
     t.text "metadata"
     t.string "number"
     t.boolean "paid", null: false
-    t.datetime "period_start"
-    t.datetime "period_end"
+    t.datetime "period_start", precision: nil
+    t.datetime "period_end", precision: nil
     t.integer "starting_balance_cents"
     t.string "starting_balance_currency"
     t.string "statement_descriptor"
-    t.datetime "subscription_proration_date"
-    t.datetime "webhooks_delivered_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "subscription_proration_date", precision: nil
+    t.datetime "webhooks_delivered_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "attempt_count"
     t.integer "ending_balance"
     t.integer "starting_balance"
@@ -327,10 +326,10 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.boolean "auto_advance", default: false
     t.string "billing_reason"
     t.string "status", default: "draft"
-    t.datetime "finalized_at"
-    t.datetime "marked_uncollectible_at"
-    t.datetime "paid_at"
-    t.datetime "voided_at"
+    t.datetime "finalized_at", precision: nil
+    t.datetime "marked_uncollectible_at", precision: nil
+    t.datetime "paid_at", precision: nil
+    t.datetime "voided_at", precision: nil
     t.integer "amount_paid_cents"
     t.string "amount_paid_currency"
     t.integer "amount_remaining_cents"
@@ -354,8 +353,8 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "description"
     t.integer "quantity"
     t.string "order_item_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["parent_id"], name: "index_stripe_order_items_on_parent_id"
     t.index ["stripe_order_id"], name: "index_stripe_order_items_on_stripe_order_id"
   end
@@ -388,10 +387,10 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "shipping_tracking_number"
     t.string "shipping_methods"
     t.string "status", null: false
-    t.datetime "created"
-    t.datetime "updated"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created", precision: nil
+    t.datetime "updated", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["stripe_charge_id"], name: "index_stripe_orders_on_stripe_charge_id"
     t.index ["stripe_customer_id"], name: "index_stripe_orders_on_stripe_customer_id"
     t.index ["stripe_id"], name: "index_stripe_orders_on_stripe_id"
@@ -401,10 +400,10 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "stripe_id", null: false
     t.integer "amount_cents"
     t.string "amount_currency"
-    t.datetime "arrival_date"
+    t.datetime "arrival_date", precision: nil
     t.boolean "automatic"
     t.string "balance_transaction"
-    t.datetime "created"
+    t.datetime "created", precision: nil
     t.string "currency"
     t.string "description"
     t.string "destination"
@@ -418,8 +417,8 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "statement_descriptor"
     t.string "status"
     t.string "stripe_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["stripe_id"], name: "index_stripe_payouts_on_stripe_id"
   end
 
@@ -434,10 +433,10 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.text "metadata"
     t.string "statement_descriptor"
     t.integer "trial_period_days"
-    t.datetime "deleted_at"
-    t.datetime "created"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "stripe_product_id"
     t.string "nickname"
     t.boolean "active"
@@ -452,10 +451,10 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
 
   create_table "stripe_prices", force: :cascade do |t|
     t.string "stripe_id", null: false
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.boolean "active"
     t.string "billing_scheme"
-    t.datetime "created"
+    t.datetime "created", precision: nil
     t.string "currency"
     t.string "lookup_key"
     t.json "metadata"
@@ -470,8 +469,8 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "transform_quantity_round"
     t.string "price_type"
     t.integer "unit_amount"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["stripe_id"], name: "index_stripe_prices_on_stripe_id"
     t.index ["stripe_product_id"], name: "index_stripe_prices_on_stripe_product_id"
   end
@@ -479,7 +478,7 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
   create_table "stripe_products", force: :cascade do |t|
     t.string "stripe_id", null: false
     t.boolean "active", default: false, null: false
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.text "stripe_attributes"
     t.string "caption"
     t.string "description"
@@ -493,10 +492,10 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.boolean "shippable", default: false, null: false
     t.string "statement_descriptor"
     t.text "url"
-    t.datetime "created"
-    t.datetime "updated"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created", precision: nil
+    t.datetime "updated", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "product_type"
     t.string "unit_label"
     t.index ["deleted_at"], name: "index_stripe_products_on_deleted_at"
@@ -507,7 +506,7 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "stripe_id", null: false
     t.string "active_account"
     t.string "description"
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.string "name"
     t.string "email"
     t.boolean "livemode", default: true, null: false
@@ -515,8 +514,8 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.text "metadata"
     t.string "migrated_to"
     t.boolean "verified", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["deleted_at"], name: "index_stripe_recipients_on_deleted_at"
     t.index ["stripe_id"], name: "index_stripe_recipients_on_stripe_id"
   end
@@ -535,9 +534,9 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "reason"
     t.string "receipt_number"
     t.string "status"
-    t.datetime "created"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["stripe_charge_id"], name: "index_stripe_refunds_on_stripe_charge_id"
     t.index ["stripe_id"], name: "index_stripe_refunds_on_stripe_id"
   end
@@ -545,12 +544,12 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
   create_table "stripe_reviews", force: :cascade do |t|
     t.string "stripe_id", null: false
     t.string "stripe_charge_id"
-    t.datetime "created"
+    t.datetime "created", precision: nil
     t.boolean "livemode", default: false, null: false
     t.boolean "open", default: true, null: false
     t.string "reason"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["reason"], name: "index_stripe_reviews_on_reason"
     t.index ["stripe_charge_id"], name: "index_stripe_reviews_on_stripe_charge_id"
     t.index ["stripe_id"], name: "index_stripe_reviews_on_stripe_id"
@@ -559,7 +558,7 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
   create_table "stripe_skus", force: :cascade do |t|
     t.string "stripe_id", null: false
     t.boolean "active", default: false, null: false
-    t.datetime "deleted_at"
+    t.datetime "deleted_at", precision: nil
     t.text "stripe_attributes"
     t.string "currency", null: false
     t.integer "inventory_quantity"
@@ -570,10 +569,10 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.integer "price_cents"
     t.string "price_currency"
     t.string "stripe_product_id"
-    t.datetime "created"
-    t.datetime "updated"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created", precision: nil
+    t.datetime "updated", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["deleted_at"], name: "index_stripe_skus_on_deleted_at"
     t.index ["stripe_id"], name: "index_stripe_skus_on_stripe_id"
     t.index ["stripe_product_id"], name: "index_stripe_skus_on_stripe_product_id"
@@ -628,10 +627,10 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "ach_credit_transfer_fingerprint"
     t.string "ach_credit_transfer_bank_name"
     t.string "ach_credit_transfer_swift_code"
-    t.datetime "created"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.datetime "deleted_at"
+    t.datetime "created", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.datetime "deleted_at", precision: nil
     t.index ["deleted_at"], name: "index_stripe_sources_on_deleted_at"
     t.index ["stripe_id"], name: "index_stripe_sources_on_stripe_id"
   end
@@ -639,22 +638,22 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
   create_table "stripe_subscription_default_tax_rates", force: :cascade do |t|
     t.integer "stripe_subscription_id", null: false
     t.integer "stripe_tax_rate_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["stripe_subscription_id"], name: "index_on_subscription"
     t.index ["stripe_tax_rate_id"], name: "index_on_tax_rate"
   end
 
   create_table "stripe_subscription_items", force: :cascade do |t|
     t.string "stripe_id", null: false
-    t.datetime "created"
+    t.datetime "created", precision: nil
     t.string "stripe_subscription_id"
     t.string "stripe_plan_id"
     t.boolean "deleted", default: false, null: false
     t.text "metadata"
     t.integer "quantity"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "stripe_price_id"
     t.index ["stripe_id"], name: "index_stripe_subscription_items_on_stripe_id"
     t.index ["stripe_plan_id"], name: "index_stripe_subscription_items_on_stripe_plan_id"
@@ -668,8 +667,8 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "stripe_plan_id"
     t.string "stripe_price_id"
     t.integer "quantity"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["stripe_plan_id"], name: "index_subscription_schedule_phase_plans_on_stripe_plan_id"
     t.index ["stripe_price_id"], name: "index_subscription_schedule_phase_plans_on_stripe_price_id"
     t.index ["stripe_subscription_schedule_phase_id"], name: "index_subscription_schedule_phase_plans_on_schedule_phase_id"
@@ -683,14 +682,14 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "collection_method"
     t.string "stripe_coupon_id"
     t.string "default_payment_method"
-    t.datetime "end_date"
+    t.datetime "end_date", precision: nil
     t.integer "invoice_settings_days_until_due"
     t.boolean "prorate"
     t.string "proration_behavior"
-    t.datetime "start_date"
-    t.datetime "trial_end"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "start_date", precision: nil
+    t.datetime "trial_end", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["stripe_coupon_id"], name: "index_stripe_subscription_schedule_phases_on_stripe_coupon_id"
     t.index ["stripe_subscription_schedule_id"], name: "index_subscription_schedule_phases_on_subscription_schedule_id"
   end
@@ -700,12 +699,12 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "billing"
     t.integer "billing_thresholds_amount_gte"
     t.boolean "billing_thresholds_reset_billing_cycle_anchor"
-    t.datetime "canceled_at"
+    t.datetime "canceled_at", precision: nil
     t.string "collection_method"
-    t.datetime "completed_at"
-    t.datetime "created"
-    t.datetime "current_phase_start_date"
-    t.datetime "current_phase_end_date"
+    t.datetime "completed_at", precision: nil
+    t.datetime "created", precision: nil
+    t.datetime "current_phase_start_date", precision: nil
+    t.datetime "current_phase_end_date", precision: nil
     t.string "stripe_customer_id"
     t.string "default_payment_method"
     t.string "default_source"
@@ -713,14 +712,14 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.integer "invoice_settings_days_until_due"
     t.boolean "livemode"
     t.text "metadata"
-    t.datetime "released_at"
+    t.datetime "released_at", precision: nil
     t.string "released_stripe_subscription_id"
     t.string "renewal_behavior"
     t.string "renewal_interval"
     t.string "status"
     t.string "stripe_subscription_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["stripe_customer_id"], name: "index_stripe_subscription_schedules_on_stripe_customer_id"
     t.index ["stripe_id"], name: "index_stripe_subscription_schedules_on_stripe_id", unique: true
     t.index ["stripe_subscription_id"], name: "index_stripe_subscription_schedules_on_stripe_subscription_id"
@@ -731,26 +730,26 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.integer "application_fee_percent"
     t.string "billing"
     t.boolean "cancel_at_period_end"
-    t.datetime "canceled_at"
-    t.datetime "current_period_start"
-    t.datetime "current_period_end"
+    t.datetime "canceled_at", precision: nil
+    t.datetime "current_period_start", precision: nil
+    t.datetime "current_period_end", precision: nil
     t.string "stripe_customer_id"
     t.integer "days_until_due"
     t.string "stripe_discount_id"
-    t.datetime "ended_at"
+    t.datetime "ended_at", precision: nil
     t.boolean "livemode", default: true
     t.text "metadata"
     t.string "stripe_plan_id"
     t.integer "quantity"
-    t.datetime "start_date"
+    t.datetime "start_date", precision: nil
     t.integer "tax_percent"
     t.string "status"
-    t.datetime "trial_start"
-    t.datetime "trial_end"
-    t.datetime "deleted_at"
-    t.datetime "created"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "trial_start", precision: nil
+    t.datetime "trial_end", precision: nil
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "latest_stripe_invoice_id"
     t.index ["deleted_at"], name: "index_stripe_subscriptions_on_deleted_at"
     t.index ["latest_stripe_invoice_id"], name: "index_stripe_subscriptions_on_latest_stripe_invoice_id"
@@ -769,9 +768,9 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.float "percentage"
     t.boolean "inclusive"
     t.boolean "active"
-    t.datetime "created"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["stripe_id"], name: "index_stripe_tax_rates_on_stripe_id"
   end
 
@@ -782,7 +781,7 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.integer "amount_reversed_cents", null: false
     t.string "amount_reversed_currency", null: false
     t.string "balance_transaction"
-    t.datetime "created"
+    t.datetime "created", precision: nil
     t.string "currency", null: false
     t.string "description"
     t.string "destination"
@@ -794,8 +793,8 @@ ActiveRecord::Schema.define(version: 2021_11_21_155750) do
     t.string "source_type"
     t.string "transfer_group"
     t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["stripe_id"], name: "index_stripe_transfers_on_stripe_id"
   end
 
