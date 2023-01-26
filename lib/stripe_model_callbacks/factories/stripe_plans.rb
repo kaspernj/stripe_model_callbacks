@@ -17,7 +17,6 @@ FactoryBot.define do
           id: stripe_plan.stripe_id,
           amount: stripe_plan.amount_cents,
           currency: stripe_plan.currency,
-          name: "No name any more - waiting for Stripe mock to be updated",
           interval: stripe_plan.interval,
           interval_count: stripe_plan.interval_count,
           product: stripe_plan.stripe_product.stripe_id
