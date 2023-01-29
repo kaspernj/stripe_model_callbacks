@@ -17,7 +17,8 @@ describe "tax rate created" do
         inclusive: false,
         jurisdiction: "DE",
         percentage: 16.0,
-        stripe_id: "txr_00000000000000"
+        stripe_id: "txr_00000000000000",
+        tax_type: "vat"
       )
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_23_095544) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_29_142215) do
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
     t.string "trackable_id"
@@ -771,6 +771,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_23_095544) do
     t.datetime "created", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "tax_type"
     t.index ["stripe_id"], name: "index_stripe_tax_rates_on_stripe_id"
   end
 

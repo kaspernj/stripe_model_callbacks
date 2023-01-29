@@ -20,7 +20,8 @@
       "livemode": false,
       "metadata": {
       },
-      "percentage": 16
+      "percentage": 16,
+      "tax_type": "vat"
     }
   }
 }
