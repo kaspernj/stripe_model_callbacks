@@ -26,7 +26,4 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "stripe"
   s.add_runtime_dependency "stripe_event", ">= 0.0.4"
   s.add_runtime_dependency "with_advisory_lock", ">= 4.6.0"
-
-  s.add_development_dependency "appraisal"
-  s.add_development_dependency "pry"
 end
