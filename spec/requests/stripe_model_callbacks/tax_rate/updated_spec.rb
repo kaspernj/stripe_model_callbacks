@@ -14,6 +14,7 @@ describe "tax rate updated" do
 
       expect(tax_rate).to have_attributes(
         active: true,
+        country: "DE",
         created: Time.zone.parse("2020-12-23 20:26:41"),
         description: "VAT Germany",
         display_name: "VAT",
