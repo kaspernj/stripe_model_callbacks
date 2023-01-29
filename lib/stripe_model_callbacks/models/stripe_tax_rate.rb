@@ -16,7 +16,7 @@ class StripeTaxRate < StripeModelCallbacks::ApplicationRecord
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self,
       stripe_model: object,
-      attributes: ["display_name", "description", "jurisdiction", "percentage", "inclusive", "tax_type"]
+      attributes: ["active", "display_name", "description", "jurisdiction", "percentage", "inclusive", "tax_type"]
     )
   end
 end
