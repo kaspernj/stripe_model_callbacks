@@ -12,6 +12,7 @@
       "id": "txr_00000000000000",
       "object": "tax_rate",
       "active": true,
+      "country": "DE",
       "created": 1608755201,
       "description": "VAT Germany",
       "display_name": "VAT",
@@ -20,7 +21,8 @@
       "livemode": false,
       "metadata": {
       },
-      "percentage": 16
+      "percentage": 16,
+      "tax_type": "vat"
     },
     "previous_attributes": {
       "display_name": "Old name"
