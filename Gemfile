@@ -3,7 +3,9 @@ source "https://rubygems.org"
 gemspec
 
 group :development, :test do
+  gem "appraisal"
   gem "best_practice_project", require: false
+  gem "pry"
   gem "pry-rails"
   gem "rails_best_practices"
   gem "rubocop", require: false
