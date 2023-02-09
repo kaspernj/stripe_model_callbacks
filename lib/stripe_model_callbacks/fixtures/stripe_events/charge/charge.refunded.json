@@ -38,28 +38,6 @@
       "receipt_email": null,
       "receipt_number": null,
       "refunded": true,
-      "refunds": {
-        "object": "list",
-        "data": [
-          {
-            "id": "re_CGQ7INZZQPOC8U",
-            "object": "refund",
-            "amount": 100,
-            "balance_transaction": "txn_CGQ7Sq2yeAIYK4",
-            "charge": "ch_1BrtHZAT5SYrvIfdqkyvLyvX",
-            "created": 1517772969,
-            "currency": "usd",
-            "metadata": {
-            },
-            "reason": null,
-            "receipt_number": "1527-1121",
-            "status": "succeeded"
-          }
-        ],
-        "has_more": false,
-        "total_count": 0,
-        "url": "/v1/charges/ch_1BrtHZAT5SYrvIfdqkyvLyvX/refunds"
-      },
       "review": null,
       "shipping": null,
       "source": {

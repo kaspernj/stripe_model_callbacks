@@ -1,0 +1,28 @@
+{
+  "created": 1326853478,
+  "livemode": false,
+  "id": "evt_00000000000000",
+  "type": "refund.created",
+  "object": "event",
+  "request": null,
+  "pending_webhooks": 1,
+  "api_version": "2018-01-23",
+  "data": {
+    "object": {
+      "id": "re_CGQ7INZZQPOC8U",
+      "object": "refund",
+      "amount": 100,
+      "balance_transaction": "txn_CGQ7Sq2yeAIYK4",
+      "charge": "ch_3MI7uIIICJxvfdbR0gVMAA5h",
+      "created": 1675958030,
+      "currency": "dkk",
+      "metadata": {},
+      "payment_intent": null,
+      "reason": null,
+      "receipt_number": "1527-1121",
+      "source_transfer_reversal": null,
+      "status": "succeeded",
+      "transfer_reversal": null
+    }
+  }
+}
