@@ -24,6 +24,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     plan_events
     price_events
     product_events
+    refund_events
     review_events
     sku_events
     source_events
@@ -151,6 +152,14 @@ private
     %w[created deleted updated].each do |recipient_event|
       subscribe "recipient.#{recipient_event}" do |event|
         StripeModelCallbacks::Recipient::UpdatedService.execute_with_advisory_lock!(event: event)
+      end
+    end
+  end
+
+  def refund_events
+    %w[created updated].each do |refund_event|
+      subscribe "refund.#{refund_event}" do |event|
+        StripeModelCallbacks::Refund::UpdatedService.execute_with_advisory_lock!(event: event)
       end
     end
   end
