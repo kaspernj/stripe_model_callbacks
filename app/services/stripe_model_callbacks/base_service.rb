@@ -26,7 +26,7 @@ class StripeModelCallbacks::BaseService < ServicePattern::Service
   end
 
   def self.execute_with_advisory_lock!(*args, **opts, &blk)
-    # The difference between the stripe events is about a few milliseconds - with advisory_lock
+    # The difference between the Stripe events is about a few milliseconds - with advisory_lock
     # we will prevent from creating duplicated objects due to race condition.
     # https://stripe.com/docs/webhooks/best-practices#event-ordering
     with_exception_notifications do

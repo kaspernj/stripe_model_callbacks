@@ -1,0 +1,47 @@
+{
+  "id": "evt_1MZYBJIICJxvfdbR1IBR1zYM",
+  "object": "event",
+  "api_version": "2022-11-15",
+  "created": 1675941649,
+  "data": {
+    "object": {
+      "id": "seti_1MZYBJIICJxvfdbRFtP2AeIi",
+      "object": "setup_intent",
+      "application": null,
+      "cancellation_reason": null,
+      "client_secret": "seti_1MZYBJIICJxvfdbRFtP2AeIi_secret_NKCapEVr1rCGRLrEjdHGercMNLWCKkH",
+      "created": 1675941649,
+      "customer": "cus_NKCaPfiHnRAtaq",
+      "description": null,
+      "flow_directions": null,
+      "last_setup_error": null,
+      "latest_attempt": null,
+      "livemode": false,
+      "mandate": null,
+      "metadata": {},
+      "next_action": null,
+      "on_behalf_of": null,
+      "payment_method": null,
+      "payment_method_options": {
+        "card": {
+          "mandate_options": null,
+          "network": null,
+          "request_three_d_secure": "automatic"
+        }
+      },
+      "payment_method_types": [
+        "card"
+      ],
+      "single_use_mandate": null,
+      "status": "requires_payment_method",
+      "usage": "off_session"
+    }
+  },
+  "livemode": false,
+  "pending_webhooks": 1,
+  "request": {
+    "id": "req_8TabPJe0whYnAR",
+    "idempotency_key": "853d4eff-b952-431c-b204-b0ee45895c1a"
+  },
+  "type": "setup_intent.updated"
+}
