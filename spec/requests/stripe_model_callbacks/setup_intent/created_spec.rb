@@ -44,9 +44,10 @@ describe "setup intent created" do
         ],
         single_use_mandate: nil,
         status: "requires_payment_method",
-        usage: "off_session"
+        usage: "off_session",
+        stripe_customer: stripe_customer
       )
-      expect(created_setup_intent.stripe_customer).to eq stripe_customer
+      expect(stripe_customer.stripe_setup_intents).to eq [created_setup_intent]
     end
   end
 end
