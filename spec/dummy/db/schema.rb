@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_29_145324) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_10_082342) do
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
     t.string "trackable_id"
@@ -553,6 +553,34 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_29_145324) do
     t.index ["reason"], name: "index_stripe_reviews_on_reason"
     t.index ["stripe_charge_id"], name: "index_stripe_reviews_on_stripe_charge_id"
     t.index ["stripe_id"], name: "index_stripe_reviews_on_stripe_id"
+  end
+
+  create_table "stripe_setup_intents", force: :cascade do |t|
+    t.string "stripe_id", null: false
+    t.string "application"
+    t.string "cancellation_reason"
+    t.string "client_secret"
+    t.datetime "created"
+    t.string "customer"
+    t.string "description"
+    t.json "flow_directions"
+    t.string "last_setup_error"
+    t.string "latest_attempt"
+    t.boolean "livemode"
+    t.json "mandate"
+    t.json "metadata"
+    t.string "next_action"
+    t.string "on_behalf_of"
+    t.json "payment_method"
+    t.json "payment_method_options"
+    t.json "payment_method_types"
+    t.string "single_use_mandate"
+    t.string "status"
+    t.string "usage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer"], name: "index_stripe_setup_intents_on_customer"
+    t.index ["stripe_id"], name: "index_stripe_setup_intents_on_stripe_id", unique: true
   end
 
   create_table "stripe_skus", force: :cascade do |t|

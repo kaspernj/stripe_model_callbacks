@@ -26,6 +26,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     product_events
     refund_events
     review_events
+    setup_intent_events
     sku_events
     source_events
     subscription_events
@@ -200,6 +201,14 @@ private
     %w[opened closed].each do |review_event|
       subscribe "review.#{review_event}" do |event|
         StripeModelCallbacks::Review::UpdatedService.execute_with_advisory_lock!(event: event)
+      end
+    end
+  end
+
+  def setup_intent_events
+    %w[created updated].each do |product_event|
+      subscribe "setup_intent.#{product_event}" do |event|
+        StripeModelCallbacks::SetupIntent::UpdatedService.execute_with_advisory_lock!(event: event)
       end
     end
   end
