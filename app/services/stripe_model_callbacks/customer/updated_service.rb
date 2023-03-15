@@ -5,7 +5,7 @@ class StripeModelCallbacks::Customer::UpdatedService < StripeModelCallbacks::Bas
     customer.deleted_at ||= Time.zone.now if event.type == "customer.deleted"
 
     if customer.save
-      succeed!
+      succeed! customer
     else
       fail! customer.errors.full_messages
     end
