@@ -2,7 +2,7 @@ class StripeModelCallbacks::Customer::UpdatedService < StripeModelCallbacks::Bas
   def perform
     customer = StripeCustomer.find_or_initialize_by(stripe_id: object.id)
     customer.assign_from_stripe(object)
-    customer.deleted_at ||= Time.zone.now if event.type == "customer.deleted"
+    customer.deleted_at ||= Time.zone.now if event&.type == "customer.deleted"
 
     if customer.save
       succeed! customer
