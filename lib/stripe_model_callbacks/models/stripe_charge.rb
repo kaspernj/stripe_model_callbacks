@@ -22,9 +22,16 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
       livemode: object.livemode,
       stripe_invoice_id: object.invoice,
       metadata: JSON.generate(object.metadata),
-      stripe_order_id: object.order,
+      stripe_id: object.id,
+      stripe_order_id: object.try(:order),
       stripe_source_id: object.source
     )
+
+    if object.source.is_a?(String)
+      self.stripe_source_id = object.source
+    elsif object.source
+      self.stripe_source_id = object.source.id
+    end
 
     assign_amounts_from_stripe(object)
 
@@ -44,7 +51,7 @@ private
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
       amount_refunded: object.amount_refunded ? Money.new(object.amount_refunded, object.currency) : nil,
-      application: object.application ? Money.new(object.application, object.currency) : nil
+      application: object.try(:application) ? Money.new(object.application, object.currency) : nil
     )
   end
 end
