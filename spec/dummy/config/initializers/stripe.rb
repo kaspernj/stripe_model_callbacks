@@ -6,8 +6,8 @@ Rails.application.reloader.to_prepare do
     publishable_key: "fake-public-key",
     secret_key: "fake-secret-key"
   }
+end
 
-  StripeEvent.configure do |events|
-    StripeModelCallbacks::ConfigureService.execute!(events: events)
-  end
+StripeEvent.configure do |events|
+  StripeModelCallbacks::ConfigureService.execute!(events: events)
 end
