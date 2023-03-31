@@ -45,6 +45,12 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
     )
   end
 
+  def capture(**opts)
+    updated_charge = Stripe::Charge.capture(stripe_id, **opts)
+    assign_from_stripe(updated_charge)
+    save!
+  end
+
 private
 
   def assign_amounts_from_stripe(object)
