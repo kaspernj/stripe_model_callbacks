@@ -12,6 +12,7 @@ class StripeRefund < StripeModelCallbacks::ApplicationRecord
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
       stripe_charge_id: object.charge,
+      stripe_id: object.id,
       created: Time.zone.at(object.created),
       livemode: object.try(:livemode) == true,
       metadata: JSON.generate(object.metadata)
