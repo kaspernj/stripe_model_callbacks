@@ -15,6 +15,7 @@ describe "charge refunded" do
       expect(response.code).to eq "200"
 
       expect(created_charge.amount.format).to eq "$1.00"
+      expect(created_charge.amount_captured.format).to eq "$1.00"
       expect(created_charge.amount_refunded.format).to eq "$1.00"
       expect(created_charge).to have_attributes(
         description: "My First Test Charge (created for API docs)",

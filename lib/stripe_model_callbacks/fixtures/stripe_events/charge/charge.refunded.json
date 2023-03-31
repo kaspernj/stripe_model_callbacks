@@ -12,6 +12,7 @@
       "id": "ch_00000000000000",
       "object": "charge",
       "amount": 100,
+      "amount_captured": 100,
       "amount_refunded": 100,
       "application": null,
       "application_fee": null,
