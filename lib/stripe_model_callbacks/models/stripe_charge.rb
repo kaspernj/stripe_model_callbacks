@@ -6,6 +6,7 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
   has_many :stripe_refunds, primary_key: "stripe_id"
   has_many :stripe_reviews, primary_key: "stripe_id"
 
+  monetize :amount_captured_cents, allow_nil: true
   monetize :amount_cents
   monetize :amount_refunded_cents, allow_nil: true
   monetize :application_cents, allow_nil: true
@@ -56,6 +57,7 @@ private
   def assign_amounts_from_stripe(object)
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
+      amount_captured: object.try(:amount_captured) ? Money.new(object.amount_captured, object.currency) : nil,
       amount_refunded: object.amount_refunded ? Money.new(object.amount_refunded, object.currency) : nil,
       application: object.try(:application) ? Money.new(object.application, object.currency) : nil
     )
