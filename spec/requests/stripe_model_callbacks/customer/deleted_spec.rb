@@ -9,7 +9,7 @@ describe "customer deleted" do
 
       stripe_customer.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
       expect(stripe_customer.deleted_at).to be > 1.minute.ago
     end
   end

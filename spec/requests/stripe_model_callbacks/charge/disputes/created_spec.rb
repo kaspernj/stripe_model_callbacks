@@ -8,7 +8,7 @@ describe "disputes creation" do
 
       created_dispute = StripeDispute.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_dispute.stripe_id).to eq "dp_00000000000000"
       expect(created_dispute.created).to eq Time.zone.parse("2018-02-06 13:11:19")

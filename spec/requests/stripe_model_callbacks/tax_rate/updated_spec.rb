@@ -10,7 +10,7 @@ describe "tax rate updated" do
 
       tax_rate.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(tax_rate).to have_attributes(
         active: true,

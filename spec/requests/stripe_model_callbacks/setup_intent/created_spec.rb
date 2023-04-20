@@ -13,7 +13,7 @@ describe "setup intent created" do
 
       created_setup_intent = StripeSetupIntent.order(:created_at).last!
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_setup_intent).to have_attributes(
         stripe_id: "seti_1MZYBJIICJxvfdbRFtP2AeIi",

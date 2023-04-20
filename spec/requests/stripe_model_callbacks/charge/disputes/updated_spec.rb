@@ -10,7 +10,7 @@ describe "disputes updated" do
 
       dispute.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(dispute.stripe_id).to eq "dp_00000000000000"
       expect(dispute.created).to eq Time.zone.parse("2018-02-06 13:12:56")

@@ -11,7 +11,7 @@ describe "price deleted" do
 
       price.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(price).to have_attributes(
         stripe_id: "price_00000000000000",

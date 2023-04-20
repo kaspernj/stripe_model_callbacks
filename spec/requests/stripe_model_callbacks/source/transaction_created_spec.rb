@@ -6,7 +6,7 @@ describe "source transaction created" do
       expect { mock_stripe_event("source.transaction_created") }
         .to change(StripeSource, :count).by(0)
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       # FIXME: Write more specs
     end

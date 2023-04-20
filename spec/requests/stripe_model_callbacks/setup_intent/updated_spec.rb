@@ -13,7 +13,7 @@ describe "setup intent updated" do
         .to change(PublicActivity::Activity.where(key: "stripe_setup_intent.update"), :count).by(1)
         .and change(StripeSetupIntent, :count).by(0)
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(stripe_setup_intent.reload).to have_attributes(
         stripe_id: "seti_1MZYBJIICJxvfdbRFtP2AeIi",

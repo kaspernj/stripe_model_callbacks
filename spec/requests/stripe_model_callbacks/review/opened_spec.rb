@@ -9,7 +9,7 @@ describe "review opened" do
 
       created_review = StripeReview.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_review.stripe_id).to eq "prv_00000000000000"
       expect(created_review.stripe_charge_id).to eq "ch_00000000000000"

@@ -10,7 +10,7 @@ describe "customer source created" do
 
       created_source = StripeSource.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_source.stripe_id).to eq "src_00000000000000"
       expect(created_source.currency).to eq "usd"
@@ -24,7 +24,7 @@ describe "customer source created" do
 
       created_card = StripeCard.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_card.stripe_id).to eq "card_000000000"
       expect(created_card.address_city).to eq ""

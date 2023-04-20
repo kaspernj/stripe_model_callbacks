@@ -8,7 +8,7 @@ describe "product created" do
 
       created_product = StripeProduct.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_product).to have_attributes(
         active: false,

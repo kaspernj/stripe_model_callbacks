@@ -8,7 +8,7 @@ describe "tax rate created" do
 
       created_tax_rate = StripeTaxRate.last!
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_tax_rate).to have_attributes(
         active: true,

@@ -10,7 +10,7 @@ describe "transfer updated" do
 
       transfer.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(transfer.stripe_id).to eq "tr_00000000000000"
       expect(transfer.amount.format).to eq "$11.00"

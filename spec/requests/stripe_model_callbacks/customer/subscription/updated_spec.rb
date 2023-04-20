@@ -23,7 +23,7 @@ describe "subscription updating" do
       stripe_subscription.reload
       stripe_subscription_item.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(stripe_subscription).to have_attributes(
         stripe_customer: stripe_customer,

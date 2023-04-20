@@ -8,7 +8,7 @@ describe "payout created" do
 
       created_payout = StripePayout.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_payout.stripe_id).to eq "po_00000000000000"
       expect(created_payout.amount.format).to eq "$11.00"

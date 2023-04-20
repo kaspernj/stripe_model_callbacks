@@ -13,7 +13,7 @@ describe "order updated" do
       order.reload
       order_item.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(order.stripe_id).to eq "or_00000000000000"
       expect(order.amount.format).to eq "$15.00"

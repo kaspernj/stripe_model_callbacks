@@ -9,7 +9,7 @@ describe "customer updating" do
 
       stripe_customer.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
       expect(stripe_customer.email).to eq "test@example.com"
       expect(stripe_customer.default_source).to eq "card_000000000"
     end
