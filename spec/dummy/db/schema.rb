@@ -399,7 +399,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_102934) do
   end
 
   create_table "stripe_payment_methods", force: :cascade do |t|
-    t.string "stripe_id"
+    t.string "stripe_id", null: false
     t.json "billing_details"
     t.json "card"
     t.json "metadata"
@@ -409,6 +409,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_102934) do
     t.integer "created"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["stripe_id"], name: "index_stripe_payment_methods_on_stripe_id", unique: true
   end
 
   create_table "stripe_payouts", force: :cascade do |t|
