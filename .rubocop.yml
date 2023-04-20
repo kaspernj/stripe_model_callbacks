@@ -117,6 +117,9 @@ Performance/StringInclude:
 Rails/FindEach:
   Enabled: false
 
+Rails/ThreeStateBooleanColumn:
+  Enabled: false
+
 RSpec/AnyInstance:
   Enabled: false
 
