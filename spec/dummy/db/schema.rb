@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_31_183008) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_20_102934) do
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
     t.string "trackable_id"
@@ -396,6 +396,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_183008) do
     t.index ["stripe_charge_id"], name: "index_stripe_orders_on_stripe_charge_id"
     t.index ["stripe_customer_id"], name: "index_stripe_orders_on_stripe_customer_id"
     t.index ["stripe_id"], name: "index_stripe_orders_on_stripe_id"
+  end
+
+  create_table "stripe_payment_methods", force: :cascade do |t|
+    t.string "stripe_id"
+    t.json "billing_details"
+    t.json "card"
+    t.json "metadata"
+    t.string "customer"
+    t.string "stripe_type"
+    t.boolean "livemode"
+    t.integer "created"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "stripe_payouts", force: :cascade do |t|

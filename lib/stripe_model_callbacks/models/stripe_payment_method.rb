@@ -6,6 +6,7 @@ class StripePaymentMethod < StripeModelCallbacks::ApplicationRecord
   def assign_from_stripe(object)
     check_object_is_stripe_class(object)
 
+    self.metadata = object.metadata
     self.stripe_id = object.id
     self.stripe_type = object.type
 
@@ -13,7 +14,7 @@ class StripePaymentMethod < StripeModelCallbacks::ApplicationRecord
       model: self,
       stripe_model: object,
       attributes: %w[
-        created customer livemode metadata
+        billing_details card created customer livemode
       ]
     )
   end
