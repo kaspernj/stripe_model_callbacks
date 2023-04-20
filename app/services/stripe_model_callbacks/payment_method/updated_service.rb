@@ -4,7 +4,7 @@ class StripeModelCallbacks::PaymentMethod::UpdatedService < StripeModelCallbacks
     payment_method.assign_from_stripe(object)
 
     if payment_method.save
-      create_activity!(payment_method)
+      create_activity!(payment_method) if event
       succeed!
     else
       fail! payment_method.errors.full_messages

@@ -1,11 +1,17 @@
 class StripeModelCallbacks::EventMockerService
   attr_reader :args, :name, :scope
 
+  def self.execute!(args:, name:, scope:)
+    new(args: args, name: name, scope: scope).perform
+  end
+
   def initialize(args:, name:, scope:)
     @args = args
     @name = name
     @scope = scope
+  end
 
+  def perform
     bypass_event_signature(payload)
     post_event
   end
