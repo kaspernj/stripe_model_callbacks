@@ -22,7 +22,8 @@ class StripeSource < StripeModelCallbacks::ApplicationRecord
     assign_ach_credit_transfer(object)
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
-      model: self, stripe_model: object,
+      model: self,
+      stripe_model: object,
       attributes: %w[
         client_secret created currency flow livemode metadata statement_descriptor
         status usage

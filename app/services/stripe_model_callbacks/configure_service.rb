@@ -20,6 +20,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     invoice_events
     order_events
     recipient_events
+    payment_method_events
     payout_events
     plan_events
     price_events
@@ -161,6 +162,14 @@ private
     %w[created updated].each do |refund_event|
       subscribe "refund.#{refund_event}" do |event|
         StripeModelCallbacks::Refund::UpdatedService.execute_with_advisory_lock!(event: event)
+      end
+    end
+  end
+
+  def payment_method_events
+    %w[attached automatically_updated card_automatically_updated detached updated].each do |plan_event|
+      subscribe "payment_method.#{plan_event}" do |event|
+        StripeModelCallbacks::PaymentMethod::UpdatedService.execute_with_advisory_lock!(event: event)
       end
     end
   end
