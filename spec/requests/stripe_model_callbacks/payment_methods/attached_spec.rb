@@ -2,16 +2,17 @@ require "rails_helper"
 
 describe "payment methods - attached" do
   let!(:customer) { create :stripe_customer, stripe_id: "cus_NiCY7UI5u0pbJH" }
-  let!(:payment_method) { create :stripe_payment_method, stripe_id: "pm_1MxwglIICJxvfdbRkDNKMCwZ" }
 
   describe "#execute!" do
     it "creates the subscription" do
       expect { PublicActivity.with_tracking { mock_stripe_event("payment_method.attached") } }
-        .to change(StripePaymentMethod, :count).by(0)
+        .to change(StripePaymentMethod, :count).by(1)
         .and change(PublicActivity::Activity.where(key: "stripe_payment_method.attached"), :count).by(1)
 
+      created_payment_method = StripePaymentMethod.last!
+
       expect(response.code).to eq "200"
-      expect(payment_method.reload).to have_attributes(
+      expect(created_payment_method.reload).to have_attributes(
         billing_details: {
           "address" => {
             "city" => nil,
@@ -58,6 +59,7 @@ describe "payment methods - attached" do
         stripe_id: "pm_1MxwglIICJxvfdbRkDNKMCwZ",
         stripe_type: "card"
       )
+      expect(customer.stripe_payment_methods).to eq [created_payment_method]
     end
   end
 end
