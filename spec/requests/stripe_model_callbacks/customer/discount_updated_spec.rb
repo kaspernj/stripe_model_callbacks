@@ -13,7 +13,7 @@ describe "customer discount updated" do
 
       discount.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(discount.stripe_coupon_id).to eq "25OFF_00000000000000"
       expect(discount.stripe_coupon).to eq coupon

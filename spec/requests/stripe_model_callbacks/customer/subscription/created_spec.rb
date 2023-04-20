@@ -17,7 +17,7 @@ describe "subscription creation" do
       created_subscription = StripeSubscription.last
       created_subscription_item = StripeSubscriptionItem.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_subscription).to have_attributes(
         latest_stripe_invoice_id: latest_invoice_id,
@@ -49,7 +49,7 @@ describe "subscription creation" do
       created_subscription_item = StripeSubscriptionItem.last
       created_tax_rate = StripeTaxRate.last!
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_price).to have_attributes(
         stripe_product_id: "prod_00000000000000"

@@ -11,7 +11,7 @@ describe "customer discount creation" do
 
       created_discount = StripeDiscount.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_discount.stripe_coupon_id).to eq "25OFF_00000000000000"
       expect(created_discount.stripe_coupon).to eq coupon

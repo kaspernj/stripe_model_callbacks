@@ -10,7 +10,7 @@ describe "plan updated" do
 
       plan = StripePlan.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(plan.stripe_id).to eq "peak_00000000000000"
       expect(plan.active).to be true

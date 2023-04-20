@@ -13,7 +13,7 @@ describe "invoice payment failed" do
 
       stripe_invoice.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(stripe_invoice.stripe_id).to eq "in_00000000000000"
       expect(stripe_invoice.amount_due.format).to eq "$35.00"

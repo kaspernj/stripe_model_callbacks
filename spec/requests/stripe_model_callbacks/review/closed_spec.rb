@@ -11,7 +11,7 @@ describe "review closed" do
 
       review.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(review.stripe_id).to eq "prv_00000000000000"
       expect(review.stripe_charge_id).to eq "ch_00000000000000"

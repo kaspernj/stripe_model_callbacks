@@ -11,7 +11,7 @@ describe "product deleted" do
 
       product.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(product).to have_attributes(
         stripe_id: "prod_00000000000000",

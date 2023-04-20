@@ -13,7 +13,7 @@ describe "invoice sent" do
 
       created_invoice = StripeInvoice.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_invoice.stripe_id).to eq "in_00000000000000"
       expect(created_invoice.amount_due.format).to eq "35.00 kr."

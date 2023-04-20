@@ -10,7 +10,7 @@ describe "payment methods - detached" do
         .to change(StripePaymentMethod, :count).by(0)
         .and change(PublicActivity::Activity.where(key: "stripe_payment_method.detached"), :count).by(1)
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
       expect(payment_method.reload).to have_attributes(
         billing_details: {
           "address" => {

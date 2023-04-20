@@ -8,7 +8,7 @@ describe "sku created" do
 
       created_sku = StripeSku.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_sku.stripe_id).to eq "sku_00000000000000"
       expect(created_sku.inventory_quantity).to eq 50

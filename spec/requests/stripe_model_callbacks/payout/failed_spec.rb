@@ -11,7 +11,7 @@ describe "payout failed" do
 
       payout.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(payout.stripe_id).to eq "po_00000000000000"
       expect(payout.amount.format).to eq "$11.00"

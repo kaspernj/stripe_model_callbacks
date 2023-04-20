@@ -8,7 +8,7 @@ describe "recipient created" do
 
       created_recipient = StripeRecipient.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_recipient.stripe_id).to eq "rp_00000000000000"
       expect(created_recipient.description).to eq "Recipient for John Doe"

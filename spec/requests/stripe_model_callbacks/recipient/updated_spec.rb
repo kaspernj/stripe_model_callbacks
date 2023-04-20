@@ -10,7 +10,7 @@ describe "recipient created" do
 
       recipient.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(recipient.stripe_id).to eq "rp_00000000000000"
       expect(recipient.description).to eq "Recipient for John Doe"

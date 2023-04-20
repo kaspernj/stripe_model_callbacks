@@ -12,7 +12,7 @@ describe "charge refunded" do
 
       created_charge = StripeCharge.order(:created_at).last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_charge.amount.format).to eq "$1.00"
       expect(created_charge.amount_captured.format).to eq "$1.00"

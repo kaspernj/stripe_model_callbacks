@@ -11,7 +11,7 @@ describe "payment methods - attached" do
 
       created_payment_method = StripePaymentMethod.last!
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
       expect(created_payment_method.reload).to have_attributes(
         billing_details: {
           "address" => {
