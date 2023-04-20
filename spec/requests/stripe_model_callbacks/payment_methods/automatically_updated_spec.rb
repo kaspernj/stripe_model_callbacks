@@ -1,6 +1,7 @@
 require "rails_helper"
 
 describe "payment methods - automatically updated" do
+  let!(:customer) { create :stripe_customer, stripe_id: "cus_NiCY7UI5u0pbJH" }
   let!(:payment_method) { create :stripe_payment_method, stripe_id: "pm_1MxwglIICJxvfdbRkDNKMCwZ" }
 
   describe "#execute!" do
@@ -53,6 +54,7 @@ describe "payment methods - automatically updated" do
         customer: "cus_NiCY7UI5u0pbJH",
         livemode: true,
         metadata: {},
+        stripe_customer: customer,
         stripe_id: "pm_1MxwglIICJxvfdbRkDNKMCwZ",
         stripe_type: "card"
       )
