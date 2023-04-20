@@ -11,7 +11,7 @@ describe "refund updated" do
 
       refund.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
       expect(refund).to have_attributes(
         stripe_charge: charge,
         balance_transaction: nil,

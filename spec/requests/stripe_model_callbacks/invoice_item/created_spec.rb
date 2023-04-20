@@ -10,7 +10,7 @@ describe "subscription creation" do
 
       created_invoice_item = StripeInvoiceItem.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
       expect(created_invoice_item.stripe_customer).to eq customer
       expect(created_invoice_item.description).to eq "My First Invoice Item (created for API docs)"
       expect(created_invoice_item.discountable).to be true

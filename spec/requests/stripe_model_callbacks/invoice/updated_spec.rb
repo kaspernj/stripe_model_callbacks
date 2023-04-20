@@ -23,7 +23,7 @@ describe "invoice updated" do
       stripe_invoice.reload
       stripe_invoice_item.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(stripe_invoice).to have_attributes(
         stripe_id: "in_00000000000000",

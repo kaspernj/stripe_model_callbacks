@@ -8,7 +8,7 @@ describe "customer creation" do
 
       created_customer = StripeCustomer.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
       expect(created_customer.id).to be > 0
       expect(created_customer.stripe_id).to eq "cus_2wm5EgmRGEiyPO"
       expect(created_customer.livemode).to be false

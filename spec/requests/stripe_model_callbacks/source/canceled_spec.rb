@@ -11,7 +11,7 @@ describe "source canceled" do
 
       source.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(source.currency).to eq "usd"
       expect(source.stripe_id).to eq "src_00000000000000"

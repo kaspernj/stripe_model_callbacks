@@ -8,7 +8,7 @@ describe "coupon created" do
 
       created_coupon = StripeCoupon.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_coupon.stripe_id).to eq "25OFF_00000000000000"
       expect(created_coupon.amount_off).to be_nil

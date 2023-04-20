@@ -12,7 +12,7 @@ describe "customer source deleted" do
 
       stripe_source.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(stripe_source.stripe_id).to eq "src_00000000000000"
       expect(stripe_source.currency).to eq "usd"

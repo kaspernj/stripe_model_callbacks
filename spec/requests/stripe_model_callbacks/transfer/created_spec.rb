@@ -8,7 +8,7 @@ describe "transfer created" do
 
       created_transfer = StripeTransfer.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_transfer.stripe_id).to eq "tr_00000000000000"
       expect(created_transfer.amount.format).to eq "$11.00"

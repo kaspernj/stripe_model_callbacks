@@ -15,7 +15,7 @@ describe "invoice upcoming" do
 
       created_invoice = StripeInvoice.last!
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_invoice).to have_attributes(
         stripe_id: "in_00000000000000",

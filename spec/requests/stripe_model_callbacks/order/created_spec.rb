@@ -10,7 +10,7 @@ describe "order creation" do
       created_order = StripeOrder.last
       created_order_item = StripeOrderItem.last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_order.stripe_id).to eq "or_00000000000000"
       expect(created_order.amount.format).to eq "$15.00"

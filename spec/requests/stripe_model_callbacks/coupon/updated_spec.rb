@@ -10,7 +10,7 @@ describe "coupon updated" do
 
       coupon.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(coupon.stripe_id).to eq "25OFF_00000000000000"
       expect(coupon.amount_off).to be_nil

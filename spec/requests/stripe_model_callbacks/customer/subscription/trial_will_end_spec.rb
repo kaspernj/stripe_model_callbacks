@@ -13,7 +13,7 @@ describe "subscription trial will end" do
 
       subscription.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
       expect(subscription).to have_attributes(
         stripe_customer: customer,
         stripe_plan: plan,

@@ -8,7 +8,7 @@ describe "price created" do
 
       created_price = StripePrice.last!
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_price).to have_attributes(
         stripe_id: "price_00000000000000",

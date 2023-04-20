@@ -10,7 +10,7 @@ describe "customer bank account deleted" do
 
       bank_account.reload
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(bank_account.stripe_id).to eq "ba_00000000000000"
       expect(bank_account.stripe_account_id).to eq "acct_00000000000000"

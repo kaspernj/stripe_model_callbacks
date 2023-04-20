@@ -13,7 +13,7 @@ describe "refund created" do
 
       created_refund = StripeRefund.order(:created_at).last
 
-      expect(response.code).to eq "200"
+      expect(response).to have_http_status :ok
 
       expect(created_refund).to have_attributes(
         stripe_id: "re_CGQ7INZZQPOC8U",
