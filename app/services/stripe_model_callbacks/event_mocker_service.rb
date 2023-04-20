@@ -16,6 +16,13 @@ class StripeModelCallbacks::EventMockerService
     post_event
   end
 
+  def payload
+    file_content = File.read(fixture_path)
+    data = JSON.parse(file_content, symbolize_names: true)
+    data.deep_merge!(args) if args
+    data
+  end
+
 private
 
   def bypass_event_signature(payload)
@@ -29,13 +36,6 @@ private
 
   def fixture_path
     @fixture_path ||= "#{File.dirname(__FILE__)}/../../../lib/stripe_model_callbacks/fixtures/stripe_events/#{first_part}/#{name}.json"
-  end
-
-  def payload
-    file_content = File.read(fixture_path)
-    data = JSON.parse(file_content, symbolize_names: true)
-    data.deep_merge!(args) if args
-    data
   end
 
   def post_event
