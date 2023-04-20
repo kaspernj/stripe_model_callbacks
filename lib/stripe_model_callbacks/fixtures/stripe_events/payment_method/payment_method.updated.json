@@ -1,0 +1,63 @@
+{
+  "id": "evt_1MxwhGIICJxvfdbRjLpH5qNb",
+  "object": "event",
+  "api_version": "2022-11-15",
+  "created": 1681755758,
+  "data": {
+    "object": {
+      "id": "pm_1MxwglIICJxvfdbRkDNKMCwZ",
+      "object": "payment_method",
+      "billing_details": {
+        "address": {
+          "city": null,
+          "country": "DK",
+          "line1": null,
+          "line2": null,
+          "postal_code": null,
+          "state": null
+        },
+        "email": null,
+        "name": null,
+        "phone": null
+      },
+      "card": {
+        "brand": "mastercard",
+        "checks": {
+          "address_line1_check": null,
+          "address_postal_code_check": null,
+          "cvc_check": "pass"
+        },
+        "country": "DK",
+        "exp_month": 6,
+        "exp_year": 2023,
+        "fingerprint": "QJ3sKGzehiISoOQ3",
+        "funding": "debit",
+        "generated_from": null,
+        "last4": "7080",
+        "networks": {
+          "available": [
+            "mastercard"
+          ],
+          "preferred": null
+        },
+        "three_d_secure_usage": {
+          "supported": true
+        },
+        "wallet": null
+      },
+      "created": 1681755727,
+      "customer": "cus_NiCY7UI5u0pbJH",
+      "livemode": true,
+      "metadata": {
+      },
+      "type": "card"
+    }
+  },
+  "livemode": true,
+  "pending_webhooks": 1,
+  "request": {
+    "id": null,
+    "idempotency_key": "setatt_1MxwglIICJxvfdbR7jPCO6O3-src_1MxwgmIICJxvfdbRoaqKyWHH"
+  },
+  "type": "payment_method.updated"
+}
