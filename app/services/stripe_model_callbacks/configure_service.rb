@@ -20,6 +20,7 @@ class StripeModelCallbacks::ConfigureService < StripeModelCallbacks::BaseEventSe
     invoice_events
     order_events
     recipient_events
+    payment_intent_events
     payment_method_events
     payout_events
     plan_events
@@ -162,6 +163,14 @@ private
     %w[created updated].each do |refund_event|
       subscribe "refund.#{refund_event}" do |event|
         StripeModelCallbacks::Refund::UpdatedService.execute_with_advisory_lock!(event: event)
+      end
+    end
+  end
+
+  def payment_intent_events
+    %w[amount_capturable_updated canceled created partially_funded payment_failed processing requires_action succeeded].each do |plan_event|
+      subscribe "payment_intent.#{plan_event}" do |event|
+        StripeModelCallbacks::PaymentIntent::UpdatedService.execute_with_advisory_lock!(event: event)
       end
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_20_102934) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_21_073332) do
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
     t.string "trackable_id"
@@ -398,8 +398,56 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_102934) do
     t.index ["stripe_id"], name: "index_stripe_orders_on_stripe_id"
   end
 
-  create_table "stripe_payment_methods", force: :cascade do |t|
+  create_table "stripe_payment_intents", force: :cascade do |t|
     t.string "stripe_id", null: false
+    t.integer "amount"
+    t.integer "amount_capturable"
+    t.json "amount_details"
+    t.integer "amount_received"
+    t.string "application"
+    t.integer "application_fee_amount"
+    t.json "automatic_payment_methods"
+    t.integer "canceled_at"
+    t.string "cancellation_reason"
+    t.string "capture_method"
+    t.string "client_secret"
+    t.string "confirmation_method"
+    t.integer "created"
+    t.string "currency"
+    t.string "customer"
+    t.text "description"
+    t.string "invoice"
+    t.json "last_payment_error"
+    t.string "latest_charge"
+    t.boolean "livemode"
+    t.json "metadata"
+    t.json "next_action"
+    t.string "on_behalf_of"
+    t.string "payment_method"
+    t.json "payment_method_options"
+    t.json "payment_method_types"
+    t.json "processing"
+    t.string "receipt_email"
+    t.string "review"
+    t.string "setup_future_usage"
+    t.json "shipping"
+    t.string "statement_descriptor"
+    t.string "statement_descriptor_suffix"
+    t.string "status"
+    t.json "transfer_data"
+    t.string "transfer_group"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["customer"], name: "index_stripe_payment_intents_on_customer"
+    t.index ["latest_charge"], name: "index_stripe_payment_intents_on_latest_charge"
+    t.index ["on_behalf_of"], name: "index_stripe_payment_intents_on_on_behalf_of"
+    t.index ["payment_method"], name: "index_stripe_payment_intents_on_payment_method"
+    t.index ["review"], name: "index_stripe_payment_intents_on_review"
+    t.index ["stripe_id"], name: "index_stripe_payment_intents_on_stripe_id", unique: true
+  end
+
+  create_table "stripe_payment_methods", force: :cascade do |t|
+    t.string "stripe_id"
     t.json "billing_details"
     t.json "card"
     t.json "metadata"
@@ -409,7 +457,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_20_102934) do
     t.integer "created"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["stripe_id"], name: "index_stripe_payment_methods_on_stripe_id", unique: true
   end
 
   create_table "stripe_payouts", force: :cascade do |t|
