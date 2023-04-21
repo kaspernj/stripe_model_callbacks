@@ -1,4 +1,6 @@
 class StripePaymentIntent < StripeModelCallbacks::ApplicationRecord
+  belongs_to :stripe_customer, foreign_key: "customer", optional: true, primary_key: "stripe_id"
+
   def self.stripe_class
     Stripe::PaymentIntent
   end
@@ -26,6 +28,7 @@ class StripePaymentIntent < StripeModelCallbacks::ApplicationRecord
         currency
         customer
         description
+        id
         invoice
         last_payment_error
         latest_charge

@@ -13,7 +13,8 @@ describe "payment intents - amount capturable updated" do
       expect(response).to have_http_status :ok
       expect(payment_intent.reload).to have_attributes(
         created: 1_627_149_796,
-        status: "requires_payment_method"
+        status: "requires_payment_method",
+        stripe_customer: customer
       )
     end
   end
