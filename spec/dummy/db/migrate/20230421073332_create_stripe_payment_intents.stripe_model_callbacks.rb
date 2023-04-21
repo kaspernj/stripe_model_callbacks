@@ -1,6 +1,6 @@
 # This migration comes from stripe_model_callbacks (originally 20230421072509)
 class CreateStripePaymentIntents < ActiveRecord::Migration[7.0]
-  def change
+  def change # rubocop:disable Metrics/AbcSize
     create_table :stripe_payment_intents do |t|
       t.string :stripe_id, index: {unique: true}, null: false
       t.integer :amount
