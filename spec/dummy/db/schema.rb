@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_21_073332) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_22_074349) do
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
     t.string "trackable_id"
@@ -120,6 +120,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_073332) do
     t.datetime "updated_at", precision: nil, null: false
     t.integer "amount_captured_cents"
     t.string "amount_captured_currency"
+    t.string "payment_intent"
+    t.index ["payment_intent"], name: "index_stripe_charges_on_payment_intent"
     t.index ["stripe_customer_id"], name: "index_stripe_charges_on_stripe_customer_id"
     t.index ["stripe_id"], name: "index_stripe_charges_on_stripe_id"
     t.index ["stripe_invoice_id"], name: "index_stripe_charges_on_stripe_invoice_id"

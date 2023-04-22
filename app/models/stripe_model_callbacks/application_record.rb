@@ -4,7 +4,7 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
 
   self.abstract_class = true
 
-  attr_writer :stripe_object
+  attr_accessor :stripe_object
 
   def self.check_object_is_stripe_class(object, allowed = nil)
     raise "'stripe_class' not defined on #{name}" unless respond_to?(:stripe_class)
