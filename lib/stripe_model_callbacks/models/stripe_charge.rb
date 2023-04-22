@@ -41,7 +41,7 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
       model: self,
       stripe_model: object,
       attributes: %w[
-        captured currency description dispute outcome refunded fraud_details failure_message failure_code on_behalf_of paid
+        captured currency description dispute outcome refunded fraud_details failure_message failure_code on_behalf_of paid payment_intent
         receipt_email receipt_number review shipping source_transfer statement_descriptor status transfer_group
       ]
     )

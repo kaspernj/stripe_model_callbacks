@@ -1,5 +1,6 @@
 class StripeRefund < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_charge, optional: true, primary_key: "stripe_id"
+  belongs_to :stripe_payment_intent, foreign_key: "payment_intent", optional: true, primary_key: "stripe_id"
 
   monetize :amount_cents, allow_nil: true
 
@@ -21,7 +22,7 @@ class StripeRefund < StripeModelCallbacks::ApplicationRecord
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self,
       stripe_model: object,
-      attributes: %w[balance_transaction currency reason receipt_number status]
+      attributes: %w[balance_transaction currency payment_intent reason receipt_number status]
     )
 
     self.failure_reason = object.failure_reason if object.respond_to?(:failure_reason)
