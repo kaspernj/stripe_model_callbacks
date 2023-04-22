@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_22_074349) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_22_180616) do
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
     t.string "trackable_id"
@@ -590,7 +590,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_074349) do
     t.integer "amount_cents"
     t.string "amount_currency"
     t.string "balance_transaction"
-    t.string "stripe_charge_id", null: false
+    t.string "stripe_charge_id"
     t.string "currency", null: false
     t.string "failure_balance_transaction"
     t.string "failure_reason"
@@ -602,6 +602,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_074349) do
     t.datetime "created", precision: nil
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.string "payment_intent"
+    t.index ["payment_intent"], name: "index_stripe_refunds_on_payment_intent"
     t.index ["stripe_charge_id"], name: "index_stripe_refunds_on_stripe_charge_id"
     t.index ["stripe_id"], name: "index_stripe_refunds_on_stripe_id"
   end

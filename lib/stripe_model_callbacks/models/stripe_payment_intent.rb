@@ -55,6 +55,18 @@ class StripePaymentIntent < StripeModelCallbacks::ApplicationRecord
     )
   end
 
+  def amount_money
+    Money.new(amount, currency)
+  end
+
+  def amount_capturable_money
+    Money.new(amount_capturable, currency)
+  end
+
+  def amount_received_money
+    Money.new(amount_received, currency)
+  end
+
   def cancel(**args)
     updated_payment_intent = Stripe::PaymentIntent.cancel(stripe_id, **args)
     assign_from_stripe(updated_payment_intent)
