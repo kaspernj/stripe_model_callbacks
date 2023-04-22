@@ -2,6 +2,7 @@ class StripePaymentIntent < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_customer, foreign_key: "customer", optional: true, primary_key: "stripe_id"
 
   has_many :stripe_charges, foreign_key: "payment_intent", primary_key: "stripe_id"
+  has_many :stripe_refunds, foreign_key: "payment_intent", primary_key: "stripe_id"
 
   def self.stripe_class
     Stripe::PaymentIntent
