@@ -14,4 +14,14 @@ describe StripeCharge do
       expect(stripe_charge).to have_attributes(captured: true)
     end
   end
+
+  describe "#stripe_payment_intent" do
+    it "resolves the relationship" do
+      stripe_payment_intent = create :stripe_payment_intent
+      stripe_charge = create :stripe_charge, payment_intent: stripe_payment_intent.stripe_id
+
+      expect(stripe_charge).to have_attributes(stripe_payment_intent: stripe_payment_intent)
+      expect(stripe_payment_intent).to have_attributes(stripe_charges: [stripe_charge])
+    end
+  end
 end

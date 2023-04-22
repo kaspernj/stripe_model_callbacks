@@ -1,6 +1,8 @@
 class StripePaymentIntent < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_customer, foreign_key: "customer", optional: true, primary_key: "stripe_id"
 
+  has_many :stripe_charges, foreign_key: "payment_intent", primary_key: "stripe_id"
+
   def self.stripe_class
     Stripe::PaymentIntent
   end
@@ -51,5 +53,23 @@ class StripePaymentIntent < StripeModelCallbacks::ApplicationRecord
         transfer_group
       ]
     )
+  end
+
+  def cancel!(**args)
+    updated_payment_intent = Stripe::PaymentIntent.cancel(stripe_id, **args)
+    assign_from_stripe(updated_payment_intent)
+    save!
+  end
+
+  def capture!(**args)
+    updated_payment_intent = Stripe::PaymentIntent.capture(stripe_id, **args)
+    assign_from_stripe(updated_payment_intent)
+    save!
+  end
+
+  def confirm!(**args)
+    updated_payment_intent = Stripe::PaymentIntent.confirm(stripe_id, **args)
+    assign_from_stripe(updated_payment_intent)
+    save!
   end
 end
