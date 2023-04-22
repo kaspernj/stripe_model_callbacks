@@ -15,6 +15,21 @@ describe StripeCharge do
     end
   end
 
+  describe "#refund" do
+    it "refunds the charge", :stripe_mock do
+      expect { stripe_charge.refund }
+        .to change(StripeRefund, :count).by(1)
+
+      created_stripe_refund = StripeRefund.last!
+
+      expect(created_stripe_refund).to have_attributes(
+        amount_cents: 100,
+        currency: "dkk",
+        stripe_charge: stripe_charge
+      )
+    end
+  end
+
   describe "#stripe_payment_intent" do
     it "resolves the relationship" do
       stripe_payment_intent = create :stripe_payment_intent

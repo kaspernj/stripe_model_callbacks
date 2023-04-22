@@ -55,19 +55,19 @@ class StripePaymentIntent < StripeModelCallbacks::ApplicationRecord
     )
   end
 
-  def cancel!(**args)
+  def cancel(**args)
     updated_payment_intent = Stripe::PaymentIntent.cancel(stripe_id, **args)
     assign_from_stripe(updated_payment_intent)
     save!
   end
 
-  def capture!(**args)
+  def capture(**args)
     updated_payment_intent = Stripe::PaymentIntent.capture(stripe_id, **args)
     assign_from_stripe(updated_payment_intent)
     save!
   end
 
-  def confirm!(**args)
+  def confirm(**args)
     updated_payment_intent = Stripe::PaymentIntent.confirm(stripe_id, **args)
     assign_from_stripe(updated_payment_intent)
     save!

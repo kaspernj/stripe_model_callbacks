@@ -53,7 +53,7 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
     save!
   end
 
-  def refund!(**opts)
+  def refund(**opts)
     StripeRefund.create_on_stripe!(charge: stripe_id, currency: currency)
     updated_charge = Stripe::Charge.retrieve(stripe_id, **opts)
     assign_from_stripe(updated_charge)
