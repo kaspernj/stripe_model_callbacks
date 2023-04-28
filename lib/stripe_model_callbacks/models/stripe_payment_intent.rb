@@ -11,6 +11,8 @@ class StripePaymentIntent < StripeModelCallbacks::ApplicationRecord
   def assign_from_stripe(object)
     check_object_is_stripe_class(object)
 
+    self.metadata = object.metadata
+
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self,
       stripe_model: object,
@@ -36,7 +38,6 @@ class StripePaymentIntent < StripeModelCallbacks::ApplicationRecord
         last_payment_error
         latest_charge
         livemode
-        metadata
         next_action
         on_behalf_of
         payment_method
