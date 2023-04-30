@@ -2,8 +2,9 @@ require "rails_helper"
 
 describe StripeModelCallbacks::SyncEverything do
   it "calls all the sync-all services" do
-    expect(StripeModelCallbacks::Coupon::SyncAll).to receive(:execute!)
-    expect(StripeModelCallbacks::Plan::SyncAll).to receive(:execute!)
+    StripeModelCallbacks::SyncEverything.stripe_classes.each do |stripe_class| # rubocop:disable RSpec/IteratedExpectation
+      expect(stripe_class).to receive(:list).and_return([])
+    end
 
     StripeModelCallbacks::SyncEverything.execute!
   end
