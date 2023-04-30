@@ -1,6 +1,8 @@
 class StripePaymentMethod < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_customer, foreign_key: "customer", optional: true, primary_key: "stripe_id"
 
+  has_many :stripe_payment_intents, foreign_key: "payment_method", primary_key: "stripe_id"
+
   def self.stripe_class
     Stripe::PaymentMethod
   end
