@@ -26,6 +26,9 @@ describe "payment intents - created" do
         stripe_latest_charge: charge,
         stripe_payment_method: payment_method
       )
+      expect(charge).to have_attributes(
+        latest_charge_on_stripe_payment_intent: created_payment_intent
+      )
     end
   end
 end

@@ -7,6 +7,8 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
   has_many :stripe_refunds, primary_key: "stripe_id"
   has_many :stripe_reviews, primary_key: "stripe_id"
 
+  has_one :latest_charge_on_stripe_payment_intent, class_name: "StripePaymentIntent", foreign_key: "latest_charge", primary_key: "stripe_id"
+
   monetize :amount_captured_cents, allow_nil: true
   monetize :amount_cents
   monetize :amount_refunded_cents, allow_nil: true
