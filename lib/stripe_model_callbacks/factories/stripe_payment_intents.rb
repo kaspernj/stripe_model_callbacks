@@ -20,7 +20,8 @@ FactoryBot.define do
           client_secret: stripe_payment_intent.client_secret,
           currency: stripe_payment_intent.currency,
           customer: stripe_payment_intent.customer,
-          id: stripe_payment_intent.stripe_id
+          id: stripe_payment_intent.stripe_id,
+          status: stripe_payment_intent.status
         )
         stripe_payment_intent.assign_from_stripe(mock_payment_intent)
         stripe_payment_intent.save!
