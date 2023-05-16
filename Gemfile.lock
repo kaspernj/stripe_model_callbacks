@@ -270,7 +270,7 @@ GEM
     ruby-progressbar (1.13.0)
     service_pattern (1.0.10)
     sexp_processor (4.16.1)
-    sqlite3 (1.6.2)
+    sqlite3 (1.6.3)
       mini_portile2 (~> 2.8.0)
     string-cases (0.0.4)
     stripe (5.55.0)
