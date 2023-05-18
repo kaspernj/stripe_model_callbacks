@@ -2,12 +2,15 @@ require "rails_helper"
 
 describe "setup intent created" do
   let(:stripe_customer) { create :stripe_customer, stripe_id: "cus_NKCaPfiHnRAtaq" }
+  let(:payment_method) { create :stripe_payment_method }
 
   describe "#execute!" do
     it "marks the charge as intented" do
       stripe_customer
 
-      expect { PublicActivity.with_tracking { mock_stripe_event("setup_intent.created") } }
+      data = {object: {payment_method: payment_method.stripe_id}}
+
+      expect { PublicActivity.with_tracking { mock_stripe_event("setup_intent.created", data: data) } }
         .to change(PublicActivity::Activity.where(key: "stripe_setup_intent.create"), :count).by(1)
         .and change(StripeSetupIntent, :count).by(1)
 
@@ -31,7 +34,7 @@ describe "setup intent created" do
         metadata: "{}",
         next_action: nil,
         on_behalf_of: nil,
-        payment_method: nil,
+        payment_method: payment_method.stripe_id,
         payment_method_options: {
           "card" => {
             "mandate_options" => nil,
@@ -44,6 +47,7 @@ describe "setup intent created" do
         ],
         single_use_mandate: nil,
         status: "requires_payment_method",
+        stripe_payment_method: payment_method,
         usage: "off_session",
         stripe_customer: stripe_customer
       )
