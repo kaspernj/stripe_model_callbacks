@@ -10,9 +10,13 @@ AllCops:
 
 require:
   - rubocop-capybara
+  - rubocop-factory_bot
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
+
+FactoryBot/ConsistentParenthesesStyle:
+  Enabled: false
 
 Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
@@ -136,9 +140,6 @@ RSpec/DescribedClass:
   Enabled: false
 
 RSpec/ExampleLength:
-  Enabled: false
-
-RSpec/FactoryBot/ConsistentParenthesesStyle:
   Enabled: false
 
 RSpec/LetSetup:
