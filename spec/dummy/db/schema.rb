@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_22_180616) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_18_072738) do
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
     t.string "trackable_id"
@@ -638,7 +638,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_180616) do
     t.json "metadata"
     t.string "next_action"
     t.string "on_behalf_of"
-    t.json "payment_method"
+    t.json "payment_method_old"
     t.json "payment_method_options"
     t.json "payment_method_types"
     t.string "single_use_mandate"
@@ -646,7 +646,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_180616) do
     t.string "usage"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "payment_method"
     t.index ["customer"], name: "index_stripe_setup_intents_on_customer"
+    t.index ["payment_method"], name: "index_stripe_setup_intents_on_payment_method"
     t.index ["stripe_id"], name: "index_stripe_setup_intents_on_stripe_id", unique: true
   end
 
