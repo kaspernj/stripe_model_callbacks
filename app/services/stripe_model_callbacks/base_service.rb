@@ -1,7 +1,7 @@
 class StripeModelCallbacks::BaseService < ServicePattern::Service
-  def self.reported_execute!(*args, **opts, &blk)
+  def self.reported_execute!(...)
     with_exception_notifications do
-      response = execute(*args, **opts, &blk)
+      response = execute(...)
       raise response.errors.join(". ") unless response.success?
 
       response
@@ -25,13 +25,13 @@ class StripeModelCallbacks::BaseService < ServicePattern::Service
     raise e
   end
 
-  def self.execute_with_advisory_lock!(*args, **opts, &blk)
+  def self.execute_with_advisory_lock!(*args, **opts, &blk) # rubocop:disable Style/ArgumentsForwarding
     # The difference between the Stripe events is about a few milliseconds - with advisory_lock
     # we will prevent from creating duplicated objects due to race condition.
     # https://stripe.com/docs/webhooks/best-practices#event-ordering
     with_exception_notifications do
       StripeModelCallbacks::ApplicationRecord.with_advisory_lock(advisory_lock_name(*args, **opts)) do
-        response = execute(*args, **opts, &blk)
+        response = execute(*args, **opts, &blk) # rubocop:disable Style/ArgumentsForwarding
         raise response.errors.join(". ") unless response.success?
 
         response
