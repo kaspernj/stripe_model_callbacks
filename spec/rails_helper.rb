@@ -68,12 +68,12 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  config.before(:each, stripe_mock: true) do
+  config.before(:each, :stripe_mock) do
     require "stripe_mock"
     StripeMock.start
   end
 
-  config.after(:each, stripe_mock: true) do
+  config.after(:each, :stripe_mock) do
     StripeMock.stop
   end
 
