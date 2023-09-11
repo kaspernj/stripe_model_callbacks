@@ -17,7 +17,7 @@ class AddNewPrimaryIdAndRenameOld < ActiveRecord::Migration[5.2]
       change_column_null table_name, :stripe_id, false
       remove_column table_name, :id
 
-      add_column table_name, :id, :primary_key
+      add_column table_name, :id, :primary_key # rubocop:disable Rails/DangerousColumnNames
     end
   end
 
@@ -28,7 +28,7 @@ class AddNewPrimaryIdAndRenameOld < ActiveRecord::Migration[5.2]
       next unless column_exists?(table_name, :stripe_id)
 
       remove_column table_name, :id
-      add_column table_name, :id, :string, primary_key: true
+      add_column table_name, :id, :string, primary_key: true # rubocop:disable Rails/DangerousColumnNames
       execute "UPDATE #{table_name} SET id = stripe_id"
       change_column_null table_name, :id, false
       remove_column table_name, :stripe_id
