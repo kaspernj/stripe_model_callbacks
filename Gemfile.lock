@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/stripe-ruby-mock/stripe-ruby-mock.git
-  revision: b8b211c2c697fb94eab1a70a0215282c058e34d6
+  revision: 49812a38ee8dd0b0cff10d0ca1d8511fdf884d8e
   specs:
     stripe-ruby-mock (3.1.0.rc3)
       dante (>= 0.2.0)
