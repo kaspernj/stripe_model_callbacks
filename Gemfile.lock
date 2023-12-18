@@ -109,7 +109,7 @@ GEM
     base64 (0.2.0)
     best_practice_project (0.0.12)
       auto_autoloader (>= 0.0.5)
-    bigdecimal (3.1.4)
+    bigdecimal (3.1.5)
     builder (3.2.4)
     capybara (3.39.2)
       addressable
@@ -186,7 +186,7 @@ GEM
     nokogiri (1.15.5)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
-    parallel (1.23.0)
+    parallel (1.24.0)
     parser (3.2.2.4)
       ast (~> 2.4.1)
       racc
@@ -295,7 +295,7 @@ GEM
     rubocop-performance (1.19.1)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
-    rubocop-rails (2.22.2)
+    rubocop-rails (2.23.0)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
