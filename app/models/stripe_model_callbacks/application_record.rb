@@ -52,7 +52,7 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
 
   def update_on_stripe(attributes)
     attributes.each do |key, value|
-      to_stripe.__send__("#{key}=", value)
+      to_stripe.__send__(:"#{key}=", value)
     end
 
     to_stripe.save
