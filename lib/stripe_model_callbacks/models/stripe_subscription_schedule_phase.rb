@@ -49,7 +49,7 @@ private
   def assign_timestamps(object)
     %i[end_date start_date trial_end].each do |timestamp|
       object_timestamp = object.__send__(timestamp)
-      __send__("#{timestamp}=", Time.zone.at(object_timestamp)) if object_timestamp
+      __send__(:"#{timestamp}=", Time.zone.at(object_timestamp)) if object_timestamp
     end
   end
 

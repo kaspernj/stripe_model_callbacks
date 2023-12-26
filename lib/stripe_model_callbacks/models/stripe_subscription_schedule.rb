@@ -76,7 +76,7 @@ private
   def assign_timestamps(object)
     %i[canceled_at completed_at released_at].each do |timestamp|
       object_timestamp = object.__send__(timestamp)
-      __send__("#{timestamp}=", Time.zone.at(object_timestamp)) if object_timestamp
+      __send__(:"#{timestamp}=", Time.zone.at(object_timestamp)) if object_timestamp
     end
   end
 
