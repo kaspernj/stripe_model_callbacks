@@ -308,7 +308,7 @@ GEM
     ruby2_keywords (0.0.5)
     service_pattern (1.0.10)
     sexp_processor (4.16.1)
-    sqlite3 (1.6.9)
+    sqlite3 (1.7.0)
       mini_portile2 (~> 2.8.0)
     string-cases (0.0.4)
     stringio (3.0.9)
