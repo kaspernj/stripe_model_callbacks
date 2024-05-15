@@ -3,6 +3,7 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_invoice, optional: true, primary_key: "stripe_id"
   belongs_to :stripe_payment_intent, foreign_key: "payment_intent", optional: true, primary_key: "stripe_id"
   belongs_to :stripe_source, optional: true, primary_key: "stripe_id"
+  has_many :stripe_invoices, primary_key: "stripe_id"
   has_many :stripe_orders, primary_key: "stripe_id"
   has_many :stripe_refunds, primary_key: "stripe_id"
   has_many :stripe_reviews, primary_key: "stripe_id"

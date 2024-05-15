@@ -4,6 +4,7 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_discount, optional: true
   belongs_to :stripe_subscription, optional: true, primary_key: "stripe_id"
 
+  has_many :stripe_charges, foreign_key: "stripe_invoice_id", primary_key: "stripe_id"
   has_many :stripe_invoice_items, autosave: true, primary_key: "stripe_id"
 
   validates :stripe_id, uniqueness: true
