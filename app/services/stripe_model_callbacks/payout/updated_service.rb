@@ -15,11 +15,11 @@ private
   def create_activity
     case event.type
     when "payout.canceled"
-      payout.create_activity :canceled
+      payout.try(:create_activity, :canceled)
     when "payout.failed"
-      payout.create_activity :failed
+      payout.try(:create_activity, :failed)
     when "payout.paid"
-      payout.create_activity :paid
+      payout.try(:create_activity, :paid)
     end
   end
 

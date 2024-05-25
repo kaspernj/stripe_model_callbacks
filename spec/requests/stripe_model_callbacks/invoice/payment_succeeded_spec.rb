@@ -5,10 +5,10 @@ describe "invoice payment succeeded" do
 
   describe "#execute!" do
     it "updates the invoice and adds a payment succeeded log" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("invoice.payment_succeeded") } }
+      expect { mock_stripe_event("invoice.payment_succeeded") }
         .to change(StripeInvoice, :count).by(1)
         .and change(StripeInvoiceItem, :count).by(1)
-        .and change(PublicActivity::Activity.where(key: "stripe_invoice.payment_succeeded"), :count).by(1)
+        .and change(Activity.where(key: "stripe_invoice.payment_succeeded"), :count).by(1)
 
       created_invoice = StripeInvoice.last
 

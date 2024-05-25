@@ -5,9 +5,9 @@ describe "disputes funds reinstated" do
 
   describe "#execute!" do
     it "adds an activity and updates the disppute" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("charge.dispute.funds_reinstated") } }
+      expect { mock_stripe_event("charge.dispute.funds_reinstated") }
         .to change(StripeDispute, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_dispute.funds_reinstated"), :count).by(1)
+        .and change(Activity.where(key: "stripe_dispute.funds_reinstated"), :count).by(1)
 
       dispute.reload
 

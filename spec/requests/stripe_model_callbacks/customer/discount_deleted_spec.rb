@@ -7,9 +7,9 @@ describe "customer discount deleted" do
 
   describe "#execute!" do
     it "adds an activity and updates the existing discount" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("customer.discount.deleted") } }
+      expect { mock_stripe_event("customer.discount.deleted") }
         .to change(StripeDiscount, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_discount.deleted"), :count).by(1)
+        .and change(Activity.where(key: "stripe_discount.deleted"), :count).by(1)
 
       discount.reload
 

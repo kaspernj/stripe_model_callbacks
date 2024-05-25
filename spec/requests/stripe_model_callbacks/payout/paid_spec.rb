@@ -7,7 +7,7 @@ describe "payout paid" do
     it "creates the subscription" do
       expect { mock_stripe_event("payout.paid") }
         .to change(StripePayout, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_payout.paid"), :count).by(1)
+        .and change(Activity.where(key: "stripe_payout.paid"), :count).by(1)
 
       payout.reload
 

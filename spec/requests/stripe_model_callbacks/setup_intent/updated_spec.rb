@@ -9,8 +9,8 @@ describe "setup intent updated" do
       stripe_customer
       stripe_setup_intent
 
-      expect { PublicActivity.with_tracking { mock_stripe_event("setup_intent.updated") } }
-        .to change(PublicActivity::Activity.where(key: "stripe_setup_intent.update"), :count).by(1)
+      expect { mock_stripe_event("setup_intent.updated") }
+        .to change(Activity.where(key: "stripe_setup_intent.update"), :count).by(1)
         .and change(StripeSetupIntent, :count).by(0)
 
       expect(response).to have_http_status :ok

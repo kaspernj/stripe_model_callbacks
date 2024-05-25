@@ -19,7 +19,7 @@ describe "error handling" do
 
     configuration.instance_variable_set(:@on_error_callbacks, [callback])
 
-    expect { PublicActivity.with_tracking { mock_stripe_event("invoice.created") } }
+    expect { mock_stripe_event("invoice.created") }
       .to raise_error(RuntimeError, "BOOM!")
       .and change(StripeInvoice, :count).by(0)
 

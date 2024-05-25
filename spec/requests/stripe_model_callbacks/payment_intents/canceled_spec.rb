@@ -6,9 +6,9 @@ describe "payment intents - canceled" do
 
   describe "#execute!" do
     it "updates the payment intent and logs it" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("payment_intent.canceled") } }
+      expect { mock_stripe_event("payment_intent.canceled") }
         .to change(StripePaymentIntent, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_payment_intent.canceled"), :count).by(1)
+        .and change(Activity.where(key: "stripe_payment_intent.canceled"), :count).by(1)
 
       expect(response).to have_http_status :ok
       expect(payment_intent.reload).to have_attributes(

@@ -5,7 +5,7 @@ class StripeModelCallbacks::Recipient::UpdatedService < StripeModelCallbacks::Ba
     recipient.deleted_at ||= Time.zone.now if event.type == "recipient.deleted"
 
     if recipient.save
-      recipient.create_activity :deleted if event.type == "recipient.deleted"
+      recipient.try(:create_activity, :deleted) if event.type == "recipient.deleted"
       succeed!
     else
       fail! recipient.errors.full_messages

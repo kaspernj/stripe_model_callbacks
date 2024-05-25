@@ -56,8 +56,8 @@ describe "subscription_schedule created" do
     end
 
     it "creates a activity for canceled" do
-      expect { PublicActivity.with_tracking { stripe_event } }
-        .to change(PublicActivity::Activity.where(key: "stripe_subscription_schedule.canceled"), :count).by(1)
+      expect { stripe_event }
+        .to change(Activity.where(key: "stripe_subscription_schedule.canceled"), :count).by(1)
     end
 
     it "saves subscription_schedule_phases data from stripe" do

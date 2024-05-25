@@ -16,9 +16,9 @@ private
   def create_activity
     case event.type
     when "customer.subscription.trial_will_end"
-      subscription.create_activity :trial_will_end
+      subscription.try(:create_activity, :trial_will_end)
     when "customer.subscription.deleted"
-      subscription.create_activity :deleted
+      subscription.try(:create_activity, :deleted)
     end
   end
 

@@ -19,11 +19,11 @@ private
   def create_activity
     case event.type
     when "charge.dispute.closed"
-      dispute.create_activity :closed
+      dispute.try(:create_activity, :closed)
     when "charge.dispute.funds_reinstated"
-      dispute.create_activity :funds_reinstated
+      dispute.try(:create_activity, :funds_reinstated)
     when "charge.dispute.funds_withdrawn"
-      dispute.create_activity :funds_withdrawn
+      dispute.try(:create_activity, :funds_withdrawn)
     end
   end
 end

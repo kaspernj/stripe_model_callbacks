@@ -5,9 +5,9 @@ describe "source chargeable" do
 
   describe "#execute!" do
     it "creates an activity and updates the source" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("source.chargeable") } }
+      expect { mock_stripe_event("source.chargeable") }
         .to change(StripeSource, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_source.chargeable"), :count).by(1)
+        .and change(Activity.where(key: "stripe_source.chargeable"), :count).by(1)
 
       source.reload
 

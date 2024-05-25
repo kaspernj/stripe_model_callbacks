@@ -5,9 +5,9 @@ describe "review closed" do
 
   describe "#execute!" do
     it "creates the subscription" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("review.closed") } }
+      expect { mock_stripe_event("review.closed") }
         .to change(StripeReview, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_review.closed"), :count).by(1)
+        .and change(Activity.where(key: "stripe_review.closed"), :count).by(1)
 
       review.reload
 
