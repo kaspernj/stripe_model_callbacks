@@ -6,9 +6,9 @@ describe "customer source expiring" do
 
   describe "#execute!" do
     it "adds an activity and updates the source" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("customer.source.expiring") } }
+      expect { mock_stripe_event("customer.source.expiring") }
         .to change(StripeSource, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_source.expiring"), :count).by(1)
+        .and change(Activity.where(key: "stripe_source.expiring"), :count).by(1)
 
       stripe_source.reload
 

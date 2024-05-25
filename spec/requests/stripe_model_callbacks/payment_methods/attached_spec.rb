@@ -5,9 +5,9 @@ describe "payment methods - attached" do
 
   describe "#execute!" do
     it "creates the subscription" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("payment_method.attached") } }
+      expect { mock_stripe_event("payment_method.attached") }
         .to change(StripePaymentMethod, :count).by(1)
-        .and change(PublicActivity::Activity.where(key: "stripe_payment_method.attached"), :count).by(1)
+        .and change(Activity.where(key: "stripe_payment_method.attached"), :count).by(1)
 
       created_payment_method = StripePaymentMethod.last!
 

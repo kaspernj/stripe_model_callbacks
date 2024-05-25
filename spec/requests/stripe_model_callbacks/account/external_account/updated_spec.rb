@@ -5,9 +5,9 @@ describe "account external account updated" do
 
   describe "#execute!" do
     it "updates the bank account" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("account.external_account.updated") } }
+      expect { mock_stripe_event("account.external_account.updated") }
         .to change(StripeBankAccount, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_bank_account.update"), :count).by(1)
+        .and change(Activity.where(key: "stripe_bank_account.update"), :count).by(1)
 
       bank_account.reload
 

@@ -6,9 +6,9 @@ describe "plan deleted" do
 
   describe "#execute!" do
     it "marks the charge as refunded" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("plan.deleted") } }
+      expect { mock_stripe_event("plan.deleted") }
         .to change(StripePlan, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_plan.deleted"), :count).by(1)
+        .and change(Activity.where(key: "stripe_plan.deleted"), :count).by(1)
 
       plan.reload
 

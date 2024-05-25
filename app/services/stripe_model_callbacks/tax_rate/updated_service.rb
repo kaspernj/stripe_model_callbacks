@@ -15,9 +15,9 @@ private
   def create_activity
     case event.type
     when "tax_rate.created"
-      tax_rate.create_activity :created
+      tax_rate.try(:create_activity, :created)
     when "tax_rate.updated"
-      tax_rate.create_activity :updated
+      tax_rate.try(:create_activity, :updated)
     end
   end
 

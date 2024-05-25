@@ -5,9 +5,9 @@ describe "source mandate notification" do
 
   describe "#execute!" do
     it "creates an activity and updates the source" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("source.mandate_notification") } }
+      expect { mock_stripe_event("source.mandate_notification") }
         .to change(StripeSource, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_source.mandate_notification"), :count).by(1)
+        .and change(Activity.where(key: "stripe_source.mandate_notification"), :count).by(1)
 
       source.reload
 

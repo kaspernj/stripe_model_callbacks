@@ -5,9 +5,9 @@ describe "account external account deleted" do
 
   describe "#execute!" do
     it "adds an activity and updates the bank account" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("account.external_account.deleted") } }
+      expect { mock_stripe_event("account.external_account.deleted") }
         .to change(StripeBankAccount, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_bank_account.deleted"), :count).by(1)
+        .and change(Activity.where(key: "stripe_bank_account.deleted"), :count).by(1)
 
       bank_account.reload
 

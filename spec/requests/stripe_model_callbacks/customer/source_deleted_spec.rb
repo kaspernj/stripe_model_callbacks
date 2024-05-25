@@ -6,9 +6,9 @@ describe "customer source deleted" do
 
   describe "#execute!" do
     it "adds an activity and updates the source" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("customer.source.deleted") } }
+      expect { mock_stripe_event("customer.source.deleted") }
         .to change(StripeSource, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_source.deleted"), :count).by(1)
+        .and change(Activity.where(key: "stripe_source.deleted"), :count).by(1)
 
       stripe_source.reload
 

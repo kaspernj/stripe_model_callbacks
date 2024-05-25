@@ -15,10 +15,10 @@ describe "invoice updated" do
 
   describe "#execute!" do
     it "updates the given invoice" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("invoice.updated") } }
+      expect { mock_stripe_event("invoice.updated") }
         .to change(StripeInvoice, :count).by(0)
         .and change(StripeInvoiceItem, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_invoice.update"), :count).by(1)
+        .and change(Activity.where(key: "stripe_invoice.update"), :count).by(1)
 
       stripe_invoice.reload
       stripe_invoice_item.reload
