@@ -7,6 +7,7 @@ group :development, :test do
   gem "best_practice_project", require: false
   gem "pry"
   gem "pry-rails"
+  gem "public_activity"
   gem "rails_best_practices"
   gem "rubocop", require: false
   gem "rubocop-capybara", require: false
