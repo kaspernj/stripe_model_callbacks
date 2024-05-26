@@ -14,6 +14,6 @@ class StripeModelCallbacks::PaymentIntent::UpdatedService < StripeModelCallbacks
   def create_activity!(payment_intent)
     match = event.type.match(/\Apayment_intent\.(.+)$/)
     activity_type = match[1].to_sym
-    payment_intent.create_activity activity_type
+    payment_intent.try(:create_activity, activity_type)
   end
 end
