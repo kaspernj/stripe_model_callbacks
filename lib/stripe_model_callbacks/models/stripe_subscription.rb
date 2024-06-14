@@ -130,6 +130,18 @@ private
     )
   end
 
+  def create_stripe_mock!
+    cancel_at_period_end = cancel_at_period_end?
+
+    mock_subscription = Stripe::Subscription.create(
+      customer: stripe_customer.stripe_id,
+      plan: stripe_plan.stripe_id
+    )
+    assign_from_stripe(mock_subscription)
+    save!
+    cancel!(at_period_end: true) if cancel_at_period_end
+  end
+
   def find_item_by_stripe_item(item)
     stripe_subscription_items.find do |sub_item|
       if item.try(:plan)

@@ -60,6 +60,20 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
     save!
   end
 
+  def create_stripe_mock!(stripe_charge)
+    mock_charge = Stripe::Charge.create(
+      amount: amount_cents,
+      captured: captured,
+      currency: currency,
+      customer: stripe_customer_id,
+      id: stripe_id,
+      paid: paid,
+      refunded: refunded
+    )
+    assign_from_stripe(mock_charge)
+    save!
+  end
+
   def refund(**opts)
     StripeRefund.create_on_stripe!(charge: stripe_id, currency: currency)
     updated_charge = Stripe::Charge.retrieve(stripe_id, **opts)

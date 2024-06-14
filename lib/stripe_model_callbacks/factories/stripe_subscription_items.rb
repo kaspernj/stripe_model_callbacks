@@ -5,14 +5,15 @@ FactoryBot.define do
     stripe_plan
     quantity { 1 }
 
+    trait :with_conditional_stripe_mock
+      after :build do |item|
+        item.create_stripe_mock! if StripeMock.instance
+      end
+    end
+
     trait :with_stripe_mock do
       after :build do |item|
-        mock_item = Stripe::SubscriptionItem.create(
-          subscription: item.stripe_subscription.stripe_id,
-          plan: item.stripe_plan.stripe_id,
-          quantity: item.quantity
-        )
-        item.assign_from_stripe(mock_item)
+        item.create_stripe_mock!
       end
     end
   end
