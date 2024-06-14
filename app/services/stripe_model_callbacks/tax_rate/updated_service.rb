@@ -22,6 +22,6 @@ private
   end
 
   def tax_rate
-    @tax_rate ||= StripeTaxRate.find_or_initialize_by(stripe_id: object.id)
+    @tax_rate ||= StripeTaxRate.find_or_initialize_by(stripe_id: object.is_a?(String) ? object : object.id)
   end
 end
