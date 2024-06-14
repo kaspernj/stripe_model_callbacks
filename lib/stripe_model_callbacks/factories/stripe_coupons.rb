@@ -15,9 +15,7 @@ FactoryBot.define do
       duration { "repeating" }
       duration_in_months { 1 }
 
-      after :create do |stripe_coupon|
-        stripe_coupon.create_stripe_mock!
-      end
+      after :create, &:create_stripe_mock!
     end
   end
 end

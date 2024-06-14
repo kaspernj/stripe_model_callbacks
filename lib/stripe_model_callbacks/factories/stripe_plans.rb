@@ -20,9 +20,7 @@ FactoryBot.define do
     trait :with_stripe_mock do
       association :stripe_product, factory: [:stripe_product, :with_stripe_mock]
 
-      after :create do |stripe_plan|
-        stripe_plan.create_stripe_mock!
-      end
+      after :create, &:create_stripe_mock!
     end
   end
 end

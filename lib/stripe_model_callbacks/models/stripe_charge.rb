@@ -60,7 +60,7 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
     save!
   end
 
-  def create_stripe_mock!(stripe_charge)
+  def create_stripe_mock!
     mock_charge = Stripe::Charge.create(
       amount: amount_cents,
       captured: captured,

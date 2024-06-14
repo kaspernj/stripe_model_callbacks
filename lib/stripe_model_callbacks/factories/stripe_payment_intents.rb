@@ -11,9 +11,7 @@ FactoryBot.define do
     end
 
     trait :with_stripe_mock do
-      after :create do |stripe_payment_intent|
-        stripe_payment_intent.create_stripe_mock!
-      end
+      after :create, &:create_stripe_mock!
     end
   end
 end

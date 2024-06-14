@@ -12,9 +12,7 @@ FactoryBot.define do
     end
 
     trait :with_stripe_mock do
-      after :build do |item|
-        item.create_stripe_mock!
-      end
+      after :build, &:create_stripe_mock!
     end
   end
 end

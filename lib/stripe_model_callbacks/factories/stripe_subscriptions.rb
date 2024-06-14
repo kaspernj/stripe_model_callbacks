@@ -32,9 +32,7 @@ FactoryBot.define do
       association :stripe_customer, factory: [:stripe_customer, :with_stripe_mock]
       association :stripe_plan, factory: [:stripe_plan, :with_stripe_mock]
 
-      after :create do |stripe_subscription|
-        stripe_subscription.create_stripe_mock!
-      end
+      after :create, &:create_stripe_mock!
     end
   end
 end
