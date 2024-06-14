@@ -69,6 +69,18 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
     self
   end
 
+  def create_stripe_mock!
+    cancel_at_period_end = cancel_at_period_end?
+
+    mock_subscription = Stripe::Subscription.create(
+      customer: stripe_customer.stripe_id,
+      plan: stripe_plan.stripe_id
+    )
+    assign_from_stripe(mock_subscription)
+    save!
+    cancel!(at_period_end: true) if cancel_at_period_end
+  end
+
 private
 
   def assign_default_tax_rates(object)
@@ -128,18 +140,6 @@ private
       trial_start: object.trial_start ? Time.zone.at(object.trial_start) : nil,
       trial_end: object.trial_end ? Time.zone.at(object.trial_end) : nil
     )
-  end
-
-  def create_stripe_mock!
-    cancel_at_period_end = cancel_at_period_end?
-
-    mock_subscription = Stripe::Subscription.create(
-      customer: stripe_customer.stripe_id,
-      plan: stripe_plan.stripe_id
-    )
-    assign_from_stripe(mock_subscription)
-    save!
-    cancel!(at_period_end: true) if cancel_at_period_end
   end
 
   def find_item_by_stripe_item(item)
