@@ -22,6 +22,15 @@ class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
     )
   end
 
+  def create_stripe_mock!
+    mock_item = Stripe::SubscriptionItem.create(
+      subscription: stripe_subscription.stripe_id,
+      plan: stripe_plan.stripe_id,
+      quantity: quantity
+    )
+    assign_from_stripe(mock_item)
+  end
+
   def update_quantity_on_stripe!(new_quantity)
     sub_object = stripe_subscription.to_stripe
 

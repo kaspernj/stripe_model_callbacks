@@ -6,15 +6,14 @@ FactoryBot.define do
     delinquent { false }
     livemode { false }
 
-    trait :with_stripe_mock do
+    trait :with_conditional_stripe_mock do
       after :create do |stripe_customer|
-        mock_customer = Stripe::Customer.create(
-          id: stripe_customer.stripe_id,
-          source: StripeMock.create_test_helper.generate_card_token
-        )
-        stripe_customer.assign_from_stripe(mock_customer)
-        stripe_customer.save!
+        stripe_customer.create_stripe_mock! if StripeMock.instance
       end
+    end
+
+    trait :with_stripe_mock do
+      after :create, &:create_stripe_mock!
     end
   end
 end

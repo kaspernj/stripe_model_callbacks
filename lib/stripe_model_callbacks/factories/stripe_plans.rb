@@ -9,21 +9,18 @@ FactoryBot.define do
     livemode { false }
     stripe_product
 
+    trait :with_conditional_stripe_mock do
+      association :stripe_product, factory: [:stripe_product, :with_conditional_stripe_mock]
+
+      after :create do |stripe_plan|
+        stripe_plan.create_stripe_mock! if StripeMock.instance
+      end
+    end
+
     trait :with_stripe_mock do
       association :stripe_product, factory: [:stripe_product, :with_stripe_mock]
 
-      after :create do |stripe_plan|
-        mock_plan = Stripe::Plan.create(
-          id: stripe_plan.stripe_id,
-          amount: stripe_plan.amount_cents,
-          currency: stripe_plan.currency,
-          interval: stripe_plan.interval,
-          interval_count: stripe_plan.interval_count,
-          product: stripe_plan.stripe_product.stripe_id
-        )
-        stripe_plan.assign_from_stripe(mock_plan)
-        stripe_plan.save!
-      end
+      after :create, &:create_stripe_mock!
     end
   end
 end

@@ -34,4 +34,13 @@ class StripeCustomer < StripeModelCallbacks::ApplicationRecord
       ]
     )
   end
+
+  def create_stripe_mock!
+    mock_customer = Stripe::Customer.create(
+      id: stripe_id,
+      source: StripeMock.create_test_helper.generate_card_token
+    )
+    assign_from_stripe(mock_customer)
+    save!
+  end
 end
