@@ -77,6 +77,7 @@ private
     found_ids = []
 
     object.default_tax_rates.each do |default_tax_rate|
+      default_tax_rate = Stripe::TaxRate.retrieve(default_tax_rate) if default_tax_rate.is_a?(String)
       tax_rate = StripeModelCallbacks::TaxRate::UpdatedService.execute!(object: default_tax_rate)
 
       if new_record?
