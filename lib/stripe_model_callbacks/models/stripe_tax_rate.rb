@@ -6,7 +6,7 @@ class StripeTaxRate < StripeModelCallbacks::ApplicationRecord
   end
 
   def create_stripe_mock!
-    mock_tax_rate = Stripe::TaxRate.create(id: stripe_id)
+    mock_tax_rate = Stripe::TaxRate.create(description:, display_name:, id: stripe_id, percentage:)
     assign_from_stripe(mock_tax_rate)
     save!
   end
