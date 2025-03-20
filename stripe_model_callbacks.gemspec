@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", ">= 6.0.0"
 
+  s.add_runtime_dependency "active_record_auditable"
   s.add_runtime_dependency "auto_autoloader"
   s.add_runtime_dependency "money-rails"
   s.add_runtime_dependency "service_pattern", ">= 1.0.5"

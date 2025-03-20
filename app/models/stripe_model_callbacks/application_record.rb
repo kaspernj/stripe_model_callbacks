@@ -3,6 +3,11 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
 
   attr_accessor :stripe_object
 
+  def self.inherited(child)
+    super
+    child.include ActiveRecordAuditable::Audited
+  end
+
   def self.check_object_is_stripe_class(object, allowed = nil)
     raise "'stripe_class' not defined on #{name}" unless respond_to?(:stripe_class)
 

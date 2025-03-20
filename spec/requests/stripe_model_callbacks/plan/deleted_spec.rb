@@ -8,7 +8,7 @@ describe "plan deleted" do
     it "marks the charge as refunded" do
       expect { mock_stripe_event("plan.deleted") }
         .to change(StripePlan, :count).by(0)
-        .and change(Activity.where(key: "stripe_plan.deleted"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripePlan").where_action("deleted"), :count).by(1)
 
       plan.reload
 

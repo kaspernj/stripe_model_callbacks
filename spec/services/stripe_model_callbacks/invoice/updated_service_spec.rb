@@ -48,7 +48,8 @@ describe StripeModelCallbacks::Invoice::UpdatedService do
 
       it "creates stripe invoice activity" do
         updated_service_results
-        expect(PublicActivity::Activity.last.key).to eq("stripe_invoice.payment_succeeded")
+        expect(ActiveRecordAuditable::Audit.last!).to have_attributes(action: "payment_succeeded")
+        expect(ActiveRecordAuditable::Audit.last!.audit_auditable_type).to have_attributes(name: "StripeInvoice")
       end
     end
 

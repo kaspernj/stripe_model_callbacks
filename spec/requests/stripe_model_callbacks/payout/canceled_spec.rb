@@ -7,7 +7,7 @@ describe "payout canceled" do
     it "adds an activity and updates the payout" do
       expect { mock_stripe_event("payout.canceled") }
         .to change(StripePayout, :count).by(0)
-        .and change(Activity.where(key: "stripe_payout.canceled"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripePayout").where_action("canceled"), :count).by(1)
 
       payout.reload
 

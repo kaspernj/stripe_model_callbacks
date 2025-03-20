@@ -7,7 +7,7 @@ describe "payment methods - attached" do
     it "creates the subscription" do
       expect { mock_stripe_event("payment_method.attached") }
         .to change(StripePaymentMethod, :count).by(1)
-        .and change(Activity.where(key: "stripe_payment_method.attached"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripePaymentMethod").where_action("attached"), :count).by(1)
 
       created_payment_method = StripePaymentMethod.last!
 

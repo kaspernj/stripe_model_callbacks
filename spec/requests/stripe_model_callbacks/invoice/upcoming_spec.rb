@@ -10,7 +10,7 @@ describe "invoice upcoming" do
         .to change(StripeInvoice, :count).by(0)
 
       # Upcoming event doesnt send an invoice ID. Dunno what to do about it...
-      # .and change(Activity.where(key: "stripe_invoice.upcoming"), :count).by(1)
+      # .and change(ActiveRecordAuditable::Audit.where_type("StripeInvoice").where_action("upcoming"), :count).by(1)
       # .and change(StripeInvoiceItem, :count).by(1)
 
       created_invoice = StripeInvoice.last!

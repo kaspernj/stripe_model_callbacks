@@ -7,7 +7,7 @@ describe "account external account deleted" do
     it "adds an activity and updates the bank account" do
       expect { mock_stripe_event("account.external_account.deleted") }
         .to change(StripeBankAccount, :count).by(0)
-        .and change(Activity.where(key: "stripe_bank_account.deleted"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeBankAccount").where_action("deleted"), :count).by(1)
 
       bank_account.reload
 

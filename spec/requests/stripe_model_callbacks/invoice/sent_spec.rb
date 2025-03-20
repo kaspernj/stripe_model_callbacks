@@ -9,7 +9,7 @@ describe "invoice sent" do
       expect { mock_stripe_event("invoice.sent") }
         .to change(StripeInvoice, :count).by(0)
         .and change(StripeInvoiceItem, :count).by(1)
-        .and change(Activity.where(key: "stripe_invoice.sent"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeInvoice").where_action("sent"), :count).by(1)
 
       created_invoice = StripeInvoice.last
 

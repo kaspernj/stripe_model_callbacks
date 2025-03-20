@@ -22,7 +22,7 @@ private
   def create_activity
     return unless tracked_activities[event.type]
 
-    subscription_schedule.try(:create_activity, tracked_activities[event.type])
+    subscription_schedule.create_audit!(action: tracked_activities[event.type])
   end
 
   def set_cancellation_date

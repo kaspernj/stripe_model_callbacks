@@ -7,7 +7,7 @@ describe "disputes funds reinstated" do
     it "adds an activity and updates the disppute" do
       expect { mock_stripe_event("charge.dispute.funds_reinstated") }
         .to change(StripeDispute, :count).by(0)
-        .and change(Activity.where(key: "stripe_dispute.funds_reinstated"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeDispute").where_action("funds_reinstated"), :count).by(1)
 
       dispute.reload
 

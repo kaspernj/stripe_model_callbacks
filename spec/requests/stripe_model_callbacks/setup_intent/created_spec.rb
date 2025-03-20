@@ -11,7 +11,7 @@ describe "setup intent created" do
       data = {object: {payment_method: payment_method.stripe_id}}
 
       expect { mock_stripe_event("setup_intent.created", data: data) }
-        .to change(Activity.where(key: "stripe_setup_intent.create"), :count).by(1)
+        .to change(ActiveRecordAuditable::Audit.where_type("StripeSetupIntent").where_action("create"), :count).by(1)
         .and change(StripeSetupIntent, :count).by(1)
 
       created_setup_intent = StripeSetupIntent.order(:created_at).last!

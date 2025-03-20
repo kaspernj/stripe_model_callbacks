@@ -18,7 +18,7 @@ describe "invoice updated" do
       expect { mock_stripe_event("invoice.updated") }
         .to change(StripeInvoice, :count).by(0)
         .and change(StripeInvoiceItem, :count).by(0)
-        .and change(Activity.where(key: "stripe_invoice.update"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeInvoice").where_action("update"), :count).by(1)
 
       stripe_invoice.reload
       stripe_invoice_item.reload

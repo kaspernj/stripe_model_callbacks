@@ -7,7 +7,7 @@ describe "source mandate notification" do
     it "creates an activity and updates the source" do
       expect { mock_stripe_event("source.mandate_notification") }
         .to change(StripeSource, :count).by(0)
-        .and change(Activity.where(key: "stripe_source.mandate_notification"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeSource").where_action("mandate_notification"), :count).by(1)
 
       source.reload
 

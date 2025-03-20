@@ -11,6 +11,7 @@ PATH
   remote: .
   specs:
     stripe_model_callbacks (0.1.7)
+      active_record_auditable
       auto_autoloader
       money-rails
       rails (>= 6.0.0)
@@ -71,6 +72,9 @@ GEM
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
+    active_record_auditable (0.1.0)
+      rails (>= 7.0.0)
+      service_pattern (>= 1.0.10)
     activejob (7.1.2)
       activesupport (= 7.1.2)
       globalid (>= 0.3.6)
