@@ -47,7 +47,7 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
     save!
   end
 
-  def reload!(*args, &blk)
+  def reload!(*args, &)
     @to_stripe = nil
     super
   end

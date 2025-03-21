@@ -26,7 +26,7 @@ class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
     mock_item = Stripe::SubscriptionItem.create(
       subscription: stripe_subscription.stripe_id,
       plan: stripe_plan.stripe_id,
-      quantity: quantity
+      quantity:
     )
     assign_from_stripe(mock_item)
   end
@@ -35,7 +35,7 @@ class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
     sub_object = stripe_subscription.to_stripe
 
     new_items = [{
-      id: id,
+      id:,
       plan: stripe_plan_id,
       quantity: new_quantity
     }]

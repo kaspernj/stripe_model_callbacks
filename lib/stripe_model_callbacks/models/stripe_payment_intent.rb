@@ -96,21 +96,21 @@ class StripePaymentIntent < StripeModelCallbacks::ApplicationRecord
 
   def create_stripe_mock!
     mock_payment_intent = Stripe::PaymentIntent.create(
-      amount: amount,
-      amount_capturable: amount_capturable,
-      amount_details: amount_details,
-      amount_received: amount_received,
-      application: application,
-      application_fee_amount: application_fee_amount,
-      automatic_payment_methods: automatic_payment_methods,
-      canceled_at: canceled_at,
-      cancellation_reason: cancellation_reason,
-      capture_method: capture_method,
-      client_secret: client_secret,
-      currency: currency,
-      customer: customer,
+      amount:,
+      amount_capturable:,
+      amount_details:,
+      amount_received:,
+      application:,
+      application_fee_amount:,
+      automatic_payment_methods:,
+      canceled_at:,
+      cancellation_reason:,
+      capture_method:,
+      client_secret:,
+      currency:,
+      customer:,
       id: stripe_id,
-      status: status
+      status:
     )
     assign_from_stripe(mock_payment_intent)
     save!

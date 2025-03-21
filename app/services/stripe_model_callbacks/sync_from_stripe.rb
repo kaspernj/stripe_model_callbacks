@@ -16,7 +16,7 @@ class StripeModelCallbacks::SyncFromStripe < StripeModelCallbacks::BaseService
       model = model_class.create_from_stripe!(stripe_object)
     end
 
-    succeed!(model: model)
+    succeed!(model:)
   end
 
   def model_class_name

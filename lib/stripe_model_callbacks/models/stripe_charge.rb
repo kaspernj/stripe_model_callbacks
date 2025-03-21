@@ -54,8 +54,8 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
     )
   end
 
-  def capture(**opts)
-    updated_charge = Stripe::Charge.capture(stripe_id, **opts)
+  def capture(**)
+    updated_charge = Stripe::Charge.capture(stripe_id, **)
     assign_from_stripe(updated_charge)
     save!
   end
@@ -63,20 +63,20 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
   def create_stripe_mock!
     mock_charge = Stripe::Charge.create(
       amount: amount_cents,
-      captured: captured,
-      currency: currency,
+      captured:,
+      currency:,
       customer: stripe_customer_id,
       id: stripe_id,
-      paid: paid,
-      refunded: refunded
+      paid:,
+      refunded:
     )
     assign_from_stripe(mock_charge)
     save!
   end
 
-  def refund(**opts)
-    StripeRefund.create_on_stripe!(charge: stripe_id, currency: currency)
-    updated_charge = Stripe::Charge.retrieve(stripe_id, **opts)
+  def refund(**)
+    StripeRefund.create_on_stripe!(charge: stripe_id, currency:)
+    updated_charge = Stripe::Charge.retrieve(stripe_id, **)
     assign_from_stripe(updated_charge)
     save!
   end

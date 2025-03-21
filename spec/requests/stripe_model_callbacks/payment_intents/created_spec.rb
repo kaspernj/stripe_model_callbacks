@@ -9,7 +9,7 @@ describe "payment intents - created" do
     it "creates the payment intent and logs it" do
       data = {object: {customer: customer.stripe_id, latest_charge: charge.stripe_id, payment_method: payment_method.stripe_id}}
 
-      expect { mock_stripe_event("payment_intent.created", data: data) }
+      expect { mock_stripe_event("payment_intent.created", data:) }
         .to change(StripePaymentIntent, :count).by(1)
         .and change(ActiveRecordAuditable::Audit.where_type("StripePaymentIntent").where_action("created"), :count).by(1)
 

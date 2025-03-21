@@ -45,7 +45,7 @@ describe "setup intent updated" do
         single_use_mandate: nil,
         status: "requires_payment_method",
         usage: "off_session",
-        stripe_customer: stripe_customer
+        stripe_customer:
       )
       expect(stripe_customer.stripe_setup_intents).to eq [stripe_setup_intent]
     end

@@ -2,7 +2,7 @@ class StripeModelCallbacks::EventMockerService
   attr_reader :args, :name, :scope
 
   def self.execute!(args:, name:, scope:)
-    new(args: args, name: name, scope: scope).perform
+    new(args:, name:, scope:).perform
   end
 
   def initialize(args:, name:, scope:)
