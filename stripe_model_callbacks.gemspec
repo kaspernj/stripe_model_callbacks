@@ -19,11 +19,11 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", ">= 7.0.0"
 
-  s.add_runtime_dependency "active_record_auditable"
-  s.add_runtime_dependency "auto_autoloader"
-  s.add_runtime_dependency "money-rails"
-  s.add_runtime_dependency "service_pattern", ">= 1.0.5"
-  s.add_runtime_dependency "stripe"
-  s.add_runtime_dependency "stripe_event", ">= 0.0.4"
-  s.add_runtime_dependency "with_advisory_lock", ">= 4.6.0"
+  s.add_dependency "active_record_auditable"
+  s.add_dependency "auto_autoloader"
+  s.add_dependency "money-rails"
+  s.add_dependency "service_pattern", ">= 1.0.5"
+  s.add_dependency "stripe"
+  s.add_dependency "stripe_event", ">= 0.0.4"
+  s.add_dependency "with_advisory_lock", ">= 4.6.0"
 end
