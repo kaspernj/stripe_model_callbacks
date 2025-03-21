@@ -47,9 +47,8 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
     raise "Cannot reactivate unless cancel at period end has been set" unless cancel_at_period_end?
 
     # https://stripe.com/docs/subscriptions/canceling-pausing
-    items = []
-    stripe_subscription_items.each do |item|
-      items << {
+    items = stripe_subscription_items.map do |item|
+      {
         id: item.stripe_id,
         plan: item.stripe_plan_id,
         quantity: item.quantity
