@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.metadata["rubygems_mfa_required"] = "true"
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", ">= 6.0.0"
+  s.add_dependency "rails", ">= 7.0.0"
 
   s.add_runtime_dependency "active_record_auditable"
   s.add_runtime_dependency "auto_autoloader"

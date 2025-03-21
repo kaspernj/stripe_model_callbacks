@@ -14,7 +14,7 @@ PATH
       active_record_auditable
       auto_autoloader
       money-rails
-      rails (>= 6.0.0)
+      rails (>= 7.0.0)
       service_pattern (>= 1.0.5)
       stripe
       stripe_event (>= 0.0.4)

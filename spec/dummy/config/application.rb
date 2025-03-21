@@ -8,7 +8,6 @@ require "action_mailer/railtie"
 require "active_job/railtie"
 require "action_cable/engine"
 # require "rails/test_unit/railtie"
-require "sprockets/railtie" unless Gem.loaded_specs["rails"].version.to_s.start_with?("7.")
 
 Bundler.require(*Rails.groups)
 require "stripe_model_callbacks"
