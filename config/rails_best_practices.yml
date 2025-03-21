@@ -28,6 +28,7 @@ RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }
 RemoveUnusedMethodsInModelsCheck: {
   except_methods: [
     "StripeModelCallbacks::ApplicationRecord#create_on_stripe!",
+    "StripeModelCallbacks::ApplicationRecord#inherited",
     "StripeModelCallbacks::ApplicationRecord#reload!",
     "StripeModelCallbacks::ApplicationRecord#update_on_stripe!",
     "StripeModelCallbacks::ApplicationRecord#destroy_on_stripe!"
