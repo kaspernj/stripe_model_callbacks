@@ -34,9 +34,9 @@ class StripePlan < StripeModelCallbacks::ApplicationRecord
     mock_plan = Stripe::Plan.create(
       id: stripe_id,
       amount: amount_cents,
-      currency: currency,
-      interval: interval,
-      interval_count: interval_count,
+      currency:,
+      interval:,
+      interval_count:,
       product: stripe_product.stripe_id
     )
     assign_from_stripe(mock_plan)

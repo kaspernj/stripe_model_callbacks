@@ -3,9 +3,9 @@ require "rails_helper"
 describe "subscription creation" do
   let(:stripe_coupon) { create :stripe_coupon }
   let!(:stripe_customer) { create :stripe_customer, stripe_id: "cus_00000000000000" }
-  let(:stripe_discount) { create :stripe_discount, stripe_coupon: stripe_coupon, coupon_times_redeemed: 4 }
+  let(:stripe_discount) { create :stripe_discount, stripe_coupon:, coupon_times_redeemed: 4 }
   let!(:stripe_plan) { create :stripe_plan, stripe_id: "silver-express-898" }
-  let(:stripe_subscription) { create :stripe_subscription, stripe_customer: stripe_customer, stripe_discount: stripe_discount, stripe_id: "sub_CGPu5KqP1TORKF" }
+  let(:stripe_subscription) { create :stripe_subscription, stripe_customer:, stripe_discount:, stripe_id: "sub_CGPu5KqP1TORKF" }
   let(:latest_invoice_id) { "in_1GoYq1J3a8kmO8fmMn28KIy2" }
 
   describe "#execute!" do
@@ -21,8 +21,8 @@ describe "subscription creation" do
 
       expect(created_subscription).to have_attributes(
         latest_stripe_invoice_id: latest_invoice_id,
-        stripe_customer: stripe_customer,
-        stripe_plan: stripe_plan,
+        stripe_customer:,
+        stripe_plan:,
         stripe_plans: [stripe_plan],
         stripe_discount: nil,
         stripe_discount_id: nil
@@ -32,7 +32,7 @@ describe "subscription creation" do
         stripe_subscription_id: "sub_CGPXJjUMVXBLSx",
         stripe_subscription: created_subscription,
         stripe_plan_id: "silver-express-898",
-        stripe_plan: stripe_plan
+        stripe_plan:
       )
     end
 
@@ -57,7 +57,7 @@ describe "subscription creation" do
       expect(created_subscription).to have_attributes(
         default_tax_rates: [created_tax_rate],
         latest_stripe_invoice_id: latest_invoice_id,
-        stripe_customer: stripe_customer,
+        stripe_customer:,
         stripe_plan: nil,
         stripe_discount: nil,
         stripe_discount_id: nil
@@ -124,7 +124,7 @@ describe "subscription creation" do
       expect(created_subscription).to have_attributes(
         stripe_discount_id: created_discount.id.to_s,
         stripe_discount: created_discount,
-        stripe_plan: stripe_plan,
+        stripe_plan:,
         stripe_plans: [stripe_plan]
       )
     end
@@ -162,7 +162,7 @@ describe "subscription creation" do
         )
       end
 
-      stripe_subscription.update!(stripe_discount: stripe_discount)
+      stripe_subscription.update!(stripe_discount:)
       expect(stripe_discount.coupon_times_redeemed).to eq 4
 
       expect { send_event_action.call }
@@ -175,15 +175,15 @@ describe "subscription creation" do
 
       expect(created_subscription).to have_attributes(
         stripe_discount_id: stripe_discount.id.to_s,
-        stripe_discount: stripe_discount,
-        stripe_plan: stripe_plan,
+        stripe_discount:,
+        stripe_plan:,
         stripe_plans: [stripe_plan]
       )
       expect(created_subscription_item).to have_attributes(
         stripe_subscription: created_subscription,
         quantity: 1,
         stripe_plan_id: "silver-express-898",
-        stripe_plan: stripe_plan
+        stripe_plan:
       )
       expect(stripe_discount.reload.coupon_times_redeemed).to eq 4
     end

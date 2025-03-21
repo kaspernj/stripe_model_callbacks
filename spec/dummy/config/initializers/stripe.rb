@@ -8,6 +8,6 @@ Rails.application.reloader.to_prepare do
   }
 
   StripeEvent.configure do |events|
-    StripeModelCallbacks::ConfigureService.execute!(events: events)
+    StripeModelCallbacks::ConfigureService.execute!(events:)
   end
 end

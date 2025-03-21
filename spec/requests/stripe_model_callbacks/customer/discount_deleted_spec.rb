@@ -9,7 +9,7 @@ describe "customer discount deleted" do
     it "adds an activity and updates the existing discount" do
       expect { mock_stripe_event("customer.discount.deleted") }
         .to change(StripeDiscount, :count).by(0)
-        .and change(Activity.where(key: "stripe_discount.deleted"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeDiscount").where_action("deleted"), :count).by(1)
 
       discount.reload
 

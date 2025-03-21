@@ -7,7 +7,7 @@ describe "source failed" do
     it "creates an activity and updates the source" do
       expect { mock_stripe_event("source.failed") }
         .to change(StripeSource, :count).by(0)
-        .and change(Activity.where(key: "stripe_source.failed"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeSource").where_action("failed"), :count).by(1)
 
       source.reload
 

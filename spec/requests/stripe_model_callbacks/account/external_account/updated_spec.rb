@@ -7,7 +7,7 @@ describe "account external account updated" do
     it "updates the bank account" do
       expect { mock_stripe_event("account.external_account.updated") }
         .to change(StripeBankAccount, :count).by(0)
-        .and change(Activity.where(key: "stripe_bank_account.update"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeBankAccount").where_action("update"), :count).by(1)
 
       bank_account.reload
 

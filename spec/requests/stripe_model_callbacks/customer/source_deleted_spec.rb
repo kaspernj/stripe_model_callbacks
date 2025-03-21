@@ -8,7 +8,7 @@ describe "customer source deleted" do
     it "adds an activity and updates the source" do
       expect { mock_stripe_event("customer.source.deleted") }
         .to change(StripeSource, :count).by(0)
-        .and change(Activity.where(key: "stripe_source.deleted"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeSource").where_action("deleted"), :count).by(1)
 
       stripe_source.reload
 

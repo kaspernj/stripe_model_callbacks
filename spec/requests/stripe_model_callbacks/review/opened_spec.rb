@@ -5,7 +5,7 @@ describe "review opened" do
     it "creates the subscription" do
       expect { mock_stripe_event("review.opened") }
         .to change(StripeReview, :count).by(1)
-        .and change(Activity.where(key: "stripe_review.create"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeReview").where_action("create"), :count).by(1)
 
       created_review = StripeReview.last
 

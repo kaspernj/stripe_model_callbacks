@@ -24,7 +24,7 @@ describe "subscription_schedule created" do
       stripe_event
 
       expect(stripe_subscription_schedule).to have_attributes(
-        stripe_id: stripe_id,
+        stripe_id:,
         billing: "charge_automatically",
         billing_thresholds_amount_gte: nil,
         billing_thresholds_reset_billing_cycle_anchor: nil,
@@ -57,7 +57,7 @@ describe "subscription_schedule created" do
 
     it "creates a activity for canceled" do
       expect { stripe_event }
-        .to change(Activity.where(key: "stripe_subscription_schedule.canceled"), :count).by(1)
+        .to change(ActiveRecordAuditable::Audit.where_type("StripeSubscriptionSchedule").where_action("canceled"), :count).by(1)
     end
 
     it "saves subscription_schedule_phases data from stripe" do

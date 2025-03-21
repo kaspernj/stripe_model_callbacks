@@ -7,7 +7,7 @@ describe "transfer reversed" do
     it "logs an activity and updates the transfer" do
       expect { mock_stripe_event("transfer.reversed") }
         .to change(StripeTransfer, :count).by(0)
-        .and change(Activity.where(key: "stripe_transfer.reversed"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeTransfer").where_action("reversed"), :count).by(1)
 
       transfer.reload
 

@@ -3,7 +3,7 @@ class StripeModelCallbacks::Transfer::UpdatedService < StripeModelCallbacks::Bas
     transfer.assign_from_stripe(object)
 
     if transfer.save
-      transfer.try(:create_activity, :reversed) if event.type == "transfer.reversed"
+      transfer.create_audit!(action: :reversed) if event.type == "transfer.reversed"
       succeed!
     else
       fail! transfer.errors.full_messages

@@ -8,7 +8,7 @@ describe "subscription deletion" do
   describe "#execute!" do
     it "ends the subscription" do
       expect { mock_stripe_event("customer.subscription.deleted") }
-        .to change(Activity.where(key: "stripe_subscription.deleted"), :count).by(1)
+        .to change(ActiveRecordAuditable::Audit.where_type("StripeSubscription").where_action("deleted"), :count).by(1)
         .and change(StripeSubscriptionItem, :count).by(1)
 
       subscription.reload

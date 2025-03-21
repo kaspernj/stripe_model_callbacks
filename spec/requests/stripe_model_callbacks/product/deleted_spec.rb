@@ -7,7 +7,7 @@ describe "product deleted" do
     it "creates the subscription" do
       expect { mock_stripe_event("product.deleted") }
         .to change(StripeProduct, :count).by(0)
-        .and change(Activity.where(key: "stripe_product.deleted"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeProduct").where_action("deleted"), :count).by(1)
 
       product.reload
 

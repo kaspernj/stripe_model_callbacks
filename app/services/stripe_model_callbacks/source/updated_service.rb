@@ -15,13 +15,13 @@ private
   def create_activity
     case event.type
     when "source.canceled"
-      source.try(:create_activity, :canceled)
+      source.create_audit!(action: :canceled)
     when "source.chargeable"
-      source.try(:create_activity, :chargeable)
+      source.create_audit!(action: :chargeable)
     when "source.failed"
-      source.try(:create_activity, :failed)
+      source.create_audit!(action: :failed)
     when "source.mandate_notification"
-      source.try(:create_activity, :mandate_notification)
+      source.create_audit!(action: :mandate_notification)
     end
   end
 

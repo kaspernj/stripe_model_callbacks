@@ -10,7 +10,7 @@ describe "setup intent updated" do
       stripe_setup_intent
 
       expect { mock_stripe_event("setup_intent.updated") }
-        .to change(Activity.where(key: "stripe_setup_intent.update"), :count).by(1)
+        .to change(ActiveRecordAuditable::Audit.where_type("StripeSetupIntent").where_action("update"), :count).by(1)
         .and change(StripeSetupIntent, :count).by(0)
 
       expect(response).to have_http_status :ok
@@ -45,7 +45,7 @@ describe "setup intent updated" do
         single_use_mandate: nil,
         status: "requires_payment_method",
         usage: "off_session",
-        stripe_customer: stripe_customer
+        stripe_customer:
       )
       expect(stripe_customer.stripe_setup_intents).to eq [stripe_setup_intent]
     end

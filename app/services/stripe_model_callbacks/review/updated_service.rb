@@ -4,7 +4,7 @@ class StripeModelCallbacks::Review::UpdatedService < StripeModelCallbacks::BaseE
     review.assign_from_stripe(object)
 
     if review.save
-      review.try(:create_activity, :closed) if event.type == "review.closed"
+      review.create_audit!(action: :closed) if event.type == "review.closed"
       succeed!
     else
       fail! review.errors.full_messages

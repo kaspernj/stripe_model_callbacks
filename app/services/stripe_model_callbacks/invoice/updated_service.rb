@@ -14,10 +14,10 @@ class StripeModelCallbacks::Invoice::UpdatedService < StripeModelCallbacks::Base
 private
 
   def create_activity
-    invoice.try(:create_activity, :payment_failed) if event.type == "invoice.payment_failed"
-    invoice.try(:create_activity, :payment_succeeded) if event.type == "invoice.payment_succeeded"
-    invoice.try(:create_activity, :sent) if event.type == "invoice.sent"
-    invoice.try(:create_activity, :upcoming) if event.type == "invoice.upcoming"
+    invoice.create_audit!(action: :payment_failed) if event.type == "invoice.payment_failed"
+    invoice.create_audit!(action: :payment_succeeded) if event.type == "invoice.payment_succeeded"
+    invoice.create_audit!(action: :sent) if event.type == "invoice.sent"
+    invoice.create_audit!(action: :upcoming) if event.type == "invoice.upcoming"
   end
 
   def invoice

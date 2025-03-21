@@ -23,11 +23,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates.
-  if Rails.version.start_with?("7.")
-    config.action_dispatch.show_exceptions = :none
-  else
-    config.action_dispatch.show_exceptions = false
-  end
+  config.action_dispatch.show_exceptions = :none
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false

@@ -5,7 +5,7 @@ class StripeModelCallbacks::Price::UpdatedService < StripeModelCallbacks::BaseEv
     price.deleted_at ||= Time.zone.now if event.type == "price.deleted"
 
     if price.save
-      price.try(:create_activity, :deleted) if event.type == "price.deleted"
+      price.create_audit!(action: :deleted) if event.type == "price.deleted"
       succeed!
     else
       fail! price.errors.full_messages

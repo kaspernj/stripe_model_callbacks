@@ -6,7 +6,7 @@ describe "charge refunded" do
   describe "#execute!" do
     it "marks the charge as refunded" do
       expect { mock_stripe_event("charge.refunded") }
-        .to change(Activity.where(key: "stripe_charge.refunded"), :count).by(1)
+        .to change(ActiveRecordAuditable::Audit.where_type("StripeCharge").where_action("refunded"), :count).by(1)
         .and change(StripeCharge, :count).by(1)
         .and change(StripeRefund, :count).by(0)
 

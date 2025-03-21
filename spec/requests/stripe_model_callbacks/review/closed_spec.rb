@@ -7,7 +7,7 @@ describe "review closed" do
     it "creates the subscription" do
       expect { mock_stripe_event("review.closed") }
         .to change(StripeReview, :count).by(0)
-        .and change(Activity.where(key: "stripe_review.closed"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeReview").where_action("closed"), :count).by(1)
 
       review.reload
 

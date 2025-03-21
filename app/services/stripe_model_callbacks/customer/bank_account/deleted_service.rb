@@ -4,7 +4,7 @@ class StripeModelCallbacks::Customer::BankAccount::DeletedService < StripeModelC
     bank_account.assign_from_stripe(object)
 
     if bank_account.save
-      bank_account.try(:create_activity, :customer_bank_account_deleted) if event.type == "customer.bank_account.deleted"
+      bank_account.create_audit!(action: :customer_bank_account_deleted) if event.type == "customer.bank_account.deleted"
       succeed!
     else
       fail! bank_account.errors.full_messages

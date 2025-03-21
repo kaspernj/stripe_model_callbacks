@@ -5,7 +5,7 @@ class StripeModelCallbacks::Product::UpdatedService < StripeModelCallbacks::Base
     product.deleted_at ||= Time.zone.now if event.type == "product.deleted"
 
     if product.save
-      product.try(:create_activity, :deleted) if event.type == "product.deleted"
+      product.create_audit!(action: :deleted) if event.type == "product.deleted"
       succeed!
     else
       fail! product.errors.full_messages

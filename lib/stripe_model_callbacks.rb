@@ -1,3 +1,4 @@
+require "active_record_auditable"
 require "auto_autoloader"
 require "money-rails"
 require "service_pattern"

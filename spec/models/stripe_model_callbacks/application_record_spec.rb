@@ -22,10 +22,13 @@ describe StripeModelCallbacks::ApplicationRecord, :stripe_mock do
 
   describe "#destroy_on_stripe" do
     it "deletes the object on Stripe" do
-      result = subscription.destroy_on_stripe
+      mock_plan = Stripe::Plan.create(amount: 1000, id: "test-plan", currency: "usd", name: "Test plan", interval: "month", product: stripe_product.stripe_id)
+      stripe_plan = StripePlan.create_from_stripe!(mock_plan)
+
+      result = stripe_plan.destroy_on_stripe
 
       expect(result).to be true
-      expect(subscription.status).to eq "canceled"
+      expect(stripe_plan.deleted_at).to be > 5.seconds.ago
     end
   end
 

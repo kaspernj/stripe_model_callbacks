@@ -8,7 +8,7 @@ describe "payment methods - updated" do
     it "creates the subscription" do
       expect { mock_stripe_event("payment_method.updated") }
         .to change(StripePaymentMethod, :count).by(0)
-        .and change(Activity.where(key: "stripe_payment_method.updated"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripePaymentMethod").where_action("updated"), :count).by(1)
 
       expect(response).to have_http_status :ok
       expect(payment_method.reload).to have_attributes(

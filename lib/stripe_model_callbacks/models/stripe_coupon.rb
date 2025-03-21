@@ -25,10 +25,10 @@ class StripeCoupon < StripeModelCallbacks::ApplicationRecord
 
   def create_stripe_mock!
     mock_coupon = Stripe::Coupon.create(
-      duration: duration,
-      duration_in_months: duration_in_months,
+      duration:,
+      duration_in_months:,
       id: stripe_id,
-      percent_off: percent_off
+      percent_off:
     )
     assign_from_stripe(mock_coupon)
     save!

@@ -10,8 +10,8 @@ describe "setup intent created" do
 
       data = {object: {payment_method: payment_method.stripe_id}}
 
-      expect { mock_stripe_event("setup_intent.created", data: data) }
-        .to change(Activity.where(key: "stripe_setup_intent.create"), :count).by(1)
+      expect { mock_stripe_event("setup_intent.created", data:) }
+        .to change(ActiveRecordAuditable::Audit.where_type("StripeSetupIntent").where_action("create"), :count).by(1)
         .and change(StripeSetupIntent, :count).by(1)
 
       created_setup_intent = StripeSetupIntent.order(:created_at).last!
@@ -49,7 +49,7 @@ describe "setup intent created" do
         status: "requires_payment_method",
         stripe_payment_method: payment_method,
         usage: "off_session",
-        stripe_customer: stripe_customer
+        stripe_customer:
       )
       expect(stripe_customer.stripe_setup_intents).to eq [created_setup_intent]
     end
