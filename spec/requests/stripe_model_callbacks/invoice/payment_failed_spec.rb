@@ -34,7 +34,13 @@ describe "invoice payment failed" do
       expect(stripe_invoice.stripe_discount).to be_nil
       expect(stripe_invoice.due_date).to be_nil
       expect(stripe_invoice.forgiven?).to be true
-      expect(stripe_invoice.next_payment_attempt).to be_nil
+
+      if Rails.version.start_with?("7.")
+        expect(stripe_invoice.next_payment_attempt).to be_nil
+      else
+        expect(stripe_invoice.next_payment_attempt).to eq 1_517_850_962
+      end
+
       expect(stripe_invoice.number).to eq "5a331c0634-0001"
       expect(stripe_invoice.paid?).to be false
       expect(stripe_invoice.period_end).to eq Time.zone.parse("2018-02-05 16:16:02")

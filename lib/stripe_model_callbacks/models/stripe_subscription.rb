@@ -64,7 +64,14 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   end
 
   def cancel!(args = {})
-    to_stripe.delete(args)
+    if to_stripe.respond_to?(:cancel)
+      to_stripe.cancel(args)
+    elsif to_stripe.respond_to?(:delete)
+      to_stripe.delete(args)
+    else
+      raise "Couldn't figure out how to cancel the Stripe subscription"
+    end
+
     reload_from_stripe!
     self
   end

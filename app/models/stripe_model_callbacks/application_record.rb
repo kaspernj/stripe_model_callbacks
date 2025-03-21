@@ -67,6 +67,8 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
   end
 
   def destroy_on_stripe
+    raise "Can't delete #{self.class.name} on Stripe because it isn't supported" unless to_stripe.respond_to?(:delete)
+
     to_stripe.delete
     update!(deleted_at: Time.zone.now) if respond_to?(:deleted_at)
     reload_from_stripe!
