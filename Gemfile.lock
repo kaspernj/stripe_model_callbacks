@@ -255,7 +255,7 @@ GEM
     reline (0.4.1)
       io-console (~> 0.5)
     require_all (3.0.0)
-    rexml (3.2.6)
+    rexml (3.3.9)
     rspec-core (3.13.3)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.3)
