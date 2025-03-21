@@ -2,7 +2,7 @@ class StripeModelCallbacks::EventMockerService
   attr_reader :args, :name, :scope
 
   def self.execute!(args:, name:, scope:)
-    new(args: args, name: name, scope: scope).perform
+    new(args:, name:, scope:).perform
   end
 
   def initialize(args:, name:, scope:)
@@ -35,7 +35,7 @@ private
   end
 
   def fixture_path
-    @fixture_path ||= "#{File.dirname(__FILE__)}/../../../lib/stripe_model_callbacks/fixtures/stripe_events/#{first_part}/#{name}.json"
+    @fixture_path ||= "#{__dir__}/../../../lib/stripe_model_callbacks/fixtures/stripe_events/#{first_part}/#{name}.json"
   end
 
   def post_event

@@ -3,9 +3,9 @@ require "rails_helper"
 describe "review opened" do
   describe "#execute!" do
     it "creates the subscription" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("review.opened") } }
+      expect { mock_stripe_event("review.opened") }
         .to change(StripeReview, :count).by(1)
-        .and change(PublicActivity::Activity.where(key: "stripe_review.create"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeReview").where_action("create"), :count).by(1)
 
       created_review = StripeReview.last
 

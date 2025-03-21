@@ -7,8 +7,8 @@ describe "refund created" do
     it "marks the charge as refunded" do
       stripe_charge
 
-      expect { PublicActivity.with_tracking { mock_stripe_event("refund.created") } }
-        .to change(PublicActivity::Activity.where(key: "stripe_refund.create"), :count).by(1)
+      expect { mock_stripe_event("refund.created") }
+        .to change(ActiveRecordAuditable::Audit.where_type("StripeRefund").where_action("create"), :count).by(1)
         .and change(StripeRefund, :count).by(1)
 
       created_refund = StripeRefund.order(:created_at).last

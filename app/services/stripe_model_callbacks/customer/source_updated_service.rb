@@ -5,8 +5,8 @@ class StripeModelCallbacks::Customer::SourceUpdatedService < StripeModelCallback
     source.deleted_at = Time.zone.now if event&.type == "customer.source.deleted"
 
     if source.save
-      source.create_activity :deleted if event&.type == "customer.source.deleted"
-      source.create_activity :expiring if event&.type == "customer.source.expiring"
+      source.create_audit!(action: :deleted) if event&.type == "customer.source.deleted"
+      source.create_audit!(action: :expiring) if event&.type == "customer.source.expiring"
       succeed!
     else
       fail! source.errors.full_messages

@@ -6,10 +6,10 @@ describe "invoice sent" do
 
   describe "#execute!" do
     it "updates the invoice and adds a sent log" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("invoice.sent") } }
+      expect { mock_stripe_event("invoice.sent") }
         .to change(StripeInvoice, :count).by(0)
         .and change(StripeInvoiceItem, :count).by(1)
-        .and change(PublicActivity::Activity.where(key: "stripe_invoice.sent"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeInvoice").where_action("sent"), :count).by(1)
 
       created_invoice = StripeInvoice.last
 

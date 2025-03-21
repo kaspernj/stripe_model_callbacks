@@ -6,10 +6,10 @@ describe "invoice created" do
 
   describe "#execute!" do
     it "creates an invoice" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("invoice.created") } }
+      expect { mock_stripe_event("invoice.created") }
         .to change(StripeInvoice, :count).by(1)
         .and change(StripeInvoiceItem, :count).by(1)
-        .and change(PublicActivity::Activity.where(key: "stripe_invoice.create"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeInvoice").where_action("create"), :count).by(1)
 
       created_invoice = StripeInvoice.last
 

@@ -1,5 +1,5 @@
 # StripeModelCallbacks
-Stripe database models using ActiveRecord, Stripe event webhooks synchronization and PublicActivity.
+Stripe database models using ActiveRecord, Stripe event webhooks synchronization and ActiveRecordAuditable.
 
 This is supposed to make it easier implementing a full blown Stripe implementation into your application,
 so that you can code your app using ActiveRecord and all your favorite gems without having to mess around
@@ -20,11 +20,11 @@ And then execute:
 bundle
 ```
 
-You also need to install and setup the gems `public_activity`, `stripe` and `stripe_event`. Do this:
+You also need to install and setup the gems `active_record_auditable`, `stripe` and `stripe_event`. Do this:
 
 Install the migration for Public Activity, which will provide logging:
 ```bash
-rails g public_activity:migration
+rails active_record_auditable:install:migrations
 ```
 
 You can install the migrations (or update an existing installation) with this command:

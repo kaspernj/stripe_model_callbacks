@@ -14,7 +14,7 @@ class StripeModelCallbacks::Customer::DiscountUpdatedService < StripeModelCallba
 private
 
   def create_activity
-    discount.create_activity :deleted if event&.type == "customer.discount.deleted"
+    discount.create_audit!(action: :deleted) if event&.type == "customer.discount.deleted"
   end
 
   def coupon_id_look_up_by

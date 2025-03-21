@@ -1,16 +1,18 @@
 class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
-  include PublicActivity::Model
-  tracked
-
   self.abstract_class = true
 
   attr_accessor :stripe_object
+
+  def self.inherited(child)
+    super
+    child.include ActiveRecordAuditable::Audited
+  end
 
   def self.check_object_is_stripe_class(object, allowed = nil)
     raise "'stripe_class' not defined on #{name}" unless respond_to?(:stripe_class)
 
     # Ignore general objects
-    return if object.class.name == "Stripe::StripeObject" # rubocop:disable Style/ClassEqualityComparison:
+    return if object.class.name == "Stripe::StripeObject" # rubocop:disable Style/ClassEqualityComparison
 
     allowed ||= [stripe_class]
 
@@ -45,7 +47,7 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
     save!
   end
 
-  def reload!(*args, &blk)
+  def reload!(*args, &)
     @to_stripe = nil
     super
   end
@@ -65,6 +67,8 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
   end
 
   def destroy_on_stripe
+    raise "Can't delete #{self.class.name} on Stripe because it isn't supported" unless to_stripe.respond_to?(:delete)
+
     to_stripe.delete
     update!(deleted_at: Time.zone.now) if respond_to?(:deleted_at)
     reload_from_stripe!

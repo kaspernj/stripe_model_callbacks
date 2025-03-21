@@ -24,7 +24,7 @@ describe "subscription_schedule created" do
       stripe_event
 
       expect(stripe_subscription_schedule).to have_attributes(
-        stripe_id: stripe_id,
+        stripe_id:,
         billing: "charge_automatically",
         billing_thresholds_amount_gte: nil,
         billing_thresholds_reset_billing_cycle_anchor: nil,

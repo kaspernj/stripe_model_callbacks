@@ -23,4 +23,10 @@ class StripePaymentMethod < StripeModelCallbacks::ApplicationRecord
       ]
     )
   end
+
+  def create_stripe_mock!
+    mock_payment_method = Stripe::PaymentMethod.create(customer:, id: stripe_id, type: "card")
+    assign_from_stripe(mock_payment_method)
+    save!
+  end
 end

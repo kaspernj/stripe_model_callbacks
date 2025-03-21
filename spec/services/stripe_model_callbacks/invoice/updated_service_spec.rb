@@ -30,7 +30,7 @@ describe StripeModelCallbacks::Invoice::UpdatedService do
     end
 
     context "when invoice already exist" do
-      let!(:stripe_invoice) { create(:stripe_invoice, stripe_id: stripe_id) }
+      let!(:stripe_invoice) { create(:stripe_invoice, stripe_id:) }
 
       it "does not create new stripe invoice" do
         expect { updated_service_results }.not_to change(StripeInvoice.all, :size)
@@ -48,14 +48,15 @@ describe StripeModelCallbacks::Invoice::UpdatedService do
 
       it "creates stripe invoice activity" do
         updated_service_results
-        expect(PublicActivity::Activity.last.key).to eq("stripe_invoice.payment_succeeded")
+        expect(ActiveRecordAuditable::Audit.last!).to have_attributes(action: "payment_succeeded")
+        expect(ActiveRecordAuditable::Audit.last!.audit_auditable_type).to have_attributes(name: "StripeInvoice")
       end
     end
 
     context "when invoice already exist" do
-      let!(:stripe_invoice) { create(:stripe_invoice, stripe_id: stripe_id) }
+      let!(:stripe_invoice) { create(:stripe_invoice, stripe_id:) }
 
-      before { allow(StripeInvoice).to receive(:find_or_initialize_by).with(stripe_id: stripe_id) { StripeInvoice.new } }
+      before { allow(StripeInvoice).to receive(:find_or_initialize_by).with(stripe_id:) { StripeInvoice.new } }
 
       it "raises an error" do
         expect { updated_service_results }.to raise_error(ServicePattern::FailedError).with_message("Stripe has already been taken")

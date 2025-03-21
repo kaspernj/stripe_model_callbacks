@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_18_072738) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_20_151632) do
   create_table "activities", force: :cascade do |t|
     t.string "trackable_type"
     t.string "trackable_id"
@@ -28,6 +28,37 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_072738) do
     t.index ["recipient_type", "recipient_id"], name: "index_activities_on_recipient_type_and_recipient_id"
     t.index ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
     t.index ["trackable_type", "trackable_id"], name: "index_activities_on_trackable_type_and_trackable_id"
+  end
+
+  create_table "audit_actions", force: :cascade do |t|
+    t.string "action", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["action"], name: "index_audit_actions_on_action", unique: true
+  end
+
+  create_table "audit_auditable_types", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_audit_auditable_types_on_name", unique: true
+  end
+
+  create_table "audits", force: :cascade do |t|
+    t.integer "audit_action_id", null: false
+    t.integer "audit_auditable_type_id", null: false
+    t.string "auditable_type", null: false
+    t.integer "auditable_id", null: false
+    t.string "user_type"
+    t.integer "user_id"
+    t.json "audited_changes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.json "params"
+    t.index ["audit_action_id"], name: "index_audits_on_audit_action_id"
+    t.index ["audit_auditable_type_id"], name: "index_audits_on_audit_auditable_type_id"
+    t.index ["auditable_type", "auditable_id"], name: "index_audits_on_auditable"
+    t.index ["user_type", "user_id"], name: "index_audits_on_user"
   end
 
   create_table "stripe_bank_accounts", force: :cascade do |t|
@@ -897,6 +928,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_072738) do
     t.index ["stripe_id"], name: "index_stripe_transfers_on_stripe_id"
   end
 
+  add_foreign_key "audits", "audit_actions"
+  add_foreign_key "audits", "audit_auditable_types"
   add_foreign_key "stripe_subscription_default_tax_rates", "stripe_subscriptions"
   add_foreign_key "stripe_subscription_default_tax_rates", "stripe_tax_rates"
 end

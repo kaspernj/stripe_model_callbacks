@@ -6,9 +6,9 @@ describe "payment methods - automatically updated" do
 
   describe "#execute!" do
     it "creates the subscription" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("payment_method.automatically_updated") } }
+      expect { mock_stripe_event("payment_method.automatically_updated") }
         .to change(StripePaymentMethod, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_payment_method.automatically_updated"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripePaymentMethod").where_action("automatically_updated"), :count).by(1)
 
       expect(response).to have_http_status :ok
       expect(payment_method.reload).to have_attributes(

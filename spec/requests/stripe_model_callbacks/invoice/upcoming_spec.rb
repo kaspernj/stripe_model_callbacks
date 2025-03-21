@@ -6,11 +6,11 @@ describe "invoice upcoming" do
 
   describe "#execute!" do
     it "updates the invoice and adds a log" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("invoice.upcoming") } }
+      expect { mock_stripe_event("invoice.upcoming") }
         .to change(StripeInvoice, :count).by(0)
 
       # Upcoming event doesnt send an invoice ID. Dunno what to do about it...
-      # .and change(PublicActivity::Activity.where(key: "stripe_invoice.upcoming"), :count).by(1)
+      # .and change(ActiveRecordAuditable::Audit.where_type("StripeInvoice").where_action("upcoming"), :count).by(1)
       # .and change(StripeInvoiceItem, :count).by(1)
 
       created_invoice = StripeInvoice.last!

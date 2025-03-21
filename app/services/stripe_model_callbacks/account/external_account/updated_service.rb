@@ -4,7 +4,7 @@ class StripeModelCallbacks::Account::ExternalAccount::UpdatedService < StripeMod
     bank_account.assign_from_stripe(object)
 
     if bank_account.save
-      bank_account.create_activity :deleted if event.type == "account.external_account.deleted"
+      bank_account.create_audit!(action: :deleted) if event.type == "account.external_account.deleted"
       succeed!
     else
       fail! bank_account.errors.full_messages

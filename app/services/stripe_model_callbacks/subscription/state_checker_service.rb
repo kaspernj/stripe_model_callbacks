@@ -9,7 +9,7 @@ class StripeModelCallbacks::Subscription::StateCheckerService < StripeModelCallb
   def perform
     if state.is_a?(Array)
       state.each do |state_i|
-        response = Subscription::StateCheckerService.execute!(allowed: allowed, state: state_i)
+        response = Subscription::StateCheckerService.execute!(allowed:, state: state_i)
         return response unless response.success?
       end
     elsif allowed.exclude?(state)

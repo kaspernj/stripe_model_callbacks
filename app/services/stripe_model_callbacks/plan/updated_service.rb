@@ -5,7 +5,7 @@ class StripeModelCallbacks::Plan::UpdatedService < StripeModelCallbacks::BaseEve
     plan.deleted_at ||= Time.zone.now if event.type == "plan.deleted"
 
     if plan.save
-      plan.create_activity :deleted if event.type == "plan.deleted"
+      plan.create_audit!(action: :deleted) if event.type == "plan.deleted"
       succeed!
     else
       fail! plan.errors.full_messages

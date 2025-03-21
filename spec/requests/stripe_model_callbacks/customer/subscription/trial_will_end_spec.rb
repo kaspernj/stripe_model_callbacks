@@ -7,9 +7,9 @@ describe "subscription trial will end" do
 
   describe "#execute!" do
     it "adds an activity and updates the subscription" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("customer.subscription.trial_will_end") } }
+      expect { mock_stripe_event("customer.subscription.trial_will_end") }
         .to change(StripeSubscription, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_subscription.trial_will_end"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeSubscription").where_action("trial_will_end"), :count).by(1)
 
       subscription.reload
 

@@ -47,9 +47,8 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
     raise "Cannot reactivate unless cancel at period end has been set" unless cancel_at_period_end?
 
     # https://stripe.com/docs/subscriptions/canceling-pausing
-    items = []
-    stripe_subscription_items.each do |item|
-      items << {
+    items = stripe_subscription_items.map do |item|
+      {
         id: item.stripe_id,
         plan: item.stripe_plan_id,
         quantity: item.quantity
@@ -64,9 +63,28 @@ class StripeSubscription < StripeModelCallbacks::ApplicationRecord
   end
 
   def cancel!(args = {})
-    to_stripe.delete(args)
+    if to_stripe.respond_to?(:cancel)
+      to_stripe.cancel(args)
+    elsif to_stripe.respond_to?(:delete)
+      to_stripe.delete(args)
+    else
+      raise "Couldn't figure out how to cancel the Stripe subscription"
+    end
+
     reload_from_stripe!
     self
+  end
+
+  def create_stripe_mock!
+    cancel_at_period_end = cancel_at_period_end?
+
+    mock_subscription = Stripe::Subscription.create(
+      customer: stripe_customer.stripe_id,
+      plan: stripe_plan.stripe_id
+    )
+    assign_from_stripe(mock_subscription)
+    save!
+    cancel!(at_period_end: true) if cancel_at_period_end
   end
 
 private
@@ -77,6 +95,7 @@ private
     found_ids = []
 
     object.default_tax_rates.each do |default_tax_rate|
+      default_tax_rate = Stripe::TaxRate.retrieve(default_tax_rate) if default_tax_rate.is_a?(String)
       tax_rate = StripeModelCallbacks::TaxRate::UpdatedService.execute!(object: default_tax_rate)
 
       if new_record?

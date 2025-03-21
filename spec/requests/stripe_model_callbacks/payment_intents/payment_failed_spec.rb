@@ -6,9 +6,9 @@ describe "payment intents - payment failed" do
 
   describe "#execute!" do
     it "updates the payment intent and logs it" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("payment_intent.payment_failed") } }
+      expect { mock_stripe_event("payment_intent.payment_failed") }
         .to change(StripePaymentIntent, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_payment_intent.payment_failed"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripePaymentIntent").where_action("payment_failed"), :count).by(1)
 
       expect(response).to have_http_status :ok
       expect(payment_intent.reload).to have_attributes(

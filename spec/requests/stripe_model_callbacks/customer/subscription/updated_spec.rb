@@ -5,12 +5,12 @@ describe "subscription updating" do
   let!(:stripe_plan) { create :stripe_plan, stripe_id: "silver-express-898" }
   let!(:stripe_subscription) { create :stripe_subscription, stripe_id: "sub_CGPu5KqP1TORKF" }
   let!(:stripe_subscription_item) do
-    create :stripe_subscription_item, stripe_plan: stripe_plan, stripe_subscription: stripe_subscription, stripe_id: "si_CGPuxYgJ7bx2UW"
+    create :stripe_subscription_item, stripe_plan:, stripe_subscription:, stripe_id: "si_CGPuxYgJ7bx2UW"
   end
   let(:stripe_subscription_default_tax_rate) do
     create :stripe_subscription_default_tax_rate,
-      stripe_subscription: stripe_subscription,
-      stripe_tax_rate: stripe_tax_rate
+      stripe_subscription:,
+      stripe_tax_rate:
   end
   let(:stripe_tax_rate) { create :stripe_tax_rate }
 
@@ -26,14 +26,14 @@ describe "subscription updating" do
       expect(response).to have_http_status :ok
 
       expect(stripe_subscription).to have_attributes(
-        stripe_customer: stripe_customer,
-        stripe_plan: stripe_plan,
+        stripe_customer:,
+        stripe_plan:,
         stripe_plans: [stripe_plan],
         current_period_end: Time.zone.at(1_520_191_372)
       )
       expect(stripe_subscription_item).to have_attributes(
-        stripe_subscription: stripe_subscription,
-        stripe_plan: stripe_plan
+        stripe_subscription:,
+        stripe_plan:
       )
     end
 
@@ -54,7 +54,7 @@ describe "subscription updating" do
         }
       ]
 
-      expect { mock_stripe_event("customer.subscription.updated", data: {object: {default_tax_rates: default_tax_rates}}) }
+      expect { mock_stripe_event("customer.subscription.updated", data: {object: {default_tax_rates:}}) }
         .to change(StripeSubscription, :count).by(0)
         .and change(StripeSubscriptionDefaultTaxRate, :count).by(1)
         .and change(StripeSubscriptionItem, :count).by(0)

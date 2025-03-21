@@ -19,15 +19,15 @@ private
   def create_activity
     case event.type
     when "charge.captured"
-      charge.create_activity :captured
+      charge.create_audit!(action: :captured)
     when "charge.failed"
-      charge.create_activity :failed
+      charge.create_audit!(action: :failed)
     when "charge.pending"
-      charge.create_activity :pending
+      charge.create_audit!(action: :pending)
     when "charge.refunded"
-      charge.create_activity :refunded
+      charge.create_audit!(action: :refunded)
     when "charge.succeeded"
-      charge.create_activity :succeeded
+      charge.create_audit!(action: :succeeded)
     end
   end
 end

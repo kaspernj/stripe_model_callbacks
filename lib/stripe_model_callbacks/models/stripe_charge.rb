@@ -3,6 +3,7 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
   belongs_to :stripe_invoice, optional: true, primary_key: "stripe_id"
   belongs_to :stripe_payment_intent, foreign_key: "payment_intent", optional: true, primary_key: "stripe_id"
   belongs_to :stripe_source, optional: true, primary_key: "stripe_id"
+  has_many :stripe_invoices, primary_key: "stripe_id"
   has_many :stripe_orders, primary_key: "stripe_id"
   has_many :stripe_refunds, primary_key: "stripe_id"
   has_many :stripe_reviews, primary_key: "stripe_id"
@@ -53,15 +54,29 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
     )
   end
 
-  def capture(**opts)
-    updated_charge = Stripe::Charge.capture(stripe_id, **opts)
+  def capture(**)
+    updated_charge = Stripe::Charge.capture(stripe_id, **)
     assign_from_stripe(updated_charge)
     save!
   end
 
-  def refund(**opts)
-    StripeRefund.create_on_stripe!(charge: stripe_id, currency: currency)
-    updated_charge = Stripe::Charge.retrieve(stripe_id, **opts)
+  def create_stripe_mock!
+    mock_charge = Stripe::Charge.create(
+      amount: amount_cents,
+      captured:,
+      currency:,
+      customer: stripe_customer_id,
+      id: stripe_id,
+      paid:,
+      refunded:
+    )
+    assign_from_stripe(mock_charge)
+    save!
+  end
+
+  def refund(**)
+    StripeRefund.create_on_stripe!(charge: stripe_id, currency:)
+    updated_charge = Stripe::Charge.retrieve(stripe_id, **)
     assign_from_stripe(updated_charge)
     save!
   end

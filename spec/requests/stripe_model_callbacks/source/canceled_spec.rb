@@ -5,9 +5,9 @@ describe "source canceled" do
 
   describe "#execute!" do
     it "creates an activity and updates the source" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("source.canceled") } }
+      expect { mock_stripe_event("source.canceled") }
         .to change(StripeSource, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_source.canceled"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeSource").where_action("canceled"), :count).by(1)
 
       source.reload
 

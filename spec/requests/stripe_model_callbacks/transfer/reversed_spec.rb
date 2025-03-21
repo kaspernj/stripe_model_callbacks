@@ -5,9 +5,9 @@ describe "transfer reversed" do
 
   describe "#execute!" do
     it "logs an activity and updates the transfer" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("transfer.reversed") } }
+      expect { mock_stripe_event("transfer.reversed") }
         .to change(StripeTransfer, :count).by(0)
-        .and change(PublicActivity::Activity.where(key: "stripe_transfer.reversed"), :count).by(1)
+        .and change(ActiveRecordAuditable::Audit.where_type("StripeTransfer").where_action("reversed"), :count).by(1)
 
       transfer.reload
 

@@ -5,7 +5,7 @@ class StripeModelCallbacks::Sku::UpdatedService < StripeModelCallbacks::BaseEven
     sku.deleted_at ||= Time.zone.now if event.type == "sku.deleted"
 
     if sku.save
-      sku.create_activity :deleted if event.type == "sku.deleted"
+      sku.create_audit!(action: :deleted) if event.type == "sku.deleted"
       succeed!
     else
       fail! sku.errors.full_messages

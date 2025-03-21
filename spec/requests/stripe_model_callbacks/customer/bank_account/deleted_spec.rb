@@ -5,8 +5,8 @@ describe "customer bank account deleted" do
 
   describe "#execute!" do
     it "ends the subscription" do
-      expect { PublicActivity.with_tracking { mock_stripe_event("customer.bank_account.deleted") } }
-        .to change(PublicActivity::Activity.where(key: "stripe_bank_account.customer_bank_account_deleted"), :count).by(1)
+      expect { mock_stripe_event("customer.bank_account.deleted") }
+        .to change(ActiveRecordAuditable::Audit.where_type("StripeBankAccount").where_action("customer_bank_account_deleted"), :count).by(1)
 
       bank_account.reload
 

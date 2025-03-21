@@ -13,17 +13,17 @@ Gem::Specification.new do |s|
   s.summary = "Framework for getting Stripe webhook callbacks directly to your models"
   s.description = "Framework for getting Stripe webhook callbacks directly to your models"
   s.license = "MIT"
-  s.required_ruby_version = ">= 2.7"
+  s.required_ruby_version = ">= 3.3"
   s.metadata["rubygems_mfa_required"] = "true"
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", ">= 6.0.0"
+  s.add_dependency "rails", ">= 7.0.0"
 
-  s.add_runtime_dependency "auto_autoloader"
-  s.add_runtime_dependency "money-rails"
-  s.add_runtime_dependency "public_activity"
-  s.add_runtime_dependency "service_pattern", ">= 1.0.5"
-  s.add_runtime_dependency "stripe"
-  s.add_runtime_dependency "stripe_event", ">= 0.0.4"
-  s.add_runtime_dependency "with_advisory_lock", ">= 4.6.0"
+  s.add_dependency "active_record_auditable"
+  s.add_dependency "auto_autoloader"
+  s.add_dependency "money-rails"
+  s.add_dependency "service_pattern", ">= 1.0.5"
+  s.add_dependency "stripe"
+  s.add_dependency "stripe_event", ">= 0.0.4"
+  s.add_dependency "with_advisory_lock", ">= 4.6.0"
 end

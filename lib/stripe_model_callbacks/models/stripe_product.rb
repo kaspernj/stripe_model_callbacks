@@ -34,4 +34,14 @@ class StripeProduct < StripeModelCallbacks::ApplicationRecord
       ]
     )
   end
+
+  def create_stripe_mock!
+    mock_product = Stripe::Product.create(
+      id: stripe_id,
+      name:,
+      type: "service"
+    )
+    assign_from_stripe(mock_product)
+    save!
+  end
 end

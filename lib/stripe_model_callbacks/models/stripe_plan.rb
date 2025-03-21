@@ -30,6 +30,19 @@ class StripePlan < StripeModelCallbacks::ApplicationRecord
     )
   end
 
+  def create_stripe_mock!
+    mock_plan = Stripe::Plan.create(
+      id: stripe_id,
+      amount: amount_cents,
+      currency:,
+      interval:,
+      interval_count:,
+      product: stripe_product.stripe_id
+    )
+    assign_from_stripe(mock_plan)
+    save!
+  end
+
   def name
     nickname.presence || stripe_product&.name
   end

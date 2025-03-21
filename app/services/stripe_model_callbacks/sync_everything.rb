@@ -6,7 +6,7 @@ class StripeModelCallbacks::SyncEverything < StripeModelCallbacks::BaseService
   def perform
     StripeModelCallbacks::SyncEverything.stripe_classes.each do |stripe_class|
       stripe_class.list.each do |stripe_object|
-        StripeModelCallbacks::SyncFromStripe.execute!(stripe_object: stripe_object)
+        StripeModelCallbacks::SyncFromStripe.execute!(stripe_object:)
 
         sync_stripe_objects(Stripe::PaymentMethod.list(customer: stripe_object.id)) if stripe_class == Stripe::Customer
       end
@@ -17,7 +17,7 @@ class StripeModelCallbacks::SyncEverything < StripeModelCallbacks::BaseService
 
   def sync_stripe_objects(stripe_objects)
     stripe_objects.each do |stripe_object|
-      StripeModelCallbacks::SyncFromStripe.execute!(stripe_object: stripe_object)
+      StripeModelCallbacks::SyncFromStripe.execute!(stripe_object:)
     end
   end
 end
