@@ -372,13 +372,13 @@ PLATFORMS
 DEPENDENCIES
   appraisal
   best_practice_project
-  capybara
-  factory_bot_rails
+  capybara (= 3.40.0)
+  factory_bot_rails (= 6.4.4)
   pry
   pry-rails
   rails (>= 8.0.0)
   rails_best_practices
-  rspec-rails
+  rspec-rails (= 7.1.1)
   rubocop
   rubocop-capybara
   rubocop-factory_bot
