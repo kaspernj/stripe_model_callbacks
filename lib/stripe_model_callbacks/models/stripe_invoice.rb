@@ -17,6 +17,8 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
   monetize :tax_cents, allow_nil: true
   monetize :total_cents, allow_nil: true
 
+  has_one_attached :invoice_pdf_file
+
   def self.stripe_class
     Stripe::Invoice
   end
@@ -37,6 +39,7 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
 
     assign_amounts(object)
     assign_discount_item(object)
+    attach_invoice_pdf(object)
     assign_tax(object)
 
     assign_forgiven(object)
@@ -112,6 +115,17 @@ private
       invoice_item ||= stripe_invoice_items.build
       invoice_item.stripe_invoice_id = object.id
       invoice_item&.assign_from_stripe(item)
+    end
+  end
+
+  def attach_invoice_pdf(object)
+    if object.respond_to?(:invoice_pdf) && object.invoice_pdf && !invoice_pdf_file.attached?
+      require "open-uri"
+
+      url = URI.parse(object.invoice_pdf)
+      filename = File.basename(url.path)
+      file = URI.open(url)
+      invoice_pdf_file.attach(io: file, filename: filename)
     end
   end
 

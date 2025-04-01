@@ -5,6 +5,10 @@ describe "invoice payment succeeded" do
 
   describe "#execute!" do
     it "updates the invoice and adds a payment succeeded log" do
+      require "open-uri"
+
+      expect_any_instance_of(StripeInvoice).to receive(:attach_invoice_pdf)
+
       expect { mock_stripe_event("invoice.payment_succeeded") }
         .to change(StripeInvoice, :count).by(1)
         .and change(StripeInvoiceItem, :count).by(1)
