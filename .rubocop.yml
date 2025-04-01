@@ -8,7 +8,7 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 3.3
 
-require:
+plugins:
   - rubocop-capybara
   - rubocop-factory_bot
   - rubocop-performance

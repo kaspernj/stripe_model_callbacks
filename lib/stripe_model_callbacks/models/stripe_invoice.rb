@@ -23,7 +23,7 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
     Stripe::Invoice
   end
 
-  def assign_from_stripe(object)
+  def assign_from_stripe(object) # rubocop:disable Metrics/AbcSize
     check_object_is_stripe_class(object)
     assign_attributes(
       stripe_charge_id: object.charge,
@@ -124,7 +124,7 @@ private
 
       url = URI.parse(object.invoice_pdf)
       filename = File.basename(url.path)
-      file = URI.open(url)
+      file = url.open
       invoice_pdf_file.attach(io: file, filename: filename)
     end
   end
