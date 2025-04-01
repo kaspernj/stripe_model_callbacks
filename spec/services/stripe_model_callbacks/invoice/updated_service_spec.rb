@@ -14,6 +14,10 @@ describe StripeModelCallbacks::Invoice::UpdatedService do
   end
   let(:stripe_id) { "in_1GxxxxxxZ9ZZZxxXLFQx" }
 
+  before do
+    allow_any_instance_of(StripeInvoice).to receive(:attach_invoice_pdf)
+  end
+
   context "when 'invoice.created' event was sent" do
     let(:event_type) { "invoice.created" }
 

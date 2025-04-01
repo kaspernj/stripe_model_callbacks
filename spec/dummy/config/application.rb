@@ -7,6 +7,7 @@ require "action_view/railtie"
 require "action_mailer/railtie"
 require "active_job/railtie"
 require "action_cable/engine"
+require "active_storage/engine"
 # require "rails/test_unit/railtie"
 
 Bundler.require(*Rails.groups)
