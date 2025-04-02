@@ -24,7 +24,7 @@ describe StripeCharge do
 
       expect(created_stripe_refund).to have_attributes(
         amount_cents: 100,
-        currency: "dkk",
+        currency: "usd",
         stripe_charge:
       )
     end
