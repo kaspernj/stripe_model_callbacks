@@ -15,6 +15,26 @@ describe StripePaymentIntent, :stripe_mock do
     end
   end
 
+  describe "#cancellable" do
+    StripePaymentIntent::CANCELLABLE_STATUSES.each do |cancellable_status|
+      it "returns a list of cancellable payment intents (#{cancellable_status})" do
+        stripe_payment_intent.update!(status: cancellable_status)
+
+        expect(StripePaymentIntent.cancellable).to eq [stripe_payment_intent]
+      end
+    end
+  end
+
+  describe "#cancellable?" do
+    StripePaymentIntent::CANCELLABLE_STATUSES.each do |cancellable_status|
+      it "returns a list of cancellable payment intents (#{cancellable_status})" do
+        stripe_payment_intent.update!(status: cancellable_status)
+
+        expect(stripe_payment_intent.cancellable?).to be true
+      end
+    end
+  end
+
   describe "#capture" do
     it "captures the payment intent" do
       expect(Stripe::PaymentIntent).to receive(:capture).with(stripe_payment_intent.stripe_id).and_call_original

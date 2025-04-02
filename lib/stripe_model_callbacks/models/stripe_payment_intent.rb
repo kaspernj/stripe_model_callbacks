@@ -1,4 +1,6 @@
 class StripePaymentIntent < StripeModelCallbacks::ApplicationRecord
+  CANCELLABLE_STATUSES = %w[requires_payment_method requires_capture requires_confirmation requires_action].freeze
+
   belongs_to :stripe_customer, foreign_key: "customer", optional: true, primary_key: "stripe_id"
   belongs_to :stripe_latest_charge,
     class_name: "StripeCharge",
@@ -10,6 +12,8 @@ class StripePaymentIntent < StripeModelCallbacks::ApplicationRecord
 
   has_many :stripe_charges, foreign_key: "payment_intent", primary_key: "stripe_id"
   has_many :stripe_refunds, foreign_key: "payment_intent", primary_key: "stripe_id"
+
+  scope :cancellable, -> { where(status: CANCELLABLE_STATUSES) }
 
   def self.stripe_class
     Stripe::PaymentIntent
@@ -80,6 +84,10 @@ class StripePaymentIntent < StripeModelCallbacks::ApplicationRecord
     updated_payment_intent = Stripe::PaymentIntent.cancel(stripe_id, **args)
     assign_from_stripe(updated_payment_intent)
     save!
+  end
+
+  def cancellable?
+    CANCELLABLE_STATUSES.include?(status)
   end
 
   def capture(**args)
