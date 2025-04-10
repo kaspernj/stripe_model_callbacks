@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.name = "stripe_model_callbacks"
   s.version = StripeModelCallbacks::VERSION
   s.authors = ["kaspernj"]
-  s.email = ["kaspernj@gmail.com"]
+  s.email = ["kaspernj@diestoeckels.de"]
   s.homepage = "https://github.com/kaspernj/stripe_model_callbacks"
   s.summary = "Framework for getting Stripe webhook callbacks directly to your models"
   s.description = "Framework for getting Stripe webhook callbacks directly to your models"
