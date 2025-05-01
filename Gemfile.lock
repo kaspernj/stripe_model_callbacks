@@ -1,12 +1,12 @@
 GIT
   remote: https://github.com/stripe-ruby-mock/stripe-ruby-mock.git
-  revision: 576ee9561ea1d624fc713bdf864912e468c6d8cb
+  revision: ef2d45322c3c728f86297cce99d95e29b4965587
   specs:
-    stripe-ruby-mock (4.1.0)
+    stripe-ruby-mock (5.0.0)
       dante (>= 0.2.0)
       drb (>= 2.0.4, < 3)
       multi_json (~> 1.0)
-      stripe (> 5, < 13)
+      stripe (> 5, < 14)
 
 PATH
   remote: .
@@ -318,7 +318,7 @@ GEM
       mini_portile2 (~> 2.8.0)
     string-cases (0.0.4)
     stringio (3.1.7)
-    stripe (12.6.0)
+    stripe (13.5.1)
     stripe_event (2.12.0)
       activesupport (>= 3.1)
       stripe (>= 2.8, < 16)
