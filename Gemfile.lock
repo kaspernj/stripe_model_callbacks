@@ -107,11 +107,11 @@ GEM
     ast (2.4.3)
     auto_autoloader (0.0.5)
       string-cases
-    base64 (0.2.0)
-    benchmark (0.4.0)
+    base64 (0.3.0)
+    benchmark (0.4.1)
     best_practice_project (0.0.12)
       auto_autoloader (>= 0.0.5)
-    bigdecimal (3.1.9)
+    bigdecimal (3.2.2)
     builder (3.3.0)
     capybara (3.40.0)
       addressable
@@ -132,13 +132,14 @@ GEM
     date (3.4.1)
     diff-lcs (1.6.1)
     drb (2.2.3)
+    erb (5.0.1)
     erubi (1.13.1)
     erubis (2.7.0)
-    factory_bot (6.5.1)
+    factory_bot (6.5.4)
       activesupport (>= 6.1.0)
-    factory_bot_rails (6.4.4)
+    factory_bot_rails (6.5.0)
       factory_bot (~> 6.5)
-      railties (>= 5.0.0)
+      railties (>= 6.1.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.7)
@@ -152,7 +153,7 @@ GEM
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
     logger (1.7.0)
-    loofah (2.24.0)
+    loofah (2.24.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     mail (2.8.1)
@@ -164,7 +165,7 @@ GEM
     matrix (0.4.2)
     method_source (1.1.0)
     mini_mime (1.1.5)
-    mini_portile2 (2.8.8)
+    mini_portile2 (2.8.9)
     minitest (5.25.5)
     monetize (1.13.0)
       money (~> 6.12)
@@ -202,7 +203,7 @@ GEM
       method_source (~> 1.0)
     pry-rails (0.3.11)
       pry (>= 0.13.0)
-    psych (5.2.3)
+    psych (5.2.6)
       date
       stringio
     public_suffix (6.0.1)
@@ -229,7 +230,7 @@ GEM
       activesupport (= 8.0.2)
       bundler (>= 1.15.0)
       railties (= 8.0.2)
-    rails-dom-testing (2.2.0)
+    rails-dom-testing (2.3.0)
       activesupport (>= 5.0.0)
       minitest
       nokogiri (>= 1.6)
@@ -253,8 +254,9 @@ GEM
       thor (~> 1.0, >= 1.2.2)
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
-    rake (13.2.1)
-    rdoc (6.13.1)
+    rake (13.3.0)
+    rdoc (6.14.0)
+      erb
       psych (>= 4.0.0)
     regexp_parser (2.10.0)
     reline (0.6.1)
@@ -351,7 +353,7 @@ DEPENDENCIES
   appraisal
   best_practice_project
   capybara (= 3.40.0)
-  factory_bot_rails (= 6.4.4)
+  factory_bot_rails (= 6.5.0)
   pry
   pry-rails
   rails_best_practices
