@@ -22,6 +22,6 @@ end
 
 group :test do
   gem "capybara", "3.40.0"
-  gem "factory_bot_rails", "6.4.4", require: false
+  gem "factory_bot_rails", "6.5.0", require: false
   gem "rspec-rails", "8.0.0"
 end
