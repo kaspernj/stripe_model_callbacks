@@ -39,7 +39,7 @@ class StripeSubscriptionSchedule < StripeModelCallbacks::ApplicationRecord
     assign_subscription_schedule_phases(object)
   end
 
-  def cancel_on_stripe
+  def cancel_on_stripe # rubocop:disable Naming/PredicateMethod
     to_stripe.cancel
     update!(canceled_at: Time.zone.now) if respond_to?(:canceled_at)
     reload_from_stripe!

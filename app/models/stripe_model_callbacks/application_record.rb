@@ -52,7 +52,7 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
     super
   end
 
-  def update_on_stripe(attributes)
+  def update_on_stripe(attributes) # rubocop:disable Naming/PredicateMethod
     attributes.each do |key, value|
       to_stripe.__send__(:"#{key}=", value)
     end
@@ -66,7 +66,7 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
     raise ActiveRecord::RecordInvalid, self unless update_on_stripe(attributes)
   end
 
-  def destroy_on_stripe
+  def destroy_on_stripe # rubocop:disable Naming/PredicateMethod
     raise "Can't delete #{self.class.name} on Stripe because it isn't supported" unless to_stripe.respond_to?(:delete)
 
     to_stripe.delete
