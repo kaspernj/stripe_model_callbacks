@@ -18,7 +18,7 @@ class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
-      attributes: %w[id created metadata quantity]
+      attributes: %w[id created deleted metadata quantity]
     )
   end
 
