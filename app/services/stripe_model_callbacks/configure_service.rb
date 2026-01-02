@@ -237,6 +237,10 @@ private
         StripeModelCallbacks::Source::UpdatedService.execute_with_advisory_lock!(event:)
       end
     end
+
+    subscribe "source.transaction.created" do |event|
+      StripeModelCallbacks::Source::TransactionCreatedService.execute_with_advisory_lock!(event:)
+    end
   end
 
   def subscribe(event_name)

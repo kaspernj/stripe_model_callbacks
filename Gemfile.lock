@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    stripe_model_callbacks (0.1.7)
+    stripe_model_callbacks (0.1.8)
       active_record_auditable
       auto_autoloader
       money-rails
