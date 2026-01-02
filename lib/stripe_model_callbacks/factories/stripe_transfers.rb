@@ -5,5 +5,6 @@ FactoryBot.define do
     amount_reversed { Money.new(0, "USD") }
     currency { "usd" }
     livemode { false }
+    reversed { false }
   end
 end

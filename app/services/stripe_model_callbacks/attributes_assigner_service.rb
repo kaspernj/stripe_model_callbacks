@@ -12,6 +12,7 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
       next unless stripe_model.respond_to?(attribute)
 
       value = stripe_model.__send__(attribute)
+      value = default_value_for(attribute) if value.nil?
 
       if attribute == "metadata"
         value = JSON.generate(value)
@@ -23,6 +24,15 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
     end
 
     succeed!
+  end
+
+  def default_value_for(attribute)
+    column_name = attribute == "id" ? "stripe_id" : attribute
+    default_value = model.class.column_defaults[column_name]
+
+    return default_value unless default_value.nil?
+
+    nil
   end
 
   def setter_method(attribute)
