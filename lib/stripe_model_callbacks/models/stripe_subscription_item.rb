@@ -20,6 +20,8 @@ class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
       model: self, stripe_model: object,
       attributes: %w[id created deleted metadata quantity]
     )
+
+    Rails.logger.info("[SMC DEBUG] StripeSubscriptionItem deleted=#{deleted.inspect} stripe_id=#{stripe_id}") if Rails.env.test?
   end
 
   def create_stripe_mock!
