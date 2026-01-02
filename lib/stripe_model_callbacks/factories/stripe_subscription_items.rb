@@ -4,6 +4,7 @@ FactoryBot.define do
     stripe_subscription
     stripe_plan
     quantity { 1 }
+    deleted { false }
 
     trait :with_conditional_stripe_mock do
       after :build do |item|

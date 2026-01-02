@@ -2,6 +2,8 @@ FactoryBot.define do
   factory :stripe_product do
     sequence(:name) { |n| "Stripe product #{n}" }
     sequence(:stripe_id) { |n| "stripe-product-#{n}" }
+    active { false }
+    livemode { false }
 
     trait :with_conditional_stripe_mock do
       after :create do |stripe_product|

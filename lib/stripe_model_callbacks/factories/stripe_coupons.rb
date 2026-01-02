@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :stripe_coupon do
     sequence(:stripe_id) { |n| "stripe-coupon-#{n}" }
+    livemode { false }
 
     trait :with_conditional_stripe_mock do
       duration { "repeating" }
