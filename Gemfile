@@ -14,6 +14,7 @@ group :development, :test do
   gem "rubocop-performance", require: false
   gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
+  gem "rubocop-rspec_rails", require: false
   gem "sqlite3"
   gem "stripe-ruby-mock", git: "https://github.com/stripe-ruby-mock/stripe-ruby-mock.git"
   gem "tzinfo-data"
@@ -22,6 +23,6 @@ end
 
 group :test do
   gem "capybara", "3.40.0"
-  gem "factory_bot_rails", "6.4.4", require: false
-  gem "rspec-rails", "7.1.1"
+  gem "factory_bot_rails", "6.5.1", require: false
+  gem "rspec-rails", "8.0.2"
 end
