@@ -1,29 +1,77 @@
 before_script:
   - bundle exec appraisal bundle
-  - bundle exec rake db:schema:load
+  - wait-for-it mariadb:3306
+  - bundle exec rake db:create db:schema:load
 rvm: true
+before_install:
+  - sudo apt update && sudo apt install -y mariadb-client
+services:
+  mariadb:
+    image: mariadb:11.2.2
+    environment:
+      MARIADB_ROOT_PASSWORD: 67cd6ba2-3aad-41f7-a87e-3974fe96dc7a
+      MARIADB_DATABASE: stripe_model_callbacks_test
+      MARIADB_USER: dev
+      MARIADB_PASSWORD: c859fc93-6c69-4067-9840-6f5a00fb3052
+    expose:
+      - 3306
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u$MARIADB_USER -p$MARIADB_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    mem_limit: 6144m
+    restart_policy: always
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
 builds:
   build_1:
     environment:
       RUBY_VERSION: 3.3.7
+      RAILS_ENV: test
+      MARIADB_HOST: mariadb
+      MARIADB_PORT: "3306"
+      MARIADB_DB_TEST: stripe_model_callbacks_test
+      MARIADB_USER: dev
+      MARIADB_PASSWORD: c859fc93-6c69-4067-9840-6f5a00fb3052
     name: Ruby 3.3.7, Rails 7
     script:
       - bundle exec appraisal "rails 7" rspec
   build_2:
     environment:
       RUBY_VERSION: 3.3.7
+      RAILS_ENV: test
+      MARIADB_HOST: mariadb
+      MARIADB_PORT: "3306"
+      MARIADB_DB_TEST: stripe_model_callbacks_test
+      MARIADB_USER: dev
+      MARIADB_PASSWORD: c859fc93-6c69-4067-9840-6f5a00fb3052
     name: Ruby 3.3.7, Rails 8
     script:
       - bundle exec appraisal "rails 8" rspec
   build_3:
     environment:
       RUBY_VERSION: 3.4.2
+      RAILS_ENV: test
+      MARIADB_HOST: mariadb
+      MARIADB_PORT: "3306"
+      MARIADB_DB_TEST: stripe_model_callbacks_test
+      MARIADB_USER: dev
+      MARIADB_PASSWORD: c859fc93-6c69-4067-9840-6f5a00fb3052
     name: Ruby 3.4.2, Rails 7
     script:
       - bundle exec appraisal "rails 7" rspec
   build_4:
     environment:
       RUBY_VERSION: 3.4.2
+      RAILS_ENV: test
+      MARIADB_HOST: mariadb
+      MARIADB_PORT: "3306"
+      MARIADB_DB_TEST: stripe_model_callbacks_test
+      MARIADB_USER: dev
+      MARIADB_PASSWORD: c859fc93-6c69-4067-9840-6f5a00fb3052
     name: Ruby 3.4.2, Rails 8
     script:
       - bundle exec appraisal "rails 8" rspec
