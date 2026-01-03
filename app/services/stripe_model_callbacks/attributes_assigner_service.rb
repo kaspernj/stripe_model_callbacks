@@ -14,6 +14,7 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
       value = value_for_attribute(attribute)
       next if value == SKIP_VALUE
 
+      log_livemode_debug(attribute, value)
       value = normalize_value(attribute, value)
 
       model.__send__(setter_method(attribute), value)
@@ -43,6 +44,20 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
     else
       value
     end
+  end
+
+  def log_livemode_debug(attribute, value)
+    return unless attribute == "livemode"
+    return unless Rails.env.test?
+
+    respond = stripe_model.respond_to?(attribute)
+    model_value = model_value(attribute)
+    default_value = default_value_for(attribute)
+    $stdout.puts(
+      "[SMC DEBUG] livemode respond=#{respond} stripe_value=#{value.inspect} " \
+      "model_value=#{model_value.inspect} default=#{default_value.inspect} " \
+      "model_class=#{model.class.name}"
+    )
   end
 
   def model_value(attribute)
