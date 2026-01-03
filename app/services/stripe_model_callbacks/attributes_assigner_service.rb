@@ -24,13 +24,7 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
   end
 
   def value_for_attribute(attribute)
-    if stripe_model.respond_to?(attribute)
-      value = stripe_model.__send__(attribute)
-      return nil if value.nil? && allow_nil_attribute?(attribute)
-      return default_value_for(attribute) if value.nil?
-
-      return value
-    end
+    return value_from_stripe(attribute) if stripe_model.respond_to?(attribute)
 
     return nil if allow_nil_attribute?(attribute)
     return SKIP_VALUE unless model_value(attribute).nil?
@@ -41,11 +35,30 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
     default_value
   end
 
+  def value_from_stripe(attribute)
+    return nil if allow_nil_attribute?(attribute) && stripe_attribute_missing?(attribute)
+
+    value = stripe_model.__send__(attribute)
+    return nil if value.nil? && allow_nil_attribute?(attribute)
+    return default_value_for(attribute) if value.nil?
+
+    value
+  end
+
+  def stripe_attribute_missing?(attribute)
+    return false unless stripe_model.respond_to?(:to_hash)
+
+    stripe_values = stripe_model.to_hash
+    !stripe_values.key?(attribute.to_sym) && !stripe_values.key?(attribute.to_s)
+  end
+
   def normalize_value(attribute, value)
-    if attribute == "metadata"
-      JSON.generate(value)
-    elsif attribute == "created" && value
+    if attribute == "created" && value
       Time.zone.at(value)
+    elsif json_column?(attribute)
+      normalize_json_value(value)
+    elsif attribute == "metadata"
+      JSON.generate(normalize_json_value(value))
     else
       value
     end
@@ -79,6 +92,31 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
 
   def allow_nil_attribute?(attribute)
     attribute == "auto_advance"
+  end
+
+  def json_column?(attribute)
+    column = model.class.columns_hash[column_name_for(attribute)]
+    column&.type == :json
+  end
+
+  def normalize_json_value(value)
+    return value if value.nil?
+
+    if value.is_a?(String)
+      begin
+        return JSON.parse(value)
+      rescue JSON::ParserError
+        return value
+      end
+    end
+
+    if value.is_a?(Array)
+      value.map { |item| normalize_json_value(item) }
+    elsif value.respond_to?(:to_hash)
+      value.to_hash
+    else
+      value
+    end
   end
 
   def column_name_for(attribute)

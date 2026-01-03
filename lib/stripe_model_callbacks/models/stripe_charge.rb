@@ -84,9 +84,12 @@ class StripeCharge < StripeModelCallbacks::ApplicationRecord
 private
 
   def assign_amounts_from_stripe(object)
+    amount_captured_value = object.try(:amount_captured)
+    amount_captured_value = object.amount if amount_captured_value.nil? && object.respond_to?(:amount)
+
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
-      amount_captured: object.try(:amount_captured) ? Money.new(object.amount_captured, object.currency) : nil,
+      amount_captured: amount_captured_value ? Money.new(amount_captured_value, object.currency) : nil,
       amount_refunded: object.amount_refunded ? Money.new(object.amount_refunded, object.currency) : nil,
       application: object.try(:application) ? Money.new(object.application, object.currency) : nil
     )

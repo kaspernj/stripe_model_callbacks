@@ -17,7 +17,6 @@
       "application_fee_amount": null,
       "attempt_count": 1,
       "attempted": true,
-      "auto_advance": false,
       "billing": "charge_automatically",
       "billing_reason": "subscription_create",
       "charge": "ch_00000000000000",
