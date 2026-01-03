@@ -48,7 +48,7 @@ describe "invoice upcoming" do
         tax: nil,
         tax_percent: nil,
         total: nil,
-        auto_advance: false,
+        auto_advance: nil,
         finalized_at: nil,
         marked_uncollectible_at: nil,
         paid_at: nil,

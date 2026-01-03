@@ -30,7 +30,10 @@ class StripeModelCallbacks::BaseService < ServicePattern::Service
     # we will prevent from creating duplicated objects due to race condition.
     # https://stripe.com/docs/webhooks/best-practices#event-ordering
     with_exception_notifications do
-      StripeModelCallbacks::ApplicationRecord.with_advisory_lock(advisory_lock_name(*, **)) do
+      StripeModelCallbacks::ApplicationRecord.with_advisory_lock!(
+        advisory_lock_name(*, **),
+        timeout_seconds: 10
+      ) do
         response = execute(*, **, &)
         raise response.errors.join(". ") unless response.success?
 

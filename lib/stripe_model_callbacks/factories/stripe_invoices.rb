@@ -10,6 +10,7 @@ FactoryBot.define do
     currency { "usd" }
     forgiven { false }
     livemode { false }
+    auto_advance { nil }
     paid { false }
     stripe_customer
   end

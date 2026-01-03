@@ -6,6 +6,19 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
   def self.inherited(child)
     super
     child.include ActiveRecordAuditable::Audited
+    apply_json_attribute_types(child)
+  end
+
+  def self.apply_json_attribute_types(model_class)
+    json_columns = StripeModelCallbacks::AttributesAssignerService::JSON_COLUMNS_BY_TABLE.fetch(
+      model_class.table_name,
+      []
+    )
+    return if json_columns.empty?
+
+    json_columns.each do |column_name|
+      model_class.attribute(column_name, :json)
+    end
   end
 
   def self.check_object_is_stripe_class(object, allowed = nil)
@@ -53,12 +66,9 @@ class StripeModelCallbacks::ApplicationRecord < ActiveRecord::Base
   end
 
   def update_on_stripe(attributes) # rubocop:disable Naming/PredicateMethod
-    attributes.each do |key, value|
-      to_stripe.__send__(:"#{key}=", value)
-    end
-
-    to_stripe.save
-    reload_from_stripe!
+    updated_object = self.class.stripe_class.update(stripe_id, attributes)
+    assign_from_stripe(updated_object)
+    save!
     true
   end
 

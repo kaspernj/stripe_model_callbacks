@@ -110,3 +110,16 @@ MoneyRails.configure do |config|
   # Example:
   # config.raise_error_on_money_parsing = false
 end
+
+dkk_currency = Money::Currency.find("DKK")
+Money::Currency.register(
+  priority: (dkk_currency.priority || 0) + 1,
+  iso_code: dkk_currency.iso_code,
+  name: dkk_currency.name,
+  symbol: "kr.",
+  symbol_first: false,
+  subunit: dkk_currency.subunit,
+  subunit_to_unit: dkk_currency.subunit_to_unit,
+  thousands_separator: dkk_currency.thousands_separator,
+  decimal_mark: "."
+)

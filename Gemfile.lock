@@ -182,6 +182,8 @@ GEM
       money (~> 7.0)
       railties (>= 6.1)
     multi_json (1.17.0)
+    mysql2 (0.5.7)
+      bigdecimal
     net-imap (0.5.12)
       date
       net-protocol
@@ -328,8 +330,6 @@ GEM
     securerandom (0.4.1)
     service_pattern (1.0.10)
     sexp_processor (4.17.4)
-    sqlite3 (2.9.0)
-      mini_portile2 (~> 2.8.0)
     string-cases (0.0.4)
     stringio (3.2.0)
     stripe (13.5.1)
@@ -367,6 +367,7 @@ DEPENDENCIES
   best_practice_project
   capybara (= 3.40.0)
   factory_bot_rails (= 6.5.1)
+  mysql2
   pry
   pry-rails
   rails_best_practices
@@ -378,7 +379,6 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-rspec_rails
-  sqlite3
   stripe-ruby-mock!
   stripe_model_callbacks!
   tzinfo-data

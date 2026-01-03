@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_01_084316) do
+ActiveRecord::Schema[7.1].define(version: 20_250_401_084_316) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -73,8 +73,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_01_084316) do
   end
 
   create_table "audits", force: :cascade do |t|
-    t.integer "audit_action_id", null: false
-    t.integer "audit_auditable_type_id", null: false
+    t.bigint "audit_action_id", null: false
+    t.bigint "audit_auditable_type_id", null: false
     t.string "auditable_type", null: false
     t.integer "auditable_id", null: false
     t.string "user_type"
@@ -792,8 +792,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_01_084316) do
   end
 
   create_table "stripe_subscription_default_tax_rates", force: :cascade do |t|
-    t.integer "stripe_subscription_id", null: false
-    t.integer "stripe_tax_rate_id", null: false
+    t.bigint "stripe_subscription_id", null: false
+    t.bigint "stripe_tax_rate_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["stripe_subscription_id"], name: "index_on_subscription"

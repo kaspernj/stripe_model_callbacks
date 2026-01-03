@@ -5,6 +5,7 @@ FactoryBot.define do
     stripe_invoice
     currency { "usd" }
     discountable { false }
+    livemode { false }
     proration { false }
     sequence(:description) { |n| "Test #{n}" }
   end

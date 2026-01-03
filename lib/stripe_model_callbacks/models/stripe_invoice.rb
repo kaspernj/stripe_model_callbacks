@@ -61,6 +61,7 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
 
 private
 
+
   def assign_amounts(object)
     assign_attributes(
       amount_due: Money.new(object.amount_due, object.currency),

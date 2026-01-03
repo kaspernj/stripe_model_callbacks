@@ -15,10 +15,11 @@ class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
     self.stripe_plan_id = object.plan.id if object.try(:plan).respond_to?(:id)
 
     assign_price_from_stripe(object)
+    assign_deleted_from_stripe(object)
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
-      attributes: %w[id created metadata quantity]
+      attributes: %w[id created deleted metadata quantity]
     )
   end
 
@@ -59,5 +60,21 @@ private
 
     # Set stripe ID on the subscription item
     self.stripe_price_id = object.price.id
+  end
+
+  def assign_deleted_from_stripe(object)
+    return if stripe_attribute_missing?(object, "deleted")
+
+    self.deleted = object.deleted == true
+  end
+
+  def stripe_attribute_missing?(object, attribute)
+    return false unless object.respond_to?(:to_hash)
+
+    values = object.instance_variable_get(:@values)
+    return !values.key?(attribute.to_sym) && !values.key?(attribute.to_s) if values.is_a?(Hash)
+
+    stripe_values = object.to_hash
+    !stripe_values.key?(attribute.to_sym) && !stripe_values.key?(attribute.to_s)
   end
 end

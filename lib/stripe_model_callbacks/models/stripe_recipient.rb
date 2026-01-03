@@ -11,7 +11,7 @@ class StripeRecipient < StripeModelCallbacks::ApplicationRecord
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
-      attributes: %w[active_account description email name migrated_to verified]
+      attributes: %w[active_account description email livemode name migrated_to verified]
     )
   end
 end

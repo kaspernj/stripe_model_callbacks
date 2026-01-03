@@ -33,7 +33,7 @@ require "pry-rails"
 # If you are not using ActiveRecord, you can remove this line.
 # ActiveRecord::Migration.maintain_test_schema!
 
-Money.locale_backend = :i18n
+Money.locale_backend = :currency
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
