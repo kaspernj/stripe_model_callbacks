@@ -26,11 +26,13 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
   def value_for_attribute(attribute)
     if stripe_model.respond_to?(attribute)
       value = stripe_model.__send__(attribute)
+      return nil if value.nil? && allow_nil_attribute?(attribute)
       return default_value_for(attribute) if value.nil?
 
       return value
     end
 
+    return nil if allow_nil_attribute?(attribute)
     return SKIP_VALUE unless model_value(attribute).nil?
 
     default_value = default_value_for(attribute)
@@ -73,6 +75,10 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
     return default_value unless default_value.nil?
 
     nil
+  end
+
+  def allow_nil_attribute?(attribute)
+    attribute == "auto_advance"
   end
 
   def column_name_for(attribute)

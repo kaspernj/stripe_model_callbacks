@@ -19,8 +19,6 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
 
   has_one_attached :invoice_pdf_file
 
-  after_initialize :set_auto_advance_default
-
   def self.stripe_class
     Stripe::Invoice
   end
@@ -58,15 +56,11 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
       ]
     )
 
-    self.auto_advance = false if auto_advance.nil?
     assign_invoice_items(object)
   end
 
 private
 
-  def set_auto_advance_default
-    self.auto_advance = false if auto_advance.nil?
-  end
 
   def assign_amounts(object)
     assign_attributes(
