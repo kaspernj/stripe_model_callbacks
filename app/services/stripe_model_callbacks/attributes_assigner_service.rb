@@ -33,7 +33,10 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
 
     return SKIP_VALUE unless model_value(attribute).nil?
 
-    default_value_for(attribute) || SKIP_VALUE
+    default_value = default_value_for(attribute)
+    return SKIP_VALUE if default_value.nil?
+
+    default_value
   end
 
   def normalize_value(attribute, value)
