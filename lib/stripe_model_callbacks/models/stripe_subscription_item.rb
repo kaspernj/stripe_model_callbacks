@@ -21,9 +21,6 @@ class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
       model: self, stripe_model: object,
       attributes: %w[id created deleted metadata quantity]
     )
-
-    normalize_deleted
-    Rails.logger.info("[SMC DEBUG] StripeSubscriptionItem deleted=#{deleted.inspect} stripe_id=#{stripe_id}") if Rails.env.test?
   end
 
   def create_stripe_mock!
@@ -66,10 +63,18 @@ private
   end
 
   def assign_deleted_from_stripe(object)
-    self.deleted = object.respond_to?(:deleted) ? object.deleted == true : false
+    return if stripe_attribute_missing?(object, "deleted")
+
+    self.deleted = object.deleted == true
   end
 
-  def normalize_deleted
-    self.deleted = false if deleted.nil?
+  def stripe_attribute_missing?(object, attribute)
+    return false unless object.respond_to?(:to_hash)
+
+    values = object.instance_variable_get(:@values)
+    return !values.key?(attribute.to_sym) && !values.key?(attribute.to_s) if values.is_a?(Hash)
+
+    stripe_values = object.to_hash
+    !stripe_values.key?(attribute.to_sym) && !stripe_values.key?(attribute.to_s)
   end
 end
