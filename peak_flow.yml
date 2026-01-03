@@ -5,6 +5,12 @@ before_script:
 rvm: true
 before_install:
   - sudo apt update && sudo apt install -y mariadb-client
+environment:
+  MARIADB_HOST: mariadb
+  MARIADB_PORT: "3306"
+  MARIADB_DB_TEST: stripe_model_callbacks_test
+  MARIADB_USER: peakflow
+  MARIADB_PASSWORD: peakflow_password
 services:
   mariadb:
     image: mariadb:11.2.2
@@ -31,11 +37,6 @@ builds:
     environment:
       RUBY_VERSION: 3.3.7
       RAILS_ENV: test
-      MARIADB_HOST: mariadb
-      MARIADB_PORT: "3306"
-      MARIADB_DB_TEST: stripe_model_callbacks_test
-      MARIADB_USER: peakflow
-      MARIADB_PASSWORD: peakflow_password
     name: Ruby 3.3.7, Rails 7
     script:
       - bundle exec appraisal "rails 7" rspec
@@ -43,11 +44,6 @@ builds:
     environment:
       RUBY_VERSION: 3.3.7
       RAILS_ENV: test
-      MARIADB_HOST: mariadb
-      MARIADB_PORT: "3306"
-      MARIADB_DB_TEST: stripe_model_callbacks_test
-      MARIADB_USER: peakflow
-      MARIADB_PASSWORD: peakflow_password
     name: Ruby 3.3.7, Rails 8
     script:
       - bundle exec appraisal "rails 8" rspec
@@ -55,11 +51,6 @@ builds:
     environment:
       RUBY_VERSION: 3.4.2
       RAILS_ENV: test
-      MARIADB_HOST: mariadb
-      MARIADB_PORT: "3306"
-      MARIADB_DB_TEST: stripe_model_callbacks_test
-      MARIADB_USER: peakflow
-      MARIADB_PASSWORD: peakflow_password
     name: Ruby 3.4.2, Rails 7
     script:
       - bundle exec appraisal "rails 7" rspec
@@ -67,11 +58,6 @@ builds:
     environment:
       RUBY_VERSION: 3.4.2
       RAILS_ENV: test
-      MARIADB_HOST: mariadb
-      MARIADB_PORT: "3306"
-      MARIADB_DB_TEST: stripe_model_callbacks_test
-      MARIADB_USER: peakflow
-      MARIADB_PASSWORD: peakflow_password
     name: Ruby 3.4.2, Rails 8
     script:
       - bundle exec appraisal "rails 8" rspec
@@ -79,11 +65,6 @@ builds:
     environment:
       RUBY_VERSION: 3.3.7
       RAILS_ENV: test
-      MARIADB_HOST: mariadb
-      MARIADB_PORT: "3306"
-      MARIADB_DB_TEST: stripe_model_callbacks_test
-      MARIADB_USER: peakflow
-      MARIADB_PASSWORD: peakflow_password
     name: Linters
     script:
       - bundle exec rake best_practice_project:run
