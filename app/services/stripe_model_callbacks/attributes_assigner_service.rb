@@ -2,6 +2,29 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
   attr_reader :attributes, :model, :stripe_model
 
   SKIP_VALUE = Object.new
+  JSON_COLUMNS_BY_TABLE = {
+    "audits" => %w[audited_changes params],
+    "stripe_payment_intents" => %w[
+      amount_details
+      automatic_payment_methods
+      last_payment_error
+      metadata
+      next_action
+      payment_method_options
+      payment_method_types
+      processing
+      shipping
+      transfer_data
+    ],
+    "stripe_payment_methods" => %w[billing_details card metadata],
+    "stripe_setup_intents" => %w[
+      flow_directions
+      mandate
+      payment_method_old
+      payment_method_options
+      payment_method_types
+    ]
+  }.freeze
 
   def initialize(attributes:, model:, stripe_model:)
     @attributes = attributes
@@ -14,7 +37,6 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
       value = value_for_attribute(attribute)
       next if value == SKIP_VALUE
 
-      log_livemode_debug(attribute, value)
       value = normalize_value(attribute, value)
 
       model.__send__(setter_method(attribute), value)
@@ -48,6 +70,9 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
   def stripe_attribute_missing?(attribute)
     return false unless stripe_model.respond_to?(:to_hash)
 
+    values = stripe_model.instance_variable_get(:@values)
+    return !values.key?(attribute.to_sym) && !values.key?(attribute.to_s) if values.is_a?(Hash)
+
     stripe_values = stripe_model.to_hash
     !stripe_values.key?(attribute.to_sym) && !stripe_values.key?(attribute.to_s)
   end
@@ -55,6 +80,8 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
   def normalize_value(attribute, value)
     if attribute == "created" && value
       Time.zone.at(value)
+    elsif (converted_value = datetime_column_value(attribute, value))
+      converted_value
     elsif json_column?(attribute)
       normalize_json_value(value)
     elsif attribute == "metadata"
@@ -62,20 +89,6 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
     else
       value
     end
-  end
-
-  def log_livemode_debug(attribute, value)
-    return unless attribute == "livemode"
-    return unless Rails.env.test?
-
-    respond = stripe_model.respond_to?(attribute)
-    model_value = model_value(attribute)
-    default_value = default_value_for(attribute)
-    $stdout.puts(
-      "[SMC DEBUG] livemode respond=#{respond} stripe_value=#{value.inspect} " \
-      "model_value=#{model_value.inspect} default=#{default_value.inspect} " \
-      "model_class=#{model.class.name}"
-    )
   end
 
   def model_value(attribute)
@@ -95,26 +108,61 @@ class StripeModelCallbacks::AttributesAssignerService < ServicePattern::Service
   end
 
   def json_column?(attribute)
+    column_name = column_name_for(attribute)
+    return true if json_columns_for_table.include?(column_name)
+
+    column = model.class.columns_hash[column_name]
+    return false unless column
+    return true if column.type == :json
+
+    false
+  end
+
+  def json_columns_for_table
+    JSON_COLUMNS_BY_TABLE.fetch(model.class.table_name, [])
+  end
+
+  def datetime_column_value(attribute, value)
+    return false unless value
+
     column = model.class.columns_hash[column_name_for(attribute)]
-    column&.type == :json
+    return false unless column&.type == :datetime
+
+    timestamp = numeric_timestamp_value(value)
+    return Time.zone.at(timestamp) if timestamp
+
+    value
+  end
+
+  def numeric_timestamp_value(value)
+    return value.to_i if value.is_a?(Integer) || value.is_a?(Float)
+
+    value.to_i if value.is_a?(String) && value.match?(/\A\d+\z/)
   end
 
   def normalize_json_value(value)
     return value if value.nil?
 
-    if value.is_a?(String)
-      begin
-        return JSON.parse(value)
-      rescue JSON::ParserError
-        return value
-      end
-    end
+    return normalize_json_string(value) if value.is_a?(String)
 
-    if value.is_a?(Array)
-      value.map { |item| normalize_json_value(item) }
-    elsif value.respond_to?(:to_hash)
-      value.to_hash
-    else
+    return value.map { |item| normalize_json_value(item) } if value.is_a?(Array)
+
+    return value.transform_values { |item| normalize_json_value(item) } if value.is_a?(Hash)
+
+    return normalize_json_value(value.to_hash) if value.respond_to?(:to_hash)
+
+    value
+  end
+
+  def normalize_json_string(value)
+    sanitized_value = value.tr("\u00A0", " ")
+    stripped_value = sanitized_value.strip
+    return value unless stripped_value.start_with?("{", "[")
+
+    begin
+      parsed_value = JSON.parse(sanitized_value)
+      normalize_json_value(parsed_value)
+    rescue JSON::ParserError
       value
     end
   end
