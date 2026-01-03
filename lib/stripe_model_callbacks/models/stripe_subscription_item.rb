@@ -15,12 +15,14 @@ class StripeSubscriptionItem < StripeModelCallbacks::ApplicationRecord
     self.stripe_plan_id = object.plan.id if object.try(:plan).respond_to?(:id)
 
     assign_price_from_stripe(object)
+    assign_deleted_from_stripe(object)
 
     StripeModelCallbacks::AttributesAssignerService.execute!(
       model: self, stripe_model: object,
       attributes: %w[id created deleted metadata quantity]
     )
 
+    normalize_deleted
     Rails.logger.info("[SMC DEBUG] StripeSubscriptionItem deleted=#{deleted.inspect} stripe_id=#{stripe_id}") if Rails.env.test?
   end
 
@@ -61,5 +63,13 @@ private
 
     # Set stripe ID on the subscription item
     self.stripe_price_id = object.price.id
+  end
+
+  def assign_deleted_from_stripe(object)
+    self.deleted = object.respond_to?(:deleted) ? object.deleted == true : false
+  end
+
+  def normalize_deleted
+    self.deleted = false if deleted.nil?
   end
 end

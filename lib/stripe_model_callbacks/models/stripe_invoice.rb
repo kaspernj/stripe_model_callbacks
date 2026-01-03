@@ -56,6 +56,7 @@ class StripeInvoice < StripeModelCallbacks::ApplicationRecord
       ]
     )
 
+    self.auto_advance = false if auto_advance.nil?
     assign_invoice_items(object)
   end
 

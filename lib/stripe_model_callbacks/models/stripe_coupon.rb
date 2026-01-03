@@ -11,6 +11,7 @@ class StripeCoupon < StripeModelCallbacks::ApplicationRecord
     check_object_is_stripe_class(object)
     assign_attributes(
       amount_off: object.amount_off ? Money.new(object.amount_off, object.currency) : nil,
+      livemode: object.respond_to?(:livemode) ? object.livemode == true : false,
       stripe_valid: object.valid
     )
 
