@@ -89,9 +89,9 @@ private
 
     assign_attributes(
       amount: Money.new(object.amount, object.currency),
-      amount_captured: amount_captured_value ? Money.new(amount_captured_value, object.currency) : nil,
-      amount_refunded: object.amount_refunded ? Money.new(object.amount_refunded, object.currency) : nil,
-      application: object.try(:application) ? Money.new(object.application, object.currency) : nil
+      amount_captured: amount_captured_value.nil? ? nil : Money.new(amount_captured_value, object.currency),
+      amount_refunded: object.amount_refunded.nil? ? nil : Money.new(object.amount_refunded, object.currency),
+      application: object.try(:application).nil? ? nil : Money.new(object.application, object.currency)
     )
   end
 end

@@ -13,7 +13,7 @@ describe "refund updated" do
 
       expect(response).to have_http_status :ok
       expect(refund).to have_attributes(
-        stripe_charge: charge,
+        stripe_charge_id: charge.stripe_id,
         balance_transaction: nil,
         created: Time.zone.parse("2018-02-05 16:37:07"),
         currency: "usd",
