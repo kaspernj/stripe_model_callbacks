@@ -11,8 +11,8 @@ services:
     environment:
       MARIADB_ROOT_PASSWORD: 67cd6ba2-3aad-41f7-a87e-3974fe96dc7a
       MARIADB_DATABASE: stripe_model_callbacks_test
-      MARIADB_USER: dev
-      MARIADB_PASSWORD: c859fc93-6c69-4067-9840-6f5a00fb3052
+      MARIADB_USER: peakflow
+      MARIADB_PASSWORD: peakflow_password
     expose:
       - 3306
     healthcheck:
@@ -34,8 +34,8 @@ builds:
       MARIADB_HOST: mariadb
       MARIADB_PORT: "3306"
       MARIADB_DB_TEST: stripe_model_callbacks_test
-      MARIADB_USER: dev
-      MARIADB_PASSWORD: c859fc93-6c69-4067-9840-6f5a00fb3052
+      MARIADB_USER: peakflow
+      MARIADB_PASSWORD: peakflow_password
     name: Ruby 3.3.7, Rails 7
     script:
       - bundle exec appraisal "rails 7" rspec
@@ -46,8 +46,8 @@ builds:
       MARIADB_HOST: mariadb
       MARIADB_PORT: "3306"
       MARIADB_DB_TEST: stripe_model_callbacks_test
-      MARIADB_USER: dev
-      MARIADB_PASSWORD: c859fc93-6c69-4067-9840-6f5a00fb3052
+      MARIADB_USER: peakflow
+      MARIADB_PASSWORD: peakflow_password
     name: Ruby 3.3.7, Rails 8
     script:
       - bundle exec appraisal "rails 8" rspec
@@ -58,8 +58,8 @@ builds:
       MARIADB_HOST: mariadb
       MARIADB_PORT: "3306"
       MARIADB_DB_TEST: stripe_model_callbacks_test
-      MARIADB_USER: dev
-      MARIADB_PASSWORD: c859fc93-6c69-4067-9840-6f5a00fb3052
+      MARIADB_USER: peakflow
+      MARIADB_PASSWORD: peakflow_password
     name: Ruby 3.4.2, Rails 7
     script:
       - bundle exec appraisal "rails 7" rspec
@@ -70,8 +70,8 @@ builds:
       MARIADB_HOST: mariadb
       MARIADB_PORT: "3306"
       MARIADB_DB_TEST: stripe_model_callbacks_test
-      MARIADB_USER: dev
-      MARIADB_PASSWORD: c859fc93-6c69-4067-9840-6f5a00fb3052
+      MARIADB_USER: peakflow
+      MARIADB_PASSWORD: peakflow_password
     name: Ruby 3.4.2, Rails 8
     script:
       - bundle exec appraisal "rails 8" rspec

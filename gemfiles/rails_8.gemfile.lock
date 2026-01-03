@@ -10,7 +10,7 @@ GIT
 PATH
   remote: ..
   specs:
-    stripe_model_callbacks (0.1.7)
+    stripe_model_callbacks (0.1.8)
       active_record_auditable
       auto_autoloader
       money-rails
@@ -174,6 +174,8 @@ GEM
       money (~> 6.13)
       railties (>= 3.0)
     multi_json (1.15.0)
+    mysql2 (0.5.7)
+      bigdecimal
     net-imap (0.5.6)
       date
       net-protocol
@@ -323,14 +325,6 @@ GEM
     securerandom (0.4.1)
     service_pattern (1.0.10)
     sexp_processor (4.17.3)
-    sqlite3 (2.6.0-aarch64-linux-gnu)
-    sqlite3 (2.6.0-aarch64-linux-musl)
-    sqlite3 (2.6.0-arm-linux-gnu)
-    sqlite3 (2.6.0-arm-linux-musl)
-    sqlite3 (2.6.0-arm64-darwin)
-    sqlite3 (2.6.0-x86_64-darwin)
-    sqlite3 (2.6.0-x86_64-linux-gnu)
-    sqlite3 (2.6.0-x86_64-linux-musl)
     string-cases (0.0.4)
     stringio (3.1.5)
     stripe (12.6.0)
@@ -374,6 +368,7 @@ DEPENDENCIES
   best_practice_project
   capybara (= 3.40.0)
   factory_bot_rails (= 6.4.4)
+  mysql2
   pry
   pry-rails
   rails (>= 8.0.0)
@@ -385,7 +380,6 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  sqlite3
   stripe-ruby-mock!
   stripe_model_callbacks!
   tzinfo-data
