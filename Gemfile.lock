@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/stripe-ruby-mock/stripe-ruby-mock.git
-  revision: 25e194e1306d180662208a8890f184d8681f51b4
+  revision: dd6577c8ad19dd965ae099aa98685aee7601a2af
   specs:
     stripe-ruby-mock (5.0.0)
       dante (>= 0.2.0)
@@ -183,7 +183,7 @@ GEM
       monetize (~> 2.0)
       money (~> 7.0)
       railties (>= 7.0)
-    multi_json (1.17.0)
+    multi_json (1.19.1)
     mysql2 (0.5.7)
       bigdecimal
     net-imap (0.6.2)
