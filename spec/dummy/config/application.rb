@@ -9,11 +9,10 @@ require "active_job/railtie"
 require "action_cable/engine"
 require "active_storage/engine"
 # require "rails/test_unit/railtie"
+require_relative "dummy"
 
 Bundler.require(*Rails.groups)
 require "stripe_model_callbacks"
-
-module Dummy; end
 
 class Dummy::Application < Rails::Application
   # Initialize configuration defaults for originally generated Rails version.

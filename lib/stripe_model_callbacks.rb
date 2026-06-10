@@ -4,7 +4,6 @@ require "money-rails"
 require "service_pattern"
 require "stripe"
 require "stripe_event"
-require "stripe_model_callbacks/engine"
 require "stripe_model_callbacks/autoload_models"
 require "with_advisory_lock"
 
@@ -18,3 +17,5 @@ module StripeModelCallbacks
     yield StripeModelCallbacks::Configuration.current
   end
 end
+
+require "stripe_model_callbacks/engine"
