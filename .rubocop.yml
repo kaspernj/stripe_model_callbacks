@@ -128,10 +128,6 @@ Rails/ThreeStateBooleanColumn:
 RSpec/AnyInstance:
   Enabled: false
 
-RSpec/Output:
-  Exclude:
-    - spec/dummy/bin/*
-
 RSpec/ChangeByZero:
   Enabled: false
 
@@ -170,13 +166,6 @@ RSpec/StubbedMock:
 
 Style/AccessorGrouping:
   Enabled: true
-
-Style/OneClassPerFile:
-  Exclude:
-    - lib/stripe_model_callbacks/engine.rb
-    - spec/dummy/app/channels/application_cable/channel.rb
-    - spec/dummy/app/channels/application_cable/connection.rb
-    - spec/dummy/config/application.rb
 
 Style/ArrayCoercion:
   Enabled: true
