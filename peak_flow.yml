@@ -34,6 +34,10 @@ services:
         hard: 262144
 builds:
   build_1:
+    paths:
+      - "**"
+      - "!**/*.md"
+      - "!LICENSE"
     environment:
       RUBY_VERSION: 3.3.7
       RAILS_ENV: test
@@ -41,6 +45,10 @@ builds:
     script:
       - bundle exec appraisal "rails 7" rspec
   build_2:
+    paths:
+      - "**"
+      - "!**/*.md"
+      - "!LICENSE"
     environment:
       RUBY_VERSION: 3.3.7
       RAILS_ENV: test
@@ -48,6 +56,10 @@ builds:
     script:
       - bundle exec appraisal "rails 8" rspec
   build_3:
+    paths:
+      - "**"
+      - "!**/*.md"
+      - "!LICENSE"
     environment:
       RUBY_VERSION: 3.4.2
       RAILS_ENV: test
@@ -55,6 +67,10 @@ builds:
     script:
       - bundle exec appraisal "rails 7" rspec
   build_4:
+    paths:
+      - "**"
+      - "!**/*.md"
+      - "!LICENSE"
     environment:
       RUBY_VERSION: 3.4.2
       RAILS_ENV: test
@@ -62,6 +78,10 @@ builds:
     script:
       - bundle exec appraisal "rails 8" rspec
   build_5:
+    paths:
+      - "**"
+      - "!**/*.md"
+      - "!LICENSE"
     environment:
       RUBY_VERSION: 3.3.7
       RAILS_ENV: test
